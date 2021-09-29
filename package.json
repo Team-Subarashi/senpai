@@ -10,6 +10,8 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.4",
     "dotenv": "^10.0.0",
+    "firebase": "^9.1.0",
+    "firebase-tools": "^9.18.0",
     "koa": "^2.13.3",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",

@@ -1,11 +1,12 @@
 import './App.css';
-import NavBar from "./Components/NavBar"
+import NavBar from "./components/NavBar.js"
 import Splash from "./Pages/Splash"
 import Profile from "./Pages/Profile"
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import SignUp from './components/SignUp';
+
 
 function App() {
-  const [user, setUser] = useState(null)
 
   return (
     // <Router>
@@ -17,6 +18,7 @@ function App() {
           {/* <Route path="/profile"> */}
             <Profile />
           {/* </Route> */}
+          <SignUp />
       </div>
     // </Router>
   );

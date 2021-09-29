@@ -1,19 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
-import { useRecoilState, atom } from 'recoil';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,12 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp({setUser}) {
+export default function SignUp() {
 
   const classes = useStyles();
-  const emailRef = useRef()
-  const passwordRef = useRef()
-  const passwordConfirmRef = useRef()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
@@ -56,13 +47,13 @@ export default function SignUp({setUser}) {
 
   const submitHandler = () => {
     const auth = getAuth();
+    console.log(auth)
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
       console.log(userCredential)
       // Signed in 
       const user = userCredential.user;
-      setUser(user)
       // ...
     })
     .catch((error) => {
@@ -96,7 +87,6 @@ export default function SignUp({setUser}) {
             autoComplete="email"
             autoFocus
             onChange={(e) => emailChangeHandler(e)}
-            ref={emailRef}
           />
           <TextField
             variant="outlined"
