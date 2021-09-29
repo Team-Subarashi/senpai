@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+
+import axios from "axios";
 
 export default function NavBar() {
-    return (
-        <div>
-            NavBar
-        </div>
-    )
+  const [user, setUser] = useState("");
+  const userDisp = async () => {
+    await axios.get("/users").then((res) => {
+      console.log(res);
+      return setUser(res.data[9].name);
+    });
+  };
+
+  return (
+    <div>
+      NavBar
+      <button onClick={() => userDisp()}>User Test</button>
+      <p>{user}</p>
+    </div>
+  );
 }
