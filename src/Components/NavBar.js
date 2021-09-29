@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Splash() {
+export default function NavBar() {
     return (
         <div>
-            Splash
+            NavBar
         </div>
     )
 }

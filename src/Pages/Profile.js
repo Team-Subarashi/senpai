@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Splash() {
+export default function Profile() {
     return (
         <div>
-            Splash
+            
         </div>
     )
 }
