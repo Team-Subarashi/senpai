@@ -7,7 +7,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignIn() {
 
   const classes = useStyles();
 
@@ -51,7 +51,7 @@ export default function SignUp() {
     const auth = getAuth();
     console.log(auth)
 
-    createUserWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
       console.log(userCredential)
       // Signed in 
@@ -73,7 +73,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Sign In
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
@@ -123,12 +123,12 @@ export default function SignUp() {
               submitHandler()
             }}
           >
-            Sign Up
+            Sign In
           </Button>
           <Grid container justifyContent="center">
             <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
+              <Link href="/signup" variant="body2">
+                Don't have an account? Create an account
               </Link>
             </Grid>
           </Grid>
