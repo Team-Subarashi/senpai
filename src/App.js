@@ -4,9 +4,11 @@ import Splash from "./Pages/Splash"
 import Profile from "./Pages/Profile"
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import SignUp from './components/SignUp';
+import {useState} from 'react'
 
 
 function App() {
+  const [user, setUser] = useState(null)
 
   return (
     // <Router>
@@ -18,7 +20,7 @@ function App() {
           {/* <Route path="/profile"> */}
             <Profile />
           {/* </Route> */}
-          <SignUp />
+          {user ? "user set" : <SignUp setUser={setUser}/>}
       </div>
     // </Router>
   );

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp({setUser}) {
 
   const classes = useStyles();
 
@@ -54,6 +54,7 @@ export default function SignUp() {
       console.log(userCredential)
       // Signed in 
       const user = userCredential.user;
+      setUser(user)
       // ...
     })
     .catch((error) => {
