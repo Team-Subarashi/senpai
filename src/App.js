@@ -1,18 +1,24 @@
-import React, {useState} from 'react'
-import logo from './logo.svg';
 import './App.css';
-import SignUp from "./components/SignUp"
-import { atom, useRecoilState } from 'recoil';
+import NavBar from "./Components/NavBar"
+import Splash from "./Pages/Splash"
+import Profile from "./Pages/Profile"
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(null)
 
   return (
-    <div className="App">
-      Hello World
-      <SignUp setUser={setUser} />
-      {user === null ? "null" : "notnull"}
-    </div>
+    // <Router>
+      <div className="App">
+        <NavBar />
+          {/* <Route path="/home">  */}
+            <Splash />
+          {/* </Route> */}
+          {/* <Route path="/profile"> */}
+            <Profile />
+          {/* </Route> */}
+      </div>
+    // </Router>
   );
 }
 
