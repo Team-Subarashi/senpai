@@ -1,14 +1,22 @@
 import './App.css';
+import NavBar from "./Components/NavBar"
 import Splash from "./Pages/Splash"
-import NavBar from "./Pages/NavBar"
+import Profile from "./Pages/Profile"
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <Splash />
-      <Profile />
-    </div>
+    // <Router>
+      <div className="App">
+        <NavBar />
+          {/* <Route path="/home">  */}
+            <Splash />
+          {/* </Route> */}
+          {/* <Route path="/profile"> */}
+            <Profile />
+          {/* </Route> */}
+      </div>
+    // </Router>
   );
 }
 
