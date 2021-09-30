@@ -1,22 +1,36 @@
 import React, { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { category as categoryAtom } from "../atoms";
 import { Grid, Button } from "@material-ui/core";
 import { Menu, Popover, MenuItem } from "@mui/material";
 
 export default function Filter() {
   const [menuState, toggleMenuState] = useState(false);
+  const [category, setCategory] = useRecoilState(categoryAtom);
 
   return (
-    <Grid container xs={12} style={{ height: "inherit" }}>
+    <Grid
+      container
+      xs={12}
+      style={{ height: "inherit", backgroundColor: "lightblue" }}
+    >
       <Button
-        style={{ backgroundColor: "purple", color: "white" }}
+        id="categoryButton"
+        style={{ backgroundColor: "purple", color: "white", marginLeft: "3vw" }}
         onClick={() => toggleMenuState(!menuState)}
       >
         Category
       </Button>
-      <Menu open={menuState} style={{ marginTop: "-75.5vh" }}>
+      <Menu
+        open={menuState}
+        anchorEl={document.getElementById("categoryButton")}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        // style={{ marginTop: "-75.5vh" }}
+      >
         <MenuItem
           onClick={(e) => {
             console.log(e.target.innerText);
+            setCategory(e.target.innerText);
             toggleMenuState(!menuState);
           }}
         >
@@ -25,6 +39,7 @@ export default function Filter() {
         <MenuItem
           onClick={(e) => {
             console.log(e.target.innerText);
+            setCategory(e.target.innerText);
             toggleMenuState(!menuState);
           }}
         >
@@ -33,6 +48,7 @@ export default function Filter() {
         <MenuItem
           onClick={(e) => {
             console.log(e.target.innerText);
+            setCategory(e.target.innerText);
             toggleMenuState(!menuState);
           }}
         >
