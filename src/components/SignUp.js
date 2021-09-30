@@ -37,10 +37,14 @@ export default function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
+  const [passwordConfirm, setPasswordConfirm] = useState("")
 
 
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value)
+  }
+  const passwordConfirmChangeHandler = (e) => {
+    setPasswordConfirm(e.target.value)
   }
   const emailChangeHandler = (e) => {
     setEmail(e.target.value)
@@ -48,6 +52,11 @@ export default function SignUp() {
 
 
   const submitHandler = () => {
+    if (password !== passwordConfirm) {
+      console.log("Passwords don't match")
+      return
+    }
+
     const auth = getAuth();
     console.log(auth)
 
@@ -100,18 +109,18 @@ export default function SignUp() {
             autoComplete="current-password"
             onChange={(e) => passwordChangeHandler(e)}
           />
-          {/* <TextField
+          <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             name="password-confirm"
-            label="Password confirmation"
-            type="password-confirm"
+            label="Re-enter your password"
+            type="password"
             id="password-confirm"
             autoComplete="current-password-confirm"
-            ref={passwordConfirmRef}
-          /> */}
+            onChange={(e) => passwordConfirmChangeHandler(e)}
+          />
           <Button
             type="submit"
             fullWidth
