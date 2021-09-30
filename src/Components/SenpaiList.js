@@ -57,6 +57,11 @@ export default function SenpaiList() {
                 src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
               />
             </Box>
+            <div>
+              {senpai.category.map((skill) => {
+                return <div>{skill}</div>;
+              })}
+            </div>
           </Grid>
           <Grid
             item
@@ -129,7 +134,7 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "darkblue" }}
           >
-            Rates, etc.
+            Rates
           </Grid>
           <Grid
             item
