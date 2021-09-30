@@ -34,7 +34,7 @@ function App() {
     // <Router>
       <div className="App">
         <NavBar />
-        {user ? user.email : null}
+        {user ? "Signed in as " + user.email : null}
         <SignOut />
           {/* <Route path="/home">  */}
             <Splash />
