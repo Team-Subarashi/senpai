@@ -6,8 +6,13 @@ export default function NavBar() {
   const [user, setUser] = useState("");
   const userDisp = async () => {
     await axios.get("/users").then((res) => {
-      console.log(res);
-      return setUser(res.data[9].name);
+      console.log(
+        res.data,
+        res.data[0].name,
+        res.data[0].rates,
+        res.data[0].category[0]
+      );
+      return setUser(res.data[0].name);
     });
   };
 
