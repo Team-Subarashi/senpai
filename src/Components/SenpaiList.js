@@ -121,46 +121,47 @@ export default function SenpaiList() {
       {senpaiList.length > 0 ? (
         senpaiPopulator()
       ) : (
-        <Grid container id="single-senpai" style={{ height: "25vh" }}>
-          <Grid
-            item
-            xs={4}
-            style={{ height: "90%", backgroundColor: "lightgreen" }}
-          >
-            Bio/Pic Component
-          </Grid>
-          <Grid
-            item
-            xs={4}
-            style={{ height: "90%", backgroundColor: "darkblue" }}
-          >
-            Rates
-          </Grid>
-          <Grid
-            item
-            xs={4}
-            style={{ height: "90%", backgroundColor: "lightyellow" }}
-          >
-            <Calendar />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              style={{
-                marginTop: "1vh",
-                marginLeft: "85%",
-                backgroundColor: "purple",
-                color: "white",
-              }}
-              onClick={() => {
-                senpaiSetter();
-                console.log("booked");
-              }}
-            >
-              Book Now
-            </Button>
-          </Grid>
-        </Grid>
+        <div>No Senpai Found</div>
+        // <Grid container id="single-senpai" style={{ height: "25vh" }}>
+        //   <Grid
+        //     item
+        //     xs={4}
+        //     style={{ height: "90%", backgroundColor: "lightgreen" }}
+        //   >
+        //     Bio/Pic Component
+        //   </Grid>
+        //   <Grid
+        //     item
+        //     xs={4}
+        //     style={{ height: "90%", backgroundColor: "darkblue" }}
+        //   >
+        //     Rates
+        //   </Grid>
+        //   <Grid
+        //     item
+        //     xs={4}
+        //     style={{ height: "90%", backgroundColor: "lightyellow" }}
+        //   >
+        //     <Calendar />
+        //   </Grid>
+        //   <Grid item xs={12}>
+        //     <Button
+        //       variant="contained"
+        //       style={{
+        //         marginTop: "1vh",
+        //         marginLeft: "85%",
+        //         backgroundColor: "purple",
+        //         color: "white",
+        //       }}
+        //       onClick={() => {
+        //         senpaiSetter();
+        //         console.log("booked");
+        //       }}
+        //     >
+        //       Book Now
+        //     </Button>
+        //   </Grid>
+        // </Grid>
       )}
     </>
   );

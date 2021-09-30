@@ -8,6 +8,12 @@ export default function Filter() {
   const [menuState, toggleMenuState] = useState(false);
   const [category, setCategory] = useRecoilState(categoryAtom);
 
+  const clickHandler = (e) => {
+    document.getElementById("categoryButton").innerText = e.target.innerText;
+    setCategory(e.target.innerText);
+    toggleMenuState(!menuState);
+  };
+
   return (
     <Grid
       container
@@ -27,33 +33,13 @@ export default function Filter() {
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         // style={{ marginTop: "-75.5vh" }}
       >
-        <MenuItem
-          onClick={(e) => {
-            console.log(e.target.innerText);
-            setCategory(e.target.innerText);
-            toggleMenuState(!menuState);
-          }}
-        >
-          All
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            console.log(e.target.innerText);
-            setCategory(e.target.innerText);
-            toggleMenuState(!menuState);
-          }}
-        >
-          Pottery
-        </MenuItem>
-        <MenuItem
-          onClick={(e) => {
-            console.log(e.target.innerText);
-            setCategory(e.target.innerText);
-            toggleMenuState(!menuState);
-          }}
-        >
-          Zumba
-        </MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>All</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>Pottery</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>Zumba</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>Dancing</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>Archery</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>Painting</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>Cooking</MenuItem>
       </Menu>
     </Grid>
   );
