@@ -10,6 +10,7 @@ import Container from '@material-ui/core/Container';
 import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,6 +39,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
 
 
   const passwordChangeHandler = (e) => {
@@ -53,9 +55,11 @@ export default function SignUp() {
 
   const submitHandler = () => {
     if (password !== passwordConfirm) {
-      console.log("Passwords don't match")
+      setErrorMessage("Passwords don't match")
       return
     }
+    setErrorMessage("")
+
 
     const auth = getAuth();
     console.log(auth)
@@ -70,6 +74,8 @@ export default function SignUp() {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      setErrorMessage(error.message)
+
       // ..
     });
   }
@@ -84,6 +90,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
+        {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
