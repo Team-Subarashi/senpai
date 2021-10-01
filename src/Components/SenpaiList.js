@@ -154,4 +154,4 @@ export default function SenpaiList() {
       {senpaiList.length > 0 ? senpaiPopulator() : <div>No Senpai Found</div>}
     </>
   );
-} 
+}
