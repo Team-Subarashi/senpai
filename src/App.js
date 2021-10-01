@@ -1,3 +1,4 @@
+
 import "./App.css";
 import NavBar from "./components/NavBar.js";
 import Splash from "./Pages/Splash";
@@ -14,6 +15,7 @@ import Room from "./components/CodeRoom/Room";
 function App() {
   const [accountView, setAccountView] = useState("createAccount");
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log("hello");
@@ -28,26 +30,33 @@ function App() {
     });
   }, []);
 
+
+  const classes = useStyles()
   return (
     // <Router>
     <div className="App">
-      <NavBar />
-      {user ? user.email : null}
-      <SignOut />
-      {/* <Route path="/home">  */}
-      <Splash />
-      {/* </Route> */}
-      {/* <Route path="/profile"> */}
-      <Profile />
-      {/* </Route> */}
-      <Router>
-        <Switch>
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={SignIn} />
-          <Route path="/room" component={Room} />
+      <div className={classes.root}>
+        <CssBaseline />
 
-        </Switch>
-      </Router>
+        <NavBar />
+        {user ? user.email : null}
+        <SignOut />
+        {/* <Route path="/home">  */}
+        <Splash />
+        {/* </Route> */}
+        {/* <Route path="/profile"> */}
+        <Profile />
+        {/* </Route> */}
+        <Router>
+          <Switch>
+            <Route path="/signup" component={SignUp} />
+            <Route path="/room" component={Room} />
+            <Route path="/login" component={SignIn} />
+          </Switch>
+        </Router>
+
+      </div>
+
     </div>
     // </Router>
   );
