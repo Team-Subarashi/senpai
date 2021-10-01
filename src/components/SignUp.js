@@ -8,9 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,18 +63,27 @@ export default function SignUp() {
 
 
     const auth = getAuth();
-    console.log(auth)
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-      console.log(userCredential)
       // Signed in 
       const user = userCredential.user;
+      axios({
+        method: "post",
+        url: "/users",
+        data: {
+          name: "test",
+          email: email,
+          authId: user.uid
+        }
+      })
       // ...
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
       setErrorMessage(error.message)
 
       // ..
@@ -143,7 +153,7 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent="center">
             <Grid item>
-              <Link href="/login" variant="body2">
+              <Link to="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>

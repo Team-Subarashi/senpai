@@ -7,22 +7,35 @@ import SignUp from './components/SignUp';
 import SignIn from './components/SignIn'
 import {useEffect, useState} from 'react'
 import {auth} from './firebase'
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import SignOut from './components/SignOut';
+import { onAuthStateChanged } from '@firebase/auth';
+import SenpaiProfileView from './Pages/SenpaiProfileView';
+import FindASenpai from './Pages/FindASenpai';
+import { useRecoilState } from 'recoil';
+import { userState } from './Atoms';
+import ScheduleBooking from './Pages/ScheduleBooking';
+import axios from 'axios';
 
 
 function App() {
-  const [accountView, setAccountView] = useState("createAccount")
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log("hello")
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const uid = user.uid;
-        setUser(user)
-        console.log(user.email)
+        const response = await axios({
+          method: "get",
+          url: `/users/${user.uid}`,
+          data: {
+            authId: user.uid
+          }
+        })
+        if (response.data[0]) {
+          setUser(response.data[0])
+        }
       } else {
-        setUser(null)
+        setUser({
+          id: null,
+          email: null
+        })
         console.log("User not selected")
       }
     })
@@ -33,19 +46,23 @@ function App() {
   return (
     // <Router>
       <div className="App">
-        <NavBar />
-        {user ? "Signed in as " + user.email : null}
-        <SignOut />
+        <Router>
+
+          <NavBar />
+          {user.email ? "Signed in as " + user.email : null}
+          
           {/* <Route path="/home">  */}
             <Splash />
           {/* </Route> */}
           {/* <Route path="/profile"> */}
             <Profile />
           {/* </Route> */}
-          <Router>
             <Switch>
               <Route path="/signup" component={SignUp} />
               <Route path="/login" component={SignIn} />
+              <Route path="/findasenpai" component={FindASenpai} />
+              <Route exact path="/senpais/:senpaiId" component={SenpaiProfileView} />
+              <Route exact path="/senpais/:senpaiId/schedule" component={ScheduleBooking} />
             </Switch>
           </Router>
 
