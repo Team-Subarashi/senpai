@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
     appbarWrapper: {
         width: '80%',
         margin: '0 auto'
+    },
+    title: {
+        color: '#fff',
+        fontFamily: 'Nunioto'
     }
 }))
 
@@ -31,7 +35,7 @@ const NavBar = () => {
                 </Toolbar>
             </AppBar>
             <div>
-                <h1>Welcome to <br /> Senpai</h1>
+                <h1 className={classes.title}>Welcome to <br /> Senpai</h1>
             </div>
 
         </div>
