@@ -3,16 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
+    "@material-ui/core": "^4.12.3",
+    "@mui/icons-material": "^5.0.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "antd": "^4.16.13",
     "axios": "^0.21.4",
+    "classnames": "^2.3.1",
     "dotenv": "^10.0.0",
+    "enquire-js": "^0.2.1",
     "koa": "^2.13.3",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
+    "prop-types": "^15.7.2",
+    "rc-queue-anim": "^2.0.0",
+    "rc-scroll-anim": "^2.7.6",
+    "rc-tween-one": "^2.7.3",
     "react": "^17.0.2",
+    "react-document-title": "^2.0.3",
     "react-dom": "^17.0.2",
+    "react-github-button": "^0.1.11",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
@@ -44,5 +56,16 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-Subarashi/senpai.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-Subarashi/senpai/issues"
   }
 }
