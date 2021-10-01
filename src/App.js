@@ -1,44 +1,35 @@
-//import './index.css'
-import './App.css';
-import Splash from "./pages/Splash"
-import Profile from "./pages/Profile"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
-import NavBar from './components/NavBar';
-import SignUp from './components/SignUp';
-import SignIn from './components/SignIn'
-import { useEffect, useState } from 'react'
-import { auth } from './firebase'
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import SignOut from './components/SignOut';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: '100vh',
-    backgroundColor: '#616161',
-    backgroundRepeat: "no-repeat",
-    backgroundSize: 'cover',
-  }
-}));
+import "./App.css";
+import NavBar from "./components/NavBar.js";
+import Splash from "./Pages/Splash";
+import Profile from "./Pages/Profile";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
+import { useEffect, useState } from "react";
+import { auth } from "./firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import SignOut from "./components/SignOut";
+import Room from "./components/CodeRoom/Room";
 
 function App() {
+  const [accountView, setAccountView] = useState("createAccount");
+  const [user, setUser] = useState(null);
 
-  const [accountView, setAccountView] = useState("createAccount")
-  const [user, setUser] = useState(null)
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("hello")
+      console.log("hello");
       if (user) {
         const uid = user.uid;
-        setUser(user)
-        console.log(user.email)
+        setUser(user);
+        console.log(user.email);
       } else {
-        setUser(null)
-        console.log("User not selected")
+        setUser(null);
+        console.log("User not selected");
       }
-    })
-  }, [])
+    });
+  }, []);
+
 
   const classes = useStyles()
   return (
@@ -59,11 +50,13 @@ function App() {
         <Router>
           <Switch>
             <Route path="/signup" component={SignUp} />
+            <Route path="/room" component={Room} />
             <Route path="/login" component={SignIn} />
           </Switch>
         </Router>
 
       </div>
+
     </div>
     // </Router>
   );
