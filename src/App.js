@@ -14,6 +14,7 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
 import React, { useEffect, useState } from "react";
+import Room from "./components/CodeRoom/Room";
 
 const useStyles = makeStyles((theme) => ({
   root: {
