@@ -2,12 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "40vh",
-  },
   appbar: {
     backgroundColor: "#673AB7",
     fontFamily: "Nunioto",
