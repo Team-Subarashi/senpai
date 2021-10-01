@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Calendar from "./Calendar";
 import { Grid, Box, Button } from "@material-ui/core";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -49,19 +50,23 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightgreen" }}
           >
-            {`${senpai.name} - ${senpai.bio}`}
-            <Box mt={2}>
-              <img
-                height="125px"
-                width="125px"
-                src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
-              />
-            </Box>
-            <div>
-              {senpai.category.map((skill) => {
-                return <div>{skill}</div>;
-              })}
-            </div>
+            <Link to={"/profile"}>
+              {`${senpai.name} - ${senpai.bio}`}
+              <Box mt={2}>
+                <img
+                  height="125px"
+                  width="125px"
+                  src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
+                />
+              </Box>
+              <Link>
+                <div>
+                  {senpai.category.map((skill) => {
+                    return <div>{skill}</div>;
+                  })}
+                </div>
+              </Link>
+            </Link>
           </Grid>
           <Grid
             item
