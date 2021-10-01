@@ -22,7 +22,13 @@ export default function Filter() {
     >
       <Button
         id="categoryButton"
-        style={{ backgroundColor: "purple", color: "white", marginLeft: "3vw" }}
+        style={{
+          backgroundColor: "purple",
+          color: "white",
+          marginLeft: "3vw",
+          marginTop: "1vh",
+          marginBottom: "1vh",
+        }}
         onClick={() => toggleMenuState(!menuState)}
       >
         Category

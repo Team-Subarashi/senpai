@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar.js";
 import Splash from "./pages/Splash";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
+import Workspace from "./pages/Workspace";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
@@ -57,6 +58,7 @@ function App() {
             <Route path="/login" component={SignIn} />
             <Route path="/profile" component={Profile} />
             <Route path="/search" component={Search} />
+            <Route path="/workspace" component={Workspace} />
           </Switch>
         </Router>
       </div>
