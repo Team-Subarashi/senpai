@@ -7,7 +7,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
