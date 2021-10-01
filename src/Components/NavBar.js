@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles'
 import { AppBar, Toolbar } from '@material-ui/core'
 import logo from '../logo/logo_cropped.png'
+import axios from "axios";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +27,15 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const NavBar = () => {
+
+    // const [user, setUser] = useState("");
+    // const userDisp = async () => {
+    //   await axios.get("/users").then((res) => {
+    //     console.log(res);
+    //     return setUser(res.data);
+    //   });
+    // };
+
     const classes = useStyles()
     return (
         <div className={classes.root}>
@@ -36,6 +46,7 @@ const NavBar = () => {
             </AppBar>
             <div>
                 <h1 className={classes.title}>Welcome to <br /> Senpai</h1>
+                {/* <button onClick={() => userDisp()}>User Test</button>*/}
             </div>
 
         </div>
