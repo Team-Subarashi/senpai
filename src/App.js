@@ -1,4 +1,3 @@
-
 //import './index.css'
 import "./App.css";
 import NavBar from "./components/NavBar.js";
@@ -15,7 +14,6 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
 import React, { useEffect, useState } from "react";
-import Room from "./components/CodeRoom/Room";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const [accountView, setAccountView] = useState("createAccount");
   const [user, setUser] = useState(null);
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log("hello");
@@ -58,15 +55,13 @@ function App() {
           <Switch>
             <Route exact path="/" component={Splash} />
             <Route path="/signup" component={SignUp} />
-            <Route path="/room" component={Room} />
             <Route path="/login" component={SignIn} />
             <Route path="/profile" component={Profile} />
             <Route path="/search" component={Search} />
-            <Route path="/workspace" component={Workspace} />
+            <Route path="/room" component={Workspace} />
           </Switch>
         </Router>
       </div>
-
     </div>
     // </Router>
   );

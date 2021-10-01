@@ -66,7 +66,7 @@ function CodeEditor() {
         index.html
       </button>
       <Editor
-        height="50vh"
+        height="70vh"
         theme="vs-dark"
         onMount={handleEditorDidMount}
         path={file.name}
