@@ -39,7 +39,7 @@ export default function SenpaiProfileView({match, location}) {
                     <Container fixed style={{height: '25vh' }}>
                         <div>Schedule Here</div>
                     </Container>
-                    <BookNowPopover />
+                    <BookNowPopover senpaiId={match.params.senpaiId} />
                 </Grid>
 
             </Grid>

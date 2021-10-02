@@ -9,7 +9,7 @@ const lessonSchema = new Schema({
     type: mongoose.ObjectId,
     required: true,
   },
-  time: {
+  startTime: {
     type: Date,
     required: true,
   }

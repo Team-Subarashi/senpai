@@ -13,7 +13,11 @@ const userSchema = new Schema({
   authId: {
     type: String,
     required: true,
-  }
+  },
+  isSenpai: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 module.exports = mongoose.model("user", userSchema);

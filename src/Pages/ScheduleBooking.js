@@ -1,6 +1,6 @@
 import Button from '@material-ui/core/Button'
 import axios from 'axios'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -12,6 +12,7 @@ import { selectedDate, userState } from '../Atoms';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import BasicDateTimePicker from '../components/DateTimePicker';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -35,6 +36,14 @@ export default function ScheduleBooking({match, location}) {
         year: null,
     });
 
+    useEffect(() => {
+      const fetchData = async () => {
+        const response = await axios.get(`/lessons/${match.params.senpaiId}`)
+        console.log(response.data)
+      }
+      fetchData();
+    }, [])
+
     const handleChange = (event) => {
       const name = event.target.name;
       setState({
@@ -48,15 +57,20 @@ export default function ScheduleBooking({match, location}) {
 
     const bookButtonHandler = () => {
         console.log(user)
+        console.log(date)
         console.log(date._d)
         // match.params.senpaiId should be senpai's id
+        console.log(date)
+        let endtime = moment(date).add(1, 'hours');
+        console.log(endtime)
         axios({
           method: 'post',
           url: '/lessons',
           data: {
             senpaiId: match.params.senpaiId,
             kouhaiId: user._id,
-            time: date._d
+            startTime: date._d,
+            endTime: date._d,
           }
         })
     }
@@ -65,8 +79,8 @@ export default function ScheduleBooking({match, location}) {
     return (
         <div>
           <MuiPickersUtilsProvider utils={MomentUtils}>
-            <div>Senpai's calendar</div>
-            <div>Temporary selectors instead of calendar</div>
+            <div>Senpai's lessons</div>
+            {}
             <BasicDateTimePicker />
             <div>
               <Button color="primary" variant="contained" onClick={bookButtonHandler}>Create Booking</Button>

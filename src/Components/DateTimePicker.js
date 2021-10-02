@@ -22,7 +22,7 @@ function BasicDateTimePicker() {
         ampm={true}
         value={date}
         onChange={setDate}
-        label="24h clock"
+        label="Pick a time"
         minutesStep={60}
       />
 

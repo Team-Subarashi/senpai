@@ -9,6 +9,15 @@ exports.listAllLessons = (req, res) => {
   });
 };
 
+exports.getLessonsBySenpaiId = (req, res) => {
+  Lesson.find({ senpaiId: req.params.id }, (err, lesson) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.status(200).json(lesson);
+  });
+};
+
 exports.createNewLesson = (req, res) => {
   console.log(req.body)
   let newLesson = new Lesson(req.body);

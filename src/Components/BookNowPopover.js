@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function BookNowPopover() {
-    const selectedSenpai = "61541327574b88e678a5ccef" //temp
+export default function BookNowPopover({senpaiId}) {
+    const selectedSenpai = senpaiId //temp
 
     const classes = useStyles();
 
