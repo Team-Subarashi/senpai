@@ -6,12 +6,12 @@ const path = require("path");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
-const routes = require('./routes');
+const routes = require("./routes");
 
 require("dotenv").config();
 require("./config.js"); // Import DB Connection
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@senpai.v11ar.mongodb.net/senpaidb`;
+const uri = `mongodb+srv://${process.env._USER}:${process.env._PASSWORD}@senpai.v11ar.mongodb.net/senpaidb`;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -28,8 +28,6 @@ mongoose.connect(uri, options).then(
     }
   }
 );
-
-
 
 app.use(cors());
 app.use(express.urlencoded());

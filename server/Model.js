@@ -18,6 +18,18 @@ const userSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  rates: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: [String],
+    required: true,
+  },
+  bio: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("user", userSchema);

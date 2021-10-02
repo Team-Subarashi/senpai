@@ -1,20 +1,31 @@
-import './App.css';
-import NavBar from "./components/NavBar.js"
-import Splash from "./Pages/Splash"
-import Profile from "./Pages/Profile"
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import SignUp from './components/SignUp';
-import SignIn from './components/SignIn'
-import {useEffect, useState} from 'react'
-import {auth} from './firebase'
-import { onAuthStateChanged } from '@firebase/auth';
-import SenpaiProfileView from './Pages/SenpaiProfileView';
-import FindASenpai from './Pages/FindASenpai';
+//import './index.css'
+import "./App.css";
+import NavBar from "./components/NavBar.js";
+import Splash from "./pages/Splash";
+import Profile from "./pages/Profile";
+import Search from "./pages/Search";
+import Workspace from "./pages/Workspace";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { CssBaseline } from "@material-ui/core";
+import { auth } from "./firebase";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
+import SignOut from "./components/SignOut";
+import React, { useEffect, useState } from "react";
+import axios from 'axios'
 import { useRecoilState } from 'recoil';
-import { userState } from './Atoms';
-import ScheduleBooking from './Pages/ScheduleBooking';
-import axios from 'axios';
+import { userState } from './atoms';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundColor: "#616161",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+}));
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -38,35 +49,31 @@ function App() {
         })
         console.log("User not selected")
       }
-    })
-  }, [])
+    });
+  }, []);
 
-  
-  
+  const classes = useStyles();
   return (
     // <Router>
-      <div className="App">
+    <div className="App">
+      <div className={classes.root}>
+        <CssBaseline />
+
+        <NavBar />
+        {user ? user.email : null}
+        <SignOut />
         <Router>
-
-          <NavBar />
-          {user.email ? "Signed in as " + user.email : null}
-          
-          {/* <Route path="/home">  */}
-            <Splash />
-          {/* </Route> */}
-          {/* <Route path="/profile"> */}
-            <Profile />
-          {/* </Route> */}
-            <Switch>
-              <Route path="/signup" component={SignUp} />
-              <Route path="/login" component={SignIn} />
-              <Route path="/findasenpai" component={FindASenpai} />
-              <Route exact path="/senpais/:senpaiId" component={SenpaiProfileView} />
-              <Route exact path="/senpais/:senpaiId/schedule" component={ScheduleBooking} />
-            </Switch>
-          </Router>
-
+          <Switch>
+            <Route exact path="/" component={Splash} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/login" component={SignIn} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/search" component={Search} />
+            <Route path="/room" component={Workspace} />
+          </Switch>
+        </Router>
       </div>
+    </div>
     // </Router>
   );
 }
