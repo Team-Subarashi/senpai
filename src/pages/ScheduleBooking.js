@@ -2,17 +2,13 @@ import Button from '@material-ui/core/Button'
 import axios from 'axios'
 import React, {useEffect} from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import { useRecoilValue } from 'recoil';
-import { selectedDate, userState } from '../Atoms';
+import { selectedDate, userState } from '../atoms';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import BasicDateTimePicker from '../components/DateTimePicker';
 import moment from 'moment';
+import Test from '../components/Scheduler'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -35,10 +31,12 @@ export default function ScheduleBooking({match, location}) {
         month: null,
         year: null,
     });
+    console.log("test")
+    console.log(match.params)
 
     useEffect(() => {
       const fetchData = async () => {
-        const response = await axios.get(`/lessons/${match.params.senpaiId}`)
+        const response = await axios.get(`/lessons/${match.params.id}`)
         console.log(response.data)
       }
       fetchData();
@@ -67,7 +65,7 @@ export default function ScheduleBooking({match, location}) {
           method: 'post',
           url: '/lessons',
           data: {
-            senpaiId: match.params.senpaiId,
+            senpaiId: match.params.id,
             kouhaiId: user._id,
             startTime: date._d,
             endTime: date._d,
@@ -81,6 +79,7 @@ export default function ScheduleBooking({match, location}) {
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <div>Senpai's lessons</div>
             {}
+            <Test />
             <BasicDateTimePicker />
             <div>
               <Button color="primary" variant="contained" onClick={bookButtonHandler}>Create Booking</Button>

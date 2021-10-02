@@ -1,7 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles';
-import { selectedSenpaiState } from '../Atoms';
+import { selectedSenpaiState } from '../atoms';
 import { useRecoilValue } from 'recoil';
 import { blueGrey } from '@material-ui/core/colors';
 import BookNowPopover from '../components/BookNowPopover';
@@ -39,7 +39,7 @@ export default function SenpaiProfileView({match, location}) {
                     <Container fixed style={{height: '25vh' }}>
                         <div>Schedule Here</div>
                     </Container>
-                    <BookNowPopover senpaiId={match.params.senpaiId} />
+                    <BookNowPopover senpaiId={match.params.id} />
                 </Grid>
 
             </Grid>

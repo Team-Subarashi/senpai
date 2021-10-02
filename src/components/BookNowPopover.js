@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function BookNowPopover({senpaiId}) {
-    const selectedSenpai = senpaiId //temp
+    const selectedSenpai = senpaiId
 
     const classes = useStyles();
 
@@ -56,7 +56,7 @@ export default function BookNowPopover({senpaiId}) {
                 <Typography className={classes.typography}>The content of the Popover.</Typography>
                 <button></button>
                 
-                <Link to={`/senpais/${selectedSenpai}/schedule`}>See full schedule</Link>
+                <Link to={`/senpais/${senpaiId}/schedule`}>See full schedule</Link>
             </Popover>
         </div>
     )

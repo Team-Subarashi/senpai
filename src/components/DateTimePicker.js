@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Calendar, DateTimePicker } from "@material-ui/pickers";
 import { TimePickerView } from '@material-ui/pickers'
-import { selectedDate } from "../Atoms";
+import { selectedDate } from "../atoms";
 import { useRecoilState } from "recoil";
 
 
@@ -10,13 +10,6 @@ function BasicDateTimePicker() {
 
   return (
     <Fragment>
-      {/* <DateTimePicker
-        label="DateTimePicker"
-        inputVariant="outlined"
-        value={selectedDate}
-        onChange={handleDateChange}
-      /> */}
-
       <DateTimePicker
         disablePast
         ampm={true}
@@ -25,20 +18,6 @@ function BasicDateTimePicker() {
         label="Pick a time"
         minutesStep={60}
       />
-
-
-      {/* <TimePickerView
-        type="moment"
-      /> */}
-      
-{/* 
-      <DateTimePicker
-        value={selectedDate}
-        disablePast
-        onChange={handleDateChange}
-        label="With Today Button"
-        showTodayButton
-      /> */}
     </Fragment>
   );
 }

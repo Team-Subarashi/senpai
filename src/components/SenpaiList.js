@@ -26,6 +26,7 @@ export default function SenpaiList() {
       for (const senpai of res.data) {
         if (category.toLowerCase() === "all") {
           temp.push({
+            id: senpai._id,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -33,6 +34,7 @@ export default function SenpaiList() {
           });
         } else if (senpai.category.includes(category)) {
           temp.push({
+            id: senpai._id,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -60,7 +62,7 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightgreen" }}
           >
-            <Link to={"/profile"}>
+            <Link to={`/senpais/${senpai.id}`}>
               {senpai.name}
               <Box mt={2}>
                 <img
