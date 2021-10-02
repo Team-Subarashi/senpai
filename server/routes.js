@@ -5,7 +5,7 @@ module.exports = function (app) {
   const lessons = require("./controllers/LessonController");
 
   app.route("/users").get(users.listAllUsers).post(users.createNewUser);
-  app.route("/users/:id").patch(users.updateUser).delete(users.deleteUser);
+  app.route("/users/:id").get(users.getOneUserByAuthId).patch(users.updateUser).delete(users.deleteUser);
 
   app.route("/lessons").get(lessons.listAllLessons).post(lessons.createNewLesson);
   app.route("/lessons/:id").get(lessons.getLessonsBySenpaiId).patch(lessons.updateLesson).delete(lessons.deleteLesson);
