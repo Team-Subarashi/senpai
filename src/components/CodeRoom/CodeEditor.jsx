@@ -9,7 +9,7 @@ import files from "./files";
 import { useRecoilValueLoadable, useRecoilState } from "recoil";
 import { fileQuery } from "../../atoms";
 import axios from "axios";
-import { loadedFiles } from "../../atoms";
+import { loadedFiles, loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
 function CodeEditor() {
   const editorRef = useRef(null);
@@ -18,9 +18,9 @@ function CodeEditor() {
   const [fileName, setFileName] = useState("script.js");
   const file = files[fileName];
 
-  const [html, setHTML] = useState("");
-  const [css, setCSS] = useState("");
-  const [js, setJS] = useState("");
+  const [html, setHTML] = useRecoilState(loadedHTML);
+  const [css, setCSS] = useRecoilState(loadedCSS);
+  const [js, setJS] = useRecoilState(loadedJS);
   const [activeFiles, setActiveFiles] = useRecoilState(loadedFiles);
 
   useEffect(async () => {

@@ -6,8 +6,22 @@ export const category = atom({
   default: "Zumba",
 });
 
+export const loadedHTML = atom({
+  key: "loadedHTML",
+  default: "default HTML",
+});
+
+export const loadedCSS = atom({
+  key: "loadedCSS",
+  default: 'default CSS',
+});
+export const loadedJS = atom({
+  key: "loadedJS",
+  default: 'default JS',
+});
 export const loadedFiles = atom({
   key: "loadedFiles",
   default: 'default',
 });
+
 
