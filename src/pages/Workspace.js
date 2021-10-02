@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { Stack } from "@mui/material";
+import CodeView from "../components/CodeRoom/CodeView";
+
+import { useRecoilState } from "recoil";
+import axios from "axios";
 
 // import Video from "../components/Video";
 import CodeEditor from "../components/CodeRoom/CodeEditor";
 // import CodeView from "../components/CodeRoom/CodeView";
 
 export default function Workspace() {
+  
+
+  
   return (
     <Grid
       container
@@ -23,7 +30,9 @@ export default function Workspace() {
           backgroundColor: "lightblue",
         }}
       >
-        <CodeEditor />
+        <React.Suspense fallback={<div>Loading...</div>}>
+          <CodeEditor />
+        </React.Suspense>
       </Grid>
       <Grid
         item
@@ -35,8 +44,7 @@ export default function Workspace() {
           backgroundColor: "lightpink",
         }}
       >
-        {/* <CodeView /> */}
-        Code View
+        <CodeView/>
       </Grid>
       <Grid item xs={2} style={{ backgroundColor: "gray" }}>
         <Stack spacing={2}>

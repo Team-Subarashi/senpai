@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const userSchema = require("./model");
 const morgan = require("morgan");
 const express = require("express");
 const path = require("path");
