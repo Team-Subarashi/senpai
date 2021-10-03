@@ -48,26 +48,16 @@ export default function Timetable({senpaiLessons, match}) {
   useEffect(() => {
     //set schedulerData
     if (senpaiLessons) {
-      console.log('ollo')
-      console.log(senpaiLessons)
       const temp = senpaiLessons.map((lesson) => 
       {
         lesson.title = lesson.kouhaiId ? "Unavailable" : "Available"
         return lesson
       })
-      console.log(temp)
       setSchedulerData(temp)
     }
     
     //set currentDate
   }, [senpaiLessons])
-
-  const clickHandler = (appointmentData) => {
-    console.log(appointmentData)
-    axios.post(`/create-checkout-session/${appointmentData.priceId}`)
-  }
-
-
 
   const Content = withStyles(style, { name: 'Content' })(({
     children, appointmentData, classes, ...restProps

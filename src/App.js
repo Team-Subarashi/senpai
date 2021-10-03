@@ -41,7 +41,6 @@ function App() {
             authId: user.uid
           }
         })
-        console.log(response)
         if (response.data) {
           setUser(response.data)
         }
@@ -50,7 +49,6 @@ function App() {
           id: null,
           email: null
         })
-        console.log("User not selected")
       }
     });
   }, []);

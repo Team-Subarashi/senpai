@@ -18,11 +18,6 @@ const useStyles = makeStyles((theme) => ({
 export default function SenpaiProfileView({match, location}) {
     const classes = useStyles();
     const selectedSenpai = useRecoilValue(selectedSenpaiState)
-    console.log(selectedSenpai)
-    console.log(match)
-    console.log(location)
-
-
 
     return (
         <div>
@@ -41,9 +36,7 @@ export default function SenpaiProfileView({match, location}) {
                     </Container>
                     <BookNowPopover senpaiId={match.params.id} />
                 </Grid>
-
             </Grid>
-
         </div>
     )
 }

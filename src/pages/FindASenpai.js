@@ -9,7 +9,6 @@ export default function FindASenpai({match, location}) {
         const fetchData = async () => {
             const response = await axios.get('/users')
             setSenpaiList(response.data)
-            console.log(response.data)
         }
         fetchData()
     }, [])

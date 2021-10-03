@@ -27,8 +27,6 @@ const ProductDisplay = () => (
 export default function Checkout({match, location}) {
   const [message, setMessage] = useState("");
   const user = useRecoilValue(userState);
-  console.log('ik')
-  console.log(user)
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -43,8 +41,6 @@ export default function Checkout({match, location}) {
           kouhaiId: user._id,
         }
       })
-      console.log(match)
-      console.log(location)
     }
 
     if (query.get("canceled")) {

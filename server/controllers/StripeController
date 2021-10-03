@@ -20,8 +20,6 @@ exports.createCheckoutSession = async (req, res) => {
     success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
-  console.log(req.params)
-  console.log(req.query)
   res.redirect(303, session.url);
 }
 
