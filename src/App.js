@@ -18,6 +18,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from './atoms';
 import ScheduleBooking from './pages/ScheduleBooking'
 import SenpaiProfileView from './pages/SenpaiProfileView'
+import Checkout from './components/Checkout'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,6 +74,7 @@ function App() {
             <Route path="/senpais/:id/schedule" component={ScheduleBooking} />
             <Route path="/search" component={Search} />
             <Route path="/room" component={Workspace} />
+            <Route path="/checkout" component={Checkout} />
           </Switch>
         </Router>
       </div>
