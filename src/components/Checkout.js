@@ -1,4 +1,8 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { userState } from "../atoms";
+import { useRecoilValue } from "recoil";
 
 const ProductDisplay = () => (
   <section>
@@ -18,14 +22,13 @@ const ProductDisplay = () => (
   </section>
 );
 
-const Message = ({ message }) => (
-  <section>
-    <p>{message}</p>
-  </section>
-);
 
-export default function Checkout() {
+
+export default function Checkout({match, location}) {
   const [message, setMessage] = useState("");
+  const user = useRecoilValue(userState);
+  console.log('ik')
+  console.log(user)
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -33,6 +36,15 @@ export default function Checkout() {
 
     if (query.get("success")) {
       setMessage("Order placed! You will receive an email confirmation.");
+      axios({
+        method: 'patch',
+        url: `/lessons/${match.params.lessonId}`,
+        data: {
+          kouhaiId: user._id,
+        }
+      })
+      console.log(match)
+      console.log(location)
     }
 
     if (query.get("canceled")) {
@@ -40,7 +52,14 @@ export default function Checkout() {
         "Order canceled -- continue to shop around and checkout when you're ready."
       );
     }
-  }, []);
+  }, [user]);
+
+  const Message = ({ message }) => (
+    <section>
+      <p>{message}</p>
+      <Link to={`/senpais/${match.params.senpaiId}/schedule`}>Return to Senpai schedule</Link>
+    </section>
+  );
 
   return message ? <Message message={message} /> : <ProductDisplay />;
 }

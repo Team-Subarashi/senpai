@@ -4,6 +4,8 @@ import { AppBar, Toolbar } from "@material-ui/core";
 import logo from "../logo/logo_cropped.png";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userState } from "../atoms";
 
 const useStyles = makeStyles((theme) => ({
   root: {

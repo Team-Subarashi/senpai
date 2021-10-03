@@ -17,6 +17,7 @@ function BasicDateTimePicker() {
         onChange={setDate}
         label="Pick a time"
         minutesStep={60}
+        defaultValue={Date.now()}
       />
     </Fragment>
   );

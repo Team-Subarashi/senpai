@@ -5,17 +5,26 @@ const lessonSchema = new Schema({
     type: mongoose.ObjectId,
     required: true,
   },
+  startDate: {
+    type: Date,
+    required: true,
+  },
+  endDate: {
+    type: Date,
+    required: true,
+  },
+  title: {
+    type: String
+  },
   kouhaiId: {
     type: mongoose.ObjectId,
   },
-  startTime: {
-    type: Date,
-    required: true,
+  priceId: {
+    type: String,
   },
-  endTime: {
-    type: Date,
-    required: true,
-  }
+  productId: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("lesson", lessonSchema);

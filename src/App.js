@@ -41,8 +41,9 @@ function App() {
             authId: user.uid
           }
         })
-        if (response.data[0]) {
-          setUser(response.data[0])
+        console.log(response)
+        if (response.data) {
+          setUser(response.data)
         }
       } else {
         setUser({
@@ -74,7 +75,7 @@ function App() {
             <Route path="/senpais/:id/schedule" component={ScheduleBooking} />
             <Route path="/search" component={Search} />
             <Route path="/room" component={Workspace} />
-            <Route path="/checkout" component={Checkout} />
+            <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
           </Switch>
         </Router>
       </div>

@@ -10,16 +10,18 @@ exports.createCheckoutSession = async (req, res) => {
     line_items: [
       {
         // TODO: replace this with the `price` of the product you want to sell
-        price: "price_1Jg1LrEp77X0l0jdvmgYUpwP",
-        // price: req.params.priceId,
+        // price: "price_1Jg1LrEp77X0l0jdvmgYUpwP",
+        price: req.params.priceId,
         quantity: 1,
       },
     ],
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}?success=true`,
+    success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
+  console.log(req.params)
+  console.log(req.query)
   res.redirect(303, session.url);
 }
 

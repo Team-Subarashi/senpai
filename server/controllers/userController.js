@@ -10,7 +10,7 @@ exports.listAllUsers = (req, res) => {
 };
 
 exports.getOneUserByAuthId = (req, res) => {
-  User.find({ authId: req.params.id }, (err, user) => {
+  User.findOne({ authId: req.params.id }, (err, user) => {
     if (err) {
       res.status(500).send(err);
     }
