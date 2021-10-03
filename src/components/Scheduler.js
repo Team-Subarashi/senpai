@@ -66,9 +66,13 @@ export default function Timetable({senpaiLessons, match}) {
         <Grid item xs={2} className={classes.textCenter}>
         </Grid>
         <Grid item xs={10}>
-        <form name="checkoutForm" action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`} method="POST">
-          <button type="submit">Book Now</button>
-        </form>
+          {appointmentData.title === "Available" ? 
+          <form name="checkoutForm" action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`} method="POST">
+            <button type="submit">Book Now</button>
+          </form>
+          : null
+          }
+        
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>
