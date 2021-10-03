@@ -44,7 +44,6 @@ const style = ({ palette }) => ({
 export default function Timetable({senpaiLessons, match}) {
   const [selectedDate, setSelectedDate] = useState(Date.now())
   const [schedulerData , setSchedulerData] = useState([])
-  const [redirect, setRedirect] = useState(false)
   useEffect(() => {
     //set schedulerData
     if (senpaiLessons) {
