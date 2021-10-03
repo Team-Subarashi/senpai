@@ -62,7 +62,6 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightgreen" }}
           >
-            <Link to={`/senpais/${senpai.id}`}>
               {senpai.name}
               <Box mt={2}>
                 <img
@@ -72,7 +71,6 @@ export default function SenpaiList() {
                 />
               </Box>
               <Link></Link>
-            </Link>
           </Grid>
           <Grid
             item
@@ -114,20 +112,22 @@ export default function SenpaiList() {
             </Tabs>
           </Grid>
           <Grid item xs={2}>
-            <Button
-              variant="contained"
-              style={{
-                marginTop: "1vh",
-                backgroundColor: "purple",
-                color: "white",
-              }}
-              onClick={() => {
-                senpaiSetter();
-                console.log("booked");
-              }}
-            >
-              Book Now
-            </Button>
+            <Link to={`/senpais/${senpai.id}`}>
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "1vh",
+                  backgroundColor: "purple",
+                  color: "white",
+                }}
+                onClick={() => {
+                  senpaiSetter();
+                }}
+              >
+                Book Now
+              </Button>
+            </Link>
+
           </Grid>
         </Grid>
       );
