@@ -1,71 +1,80 @@
+
 //import './index.css'
-import './App.css';
-import Splash from "./pages/Splash"
-import Profile from "./pages/Profile"
+import "./App.css";
+import NavBar from "./components/NavBar.js";
+import Splash from "./pages/Splash";
+import Profile from "./pages/Profile";
+import Search from "./pages/Search";
+import Workspace from "./pages/Workspace";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import { CssBaseline } from '@material-ui/core';
-import NavBar from './components/NavBar';
-import SignUp from './components/SignUp';
-import SignIn from './components/SignIn'
-import { useEffect, useState } from 'react'
-import { auth } from './firebase'
-import { getAuth, onAuthStateChanged } from '@firebase/auth';
-import SignOut from './components/SignOut';
+import { makeStyles } from "@material-ui/core/styles";
+import { CssBaseline } from "@material-ui/core";
+import { auth } from "./firebase";
+import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
+import SignOut from "./components/SignOut";
+import React, { useEffect, useState } from "react";
+import Room from "./components/CodeRoom/Room";
+import { ThemeProvider } from '@material-ui/core';
+import theme from "./units/theme";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: '100vh',
-    backgroundColor: '#616161',
-    backgroundRepeat: "no-repeat",
-    backgroundSize: 'cover',
-  }
+  // root: {
+  //   minHeight: "100vh",
+  //   backgroundColor: "#616161",
+  //   backgroundRepeat: "no-repeat",
+  //   backgroundSize: "cover",
+  // },
 }));
 
 function App() {
+  const [accountView, setAccountView] = useState("createAccount");
+  const [user, setUser] = useState(null);
 
-  const [accountView, setAccountView] = useState("createAccount")
-  const [user, setUser] = useState(null)
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("hello")
+      console.log("hello");
       if (user) {
         const uid = user.uid;
-        setUser(user)
-        console.log(user.email)
+        setUser(user);
+        console.log(user.email);
       } else {
-        setUser(null)
-        console.log("User not selected")
+        setUser(null);
+        console.log("User not selected");
       }
-    })
-  }, [])
+    });
+  }, []);
 
-  const classes = useStyles()
+  const classes = useStyles();
   return (
-    // <Router>
-    <div className="App">
-      <div className={classes.root}>
-        <CssBaseline />
+    <ThemeProvider theme={theme}>
+      {/* // <Router> */}
 
-        <NavBar />
-        {user ? user.email : null}
-        <SignOut />
-        {/* <Route path="/home">  */}
-        <Splash />
-        {/* </Route> */}
-        {/* <Route path="/profile"> */}
-        <Profile />
-        {/* </Route> */}
-        <Router>
-          <Switch>
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={SignIn} />
-          </Switch>
-        </Router>
+      <div className="App">
+        <div >
+          <CssBaseline />
+
+          <NavBar />
+          {user ? user.email : null}
+          <SignOut />
+          <Router>
+            <Switch>
+              <Route exact path="/" component={Splash} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/room" component={Room} />
+              <Route path="/login" component={SignIn} />
+              <Route path="/profile" component={Profile} />
+              <Route path="/search" component={Search} />
+              <Route path="/workspace" component={Workspace} />
+            </Switch>
+          </Router>
+        </div>
 
       </div>
-    </div>
-    // </Router>
+
+      {/* // </Router> */}
+    </ThemeProvider>
   );
 }
 
