@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Cntainer, Grid, Box, Button, Container } from "@material-ui/core";
 import { Avatar, Typography } from "@mui/material";
 import PropTypes from "prop-types";
@@ -221,6 +221,10 @@ function ReactVirtualizedTable() {
 }
 
 const Kohai = () => {
+  useEffect(() => {
+    
+  }, [])
+
   return (
     <Grid
       className="main"
@@ -269,7 +273,7 @@ const Kohai = () => {
           borderRight: "#616161 1rem solid",
         }}
       >
-
+        
         <Grid container xs={12} style={{ height: "50%" }}>
           <Grid item style={{ width: "50%", height: "50%" }}>
             <img alt="sample" src="url" />
