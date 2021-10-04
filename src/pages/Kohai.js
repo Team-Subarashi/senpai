@@ -234,10 +234,11 @@ const Kohai = () => {
       <Grid
         className="left"
         item
-        xs={4}
+        xs={3}
         style={{
           height: "95vh",
           backgroundColor: " #707070",
+          borderRadius: "4px",
           borderRight: "#616161 1rem solid",
           borderLeft: "#616161 1rem solid",
         }}
@@ -338,6 +339,18 @@ const Kohai = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid
+        className="left"
+        item
+        xs={3}
+        style={{
+          height: "95vh",
+          backgroundColor: " #707070",
+          borderRadius: "100px",
+          // borderRight: "#616161 1rem solid",
+          // borderLeft: "#616161 1rem solid",
+        }}
+      ></Grid>
     </Grid>
   );
 };
