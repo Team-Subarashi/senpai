@@ -5,17 +5,27 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  rates: {
+  email: {
     type: String,
     required: true,
+    unique: true,
+  },
+  authId: {
+    type: String,
+    required: true,
+  },
+  isSenpai: {
+    type: Boolean,
+    default: true,
+  },
+  rates: {
+    type: String,
   },
   category: {
     type: [String],
-    required: true,
   },
   bio: {
     type: String,
-    required: true,
   },
 });
 

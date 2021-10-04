@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar } from "@material-ui/core";
 import logo from "../logo/logo_cropped.png";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userState } from "../atoms";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +45,8 @@ export default function NavBar() {
           <h1>
             <img src={logo} alt="senpai" height="36" width="auto" />
           </h1>
+          <Link to="/login">Login</Link>
+          <Link to="/search">Find a Senpai</Link>
         </Toolbar>
       </AppBar>
       {/* <button onClick={() => userDisp()}>User Test</button>*/}
