@@ -5,6 +5,7 @@ import Splash from "./pages/Splash";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
+import Kohai from "./pages/Kohai";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
@@ -55,6 +56,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Splash} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/kohai" component={Kohai} />
             <Route path="/login" component={SignIn} />
             <Route path="/profile" component={Profile} />
             <Route path="/search" component={Search} />
