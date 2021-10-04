@@ -53,7 +53,7 @@ export default function Checkout({match, location}) {
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
-      <Link to={`/senpais/${match.params.senpaiId}/schedule`}>Return to Senpai schedule</Link>
+      <Link to={`/senpai/${match.params.senpaiId}/schedule`}>Return to Senpai schedule</Link>
     </section>
   );
 

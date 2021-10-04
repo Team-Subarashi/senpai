@@ -25,6 +25,7 @@ import { userState } from './atoms';
 import ScheduleBooking from './pages/ScheduleBooking'
 import SenpaiProfileView from './pages/SenpaiProfileView'
 import Checkout from './components/Checkout'
+import MyLessons from './pages/MyLessons'
 
 const useStyles = makeStyles((theme) => ({
   // root: {
@@ -48,6 +49,7 @@ function App() {
           }
         })
         if (response.data) {
+          console.log(response.data)
           setUser(response.data)
         }
       } else {
@@ -74,26 +76,21 @@ function App() {
             <NavBar />
             {user ? user.email : null}
             <SignOut />
-
             <Switch>
               <Route exact path="/" component={Splash} />
               <Route path="/signup" component={SignUp} />
-              <Route path="/kohai" component={Kohai} />
-              <Route path="/room" component={Room} />
+              <Route exact path="/kouhai/:id" component={Kohai} />
               <Route path="/login" component={SignIn} />
-              <Route exact path="/senpais/:id" component={SenpaiProfileView} />
-              <Route path="/senpais/:id/schedule" component={ScheduleBooking} />
-              <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+              <Route exact path="/senpai/:id" component={SenpaiProfileView} />
+              <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
               <Route path="/search" component={Search} />
-              <Route path="/profile" component={Profile} />
-
-              <Route path="/workspace" component={Workspace} />
+              <Route path="/room" component={Workspace} />
+              <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+              <Route path="/mylessons" component={MyLessons} />
             </Switch>
           </Router>
         </div>
-
       </div>
-
       {/* // </Router> */}
     </ThemeProvider>
   );
