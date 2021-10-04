@@ -21,6 +21,7 @@ const options = {
   retryWrites: true,
   useUnifiedTopology: true,
 };
+
 if (process.env.NODE_ENV === "production") {
   mongoose.connect(uri, options).then(
     () => {
@@ -46,7 +47,6 @@ if (process.env.NODE_ENV === "production") {
       ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
     )
   );
-
   app.use(express.static(path.resolve(__dirname, "..", "build")));
 
   //Importing all routes to prod
