@@ -74,8 +74,8 @@ function App() {
             <Route path="/signup" component={SignUp} />
             <Route exact path="/kohais/:id" component={Kohai} />
             <Route path="/login" component={SignIn} />
-            <Route exact path="/senpais/:id" component={SenpaiProfileView} />
-            <Route path="/senpais/:id/schedule" component={ScheduleBooking} />
+            <Route exact path="/senpai/:id" component={SenpaiProfileView} />
+            <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
             <Route path="/search" component={Search} />
             <Route path="/room" component={Workspace} />
             <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />

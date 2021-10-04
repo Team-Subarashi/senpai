@@ -47,7 +47,7 @@ export default function NavBar() {
           <h1>
             <img src={logo} alt="senpai" height="36" width="auto" />
           </h1>
-          {user.email ? <Link to={`/kouhai/${user.id}`}>My Profile</Link> : <Link to="/login">Login</Link>}
+          {user.email ? <Link to={`/kouhai/${user._id}`}>My Profile</Link> : <Link to="/login">Login</Link>}
           <Link to="/search">Find a Senpai</Link>
         </Toolbar>
       </AppBar>
