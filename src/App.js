@@ -72,7 +72,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Splash} />
             <Route path="/signup" component={SignUp} />
-            <Route exact path="/kohais/:id" component={Kohai} />
+            <Route exact path="/kouhai/:id" component={Kohai} />
             <Route path="/login" component={SignIn} />
             <Route exact path="/senpai/:id" component={SenpaiProfileView} />
             <Route path="/senpai/:id/schedule" component={ScheduleBooking} />

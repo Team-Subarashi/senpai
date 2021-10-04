@@ -18,7 +18,7 @@ exports.getLessonsBySenpaiId = (req, res) => {
   });
 };
 exports.getLessonsByKouhaiId = (req, res) => {
-  Lesson.find({ senpaiId: req.params.id }, (err, lesson) => {
+  Lesson.find({ kouhaiId: req.params.id }, (err, lesson) => {
     if (err) {
       res.status(500).send(err);
     }
