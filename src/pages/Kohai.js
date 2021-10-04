@@ -304,8 +304,7 @@ const Kohai = ({match}) => {
           borderRight: "#616161 1rem solid",
         }}
       >
-
-        <ReactVirtualizedTable />
+        <KouhaiTimetable lessons={state} match={match} />
         <Grid container xs={12} style={{ borderRadius: "4px", height: "50%" }}>
           <Grid
             item
@@ -317,12 +316,6 @@ const Kohai = ({match}) => {
               alt="sample"
               src="https://images.freeimages.com/images/large-previews/bd7/falloxbow-1058032.jpg"
             />
-
-        <KouhaiTimetable lessons={state} match={match} />
-        <Grid container xs={12} style={{ height: "50%" }}>
-          <Grid item style={{ width: "50%", height: "50%" }}>
-            <img alt="sample" src="url" />
-
           </Grid>
           <Grid
             item
@@ -359,18 +352,6 @@ const Kohai = ({match}) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid
-        className="left"
-        item
-        xs={3}
-        style={{
-          height: "95vh",
-          backgroundColor: " #707070",
-          borderRadius: "100px",
-          // borderRight: "#616161 1rem solid",
-          // borderLeft: "#616161 1rem solid",
-        }}
-      ></Grid>
     </Grid>
   );
 };
