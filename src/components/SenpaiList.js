@@ -26,6 +26,7 @@ export default function SenpaiList() {
       for (const senpai of res.data) {
         if (category.toLowerCase() === "all") {
           temp.push({
+            id: senpai._id,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -33,6 +34,7 @@ export default function SenpaiList() {
           });
         } else if (senpai.category.includes(category)) {
           temp.push({
+            id: senpai._id,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -60,7 +62,6 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightgreen" }}
           >
-            <Link to={"/profile"}>
               {senpai.name}
               <Box mt={2}>
                 <img
@@ -70,7 +71,6 @@ export default function SenpaiList() {
                 />
               </Box>
               <Link></Link>
-            </Link>
           </Grid>
           <Grid
             item
@@ -112,20 +112,22 @@ export default function SenpaiList() {
             </Tabs>
           </Grid>
           <Grid item xs={2}>
-            <Button
-              variant="contained"
-              style={{
-                marginTop: "1vh",
-                backgroundColor: "purple",
-                color: "white",
-              }}
-              onClick={() => {
-                senpaiSetter();
-                console.log("booked");
-              }}
-            >
-              Book Now
-            </Button>
+            <Link to={`/senpais/${senpai.id}`}>
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "1vh",
+                  backgroundColor: "purple",
+                  color: "white",
+                }}
+                onClick={() => {
+                  senpaiSetter();
+                }}
+              >
+                Book Now
+              </Button>
+            </Link>
+
           </Grid>
         </Grid>
       );

@@ -24,4 +24,22 @@ export const loadedFiles = atom({
   default: 'default',
 });
 
+export const userState = atom({
+  key: 'userState',
+  default: {
+      id: null,
+      email: null,
+  },
+})
+
+export const selectedSenpaiState = atom({
+  key: 'selectedSenpaiState',
+  default: null,
+})
+
+export const selectedDate = atom({
+  key: 'selectedDate',
+  default: new Date().setMinutes(0)
+})
+
 

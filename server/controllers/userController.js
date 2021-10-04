@@ -9,6 +9,15 @@ exports.listAllUsers = (req, res) => {
   });
 };
 
+exports.getOneUserByAuthId = (req, res) => {
+  User.findOne({ authId: req.params.id }, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.status(200).json(user);
+  })
+}
+
 exports.createNewUser = (req, res) => {
   console.log(req.body)
   let newUser = new User(req.body);
