@@ -4,11 +4,15 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 8080;
 const routes = require("./routes");
+const users = require("./controllers/userController");
+const files = require("./controllers/fileController");
+const lessons = require("./controllers/LessonController");
+const stripe = require("./controllers/StripeController");
 
 require("dotenv").config();
 require("./config.js"); // Import DB Connection
+const port = process.env.PORT || 8080;
 
 const uri = process.env.MONGODB_URI;
 const options = {
@@ -43,23 +47,45 @@ app.use(
   )
 );
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../../", "/senpai/build")));
-  routes(app);
+//Importing all routes to prod
+app.use(express.static(path.join(__dirname, "../../", "/senpai/build")));
 
-  app.get("/api/v1/users", (req, res) => {
-    res.send("users pinged");
-  });
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.join(__dirname, "../../", "senpai", "build", "index.html")
-    );
-  });
-} else {
-  app.get("/", (req, res) => {
-    res.send("api running");
-  });
-}
+app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
+app
+  .route("/api/v1/users/:id")
+  .get(users.getOneUserByAuthId)
+  .patch(users.updateUser)
+  .delete(users.deleteUser);
+app.route("/api/v1/users/:id/lessons").get(lessons.getLessonsBySenpaiId);
+
+app
+  .route("/api/v1/lessons")
+  .get(lessons.listAllLessons)
+  .post(lessons.createNewLesson);
+app
+  .route("/api/v1/lessons/:id")
+  .patch(lessons.updateLesson)
+  .delete(lessons.deleteLesson);
+
+app.route("/api/v1/files").get(files.listAllFiles).post(files.createNewFile);
+app.route("/api/v1/files/:id").patch(files.updateFile).delete(files.deleteFile);
+
+app
+  .route("/api/v1/create-checkout-session/:priceId/:senpaiId")
+  .post(stripe.createCheckoutSession);
+app.route("/api/v1/create-lesson-and-price").post(stripe.createLessonAndPrice);
+app.route("/api/v1/stripeLessons").get(stripe.getStripeLesson);
+
+// if (process.env.NODE_ENV === "production") {
+app.get("*", (req, res) => {
+  routes(app);
+  res.sendFile(path.join(__dirname, "../../", "senpai", "build", "index.html"));
+});
+// } else {
+//   app.get("/", (req, res) => {
+//     res.send("api running");
+// });
+// }
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
