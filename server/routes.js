@@ -7,6 +7,7 @@ module.exports = function (app) {
 
   app.route("/users").get(users.listAllUsers).post(users.createNewUser);
   app.route("/users/:id").get(users.getOneUserByAuthId).patch(users.updateUser).delete(users.deleteUser);
+  app.route("/users/:id/lessons").get(lessons.getUserLessons);
 
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
   app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)

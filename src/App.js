@@ -22,6 +22,7 @@ import { userState } from './atoms';
 import ScheduleBooking from './pages/ScheduleBooking'
 import SenpaiProfileView from './pages/SenpaiProfileView'
 import Checkout from './components/Checkout'
+import MyLessons from './pages/MyLessons'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,6 +80,7 @@ function App() {
             <Route path="/search" component={Search} />
             <Route path="/room" component={Workspace} />
             <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+            <Route path="/mylessons" component={MyLessons} />
           </Switch>
         </Router>
       </div>
