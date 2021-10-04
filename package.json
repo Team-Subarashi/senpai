@@ -61,7 +61,8 @@
     "stripe": "^8.178.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/index.js",
+    "hack": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -89,6 +90,12 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.13"
+  },
+  "optionalDependencies": {
+    "fsevents": "2.1.2"
+  },
+  "engines": {
+    "node": "14.x"
   },
   "description": "",
   "main": "index.js",
