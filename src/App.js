@@ -1,12 +1,13 @@
-
 //import './index.css'
 import "./App.css";
 import NavBar from "./components/NavBar.js";
 import Splash from "./pages/Splash";
-import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
+
+import Kohai from "./pages/Kohai";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 import { auth } from "./firebase";
@@ -18,6 +19,12 @@ import React, { useEffect, useState } from "react";
 import Room from "./components/CodeRoom/Room";
 import { ThemeProvider } from '@material-ui/core';
 import theme from "./units/theme";
+import axios from 'axios'
+import { useRecoilState } from 'recoil';
+import { userState } from './atoms';
+import ScheduleBooking from './pages/ScheduleBooking'
+import SenpaiProfileView from './pages/SenpaiProfileView'
+import Checkout from './components/Checkout'
 
 const useStyles = makeStyles((theme) => ({
   // root: {
@@ -29,19 +36,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
-  const [accountView, setAccountView] = useState("createAccount");
-  const [user, setUser] = useState(null);
-
+  const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log("hello");
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const uid = user.uid;
-        setUser(user);
-        console.log(user.email);
+        const response = await axios({
+          method: "get",
+          url: `/users/${user.uid}`,
+          data: {
+            authId: user.uid
+          }
+        })
+        if (response.data) {
+          setUser(response.data)
+        }
       } else {
-        setUser(null);
-        console.log("User not selected");
+        setUser({
+          id: null,
+          email: null
+        })
       }
     });
   }, []);
@@ -52,20 +65,28 @@ function App() {
       {/* // <Router> */}
 
       <div className="App">
-        <div >
-          <CssBaseline />
-
-          <NavBar />
-          {user ? user.email : null}
-          <SignOut />
+        {/* <div > */}
+        <div className={classes.root}>
           <Router>
+
+            <CssBaseline />
+
+            <NavBar />
+            {user ? user.email : null}
+            <SignOut />
+
             <Switch>
               <Route exact path="/" component={Splash} />
               <Route path="/signup" component={SignUp} />
+              <Route path="/kohai" component={Kohai} />
               <Route path="/room" component={Room} />
               <Route path="/login" component={SignIn} />
-              <Route path="/profile" component={Profile} />
+              <Route exact path="/senpais/:id" component={SenpaiProfileView} />
+              <Route path="/senpais/:id/schedule" component={ScheduleBooking} />
+              <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
               <Route path="/search" component={Search} />
+              <Route path="/profile" component={Profile} />
+
               <Route path="/workspace" component={Workspace} />
             </Switch>
           </Router>

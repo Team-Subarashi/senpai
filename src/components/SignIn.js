@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
-import Link from '@material-ui/core/Link';
+import {Link} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
@@ -49,11 +49,9 @@ export default function SignIn() {
 
   const submitHandler = () => {
     const auth = getAuth();
-    console.log(auth)
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-      console.log(userCredential)
       // Signed in 
       const user = userCredential.user;
       // ...
@@ -61,6 +59,8 @@ export default function SignIn() {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.log(errorCode)
+      console.log(errorMessage)
       // ..
     });
   }
@@ -100,18 +100,6 @@ export default function SignIn() {
             autoComplete="current-password"
             onChange={(e) => passwordChangeHandler(e)}
           />
-          {/* <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password-confirm"
-            label="Password confirmation"
-            type="password-confirm"
-            id="password-confirm"
-            autoComplete="current-password-confirm"
-            ref={passwordConfirmRef}
-          /> */}
           <Button
             type="submit"
             fullWidth
@@ -127,7 +115,7 @@ export default function SignIn() {
           </Button>
           <Grid container justifyContent="center">
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link to="/signup" variant="body2">
                 Don't have an account? Create an account
               </Link>
             </Grid>

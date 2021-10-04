@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Calendar from "./Calendar";
 import { Grid, Box, Button } from "@material-ui/core";
-import { Tabs, Tab } from "@mui/material";
-// import { TabContext, TabPanel } from "@mui/lab";
 import { useRecoilState, useRecoilValue } from "recoil";
+import "antd/dist/antd.css";
+import { Tabs } from "antd";
 import { category as categoryAtom } from "../atoms";
 import axios from "axios";
 
@@ -12,11 +12,13 @@ export default function SenpaiList() {
   const [senpaiList, setSenpaiList] = useState([]);
   const category = useRecoilValue(categoryAtom);
 
-  const [tabValue, setTabValue] = useState("");
+  const [toggleState, setToggleState] = useState(1);
+  // const { Tabs } = antd;
+  const { TabPane } = Tabs;
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
+  function callback(key) {
+    console.log(key);
+  }
 
   const temp = [];
   const senpaiSetter = async () => {
@@ -24,6 +26,7 @@ export default function SenpaiList() {
       for (const senpai of res.data) {
         if (category.toLowerCase() === "all") {
           temp.push({
+            id: senpai._id,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -31,6 +34,7 @@ export default function SenpaiList() {
           });
         } else if (senpai.category.includes(category)) {
           temp.push({
+            id: senpai._id,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -43,7 +47,7 @@ export default function SenpaiList() {
   };
 
   const senpaiPopulator = () => {
-    return senpaiList.map((senpai) => {
+    return senpaiList.map((senpai, index) => {
       return (
         <Grid
           container
@@ -58,7 +62,6 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightgreen" }}
           >
-            <Link to={"/profile"}>
               {senpai.name}
               <Box mt={2}>
                 <img
@@ -68,14 +71,13 @@ export default function SenpaiList() {
                 />
               </Box>
               <Link></Link>
-            </Link>
           </Grid>
           <Grid
             item
             xs={4}
             style={{
               fontWeight: "bold",
-              paddingTop: "12vh",
+              paddingTop: "1.cl.2vh",
               height: "90%",
               backgroundColor: "aqua",
             }}
@@ -93,49 +95,48 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightyellow" }}
           >
-            <Tabs value={tabValue} onChange={handleTabChange}>
-              <Tab label="Bio" />
-              <Tab label="Calendar" />
-              <Tab label="Sample" />
+            <Tabs class="my-tabs" defaultActiveKey="1" onChange={callback}>
+              <TabPane tab="Bio" key="1">
+                {senpai.bio}
+              </TabPane>
+              <TabPane tab="Calendar" key="2">
+                <Calendar />
+              </TabPane>
+              <TabPane tab="Sample" key="3">
+                <img
+                  height="50px"
+                  width="50px"
+                  src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
+                />
+              </TabPane>
             </Tabs>
-            <TabPanel value={tabValue} index={0}>
-              {senpai.bio}
-            </TabPanel>
-            <TabPanel value={tabValue} index={1}>
-              <Calendar />
-            </TabPanel>
-            <TabPanel value={tabValue} index={2}>
-              <img
-                height="50px"
-                width="50px"
-                src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
-              />
-            </TabPanel>
           </Grid>
           <Grid item xs={2}>
-            <Button
-              variant="contained"
-              style={{
-                marginTop: "1vh",
-                backgroundColor: "purple",
-                color: "white",
-              }}
-              onClick={() => {
-                senpaiSetter();
-                console.log("booked");
-              }}
-            >
-              Book Now
-            </Button>
+            <Link to={`/senpais/${senpai.id}`}>
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "1vh",
+                  backgroundColor: "purple",
+                  color: "white",
+                }}
+                onClick={() => {
+                  senpaiSetter();
+                }}
+              >
+                Book Now
+              </Button>
+            </Link>
+
           </Grid>
         </Grid>
       );
     });
   };
 
-  const TabPanel = (props) => {
-    const { children, tabValue, index } = props;
-    return <div>{children}</div>;
+  const toggleTab = (event, index) => {
+    console.log(event.target.id);
+    setToggleState(index);
   };
 
   useEffect(() => {

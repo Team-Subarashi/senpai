@@ -6,18 +6,63 @@ import "firebase/compat/database";
 import { fromMonaco } from "@hackerrank/firepad";
 import "./CodeEditor.css";
 import files from "./files";
+import { useRecoilValueLoadable, useRecoilState } from "recoil";
+import { fileQuery } from "../../atoms";
+import axios from "axios";
+import { loadedFiles, loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
 function CodeEditor() {
   const editorRef = useRef(null);
   const [editorLoaded, setEditorLoaded] = useState(false);
-  const [activeText, setActiveText] = useState("");
+  const [filesLoaded, setFilesLoaded] = useState(false);
   const [fileName, setFileName] = useState("script.js");
   const file = files[fileName];
+
+  const [html, setHTML] = useRecoilState(loadedHTML);
+  const [css, setCSS] = useRecoilState(loadedCSS);
+  const [js, setJS] = useRecoilState(loadedJS);
+  const [activeFiles, setActiveFiles] = useRecoilState(loadedFiles);
+
+  useEffect(async () => {
+    const files = await axios.get("/files");
+    setActiveFiles(files.data[0]);
+  }, []);
+
+    useEffect(() => {
+        setHTML(activeFiles.html);
+        setJS(activeFiles.js);
+        setCSS(activeFiles.css);
+
+        
+  }, [activeFiles]);
+
+    const handleHTML = (value, event) => {
+    setHTML(value);
+    
+  };
+  const handleJS = (value, event) => {
+    setJS(value);
+   
+  };
+  const handleCSS = (value, event) => {
+    setCSS(value);
+    
+  };
+
+    const handleSave = async (value, event) => {
+       return await axios.patch(`/files/${activeFiles._id}`, {js: js, css: css, html: html})
+    }
+  // const loadedFiles = useRecoilValueLoadable(fileQuery)
+
+  // const loadedFilesJS =  loadedFiles.contents.data.js
+  // const loadedFilesCSS = loadedFiles.contents.data.css
+  // const loadedFilesHTML = loadedFiles.contents.data.html
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
     setEditorLoaded(true);
-  }
+    }
+    
 
   useEffect(() => {
     // if (!firebase.app.length) {
@@ -25,6 +70,7 @@ function CodeEditor() {
     // } else {
     //   firebase.app();
     // }
+
     firebase.initializeApp(firebaseConfig);
   }, []);
 
@@ -39,12 +85,6 @@ function CodeEditor() {
     firepad.setUserName(name);
   }, [editorLoaded]);
 
-  const handleChange = (value, event) => {
-    setActiveText(value);
-    console.log(activeText);
-  };
-    
-    
   return (
     <div id="editor-container">
       <button
@@ -64,14 +104,25 @@ function CodeEditor() {
         onClick={() => setFileName("index.html")}
       >
         index.html
-      </button>
+          </button>
+          <button onClick={handleSave}>Save</button>
       <Editor
-        height="50vh"
+        height="70vh"
         theme="vs-dark"
         onMount={handleEditorDidMount}
         path={file.name}
         defaultLanguage={file.language}
-        defaultValue={file.value}
+        defaultValue={
+          fileName === "script.js" ? js : fileName === "index.html" ? html : css
+        }
+        options={{ fontSize: 7 }}
+        onChange={
+          fileName === "script.js"
+            ? handleJS
+            : fileName === "index.html"
+            ? handleHTML
+            : handleCSS
+        }
       />
     </div>
   );
