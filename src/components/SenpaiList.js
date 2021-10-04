@@ -22,8 +22,8 @@ export default function SenpaiList() {
 
   const temp = [];
   const senpaiSetter = async () => {
-    await axios.get("/users").then((res) => {
-      console.log(res.data);
+    await axios.get("/api/v1/users").then((res) => {
+      console.log(res);
       for (const senpai of res.data) {
         if (category.toLowerCase() === "all") {
           temp.push({

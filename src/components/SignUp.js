@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
-import {Link} from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Alert from '@material-ui/lab/Alert';
-import axios from 'axios';
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+import { Link } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Alert from "@material-ui/lab/Alert";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -34,62 +34,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
-
   const classes = useStyles();
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
-  const [passwordConfirm, setPasswordConfirm] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
-
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const passwordChangeHandler = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
   const passwordConfirmChangeHandler = (e) => {
-    setPasswordConfirm(e.target.value)
-  }
+    setPasswordConfirm(e.target.value);
+  };
   const emailChangeHandler = (e) => {
-    setEmail(e.target.value)
-  }
-
+    setEmail(e.target.value);
+  };
 
   const submitHandler = () => {
     if (password !== passwordConfirm) {
-      setErrorMessage("Passwords don't match")
-      return
+      setErrorMessage("Passwords don't match");
+      return;
     }
-    setErrorMessage("")
-
+    setErrorMessage("");
 
     const auth = getAuth();
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      axios({
-        method: "post",
-        url: "/users",
-        data: {
-          name: "test",
-          email: email,
-          authId: user.uid
-        }
+        // Signed in
+        const user = userCredential.user;
+        axios({
+          method: "post",
+          url: "/api/v1/users",
+          data: {
+            name: "test",
+            email: email,
+            authId: user.uid,
+          },
+        });
+        // ...
       })
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      setErrorMessage(error.message)
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        setErrorMessage(error.message);
 
-      // ..
-    });
-  }
-  
+        // ..
+      });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -145,8 +141,8 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
             onClick={(e) => {
-              e.preventDefault()
-              submitHandler()
+              e.preventDefault();
+              submitHandler();
             }}
           >
             Sign Up

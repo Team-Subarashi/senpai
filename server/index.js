@@ -4,7 +4,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 const routes = require("./routes");
 
 require("dotenv").config();
@@ -44,10 +44,16 @@ app.use(
 );
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/build")));
+  app.use(express.static(path.join(__dirname, "../../", "/senpai/build")));
+  routes(app);
 
+  app.get("/api/v1/users", (req, res) => {
+    res.send("users pinged");
+  });
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "senpai", "build", "index.html"));
+    res.sendFile(
+      path.join(__dirname, "../../", "senpai", "build", "index.html")
+    );
   });
 } else {
   app.get("/", (req, res) => {
