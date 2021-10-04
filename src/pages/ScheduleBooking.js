@@ -29,7 +29,7 @@ export default function ScheduleBooking({match, location}) {
 
     useEffect(() => {
       const fetchData = async () => {
-        const response = await axios.get(`/users/${match.params.id}/lessons`)
+        const response = await axios.get(`/senpai/${match.params.id}/lessons`)
         setState(response.data)
       }
       fetchData();

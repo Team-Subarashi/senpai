@@ -112,7 +112,7 @@ export default function SenpaiList() {
             </Tabs>
           </Grid>
           <Grid item xs={2}>
-            <Link to={`/senpais/${senpai.id}`}>
+            <Link to={`/senpai/${senpai.id}`}>
               <Button
                 variant="contained"
                 style={{

@@ -37,6 +37,7 @@ export default function SignUp() {
 
   const classes = useStyles();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
@@ -51,6 +52,9 @@ export default function SignUp() {
   }
   const emailChangeHandler = (e) => {
     setEmail(e.target.value)
+  }
+  const nameChangeHandler = (e) => {
+    setName(e.target.value)
   }
 
 
@@ -72,7 +76,7 @@ export default function SignUp() {
         method: "post",
         url: "/users",
         data: {
-          name: "test",
+          name: name,
           email: email,
           authId: user.uid
         }
@@ -102,6 +106,18 @@ export default function SignUp() {
         </Typography>
         {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
         <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            onChange={(e) => nameChangeHandler(e)}
+          />
           <TextField
             variant="outlined"
             margin="normal"

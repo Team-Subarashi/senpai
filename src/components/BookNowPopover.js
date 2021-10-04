@@ -56,7 +56,7 @@ export default function BookNowPopover({senpaiId}) {
                 <Typography className={classes.typography}>The content of the Popover.</Typography>
                 <button></button>
                 
-                <Link to={`/senpais/${senpaiId}/schedule`}>See full schedule</Link>
+                <Link to={`/senpai/${senpaiId}/schedule`}>See full schedule</Link>
             </Popover>
         </div>
     )
