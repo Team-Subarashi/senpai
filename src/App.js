@@ -4,7 +4,10 @@ import NavBar from "./components/NavBar.js";
 import Splash from "./pages/Splash";
 import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Kohai from "./pages/Kohai";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 import { auth } from "./firebase";
@@ -68,6 +71,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Splash} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/kohai" component={Kohai} />
             <Route path="/login" component={SignIn} />
             <Route exact path="/senpais/:id" component={SenpaiProfileView} />
             <Route path="/senpais/:id/schedule" component={ScheduleBooking} />
