@@ -269,7 +269,7 @@ const Kohai = () => {
           borderRight: "#616161 1rem solid",
         }}
       >
-        <ReactVirtualizedTable />
+
         <Grid container xs={12} style={{ height: "50%" }}>
           <Grid item style={{ width: "50%", height: "50%" }}>
             <img alt="sample" src="url" />

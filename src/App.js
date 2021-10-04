@@ -45,6 +45,7 @@ function App() {
           }
         })
         if (response.data) {
+          console.log(response.data)
           setUser(response.data)
         }
       } else {
@@ -71,7 +72,7 @@ function App() {
           <Switch>
             <Route exact path="/" component={Splash} />
             <Route path="/signup" component={SignUp} />
-            <Route path="/kohai" component={Kohai} />
+            <Route exact path="/kohais/:id" component={Kohai} />
             <Route path="/login" component={SignIn} />
             <Route exact path="/senpais/:id" component={SenpaiProfileView} />
             <Route path="/senpais/:id/schedule" component={ScheduleBooking} />
