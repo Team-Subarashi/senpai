@@ -21,71 +21,78 @@ const options = {
   retryWrites: true,
   useUnifiedTopology: true,
 };
-
-mongoose.connect(uri, options).then(
-  () => {
-    console.log("Database connection established!");
-    routes(app);
-  },
-  (err) => {
-    {
-      console.log("Error connecting Database instance due to:", err);
+if (process.env.NODE_ENV === "production") {
+  mongoose.connect(uri, options).then(
+    () => {
+      console.log("Database connection established in prod!");
+      routes(app);
+    },
+    (err) => {
+      {
+        console.log("Error connecting Database instance due to:", err);
+      }
     }
-  }
-);
+  );
 
-mongoose.connection.once("open", () => {
-  console.log("MongoDB connected!");
-});
+  mongoose.connection.once("open", () => {
+    console.log("MongoDB connected!");
+  });
 
-app.use(cors());
-app.use(express.urlencoded());
-app.use(express.json());
-app.use(
-  morgan(
-    ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
-  )
-);
+  app.use(cors());
+  app.use(express.urlencoded());
+  app.use(express.json());
+  app.use(
+    morgan(
+      ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
+    )
+  );
 
-//Importing all routes to prod
-app.use(express.static(path.join(__dirname, "../../", "/senpai/build")));
+  app.use(express.static(path.resolve(__dirname, "..", "build")));
 
-app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
-app
-  .route("/api/v1/users/:id")
-  .get(users.getOneUserByAuthId)
-  .patch(users.updateUser)
-  .delete(users.deleteUser);
-app.route("/api/v1/users/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  //Importing all routes to prod
 
-app
-  .route("/api/v1/lessons")
-  .get(lessons.listAllLessons)
-  .post(lessons.createNewLesson);
-app
-  .route("/api/v1/lessons/:id")
-  .patch(lessons.updateLesson)
-  .delete(lessons.deleteLesson);
+  app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
+  app
+    .route("/api/v1/users/:id")
+    .get(users.getOneUserByAuthId)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
+  app.route("/api/v1/users/:id/lessons").get(lessons.getLessonsBySenpaiId);
 
-app.route("/api/v1/files").get(files.listAllFiles).post(files.createNewFile);
-app.route("/api/v1/files/:id").patch(files.updateFile).delete(files.deleteFile);
+  app
+    .route("/api/v1/lessons")
+    .get(lessons.listAllLessons)
+    .post(lessons.createNewLesson);
+  app
+    .route("/api/v1/lessons/:id")
+    .patch(lessons.updateLesson)
+    .delete(lessons.deleteLesson);
 
-app
-  .route("/api/v1/create-checkout-session/:priceId/:senpaiId")
-  .post(stripe.createCheckoutSession);
-app.route("/api/v1/create-lesson-and-price").post(stripe.createLessonAndPrice);
-app.route("/api/v1/stripeLessons").get(stripe.getStripeLesson);
+  app.route("/api/v1/files").get(files.listAllFiles).post(files.createNewFile);
+  app
+    .route("/api/v1/files/:id")
+    .patch(files.updateFile)
+    .delete(files.deleteFile);
 
-// if (process.env.NODE_ENV === "production") {
-app.get("*", (req, res) => {
-  routes(app);
-  res.sendFile(path.join(__dirname, "../../", "senpai", "build", "index.html"));
-});
-// } else {
-//   app.get("/", (req, res) => {
-//     res.send("api running");
-// });
-// }
+  app
+    .route("/api/v1/create-checkout-session/:priceId/:senpaiId")
+    .post(stripe.createCheckoutSession);
+  app
+    .route("/api/v1/create-lesson-and-price")
+    .post(stripe.createLessonAndPrice);
+  app.route("/api/v1/stripeLessons").get(stripe.getStripeLesson);
+
+  app.get("*", (req, res) => {
+    routes(app);
+    res.sendFile(
+      path.join(__dirname, "../../", "senpai", "build", "index.html")
+    );
+  });
+  // } else {
+  //   app.get("/", (req, res) => {
+  //     res.send("api running");
+  // });
+}
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
