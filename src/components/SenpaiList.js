@@ -23,6 +23,7 @@ export default function SenpaiList() {
   const temp = [];
   const senpaiSetter = async () => {
     await axios.get("/users").then((res) => {
+      console.log(res.data);
       for (const senpai of res.data) {
         if (category.toLowerCase() === "all") {
           temp.push({
@@ -62,15 +63,15 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightgreen" }}
           >
-              {senpai.name}
-              <Box mt={2}>
-                <img
-                  height="125px"
-                  width="125px"
-                  src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
-                />
-              </Box>
-              <Link></Link>
+            {senpai.name}
+            <Box mt={2}>
+              <img
+                height="125px"
+                width="125px"
+                src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
+              />
+            </Box>
+            <Link></Link>
           </Grid>
           <Grid
             item
@@ -127,7 +128,6 @@ export default function SenpaiList() {
                 Book Now
               </Button>
             </Link>
-
           </Grid>
         </Grid>
       );
