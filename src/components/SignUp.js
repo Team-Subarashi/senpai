@@ -49,12 +49,11 @@ export default function SignUp() {
     setPasswordConfirm(e.target.value);
   };
   const emailChangeHandler = (e) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
   const nameChangeHandler = (e) => {
-    setName(e.target.value)
-  }
-
+    setName(e.target.value);
+  };
 
   const submitHandler = () => {
     if (password !== passwordConfirm) {
@@ -67,16 +66,18 @@ export default function SignUp() {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      axios({
-        method: "post",
-        url: "/api/v1/users",
-        data: {
-          name: name,
-          email: email,
-          authId: user.uid
-        }
+        // Signed in
+        const user = userCredential.user;
+        axios({
+          method: "post",
+          url: "/users",
+          data: {
+            name: name,
+            email: email,
+            authId: user.uid,
+          },
+        });
+        // ...
       })
       .catch((error) => {
         const errorCode = error.code;

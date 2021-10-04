@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Cntainer, Grid, Box, Button, Container } from "@material-ui/core";
 import { Avatar, Typography } from "@mui/material";
 import PropTypes from "prop-types";
@@ -8,7 +8,7 @@ import { createTheme } from "@mui/material/styles";
 import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import { AutoSizer, Column, Table } from "react-virtualized";
-import axios from 'axios'
+import axios from "axios";
 import KouhaiTimetable from "../components/KouhaiTimetable";
 
 const styles = (theme) => ({
@@ -222,17 +222,17 @@ function ReactVirtualizedTable() {
   );
 }
 
-const Kohai = ({match}) => {
+const Kohai = ({ match }) => {
   const [state, setState] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`/kouhai/${match.params.id}/lessons`)
-      console.log(response)
-      setState(response.data)
-    }
+      const response = await axios.get(`/kouhai/${match.params.id}/lessons`);
+      console.log(response);
+      setState(response.data);
+    };
     fetchData();
-  }, [])
+  }, []);
 
   return (
     <Grid
@@ -304,8 +304,7 @@ const Kohai = ({match}) => {
           borderRight: "#616161 1rem solid",
         }}
       >
-
-        <ReactVirtualizedTable />
+        <KouhaiTimetable lessons={state} match={match} />
         <Grid container xs={12} style={{ borderRadius: "4px", height: "50%" }}>
           <Grid
             item
@@ -317,12 +316,6 @@ const Kohai = ({match}) => {
               alt="sample"
               src="https://images.freeimages.com/images/large-previews/bd7/falloxbow-1058032.jpg"
             />
-
-        <KouhaiTimetable lessons={state} match={match} />
-        <Grid container xs={12} style={{ height: "50%" }}>
-          <Grid item style={{ width: "50%", height: "50%" }}>
-            <img alt="sample" src="url" />
-
           </Grid>
           <Grid
             item
@@ -359,18 +352,6 @@ const Kohai = ({match}) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid
-        className="left"
-        item
-        xs={3}
-        style={{
-          height: "95vh",
-          backgroundColor: " #707070",
-          borderRadius: "100px",
-          // borderRight: "#616161 1rem solid",
-          // borderLeft: "#616161 1rem solid",
-        }}
-      ></Grid>
     </Grid>
   );
 };

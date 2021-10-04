@@ -59,22 +59,22 @@ export default function ScheduleBooking({ match, location }) {
     fetchData();
   }, []);
 
-  const date = useRecoilValue(selectedDate);
+  // const date = useRecoilValue(selectedDate);
 
-  const bookButtonHandler = () => {
-    // match.params.senpaiId should be senpai's id
-    let endtime = moment(date).add(1, "hours");
-    axios({
-      method: "post",
-      url: "/lessons",
-      data: {
-        senpaiId: match.params.id,
-        startDate: date._d,
-        endDate: endtime,
-        priceId: "price_1Jg1LrEp77X0l0jdvmgYUpwP", //temp until we have a create your own rate page
-      },
-    });
-  };
+  // const bookButtonHandler = () => {
+  //   // match.params.senpaiId should be senpai's id
+  //   let endtime = moment(date).add(1, "hours");
+  //   axios({
+  //     method: "post",
+  //     url: "/lessons",
+  //     data: {
+  //       senpaiId: match.params.id,
+  //       startDate: date._d,
+  //       endDate: endtime,
+  //       priceId: "price_1Jg1LrEp77X0l0jdvmgYUpwP", //temp until we have a create your own rate page
+  //     },
+  //   });
+  // };
 
   return (
     <div>
