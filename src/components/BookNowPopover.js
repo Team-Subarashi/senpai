@@ -105,4 +105,5 @@ export default function BookNowPopover({ senpaiId }) {
       {/* </Popover> */}
     </div>
   );
+
 }
