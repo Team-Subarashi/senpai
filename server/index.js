@@ -13,6 +13,8 @@ require("./config.js"); // Import DB Connection
 const uri = process.env.MONGODB_URI;
 const options = {
   useNewUrlParser: true,
+  ssl: true,
+  retryWrites: true,
   useUnifiedTopology: true,
 };
 
@@ -27,6 +29,10 @@ mongoose.connect(uri, options).then(
     }
   }
 );
+
+mongoose.connection.once("open", () => {
+  console.log("MongoDB connected!");
+});
 
 app.use(cors());
 app.use(express.urlencoded());
