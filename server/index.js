@@ -10,7 +10,7 @@ const routes = require("./routes");
 require("dotenv").config();
 require("./config.js"); // Import DB Connection
 
-const uri = `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
+const uri = process.env.MONGODB_URI;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -36,6 +36,10 @@ app.use(
     ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
   )
 );
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("senpai/build"));
+}
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
