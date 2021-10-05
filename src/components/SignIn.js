@@ -8,8 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@mui/material/Paper';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -17,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    border: '1px solid',
+    borderColor: 'gray',
+    padding: theme.spacing(10)
+
   },
   avatar: {
     margin: theme.spacing(1),
@@ -29,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  signInText: {
+    color: "#fff"
+  },
+
 }));
 
 export default function SignIn() {
@@ -52,27 +61,28 @@ export default function SignIn() {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      // ..
-    });
+        // Signed in 
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+        // ..
+      });
   }
-  
+
   return (
+
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography className={classes.signInText} component="h1" variant="h5">
           Sign In
         </Typography>
         <form className={classes.form} noValidate>
@@ -123,5 +133,6 @@ export default function SignIn() {
         </form>
       </div>
     </Container>
+
   );
 }
