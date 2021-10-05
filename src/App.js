@@ -15,7 +15,6 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
-<<<<<<< HEAD
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
@@ -24,27 +23,14 @@ import ScheduleBooking from "./pages/ScheduleBooking";
 import SenpaiProfileView from "./pages/SenpaiProfileView";
 import Checkout from "./components/Checkout";
 import MyLessons from "./pages/MyLessons";
-=======
-import React, { useEffect, useState } from "react";
-//import Room from "./components/CodeRoom/Room";
-import { ThemeProvider } from '@material-ui/core';
-import theme from "./units/theme";
-import axios from 'axios'
-import { useRecoilState } from 'recoil';
-import { userState } from './atoms';
-import ScheduleBooking from './pages/ScheduleBooking'
-import SenpaiProfileView from './pages/SenpaiProfileView'
-import Checkout from './components/Checkout'
-import MyLessons from './pages/MyLessons'
->>>>>>> c5fa5ac37bb6b2b6be924110b8cdf872a7206bdc
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   minHeight: "100vh",
-  //   backgroundColor: "#616161",
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: "cover",
-  // },
+  root: {
+    minHeight: "100vh",
+    backgroundColor: "#616161",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
 }));
 
 function App() {
@@ -74,44 +60,31 @@ function App() {
 
   const classes = useStyles();
   return (
-<<<<<<< HEAD
     // <Router>
     <div className="App">
       <div className={classes.root}>
         <Router>
           <CssBaseline />
-=======
-    <ThemeProvider theme={theme}>
-      {/* // <Router> */}
 
-      <div className="App">
-        {/* <div > */}
-        <div className={classes.root}>
-          <Router>
->>>>>>> c5fa5ac37bb6b2b6be924110b8cdf872a7206bdc
-
-            <CssBaseline />
-
-            <NavBar />
-            {user ? user.email : null}
-            <SignOut />
-            <Switch>
-              <Route exact path="/" component={Splash} />
-              <Route path="/signup" component={SignUp} />
-              <Route exact path="/kouhai/:id" component={Kohai} />
-              <Route path="/login" component={SignIn} />
-              <Route exact path="/senpai/:id" component={SenpaiProfileView} />
-              <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
-              <Route path="/search" component={Search} />
-              <Route path="/room" component={Workspace} />
-              <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
-              <Route path="/mylessons" component={MyLessons} />
-            </Switch>
-          </Router>
-        </div>
+          <NavBar />
+          {user ? user.email : null}
+          <SignOut />
+          <Switch>
+            <Route exact path="/" component={Splash} />
+            <Route path="/signup" component={SignUp} />
+            <Route exact path="/kouhai/:id" component={Kohai} />
+            <Route path="/login" component={SignIn} />
+            <Route exact path="/senpai/:id" component={SenpaiProfileView} />
+            <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
+            <Route path="/search" component={Search} />
+            <Route path="/room" component={Workspace} />
+            <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+            <Route path="/mylessons" component={MyLessons} />
+          </Switch>
+        </Router>
       </div>
-      {/* // </Router> */}
-    </ThemeProvider>
+    </div>
+    // </Router>
   );
 }
 

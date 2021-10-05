@@ -15,7 +15,7 @@ function CodeEditor() {
   const editorRef = useRef(null);
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [filesLoaded, setFilesLoaded] = useState(false);
-  const [fileName, setFileName] = useState("");
+  const [fileName, setFileName] = useState("script.js");
   const file = files[fileName];
 
   const [html, setHTML] = useRecoilState(loadedHTML);
