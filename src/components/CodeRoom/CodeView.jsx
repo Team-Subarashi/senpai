@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 import { useRecoilValue } from "recoil";
-
+import "./CodeView.css";
 const CodeView = () => {
   const html = useRecoilValue(loadedHTML);
   const js = useRecoilValue(loadedJS);
@@ -16,8 +16,8 @@ const CodeView = () => {
       const secondHTML = html.slice(headIndex, html.length - 1);
       const src = `${firstHTML} <style> ${css} </style> ${secondHTML}`;
       return src;
-      }
-      return;
+    }
+    return;
   };
 
   useEffect(() => {
@@ -25,8 +25,13 @@ const CodeView = () => {
   }, [html, js, css]);
 
   return (
-    <div>
-      <iframe srcDoc={srcDoc} sandbox="allow-scripts" />
+    <div id="view-container">
+      <iframe
+        srcDoc={srcDoc}
+        sandbox="allow-scripts"
+        width="100%"
+        height="100%"
+      />
     </div>
   );
 };
