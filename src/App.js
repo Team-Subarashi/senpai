@@ -73,7 +73,7 @@ function App() {
 
             <CssBaseline />
 
-            <NavBar />
+            <NavBar user={user} />
             {user ? user.email : null}
             <SignOut />
             <Switch>

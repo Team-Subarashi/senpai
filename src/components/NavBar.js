@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
+import { getAuth, signOut } from '@firebase/auth'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "Nunito",
     },
     appbarWrapper: {
-        width: '80%',
+        // width: '80%',
+        display: 'flex',
+        justifyContent: "space-evenly"
         // margin: '0 auto'
     },
     icon: {
@@ -44,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const NavBar = () => {
+const NavBar = ({user}) => {
     const [value, setValue] = useState(0)
     const handleClickTab = (e, newValue) => {
         setValue(newValue)
@@ -67,30 +71,34 @@ const NavBar = () => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     }
+
+    const signOutHandler = () => {
+        const auth = getAuth();
+        signOut(auth).then(() => {
+          // Sign-out successful.
+        }).catch((error) => {
+          // An error happened.
+        });
+    }
+
     return (
-
-
         <>
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar className={classes.appbar}  >
                     <Toolbar className={classes.appbarWrapper}>
 
                         <Typography  >
-                            <img src={logo} alt="senpai" height="36" width="auto" />
+                            <Link to={`/`} style={{color:"white"}}>
+                                <img src={logo} alt="senpai" height="36" width="auto" />
+                            </Link>
                         </Typography>
-                        <div style={{ flexGrow: 1 }}></div>
-                        <Tabs onChange={handleClickTab} indicatorColor='secondary' value={value}>
-                            <Tab disableRipple label='profile' />
-
-
-                            <Tab disableRipple label='Senpai prof' />
-
-
-                            <Tab disableRipple label='Find a Senpai' />
-
-
-                            <Tab disableRipple label='Log Out' />
-                        </Tabs>
+                        {/* <div style={{ flexGrow: 1 }}></div> */}
+                          <Link to={`/kouhai/${user._id}`} style={{color:"white"}}>Profile</Link>
+                          <Link to={`/senpai/${user._id}`} style={{color:"white"}}>Senpai Profile</Link>
+                          <Link to={`/myLessons`} style={{color:"white"}}>My Lessons</Link>
+                          <Link to={`/search`} style={{color:"white"}}>Find a Senpai</Link>
+                          {user.name ? user.email : <Link to="/signup" style={{color:"white"}}>Create an Account</Link> }
+                          {!user.email ? <Link to="/login" style={{color:"white"}}>Sign in</Link> : <Link to="/" onClick={signOutHandler} style={{color:"white"}}>Sign Out</Link> }
                         {/* <IconButton>
                             <SortIcon aria-controls='menu' onClick={handleOpenMenu} className={classes.icon} />
                         </IconButton> */}
