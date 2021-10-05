@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { Stack } from "@mui/material";
 import CodeView from "../components/CodeRoom/CodeView";
-
 import { useRecoilState } from "recoil";
 import axios from "axios";
 
@@ -12,7 +11,11 @@ import CodeEditor from "../components/CodeRoom/CodeEditor";
 
 export default function Workspace() {
   
-
+  const [activeFiles, setActiveFiles] = useState("")
+  useEffect(async () => {
+    const files = await axios.get("/files");
+    setActiveFiles(files.data[0]);
+  }, []);
   
   return (
     <Grid
@@ -31,7 +34,7 @@ export default function Workspace() {
         }}
       >
         <React.Suspense fallback={<div>Loading...</div>}>
-          <CodeEditor />
+          <CodeEditor activeFiles={activeFiles}/>
         </React.Suspense>
       </Grid>
       <Grid
