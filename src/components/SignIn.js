@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     border: '1px solid',
     borderColor: 'gray',
-    padding: theme.spacing(10)
+    padding: theme.spacing(13)
 
   },
   avatar: {
