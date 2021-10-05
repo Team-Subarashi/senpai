@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import images from '../images/round_edges.png'
 import Button from "@material-ui/core/Button";
 import Box from '@mui/material/Box';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,9 +67,8 @@ export default function Splash() {
           <Box component="div"
             m={1} //margin
             className={`${classes.centerBox} ${classes.box}`}>
-            <Button variant="contained" onClick={() => {
-              alert('clicked');
-            }} color="primary">Button</Button></Box>
+            <Button variant="contained" component={Link}
+              to="/login" color="primary">Button</Button></Box>
         </Grid>
         <Grid className={classes.topRight} item xs={6}>
           <div><img src={images} alt="img" height="350" width="auto" /></div>
