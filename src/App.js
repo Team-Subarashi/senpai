@@ -73,9 +73,7 @@ function App() {
 
             <CssBaseline />
 
-            <NavBar />
-            {user ? user.email : null}
-            <SignOut />
+            <NavBar user={user} />
             <Switch>
               <Route exact path="/" component={Splash} />
               <Route path="/signup" component={SignUp} />
