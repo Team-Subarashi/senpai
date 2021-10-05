@@ -31,7 +31,7 @@ export default function Filter() {
         }}
         onClick={() => toggleMenuState(!menuState)}
       >
-        Category
+        {category}
       </Button>
       <Menu
         open={menuState}
