@@ -71,6 +71,7 @@ export default function SenpaiList() {
             marginBottom: "3vh",
             height: "25vh",
           }}
+          key={senpai._id}
         >
           <Grid
             item
