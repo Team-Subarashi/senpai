@@ -2,8 +2,13 @@ const stripe = require("stripe")(
   "sk_test_51JetOIEp77X0l0jdMfeOyoPZ5RQCBQsIwYGFHDl1oO7gp3MEcZBNIyUMIxyfjh1oV9Ti76Ql1NXNvm7vP28UCJ0X00h7n8UGYl"
 );
 
-const YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
+require("dotenv").config();
 
+if (process.env.NODE_ENV === "development") {
+  YOUR_DOMAIN = "http://localhost:3000/checkout";
+} else {
+  YOUR_DOMAIN = "subarashi-senpai.herokuapp.com/checkout";
+}
 
 exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
