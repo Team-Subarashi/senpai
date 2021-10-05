@@ -1,8 +1,11 @@
 import React from "react";
-import { makeStyles, IconButton } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
 import Grid from '@material-ui/core/Grid';
 import images from '../images/round_edges.png'
+import Button from "@material-ui/core/Button";
+import Box from '@mui/material/Box';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "200vh",
@@ -30,6 +33,16 @@ const useStyles = makeStyles((theme) => ({
   },
   topRight: {
     padding: "80px",
+  },
+  box: {
+    height: 10,
+    display: "flex",
+    //border: "1px solid black",
+    padding: 8
+  },
+  centerBox: {
+    justifyContent: "center",
+    alignItems: "center"
   }
 }));
 
@@ -50,6 +63,12 @@ export default function Splash() {
             <li>Item 2</li>
             <li>Item 3</li>
           </ul>
+          <Box component="div"
+            m={1} //margin
+            className={`${classes.centerBox} ${classes.box}`}>
+            <Button variant="contained" onClick={() => {
+              alert('clicked');
+            }} color="primary">Button</Button></Box>
         </Grid>
         <Grid className={classes.topRight} item xs={6}>
           <div><img src={images} alt="img" height="350" width="auto" /></div>
