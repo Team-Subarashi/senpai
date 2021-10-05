@@ -17,6 +17,7 @@ function CodeEditor() {
   const [filesLoaded, setFilesLoaded] = useState(false);
   const [fileName, setFileName] = useState("script.js");
   const file = files[fileName];
+  const lessonId = window.location.href.split("room/")[1];
 
   const [html, setHTML] = useRecoilState(loadedHTML);
   const [css, setCSS] = useRecoilState(loadedCSS);
@@ -35,6 +36,10 @@ function CodeEditor() {
 
 
   }, [activeFiles]);
+
+  useEffect(() => {
+    console.log("Lesson ID is " + lessonId)
+  }, [])
 
   const handleHTML = (value, event) => {
     setHTML(value);
@@ -79,7 +84,8 @@ function CodeEditor() {
       return;
     }
 
-    const dbRef = firebase.database().ref().child(`pair001`);
+    //TODO TRY ADDING LESSON ID AS REF
+    const dbRef = firebase.database().ref(lessonId).child(`pair001`);
     const firepad = fromMonaco(dbRef, editorRef.current);
     const name = prompt("Enter your Name :");
     firepad.setUserName(name);
