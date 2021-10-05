@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
+  Resources,
   WeekView,
   Appointments,
   AppointmentTooltip,
@@ -17,11 +18,10 @@ import Room from '@material-ui/icons/Room';
 import { Redirect } from 'react-router-dom';
 import { userState } from '../atoms';
 import { useRecoilValue } from 'recoil';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
-const style = ({ palette }) => ({
-  icon: {
-    color: palette.action.active,
-  },
+const styles = theme => ({
   textCenter: {
     textAlign: 'center',
   },
@@ -41,12 +41,24 @@ const style = ({ palette }) => ({
   commandButton: {
     backgroundColor: 'rgba(255,255,255,0.65)',
   },
+  container: {
+    display: 'flex',
+    marginBottom: theme.spacing(2),
+    justifyContent: 'flex-end',
+  },
+  text: {
+    ...theme.typography.h6,
+    marginRight: theme.spacing(2),
+  },
 });
 
 export default function MyLessons({match}) {
   const user = useRecoilValue(userState)
   const [selectedDate, setSelectedDate] = useState(Date.now())
   const [schedulerData , setSchedulerData] = useState([])
+  const [mainResourceName, setMainResourceName] = useState('members')
+  const [resources, setResources] = useState([])
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(`/users/${user._id}/lessons`)
@@ -54,6 +66,7 @@ export default function MyLessons({match}) {
         console.log(response.data)
         const temp = response.data.map((lesson) => {
           lesson.title = "Active Lesson"
+          
           return lesson
         })
         setSchedulerData(temp)
@@ -62,7 +75,29 @@ export default function MyLessons({match}) {
     fetchData()
   }, [user])
 
-  const Content = withStyles(style, { name: 'Content' })(({
+  const ResourceSwitcher = withStyles(styles, { name: 'ResourceSwitcher' })(
+    ({
+      mainResourceName, onChange, classes, resources,
+    }) => (
+      <div className={classes.container}>
+        <div className={classes.text}>
+          Main resource name:
+        </div>
+        <Select
+          value={mainResourceName}
+          onChange={e => onChange(e.target.value)}
+        >
+          {resources.map(resource => (
+            <MenuItem key={resource.fieldName} value={resource.fieldName}>
+              {resource.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </div>
+    ),
+  );
+
+  const Content = withStyles(styles, { name: 'Content' })(({
     children, appointmentData, classes, ...restProps
   }) => (
     <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
@@ -76,25 +111,40 @@ export default function MyLessons({match}) {
     </AppointmentTooltip.Content>
   ));
 
+  function changeMainResource(mainResourceName) {
+    setMainResourceName(mainResourceName);
+  }
+
   return (
-    <Paper>
-      <Scheduler
-        data={schedulerData}
-      >
-        <ViewState
-          defaultCurrentDate={selectedDate}
-        />
-        <WeekView
-          startDayHour={9}
-          endDayHour={24}
-          cellDuration={60}
-        />
-        <Appointments />
-        <AppointmentTooltip contentComponent={Content} />
-        <Toolbar />
-        <DateNavigator />
-      </Scheduler>
-    </Paper>
+    <>
+      <ResourceSwitcher 
+        resources={resources}
+        mainResourceName={mainResourceName}
+        onChange={changeMainResource}
+      />
+      <Paper>
+        <Scheduler
+          data={schedulerData}
+        >
+          <ViewState
+            defaultCurrentDate={selectedDate}
+          />
+          <WeekView
+            startDayHour={9}
+            endDayHour={24}
+            cellDuration={60}
+          />
+          <Appointments />
+          <AppointmentTooltip contentComponent={Content} />
+          <Resources 
+            data={resources}
+            mainResourceName={mainResourceName}
+          />
+          <Toolbar />
+          <DateNavigator />
+        </Scheduler>
+      </Paper>
+    </>
   )
 }
 
