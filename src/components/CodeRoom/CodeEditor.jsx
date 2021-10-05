@@ -110,7 +110,7 @@ function CodeEditor({ activeFiles }) {
         defaultValue={
           fileName === "script.js" ? js : fileName === "index.html" ? html : css
         }
-        options={{ fontSize: 7 }}
+        options={{ fontSize: 8 }}
         onChange={
           fileName === "script.js"
             ? handleJS
