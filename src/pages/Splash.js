@@ -69,7 +69,7 @@ export default function Splash() {
               to="/login" color="primary">Button</Button></Box>
         </Grid>
         <Grid className={classes.topRight} item xs={6}>
-          <div><img src="https://imgur.com/a/2ldFgeq" alt="img" height="350" width="auto" /></div>
+          <div><img src="https://i.imgur.com/HKga5Hs.png" alt="img" height="350" width="auto" /></div>
         </Grid>
         <Grid item xs={12}>
           <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
