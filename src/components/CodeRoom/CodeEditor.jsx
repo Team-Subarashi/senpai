@@ -85,7 +85,11 @@ function CodeEditor() {
     }
 
     //TODO TRY ADDING LESSON ID AS REF
-    const dbRef = firebase.database().ref(lessonId).child(`pair001`);
+    const dbRef = firebase.database()
+      .ref(
+        // lessonId
+      )
+      .child(`${lessonId}`);
     const firepad = fromMonaco(dbRef, editorRef.current);
     const name = prompt("Enter your Name :");
     firepad.setUserName(name);
