@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    border: '1px solid',
+    borderColor: 'gray',
+    padding: theme.spacing(9)
   },
   avatar: {
     margin: theme.spacing(1),
@@ -31,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  signUpText: {
+    color: "#fff"
+  }
 }));
 
 export default function SignUp() {
@@ -70,30 +76,30 @@ export default function SignUp() {
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      axios({
-        method: "post",
-        url: "/users",
-        data: {
-          name: name,
-          email: email,
-          authId: user.uid
-        }
+        // Signed in 
+        const user = userCredential.user;
+        axios({
+          method: "post",
+          url: "/users",
+          data: {
+            name: name,
+            email: email,
+            authId: user.uid
+          }
+        })
+        // ...
       })
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode)
-      console.log(errorMessage)
-      setErrorMessage(error.message)
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode)
+        console.log(errorMessage)
+        setErrorMessage(error.message)
 
-      // ..
-    });
+        // ..
+      });
   }
-  
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -101,7 +107,7 @@ export default function SignUp() {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography className={classes.signUpText} component="h1" variant="h5">
           Sign Up
         </Typography>
         {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
