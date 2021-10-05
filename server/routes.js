@@ -11,7 +11,7 @@ module.exports = function (app) {
     .get(users.getOneUserByAuthId)
     .patch(users.updateUser)
     .delete(users.deleteUser);
-  app.route("/api/v1/users/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
   app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
 

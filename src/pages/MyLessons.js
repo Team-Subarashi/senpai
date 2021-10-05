@@ -49,7 +49,7 @@ export default function MyLessons({match}) {
   const [schedulerData , setSchedulerData] = useState([])
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`/users/${user._id}/lessons`)
+      const response = await axios.get(`/api/v1/users/${user._id}/lessons`)
       if (response.data) {
         console.log(response.data)
         const temp = response.data.map((lesson) => {
