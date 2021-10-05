@@ -31,6 +31,21 @@ const userSchema = new Schema({
   bio: {
     type: String,
   },
+  location: {
+    type: String,
+  },
+  twitter: {
+    type: String,
+  },
+  linkedIn: {
+    type: String,
+  },
+  facebook: {
+    type: String,
+  },
+  website: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("user", userSchema);

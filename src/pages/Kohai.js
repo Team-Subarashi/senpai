@@ -10,6 +10,8 @@ import Paper from "@mui/material/Paper";
 import { AutoSizer, Column, Table } from "react-virtualized";
 import axios from 'axios'
 import KouhaiTimetable from "../components/KouhaiTimetable";
+import {useRecoilValue} from "recoil"
+import {userState} from "../atoms"
 
 const styles = (theme) => ({
   flexContainer: {
@@ -164,24 +166,24 @@ const VirtualizedTable = withStyles(styles, { defaultTheme })(
 
 // ---
 
-const senpaiList = [
-  ["senpai1", "title"],
-  ["senpai2", "title"],
+const userList = [
+  ["user1", "title"],
+  ["user2", "title"],
   ["test", "title"],
   ["元後輩", "title"],
   ["パイセン", "title"],
-  ["senpai1", "title"],
-  ["senpai2", "title"],
+  ["user1", "title"],
+  ["user2", "title"],
   ["test", "title"],
   ["元後輩", "title"],
   ["パイセン", "title"],
-  ["senpai1", "title"],
-  ["senpai2", "title"],
+  ["user1", "title"],
+  ["user2", "title"],
   ["test", "title"],
   ["元後輩", "title"],
   ["パイセン", "title"],
-  ["senpai1", "title"],
-  ["senpai2", "title"],
+  ["user1", "title"],
+  ["user2", "title"],
   ["test", "title"],
   ["元後輩", "title"],
   ["パイセン", "title"],
@@ -193,8 +195,8 @@ function createData(id, Lesson, Title) {
 
 const rows = [];
 
-for (let i = 0; i < senpaiList.length; i += 1) {
-  const selection = senpaiList[i];
+for (let i = 0; i < userList.length; i += 1) {
+  const selection = userList[i];
   rows.push(createData(i, ...selection));
 }
 console.log(rows);
@@ -224,6 +226,7 @@ function ReactVirtualizedTable() {
 
 const Kohai = ({match}) => {
   const [state, setState] = useState([]);
+  const user = useRecoilValue(userState)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -257,7 +260,7 @@ const Kohai = ({match}) => {
         }}
       >
         <Typography style={{ fontSize: "25px", color: "white" }}>
-          素晴らしい後輩
+          {user.name}
         </Typography>
         <Grid
           className="avatar-holder"
@@ -272,27 +275,70 @@ const Kohai = ({match}) => {
             <Avatar
               className="kohai-photo"
               alt="kohai"
-              src="https://www.sacmag.com/wp-content/uploads/sites/50/2020/12/HI_RES_FIN_IMG_8626.jpg"
+              src={user.avatar}
               sx={{ width: 150, height: 150 }}
             />
           </Grid>
         </Grid>
         <Grid class="detail" style={{ marginLeft: "10px" }}>
-          <Typography
-            style={{ textAlign: "left", fontSize: "20px", color: "white" }}
-          >
-            Location: Tokyo
-          </Typography>
-          <Typography
-            style={{ textAlign: "left", fontSize: "20px", color: "white" }}
-          >
-            Email: sample@gmail.com
-          </Typography>
-          <Typography
-            style={{ textAlign: "left", fontSize: "20px", color: "white" }}
-          >
-            Bio: Art lover
-          </Typography>
+          {user.email ? 
+            <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}>
+            <div>Email:</div>
+              <a href={user.email}>{user.email}</a>
+          </Typography> : null}
+            {user.location ? <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              Location: {user.location}
+            </Typography> : null}
+            {user.website ? <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              <div>Personal Website:</div>
+              <a href={user.website}>{user.website}</a>
+            </Typography> : null}
+            <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              Socials:
+            </Typography>
+          {user.twitter ? <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              <a href={user.twitter}>@{user.twitter}</a>
+            </Typography> : null}
+          {user.linkedIn ? <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              <a href={user.twitter}>LinkedIn</a>
+            </Typography> : null}
+          {user.facebook ? <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              <a href={user.facebook}>Facebook</a>
+            </Typography> : null}
         </Grid>
       </Grid>
       <Grid
@@ -304,11 +350,10 @@ const Kohai = ({match}) => {
           borderRight: "#616161 1rem solid",
         }}
       >
-        <KouhaiTimetable lessons={state} match={match} />
         <Grid container xs={12} style={{ borderRadius: "4px", height: "50%" }}>
           <Grid
             item
-            style={{ borderRadius: "4px", width: "50%", height: "50%" }}
+            style={{ borderRadius: "4px", width: "50%", height: "50%",}}
           >
             <img
               height="100%"
