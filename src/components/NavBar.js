@@ -83,9 +83,6 @@ const NavBar = () => {
                             <Tab disableRipple label='profile' />
 
 
-                            <Tab disableRipple label='Senpai prof' />
-
-
                             <Tab disableRipple label='Find a Senpai' />
 
 
