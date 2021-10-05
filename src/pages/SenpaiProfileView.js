@@ -122,14 +122,14 @@ export default function SenpaiProfileView({ match, location }) {
         <Grid container xs={8} style={{display: "flex", flexDirection:"column", justifyContent:"space-between"}} >
           <Container
             fixed
-            style={{ backgroundColor: "#cfe8fc", padding: "1rem", height: "55vh" }}
+            style={{ backgroundColor: "#cfe8fc", padding: "1rem", height: "65vh" }}
           >
             <iframe width="854" height="480" src="https://www.youtube.com/embed/dHRO8M6elcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>     
           </Container>
           <Container
             fixed
             className={classes.right}
-            style={{ height: "40vh", padding: "2rem" }}
+            style={{ height: "30vh", padding: "2rem" }}
           >
                         {senpai.bio ? <Typography
               style={{
