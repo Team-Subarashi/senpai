@@ -125,7 +125,7 @@ export default function SenpaiList() {
                   senpaiSetter();
                 }}
               >
-                Book Now
+                View Senpai
               </Button>
             </Link>
           </Grid>

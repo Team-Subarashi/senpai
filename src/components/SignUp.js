@@ -70,7 +70,7 @@ export default function SignUp() {
         const user = userCredential.user;
         axios({
           method: "post",
-          url: "/users",
+          url: "/api/v1/users",
           data: {
             name: name,
             email: email,

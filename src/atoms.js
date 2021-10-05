@@ -3,7 +3,7 @@ import { atom, selector } from "recoil";
 
 export const category = atom({
   key: "category",
-  default: "Zumba",
+  default: "D3",
 });
 
 export const loadedHTML = atom({

@@ -12,32 +12,32 @@ module.exports = function (app) {
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/api/v1/users/:id/lessons").get(lessons.getLessonsBySenpaiId);
-  app.route("/api/v1/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
-  app.route("/api/v1/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
+  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
+  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
 
 
   app
-    .route("/api/v1/lessons")
+    .route("/lessons")
     .get(lessons.listAllLessons)
     .post(lessons.createNewLesson);
   app
-    .route("/api/v1/lessons/:id")
+    .route("/lessons/:id")
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
-  app.route("/api/v1/files").get(files.listAllFiles).post(files.createNewFile);
+  app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app
-    .route("/api/v1/files/:id")
+    .route("/files/:id")
     .patch(files.updateFile)
     .delete(files.deleteFile);
 
   app
-    .route("/api/v1/create-checkout-session/:priceId/:senpaiId")
+    .route("/create-checkout-session/:priceId/:senpaiId")
     .post(stripe.createCheckoutSession);
   app
-    .route("/api/v1/create-lesson-and-price")
+    .route("/create-lesson-and-price")
     .post(stripe.createLessonAndPrice);
-  app.route("/api/v1/stripeLessons").get(stripe.getStripeLesson);
+  app.route("/stripeLessons").get(stripe.getStripeLesson);
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({
