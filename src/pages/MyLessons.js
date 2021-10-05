@@ -10,11 +10,12 @@ import {
   DateNavigator
 } from '@devexpress/dx-react-scheduler-material-ui';
 import axios from 'axios';
+// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Room from '@material-ui/icons/Room';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { userState } from '../atoms';
 import { useRecoilValue } from 'recoil';
 
@@ -51,7 +52,7 @@ export default function MyLessons({match}) {
     const fetchData = async () => {
       const response = await axios.get(`/api/v1/users/${user._id}/lessons`)
       if (response.data) {
-        console.log(response.data)
+        // console.log(response.data)
         const temp = response.data.map((lesson) => {
           lesson.title = "Active Lesson"
           return lesson
@@ -62,6 +63,10 @@ export default function MyLessons({match}) {
     fetchData()
   }, [user])
 
+  // useEffect(() => {
+  //   console.log(schedulerData)
+  // }, [schedulerData])
+
   const Content = withStyles(style, { name: 'Content' })(({
     children, appointmentData, classes, ...restProps
   }) => (
@@ -70,7 +75,11 @@ export default function MyLessons({match}) {
         <Grid item xs={2} className={classes.textCenter}>
         </Grid>
         <Grid item xs={10}>
-            <button type="submit">Join Room</button>
+           <Link to={`/room/${appointmentData._id}`}>
+              <Button>
+                Join Room
+              </Button>
+            </Link>
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>
