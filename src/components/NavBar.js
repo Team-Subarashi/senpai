@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     appbar: {
         backgroundColor: '#673AB7',
         fontFamily: "Nunito",
+        position: "relative"
     },
     appbarWrapper: {
         // width: '80%',
@@ -93,9 +94,9 @@ const NavBar = ({user}) => {
                             </Link>
                         </Typography>
                         {/* <div style={{ flexGrow: 1 }}></div> */}
-                          <Link to={`/kouhai/${user._id}`} style={{color:"white"}}>Profile</Link>
-                          <Link to={`/senpai/${user._id}`} style={{color:"white"}}>Senpai Profile</Link>
-                          <Link to={`/myLessons`} style={{color:"white"}}>My Lessons</Link>
+                          <Link to={user.name ? `/kouhai/${user._id}` : "/login"} style={{color:"white"}}>Profile</Link>
+                          <Link to={user.name ? `/senpai/${user._id}` : "/login"} style={{color:"white"}}>Senpai Profile</Link>
+                          <Link to={user._id ? `/myLessons` : "/login"} style={{color:"white"}}>My Lessons</Link>
                           <Link to={`/search`} style={{color:"white"}}>Find a Senpai</Link>
                           {user.name ? user.email : <Link to="/signup" style={{color:"white"}}>Create an Account</Link> }
                           {!user.email ? <Link to="/login" style={{color:"white"}}>Sign in</Link> : <Link to="/" onClick={signOutHandler} style={{color:"white"}}>Sign Out</Link> }
