@@ -77,7 +77,14 @@ function CodeEditor({ activeFiles }) {
     const dbRef = firebase.database().ref().child(`pair004`);
     const firepad = fromMonaco(dbRef, editorRef.current);
 
-    firepad.setUserName("Stephen");
+    try {
+      const name = prompt("Enter your Name :"); // Name to highlight who is editing where in the code
+      if (name) {
+        firepad.setUserName(name);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }, [editorLoaded]);
 
   return (
