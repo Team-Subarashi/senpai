@@ -16,13 +16,13 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
 import React, { useEffect } from "react";
-import axios from 'axios'
-import { useRecoilState } from 'recoil';
-import { userState } from './atoms';
-import ScheduleBooking from './pages/ScheduleBooking'
-import SenpaiProfileView from './pages/SenpaiProfileView'
-import Checkout from './components/Checkout'
-import MyLessons from './pages/MyLessons'
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userState } from "./atoms";
+import ScheduleBooking from "./pages/ScheduleBooking";
+import SenpaiProfileView from "./pages/SenpaiProfileView";
+import Checkout from "./components/Checkout";
+import MyLessons from "./pages/MyLessons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,20 +40,20 @@ function App() {
       if (user) {
         const response = await axios({
           method: "get",
-          url: `/users/${user.uid}`,
+          url: `/api/v1/users/${user.uid}`,
           data: {
-            authId: user.uid
-          }
-        })
+            authId: user.uid,
+          },
+        });
         if (response.data) {
-          console.log(response.data)
-          setUser(response.data)
+          console.log(response.data);
+          setUser(response.data);
         }
       } else {
         setUser({
           id: null,
-          email: null
-        })
+          email: null,
+        });
       }
     });
   }, []);
@@ -64,7 +64,6 @@ function App() {
     <div className="App">
       <div className={classes.root}>
         <Router>
-
           <CssBaseline />
 
           <NavBar />

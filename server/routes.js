@@ -5,23 +5,39 @@ module.exports = function (app) {
   const lessons = require("./controllers/LessonController");
   const stripe = require("./controllers/StripeController");
 
-  app.route("/users").get(users.listAllUsers).post(users.createNewUser);
-  app.route("/users/:id").get(users.getOneUserByAuthId).patch(users.updateUser).delete(users.deleteUser);
-  app.route("/users/:id/lessons").get(lessons.getUserLessons);
+  app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
+  app
+    .route("/api/v1/users/:id")
+    .get(users.getOneUserByAuthId)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
+  app.route("/api/v1/users/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  app.route("/api/v1/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
+  app.route("/api/v1/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
 
-  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
-  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
 
+  app
+    .route("/api/v1/lessons")
+    .get(lessons.listAllLessons)
+    .post(lessons.createNewLesson);
+  app
+    .route("/api/v1/lessons/:id")
+    .patch(lessons.updateLesson)
+    .delete(lessons.deleteLesson);
 
-  app.route("/lessons").get(lessons.listAllLessons).post(lessons.createNewLesson);
-  app.route("/lessons/:id").patch(lessons.updateLesson).delete(lessons.deleteLesson);
+  app.route("/api/v1/files").get(files.listAllFiles).post(files.createNewFile);
+  app
+    .route("/api/v1/files/:id")
+    .patch(files.updateFile)
+    .delete(files.deleteFile);
 
-  app.route("/files").get(files.listAllFiles).post(files.createNewFile);
-  app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
-
-  app.route("/create-checkout-session/:priceId/:senpaiId").post(stripe.createCheckoutSession);
-  app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
-  app.route("/stripeLessons").get(stripe.getStripeLesson)
+  app
+    .route("/api/v1/create-checkout-session/:priceId/:senpaiId")
+    .post(stripe.createCheckoutSession);
+  app
+    .route("/api/v1/create-lesson-and-price")
+    .post(stripe.createLessonAndPrice);
+  app.route("/api/v1/stripeLessons").get(stripe.getStripeLesson);
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({
@@ -39,5 +55,4 @@ module.exports = function (app) {
   //   });
   //   res.redirect(303, session.url);
   // });
-
 };

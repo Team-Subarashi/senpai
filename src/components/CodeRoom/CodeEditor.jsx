@@ -3,7 +3,7 @@ import Editor from "@monaco-editor/react";
 import { firebaseConfig } from "../../firebase";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
-import { fromMonaco } from "@hackerrank/firepad";
+import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
 import files from "./files";
 import { useRecoilValueLoadable, useRecoilState } from "recoil";

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Cntainer, Grid, Box, Button, Container } from "@material-ui/core";
 import { Avatar, Typography } from "@mui/material";
 import PropTypes from "prop-types";
@@ -8,7 +8,7 @@ import { createTheme } from "@mui/material/styles";
 import TableCell from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import { AutoSizer, Column, Table } from "react-virtualized";
-import axios from 'axios'
+import axios from "axios";
 import KouhaiTimetable from "../components/KouhaiTimetable";
 
 const styles = (theme) => ({
@@ -222,17 +222,17 @@ function ReactVirtualizedTable() {
   );
 }
 
-const Kohai = ({match}) => {
+const Kohai = ({ match }) => {
   const [state, setState] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`/kouhai/${match.params.id}/lessons`)
-      console.log(response)
-      setState(response.data)
-    }
+      const response = await axios.get(`/kouhai/${match.params.id}/lessons`);
+      console.log(response);
+      setState(response.data);
+    };
     fetchData();
-  }, [])
+  }, []);
 
   return (
     <Grid
