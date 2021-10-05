@@ -38,8 +38,6 @@ export default function SenpaiProfileView({ match, location }) {
               xs={12}
               style={{
                 height: "100%",
-                // borderRight: "#616161 1rem solid",
-                // borderLeft: "#616161 1rem solid",
               }}
             >
               <Typography style={{ fontSize: "25px" }}>Senpai</Typography>
@@ -52,18 +50,6 @@ export default function SenpaiProfileView({ match, location }) {
                   height: "25vh",
                 }}
               >
-                {/* <Box>
-                  <img
-                    style={{
-                      borderRadius: "50%",
-                      height: "250px",
-                      width: "250px",
-                    }}
-                    className="senpai-photo"
-                    alt="senpai"
-                    src="https://fivethirtyeight.com/wp-content/uploads/2014/04/bob-ross1.jpg"
-                  />
-                </Box> */}
                 <Grid>
                   <Avatar
                     className="senpai-photo"

@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Grid } from "@material-ui/core";
 import { Stack } from "@mui/material";
 import CodeView from "../components/CodeRoom/CodeView";
 
-import { useRecoilState } from "recoil";
-import axios from "axios";
 
 // import Video from "../components/Video";
 import CodeEditor from "../components/CodeRoom/CodeEditor";

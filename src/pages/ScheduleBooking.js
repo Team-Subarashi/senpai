@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilValue } from "recoil";
-import { selectedDate, userState } from "../atoms";
+import { selectedDate } from "../atoms";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import BasicDateTimePicker from "../components/DateTimePicker";
@@ -58,23 +58,6 @@ export default function ScheduleBooking({ match, location }) {
     };
     fetchData();
   }, []);
-
-  // const date = useRecoilValue(selectedDate);
-
-  // const bookButtonHandler = () => {
-  //   // match.params.senpaiId should be senpai's id
-  //   let endtime = moment(date).add(1, "hours");
-  //   axios({
-  //     method: "post",
-  //     url: "/lessons",
-  //     data: {
-  //       senpaiId: match.params.id,
-  //       startDate: date._d,
-  //       endDate: endtime,
-  //       priceId: "price_1Jg1LrEp77X0l0jdvmgYUpwP", //temp until we have a create your own rate page
-  //     },
-  //   });
-  // };
 
   return (
     <div>

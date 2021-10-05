@@ -6,8 +6,7 @@ import "firebase/compat/database";
 import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
 import files from "./files";
-import { useRecoilValueLoadable, useRecoilState } from "recoil";
-import { fileQuery } from "../../atoms";
+import { useRecoilState } from "recoil";
 import axios from "axios";
 import { loadedFiles, loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
@@ -57,11 +56,6 @@ function CodeEditor() {
   const handleSave = async (value, event) => {
     return await axios.patch(`/files/${activeFiles._id}`, { js: js, css: css, html: html })
   }
-  // const loadedFiles = useRecoilValueLoadable(fileQuery)
-
-  // const loadedFilesJS =  loadedFiles.contents.data.js
-  // const loadedFilesCSS = loadedFiles.contents.data.css
-  // const loadedFilesHTML = loadedFiles.contents.data.html
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
@@ -70,11 +64,6 @@ function CodeEditor() {
 
 
   useEffect(() => {
-    // if (!firebase.app.length) {
-    //   firebase.initializeApp(firebaseConfig);
-    // } else {
-    //   firebase.app();
-    // }
 
     firebase.initializeApp(firebaseConfig);
   }, []);

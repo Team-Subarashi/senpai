@@ -11,7 +11,6 @@ const lessons = require("./controllers/LessonController");
 const stripe = require("./controllers/StripeController");
 
 require("dotenv").config();
-require("./config.js"); // Import DB Connection
 const port = process.env.PORT || 8080;
 
 const uri = process.env.MONGODB_URI;

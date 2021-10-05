@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { category as categoryAtom } from "../atoms";
+import React from "react";
 import Filter from "../components/Filter";
 import SenpaiList from "../components/SenpaiList";
-import { Grid, Box, Button } from "@material-ui/core";
-
-import axios from "axios";
+import { Grid } from "@material-ui/core";
 
 export default function Search() {
   return (

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Calendar from "./Calendar";
 import { Grid, Box, Button } from "@material-ui/core";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import "antd/dist/antd.css";
 import { Tabs } from "antd";
 import { category as categoryAtom } from "../atoms";

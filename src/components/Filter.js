@@ -37,7 +37,6 @@ export default function Filter() {
         open={menuState}
         anchorEl={document.getElementById("categoryButton")}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        // style={{ marginTop: "-75.5vh" }}
       >
         <MenuItem onClick={(e) => clickHandler(e)}>All</MenuItem>
         <MenuItem onClick={(e) => clickHandler(e)}>D3</MenuItem>
