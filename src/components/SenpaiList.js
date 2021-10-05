@@ -28,6 +28,7 @@ export default function SenpaiList() {
         if (category.toLowerCase() === "all") {
           temp.push({
             id: senpai._id,
+            avatar: senpai.avatar,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -36,6 +37,7 @@ export default function SenpaiList() {
         } else if (senpai.category.includes(category)) {
           temp.push({
             id: senpai._id,
+            avatar: senpai.avatar,
             name: senpai.name,
             category: senpai.category,
             rates: senpai.rates,
@@ -43,6 +45,7 @@ export default function SenpaiList() {
           });
         }
       }
+      console.log(temp)
       setSenpaiList(temp);
     });
   };
@@ -63,15 +66,15 @@ export default function SenpaiList() {
             xs={4}
             style={{ height: "90%", backgroundColor: "lightgreen" }}
           >
-            {senpai.name}
-            <Box mt={2}>
-              <img
-                height="125px"
-                width="125px"
-                src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
-              />
-            </Box>
-            <Link></Link>
+              {senpai.name}
+              <Box mt={2}>
+                <img
+                  height="125px"
+                  width="125px"
+                  src={senpai.avatar}
+                />
+              </Box>
+              <Link></Link>
           </Grid>
           <Grid
             item

@@ -19,6 +19,8 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
+import { ThemeProvider } from '@material-ui/core';
+import theme from "./units/theme";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import SenpaiProfileView from "./pages/SenpaiProfileView";
 import Checkout from "./components/Checkout";
@@ -60,15 +62,13 @@ function App() {
 
   const classes = useStyles();
   return (
-    // <Router>
+    <ThemeProvider theme={theme}>
+
     <div className="App">
       <div className={classes.root}>
         <Router>
           <CssBaseline />
-
-          <NavBar />
-          {user ? user.email : null}
-          <SignOut />
+          <NavBar user={user} />
           <Switch>
             <Route exact path="/" component={Splash} />
             <Route path="/signup" component={SignUp} />
@@ -84,8 +84,8 @@ function App() {
         </Router>
       </div>
     </div>
-    // </Router>
-  );
+  </ThemeProvider>
+);
 }
 
 export default App;
