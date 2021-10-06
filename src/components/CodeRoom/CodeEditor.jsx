@@ -5,63 +5,52 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
-import files from "./files";
-import { useRecoilState } from "recoil";
+import { useRecoilValueLoadable, useRecoilState } from "recoil";
 import axios from "axios";
 import { loadedFiles, loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
-function CodeEditor() {
+function CodeEditor({ activeFiles }) {
   const editorRef = useRef(null);
   const [editorLoaded, setEditorLoaded] = useState(false);
-  const [filesLoaded, setFilesLoaded] = useState(false);
   const [fileName, setFileName] = useState("script.js");
-  const file = files[fileName];
   const lessonId = window.location.href.split("room/")[1];
+
 
   const [html, setHTML] = useRecoilState(loadedHTML);
   const [css, setCSS] = useRecoilState(loadedCSS);
   const [js, setJS] = useRecoilState(loadedJS);
-  const [activeFiles, setActiveFiles] = useRecoilState(loadedFiles);
-
-  useEffect(async () => {
-    const files = await axios.get("/files");
-    setActiveFiles(files.data[0]);
-  }, []);
+  // const [activeFiles, setActiveFiles] = useRecoilState(loadedFiles);
 
   useEffect(() => {
     setHTML(activeFiles.html);
     setJS(activeFiles.js);
     setCSS(activeFiles.css);
-
-
   }, [activeFiles]);
-
-  useEffect(() => {
-    console.log("Lesson ID is " + lessonId)
-  }, [])
 
   const handleHTML = (value, event) => {
     setHTML(value);
-
   };
   const handleJS = (value, event) => {
     setJS(value);
-
   };
   const handleCSS = (value, event) => {
     setCSS(value);
-
   };
 
   const handleSave = async (value, event) => {
-    return await axios.patch(`/files/${activeFiles._id}`, { js: js, css: css, html: html })
-  }
+    return await axios.patch(`/files/${activeFiles._id}`, {
+      js: js,
+      css: css,
+      html: html,
+    });
+  };
+  // const loadedFiles = useRecoilValueLoadable(fileQuery)
+
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
     setEditorLoaded(true);
   }
-
 
   useEffect(() => {
 
@@ -80,8 +69,15 @@ function CodeEditor() {
       )
       .child(`${lessonId}`);
     const firepad = fromMonaco(dbRef, editorRef.current);
-    const name = prompt("Enter your Name :");
-    firepad.setUserName(name);
+
+    try {
+      const name = prompt("Enter your Name :"); // Name to highlight who is editing where in the code
+      if (name) {
+        firepad.setUserName(name);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }, [editorLoaded]);
 
   return (
@@ -109,12 +105,12 @@ function CodeEditor() {
         height="70vh"
         theme="vs-dark"
         onMount={handleEditorDidMount}
-        path={file.name}
-        defaultLanguage={file.language}
+        path={fileName}
+        // defaultLanguage={file.language}
         defaultValue={
           fileName === "script.js" ? js : fileName === "index.html" ? html : css
         }
-        options={{ fontSize: 7 }}
+        options={{ fontSize: 8 }}
         onChange={
           fileName === "script.js"
             ? handleJS

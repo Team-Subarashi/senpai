@@ -30,7 +30,7 @@ export default function BookNowPopover({ senpaiId }) {
         color="primary"
         // onClick={handleClick}
       >
-        <Link to={`/senpai/${senpaiId}/schedule`}>BOOK NOW</Link>
+        <Link to={`/senpai/${senpaiId}/schedule`}>View schedule</Link>
       </Button>
 
     </div>

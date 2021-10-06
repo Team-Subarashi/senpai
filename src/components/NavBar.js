@@ -71,7 +71,6 @@ const NavBar = ({user}) => {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar className={classes.appbar}  >
                     <Toolbar className={classes.appbarWrapper}>
-
                         <Typography  >
                             <Link to={`/`} style={{color:"white"}}>
                                 <img src={logo} alt="senpai" height="36" width="auto" />
@@ -79,7 +78,6 @@ const NavBar = ({user}) => {
                         </Typography>
 
                           <Link to={user.name ? `/kouhai/${user._id}` : "/login"} style={{color:"white"}}>Profile</Link>
-                          <Link to={user.name ? `/senpai/${user._id}` : "/login"} style={{color:"white"}}>Senpai Profile</Link>
                           <Link to={user._id ? `/myLessons` : "/login"} style={{color:"white"}}>My Lessons</Link>
                           <Link to={`/search`} style={{color:"white"}}>Find a Senpai</Link>
                           {user.name ? user.email : <Link to="/signup" style={{color:"white"}}>Create an Account</Link> }

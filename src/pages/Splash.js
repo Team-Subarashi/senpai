@@ -66,7 +66,7 @@ export default function Splash() {
             m={1} //margin
             className={`${classes.centerBox} ${classes.box}`}>
             <Button variant="contained" component={Link}
-              to="/login" color="primary">Button</Button></Box>
+              to="/login" color="primary">Get started</Button></Box>
         </Grid>
         <Grid className={classes.topRight} item xs={6}>
           <div><img src="https://i.imgur.com/HKga5Hs.png" alt="img" height="350" width="auto" /></div>
