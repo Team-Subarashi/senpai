@@ -32,6 +32,12 @@ export default function SenpaiList() {
             category: senpai.category,
             rates: senpai.rates,
             bio: senpai.bio,
+            email: senpai.email,
+            location: senpai.location,
+            twitter: senpai.twitter,
+            facebook: senpai.facebook,
+            linkedIn: senpai.linkedIn,
+            website: senpai.website,
           });
         } else if (senpai.category.includes(category)) {
           temp.push({
@@ -41,6 +47,12 @@ export default function SenpaiList() {
             category: senpai.category,
             rates: senpai.rates,
             bio: senpai.bio,
+            email: senpai.email,
+            location: senpai.location,
+            twitter: senpai.twitter,
+            facebook: senpai.facebook,
+            linkedIn: senpai.linkedIn,
+            website: senpai.website,
           });
         }
       }
@@ -116,7 +128,7 @@ export default function SenpaiList() {
             </Tabs>
           </Grid>
           <Grid item xs={2}>
-            <Link to={`/senpai/${senpai.id}`}>
+            <Link to={{pathname: `/senpai/${senpai.id}`, state: {senpai}}}>
               <Button
                 variant="contained"
                 style={{
@@ -128,7 +140,7 @@ export default function SenpaiList() {
                   senpaiSetter();
                 }}
               >
-                Book Now
+                Go to Profile
               </Button>
             </Link>
 
