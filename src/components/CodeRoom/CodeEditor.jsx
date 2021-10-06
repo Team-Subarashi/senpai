@@ -122,8 +122,8 @@ function CodeEditor({ activeFiles }) {
           fileName === "script.js"
             ? handleJS
             : fileName === "index.html"
-            ? handleHTML
-            : handleCSS
+              ? handleHTML
+              : handleCSS
         }
       />
     </div>

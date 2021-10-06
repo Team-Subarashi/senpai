@@ -62,7 +62,7 @@ export default function SenpaiProfileView({ match, location }) {
           </Grid>
           <BookNowPopover senpaiId={match.params.id} />
           <Grid style={{ margin: "10px", padding: "2rem" }}>
-          <Typography
+            <Typography
               style={{
                 textAlign: "left",
                 fontSize: "20px",
@@ -92,7 +92,7 @@ export default function SenpaiProfileView({ match, location }) {
               }}
             >
               <div>Email:</div>
-               <a href={senpai.email}>{senpai.email}</a>
+              <a href={senpai.email}>{senpai.email}</a>
             </Typography> : null}
             {senpai.location ? <Typography
               style={{

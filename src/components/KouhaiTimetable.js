@@ -67,10 +67,10 @@ export default function KouhaiTimetable({lessons, match}) {
         </Grid>
         <Grid item xs={10}>
           {appointmentData.title === "Available" ? 
-          <form name="checkoutForm" action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`} method="POST">
-            <button type="submit">Book Now</button>
-          </form>
-          : null
+            <form name="checkoutForm" action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`} method="POST">
+              <button type="submit">Book Now</button>
+            </form>
+            : null
           }
         
         </Grid>

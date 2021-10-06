@@ -71,22 +71,22 @@ const Kohai = ({ match }) => {
         </Grid>
         <Grid class="detail" style={{ marginLeft: "10px" }}>
           {user.twitter || user.linkedIn || user.facebook ? (
-              <Typography
-                style={{
-                  fontFamily: "Nunito",
-                  textAlign: "left",
-                  fontSize: "20px",
-                }}
-              >
+            <Typography
+              style={{
+                fontFamily: "Nunito",
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
                 Socials: 
-                <div>
+              <div>
                 {user.twitter ? <a ><TwitterIcon /></a> : null}
                 {user.linkedIn ? <a ><LinkedInIcon /> </a> : null}
                 {user.facebook ? <a ><FacebookIcon /></a> : null}
                 {user.facebook ? <a ><InstagramIcon /></a> : null}
-                </div>
-              </Typography>
-            ) : null}
+              </div>
+            </Typography>
+          ) : null}
           {user.email ? (
             <Typography
               style={{

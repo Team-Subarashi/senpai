@@ -105,7 +105,7 @@ export default function MyLessons({match}) {
         <Grid item xs={2} className={classes.textCenter}>
         </Grid>
         <Grid item xs={10}>
-            <button type="submit">Join Room</button>
+          <button type="submit">Join Room</button>
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>
