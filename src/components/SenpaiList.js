@@ -185,7 +185,7 @@ export default function SenpaiList() {
       {senpaiList.length > 0 ? (
         senpaiPopulator()
       ) : (
-        <div>We couldn't find any senpais!</div>
+        <div>We couldn't find any senpais that fit these filters!</div>
       )}
     </>
   );
