@@ -23,7 +23,7 @@ const options = {
 
 mongoose.connect(uri, options).then(
   () => {
-    console.log("Database connection established in prod!");
+    console.log("Database connection established!");
     routes(app);
   },
   (err) => {
@@ -34,7 +34,7 @@ mongoose.connect(uri, options).then(
 );
 
 mongoose.connection.once("open", () => {
-  console.log("MongoDB connected");
+  console.log("MongoDB has been connected to");
 });
 
 app.use(cors());
