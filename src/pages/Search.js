@@ -31,7 +31,7 @@ export default function Search() {
           marginTop: "3vh",
           // height: "80vh",
           backgroundColor: "#616162",
-          border: "1px solid white"
+          //border: "1px solid white"
           // overflow: "scroll",
         }}
       >

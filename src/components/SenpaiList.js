@@ -70,6 +70,7 @@ export default function SenpaiList() {
           style={{
             marginBottom: "3vh",
             height: "25vh",
+
           }}
           key={senpai._id}
         >
@@ -86,6 +87,22 @@ export default function SenpaiList() {
                 src={senpai.avatar}
               />
             </Box>
+
+            <Link to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}>
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "1vh",
+                  backgroundColor: "purple",
+                  color: "white",
+                }}
+                onClick={() => {
+                  senpaiSetter();
+                }}
+              >
+                Go to Profile
+              </Button>
+            </Link>
             <Link></Link>
           </Grid>
           <Grid
@@ -131,22 +148,11 @@ export default function SenpaiList() {
               </TabPane>
             </Tabs>
           </Grid>
-          <Grid item xs={2}>
-            <Link to={{pathname: `/senpai/${senpai.id}`, state: {senpai}}}>
-              <Button
-                variant="contained"
-                style={{
-                  marginTop: "1vh",
-                  backgroundColor: "purple",
-                  color: "white",
-                }}
-                onClick={() => {
-                  senpaiSetter();
-                }}
-              >
-                Go to Profile
-              </Button>
-            </Link>
+          <Grid item xs={12} style={{
+            height: "100%", backgroundColor: "#303030",
+            //border: "1px solid white"
+          }} >
+
 
           </Grid>
         </Grid>
