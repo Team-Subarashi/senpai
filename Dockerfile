@@ -1,11 +1,11 @@
 # Stage 0 - Build frontend
-FROM node:12.16.3-alpine as Build
+FROM node:14.17.0 as Build
 
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
 
-RUN npm run Build
+RUN npm run build
 
 CMD ["npm", "run", "start"]
