@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Grid } from "@material-ui/core";
 import { Avatar, Typography } from "@mui/material";
 import axios from "axios";
+import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import InstagramIcon from '@material-ui/icons/Instagram';
 
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
@@ -66,6 +70,23 @@ const Kohai = ({ match }) => {
           </Grid>
         </Grid>
         <Grid class="detail" style={{ marginLeft: "10px" }}>
+          {user.twitter || user.linkedIn || user.facebook ? (
+              <Typography
+                style={{
+                  fontFamily: "Nunito",
+                  textAlign: "left",
+                  fontSize: "20px",
+                }}
+              >
+                Socials: 
+                <div>
+                {user.twitter ? <a ><TwitterIcon /></a> : null}
+                {user.linkedIn ? <a ><LinkedInIcon /> </a> : null}
+                {user.facebook ? <a ><FacebookIcon /></a> : null}
+                {user.facebook ? <a ><InstagramIcon /></a> : null}
+                </div>
+              </Typography>
+            ) : null}
           {user.email ? (
             <Typography
               style={{
@@ -101,53 +122,6 @@ const Kohai = ({ match }) => {
             >
               <div>Personal Website:</div>
               <a href={user.website}>{user.website}</a>
-            </Typography>
-          ) : null}
-          {user.twitter || user.linkedIn || user.facebook ? (
-            <Typography
-              style={{
-                fontFamily: "Nunito",
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              Socials:
-            </Typography>
-          ) : null}
-          {user.twitter ? (
-            <Typography
-              style={{
-                fontFamily: "Nunito",
-
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <a href={user.twitter}>@{user.twitter}</a>
-            </Typography>
-          ) : null}
-          {user.linkedIn ? (
-            <Typography
-              style={{
-                fontFamily: "Nunito",
-
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <a href={user.twitter}>LinkedIn</a>
-            </Typography>
-          ) : null}
-          {user.facebook ? (
-            <Typography
-              style={{
-                fontFamily: "Nunito",
-
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <a href={user.facebook}>Facebook</a>
             </Typography>
           ) : null}
         </Grid>
