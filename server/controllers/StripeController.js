@@ -4,8 +4,8 @@ const stripe = require("stripe")(
 
 require("dotenv").config();
 
-  YOUR_DOMAIN = "http://localhost:5000/checkout";
-  // YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
+  // YOUR_DOMAIN = "http://localhost:5000/checkout";
+  YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/";
 // else {
 //   YOUR_DOMAIN = window.location.href.split(".com")[1];
 // }
@@ -22,9 +22,17 @@ exports.createCheckoutSession = async (req, res) => {
     ],
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
+    success_url: `${YOUR_DOMAIN}`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
+
+  // axios({
+  //   method: 'patch',
+  //   url: `/lessons/${req.query.lessonId}`,
+  //   data: {
+  //     kouhaiId: user._id,
+  //   }
+  // })
 
   // exports.updateLesson = (req, res) => {
   //   Lesson.findOneAndUpdate(
