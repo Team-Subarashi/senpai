@@ -30,7 +30,8 @@ export default function Search() {
           marginLeft: "8.5vw",
           marginTop: "3vh",
           // height: "80vh",
-          backgroundColor: "lightblue",
+          backgroundColor: "#616162",
+          //border: "1px solid white"
           // overflow: "scroll",
         }}
       >

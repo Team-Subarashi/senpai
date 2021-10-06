@@ -7,11 +7,10 @@ const app = express();
 const port = process.env.PORT || 5000;
 const routes = require("./routes");
 
-
 require("dotenv").config();
 require("./config.js"); // Import DB Connection
 
-const uri = `mongodb+srv://${process.env._USER}:${process.env._PASSWORD}@senpai.v11ar.mongodb.net/senpaidb`;
+const uri = `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
