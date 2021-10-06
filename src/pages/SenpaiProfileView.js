@@ -7,6 +7,10 @@ import { blueGrey } from "@material-ui/core/colors";
 import BookNowPopover from "../components/BookNowPopover";
 import { Button, Box, Container } from "@material-ui/core";
 import { Avatar, Typography } from "@mui/material";
+import TwitterIcon from '@material-ui/icons/Twitter';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import InstagramIcon from '@material-ui/icons/Instagram';
 
 const useStyles = makeStyles((theme) => ({
   left: {
@@ -56,6 +60,29 @@ export default function SenpaiProfileView({ match, location }) {
           </Grid>
           <BookNowPopover senpaiId={match.params.id} />     
           <Grid style={{ margin: "10px", padding: "2rem" }}>
+          <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              Socials:
+            </Typography>
+            <Typography
+              style={{
+                textAlign: "left",
+                fontSize: "20px",
+              }}
+            >
+              {senpai.twitter ? <a ><TwitterIcon /></a> : null}
+              {senpai.linkedIn ? <a ><LinkedInIcon /> </a> : null}
+              {senpai.facebook ? <a ><FacebookIcon /></a> : null}
+              {senpai.facebook ? <a ><InstagramIcon /></a> : null}
+              {/* {senpai.twitter ? <a href={senpai.twitter}><TwitterIcon /></a> : null}
+              {senpai.linkedIn ? <a href={senpai.linkedIn}><LinkedInIcon /> </a> : null}
+              {senpai.facebook ? <a href={senpai.facebook}><FacebookIcon /></a> : null}
+              {senpai.facebook ? <a href={senpai.instagram}><InstagramIcon /></a> : null} */}
+            </Typography>
             {senpai.email ? <Typography
               style={{
                 textAlign: "left",
@@ -82,41 +109,6 @@ export default function SenpaiProfileView({ match, location }) {
               <div>Personal Website:</div>
               <a href={senpai.website}>{senpai.website}</a>
             </Typography> : null}
-            <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              Socials:
-            </Typography>
-          {senpai.twitter ? <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <a href={senpai.twitter}>@{senpai.twitter}</a>
-            </Typography> : null}
-          {senpai.linkedIn ? <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <a href={senpai.twitter}>LinkedIn</a>
-            </Typography> : null}
-          {senpai.facebook ? <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <a href={senpai.facebook}>Facebook</a>
-            </Typography> : null}
-          
-          
-            
           </Grid>
         </Grid>
         <Grid container xs={8} style={{display: "flex", flexDirection:"column", justifyContent:"space-between"}} >
