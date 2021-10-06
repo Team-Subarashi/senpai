@@ -4,6 +4,7 @@ module.exports = function (app) {
   const files = require("./controllers/fileController");
   const lessons = require("./controllers/LessonController");
   const stripe = require("./controllers/StripeController");
+  const messages = require("./controllers/MessageController")
 
   app.route("/users").get(users.listAllUsers).post(users.createNewUser);
   app.route("/users/:id").get(users.getOneUserByAuthId).patch(users.updateUser).delete(users.deleteUser);
@@ -21,7 +22,9 @@ module.exports = function (app) {
 
   app.route("/create-checkout-session/:priceId/:senpaiId").post(stripe.createCheckoutSession);
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
-  app.route("/stripeLessons").get(stripe.getStripeLesson)
+  app.route("/stripeLessons").get(stripe.getStripeLesson);
+
+  app.route("/messages").get(messages.getMessages);
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({
