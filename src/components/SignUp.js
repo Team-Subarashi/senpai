@@ -7,8 +7,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { getAuth, createUserWithEmailAndPassword } from '@firebase/auth';
-import { Link } from 'react-router-dom';
+import { getAuth, createUserWithEmailAndPassword, signOut } from '@firebase/auth';
+import { Link, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp() {
+  const history = useHistory();
 
   const classes = useStyles();
 
@@ -77,16 +78,21 @@ export default function SignUp() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
         axios({
           method: "post",
           url: "/users",
           data: {
             name: name,
             email: email,
-            authId: user.uid
+            authId: userCredential.user.uid
           }
         })
+        signOut(auth).then(() => {  // TEMPORARY BUGFIX FOR CREATE ACCOUNT NOT PROPERLY LOGGING IN
+          // Sign-out successful.
+        }).catch((error) => {
+          // An error happened.
+        });
+        history.push('/login')
         // ...
       })
       .catch((error) => {
