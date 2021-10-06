@@ -23,7 +23,7 @@ const options = {
 
 mongoose.connect(uri, options).then(
   () => {
-    console.log("Nice! Database connection established!");
+    console.log("Database connection established!");
     routes(app);
   },
   (err) => {
