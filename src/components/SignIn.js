@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 
@@ -41,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignIn() {
+  const history = useHistory();
+
 
   const classes = useStyles();
 
@@ -64,6 +66,7 @@ export default function SignIn() {
         // Signed in 
         const user = userCredential.user;
         // ...
+        history.push('/')
       })
       .catch((error) => {
         const errorCode = error.code;

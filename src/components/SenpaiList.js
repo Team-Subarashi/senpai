@@ -71,23 +71,40 @@ export default function SenpaiList() {
           style={{
             marginBottom: "3vh",
             height: "25vh",
+
           }}
           key={senpai._id}
         >
           <Grid
             item
             xs={4}
-            style={{ height: "90%", backgroundColor: "lightgreen" }}
+            style={{ height: "90%", backgroundColor: "#616162", border: "1px solid white" }}
           >
-              {senpai.name}
-              <Box mt={2}>
-                <img
-                  height="125px"
-                  width="125px"
-                  src={senpai.avatar}
-                />
-              </Box>
-              <Link></Link>
+            {senpai.name}
+            <Box mt={2}>
+              <img
+                height="125px"
+                width="125px"
+                src={senpai.avatar}
+              />
+            </Box>
+
+            <Link to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}>
+              <Button
+                variant="contained"
+                style={{
+                  marginTop: "1vh",
+                  backgroundColor: "purple",
+                  color: "white",
+                }}
+                onClick={() => {
+                  senpaiSetter();
+                }}
+              >
+                Go to Profile
+              </Button>
+            </Link>
+            <Link></Link>
           </Grid>
           <Grid
             item
@@ -96,7 +113,8 @@ export default function SenpaiList() {
               fontWeight: "bold",
               paddingTop: "1.cl.2vh",
               height: "90%",
-              backgroundColor: "aqua",
+              backgroundColor: "#616162",
+              border: "1px solid white"
             }}
           >
             <div>
@@ -110,7 +128,10 @@ export default function SenpaiList() {
           <Grid
             item
             xs={4}
-            style={{ height: "90%", backgroundColor: "lightyellow" }}
+            style={{
+              height: "90%", backgroundColor: "#616162",
+              border: "1px solid white"
+            }}
           >
             <Tabs class="my-tabs" defaultActiveKey="1" onChange={callback}>
               <TabPane tab="Bio" key="1">
@@ -128,22 +149,12 @@ export default function SenpaiList() {
               </TabPane>
             </Tabs>
           </Grid>
-          <Grid item xs={2}>
-            <Link to={{pathname: `/senpai/${senpai.id}`, state: {senpai}}}>
-              <Button
-                variant="contained"
-                style={{
-                  marginTop: "1vh",
-                  backgroundColor: "purple",
-                  color: "white",
-                }}
-                onClick={() => {
-                  senpaiSetter();
-                }}
-              >
-                Go to Profile
-              </Button>
-            </Link>
+          <Grid item xs={12} style={{
+            height: "100%", backgroundColor: "#303030",
+            //border: "1px solid white"
+          }} >
+
+
           </Grid>
         </Grid>
       );
