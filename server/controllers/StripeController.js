@@ -2,9 +2,13 @@ const stripe = require("stripe")(
   "sk_test_51JetOIEp77X0l0jdMfeOyoPZ5RQCBQsIwYGFHDl1oO7gp3MEcZBNIyUMIxyfjh1oV9Ti76Ql1NXNvm7vP28UCJ0X00h7n8UGYl"
 );
 
-const YOUR_DOMAIN = "http://localhost:3000/checkout";
+require("dotenv").config();
 
-
+if (process.env.NODE_ENV === "development") {
+  YOUR_DOMAIN = "http://localhost:3000/checkout";
+} else {
+  YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
+}
 exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -21,7 +25,7 @@ exports.createCheckoutSession = async (req, res) => {
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
   res.redirect(303, session.url);
-}
+};
 
 exports.createLessonAndPrice = async (req, res) => {
   const inputNewLesson = req.body;
@@ -35,11 +39,11 @@ exports.createLessonAndPrice = async (req, res) => {
     currency: "jpy",
   });
   res.send(200);
-}
+};
 
 exports.getStripeLesson = async (req, res) => {
   const products = await stripe.products.list({
     limit: 100,
   });
   res.send(products);
-}
+};
