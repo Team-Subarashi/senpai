@@ -46,7 +46,7 @@ mongoose.connect(uri, options).then(
       )
       );
       if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.resolve(__dirname, "..", "build")));
+        app.use(express.static(path.resolve(__dirname, "..", "build")));
 
   //Importing all routes to prod
 
