@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const NavBar = ({user}) => {
+const NavBar = ({ user }) => {
     const [value, setValue] = useState(0)
     const handleClickTab = (e, newValue) => {
         setValue(newValue)
@@ -76,9 +76,9 @@ const NavBar = ({user}) => {
     const signOutHandler = () => {
         const auth = getAuth();
         signOut(auth).then(() => {
-          // Sign-out successful.
+            // Sign-out successful.
         }).catch((error) => {
-          // An error happened.
+            // An error happened.
         });
     }
 
@@ -89,39 +89,29 @@ const NavBar = ({user}) => {
                     <Toolbar className={classes.appbarWrapper}>
 
                         <Typography  >
-                            <Link to={`/`} style={{color:"white"}}>
+                            <Link to={`/`} style={{ color: "white" }}>
                                 <img src={logo} alt="senpai" height="36" width="auto" />
                             </Link>
                         </Typography>
 
                         {/* <div style={{ flexGrow: 1 }}></div> */}
-                          <Link to={user.name ? `/kouhai/${user._id}` : "/login"} style={{color:"white"}}>Profile</Link>
-                          <Link to={user.name ? `/senpai/${user._id}` : "/login"} style={{color:"white"}}>Senpai Profile</Link>
-                          <Link to={user._id ? `/myLessons` : "/login"} style={{color:"white"}}>My Lessons</Link>
-                          <Link to={`/search`} style={{color:"white"}}>Find a Senpai</Link>
-                          {user.name ? user.email : <Link to="/signup" style={{color:"white"}}>Create an Account</Link> }
-                          {!user.email ? <Link to="/login" style={{color:"white"}}>Sign in</Link> : <Link to="/" onClick={signOutHandler} style={{color:"white"}}>Sign Out</Link> }
+                        <Link to={user.name ? `/kouhai/${user._id}` : "/login"} style={{ color: "white" }}>Profile</Link>
+                        <Link to={user.name ? `/senpai/${user._id}` : "/login"} style={{ color: "white" }}>Senpai Profile</Link>
+                        <Link to={user._id ? `/myLessons` : "/login"} style={{ color: "white" }}>My Lessons</Link>
+                        <Link to={`/search`} style={{ color: "white" }}>Find a Senpai</Link>
+                        {user.name ? user.email : <Link to="/signup" style={{ color: "white" }}>Create an Account</Link>}
+                        {!user.email ? <Link to="/login" style={{ color: "white" }}>Sign in</Link> : <Link to="/" onClick={signOutHandler} style={{ color: "white" }}>Sign Out</Link>}
 
                         {/* <IconButton>
                             <SortIcon aria-controls='menu' onClick={handleOpenMenu} className={classes.icon} />
                         </IconButton> */}
+
+
+
                     </Toolbar>
                 </AppBar>
 
-                {/* <Menu style={{ marginTop: '50px' }} id='menu' onClose={handleMenuClose} anchorEl={anchorEl} open={Boolean(anchorEl)}>
-                    <MenuItem onClick={handleMenuClose}>
-                        Profile
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                        Senpai Prof
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                        Find a Senpai
-                    </MenuItem>
-                    <MenuItem onClick={handleMenuClose}>
-                        Log Out
-                    </MenuItem>
-                </Menu> */}
+
             </Box>
 
         </>
