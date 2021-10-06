@@ -26,6 +26,7 @@ import ScheduleBooking from './pages/ScheduleBooking'
 import SenpaiProfileView from './pages/SenpaiProfileView'
 import Checkout from './components/Checkout'
 import MyLessons from './pages/MyLessons'
+import Messages from './pages/Messages'
 
 const useStyles = makeStyles((theme) => ({
   // root: {
@@ -85,6 +86,7 @@ function App() {
               <Route path="/room" component={Workspace} />
               <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
               <Route path="/mylessons" component={MyLessons} />
+              <Route path="/messages" component={Messages} />
             </Switch>
           </Router>
         </div>
