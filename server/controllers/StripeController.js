@@ -5,9 +5,10 @@ const stripe = require("stripe")(
 require("dotenv").config();
 
 if (process.env.NODE_ENV === "development") {
-  YOUR_DOMAIN = "http://localhost:3000/checkout";
+  YOUR_DOMAIN = "http://localhost:5000/checkout";
 } else {
-  YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
+  YOUR_DOMAIN = "http://localhost:5000/checkout";
+  // "https://subarashi-senpai.herokuapp.com/checkout";
 }
 exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -22,8 +23,33 @@ exports.createCheckoutSession = async (req, res) => {
     payment_method_types: ["card"],
     mode: "payment",
     success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
+    // success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
+
+  // axios({
+  //   method: 'patch',
+  //   url: `/lessons/${req.query.lessonId}`,
+  //   data: {
+  //     kouhaiId: user._id,
+  //   }
+  // })
+
+  // exports.updateLesson = (req, res) => {
+  //   Lesson.findOneAndUpdate(
+  //     { _id: req.params.id },
+  //     req.body,
+  //     { new: true },
+  //     (err, todo) => {
+  //       if (err) {
+  //         res.status(500).send(err);
+  //       }
+  //       res.status(200).json(todo);
+  //     }
+  //   );
+  // };
+
+  console.log(session.success_url);
   res.redirect(303, session.url);
 };
 

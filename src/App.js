@@ -15,13 +15,12 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
-import React, { useEffect, useState } from "react";
-//import Room from "./components/CodeRoom/Room";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userState } from "./atoms";
 import { ThemeProvider } from '@material-ui/core';
 import theme from "./units/theme";
-import axios from 'axios'
-import { useRecoilState } from 'recoil';
-import { userState } from './atoms';
 import ScheduleBooking from './pages/ScheduleBooking'
 import SenpaiProfileView from './pages/SenpaiProfileView'
 import Checkout from './components/Checkout'
@@ -29,12 +28,12 @@ import MyLessons from './pages/MyLessons'
 import Messages from './pages/Messages'
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   minHeight: "100vh",
-  //   backgroundColor: "#616161",
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: "cover",
-  // },
+  root: {
+    minHeight: "100vh",
+    backgroundColor: "#616161",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
 }));
 
 function App() {
@@ -44,20 +43,20 @@ function App() {
       if (user) {
         const response = await axios({
           method: "get",
-          url: `/users/${user.uid}`,
+          url: `/api/v1/users/${user.uid}`,
           data: {
-            authId: user.uid
-          }
-        })
+            authId: user.uid,
+          },
+        });
         if (response.data) {
-          console.log(response.data)
-          setUser(response.data)
+          console.log(response.data);
+          setUser(response.data);
         }
       } else {
         setUser({
           id: null,
-          email: null
-        })
+          email: null,
+        });
       }
     });
   }, []);
@@ -65,7 +64,6 @@ function App() {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      {/* // <Router> */}
 
       <div className="App">
         {/* <div > */}
@@ -91,8 +89,8 @@ function App() {
           </Router>
         </div>
       </div>
-      {/* // </Router> */}
-    </ThemeProvider>
+
+    </ThemeProvider >
   );
 }
 

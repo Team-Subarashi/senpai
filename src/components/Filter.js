@@ -31,21 +31,21 @@ export default function Filter() {
         }}
         onClick={() => toggleMenuState(!menuState)}
       >
-        Cat
+        {category}
       </Button>
       <Menu
         open={menuState}
         anchorEl={document.getElementById("categoryButton")}
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        // style={{ marginTop: "-75.5vh" }}
       >
         <MenuItem onClick={(e) => clickHandler(e)}>All</MenuItem>
-        <MenuItem onClick={(e) => clickHandler(e)}>Pottery</MenuItem>
-        <MenuItem onClick={(e) => clickHandler(e)}>Zumba</MenuItem>
-        <MenuItem onClick={(e) => clickHandler(e)}>Dancing</MenuItem>
-        <MenuItem onClick={(e) => clickHandler(e)}>Archery</MenuItem>
-        <MenuItem onClick={(e) => clickHandler(e)}>Painting</MenuItem>
-        <MenuItem onClick={(e) => clickHandler(e)}>Cooking</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>D3</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>WebGL</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>Canvas</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>OpenGL</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>WebGPU</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>three.js</MenuItem>
+        <MenuItem onClick={(e) => clickHandler(e)}>CSS</MenuItem>
       </Menu>
     </Grid>
   );

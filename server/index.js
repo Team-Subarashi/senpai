@@ -1,16 +1,29 @@
+require("dotenv").config();
+// const port = process.env.NODE_ENV === "production"
+//   ? process.env.PORT
+//   : 8080;
+
+const port = process.env.PORT || 8080;
+
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const app = express();
-const port = process.env.PORT || 5000;
+const { Server } = require("socket.io")
 const routes = require("./routes");
 const http = require('http');
-const { Server } = require("socket.io")
+
 
 
 const server = http.createServer(app);
+
+
+app.get('/', (req, res) => {
+  res.send('<h1>Hello world</h1>');
+});
+
 const io = new Server(server, {
   cors: {
     origin: "*"
@@ -30,8 +43,8 @@ io.on("connection", (socket) => {
   })
 })
 
-require("dotenv").config();
-require("./config.js"); // Import DB Connection
+
+
 
 const uri = `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
 const options = {

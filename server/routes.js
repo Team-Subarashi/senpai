@@ -6,16 +6,25 @@ module.exports = function (app) {
   const stripe = require("./controllers/StripeController");
   const messages = require("./controllers/MessageController")
 
-  app.route("/users").get(users.listAllUsers).post(users.createNewUser);
-  app.route("/users/:id").get(users.getOneUserByAuthId).patch(users.updateUser).delete(users.deleteUser);
-  app.route("/users/:id/lessons").get(lessons.getUserLessons);
-
+  app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
+  app
+    .route("/api/v1/users/:id")
+    .get(users.getOneUserByAuthId)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
+  app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
   app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
 
 
-  app.route("/lessons").get(lessons.listAllLessons).post(lessons.createNewLesson);
-  app.route("/lessons/:id").patch(lessons.updateLesson).delete(lessons.deleteLesson);
+  app
+    .route("/lessons")
+    .get(lessons.listAllLessons)
+    .post(lessons.createNewLesson);
+  app
+    .route("/lessons/:id")
+    .patch(lessons.updateLesson)
+    .delete(lessons.deleteLesson);
 
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
@@ -25,6 +34,10 @@ module.exports = function (app) {
   app.route("/stripeLessons").get(stripe.getStripeLesson);
 
   app.route("/messages").get(messages.getMessages);
+
+  app
+    .route("/create-checkout-session/:priceId/:senpaiId")
+    .post(stripe.createCheckoutSession);
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({
@@ -42,5 +55,4 @@ module.exports = function (app) {
   //   });
   //   res.redirect(303, session.url);
   // });
-
 };
