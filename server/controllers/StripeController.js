@@ -1,12 +1,11 @@
-
 const stripe = require("stripe")(
   "sk_test_51JetOIEp77X0l0jdMfeOyoPZ5RQCBQsIwYGFHDl1oO7gp3MEcZBNIyUMIxyfjh1oV9Ti76Ql1NXNvm7vP28UCJ0X00h7n8UGYl"
 );
 
 require("dotenv").config();
 
-  YOUR_DOMAIN = "http://localhost:5000/checkout";
-  // YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
+// YOUR_DOMAIN = "http://localhost:5000/checkout";
+YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
 // else {
 //   YOUR_DOMAIN = window.location.href.split(".com")[1];
 // }
@@ -28,7 +27,8 @@ exports.createCheckoutSession = async (req, res) => {
     ],
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
+    success_url: `${YOUR_DOMAIN}/${req.query.lesson_id}?success=true`,
+    // success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
 
@@ -54,8 +54,7 @@ exports.createCheckoutSession = async (req, res) => {
   //   );
   // };
 
-
-  console.log(session.success_url)
+  console.log(session.success_url);
   res.redirect(303, session.url);
 };
 
