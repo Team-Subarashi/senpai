@@ -1,13 +1,26 @@
 import React from 'react';
 import MessageList from '../components/MessageList';
 import io from 'socket.io-client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { roomAtom } from '../atoms'
+import axios from 'axios';
 
-const socket = io.connect("http://localhost:3001")//useeffect!!!! first 
+
 
 const Messages = () => {
+    const [socket, setSocket] = useState("")
+
+    // const socket = io.connect("http://localhost:3001")//useeffect!!!! first 
+    useEffect(() => {
+        const socket = io.connect("http://localhost:3001")
+        setSocket(socket)
+    }, [])
+
     const [userName, setUserName] = useState("");
-    const [room, setRoom] = useState("");
+    // const [room, setRoom] = useState("");
+
+    const [room, setRoom] = useRecoilState(roomAtom)//recoil
 
 
     const joinRoom = () => {
