@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -46,32 +46,29 @@ export default function SignUp() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
-  const [passwordConfirm, setPasswordConfirm] = useState("")
-  const [errorMessage, setErrorMessage] = useState("")
-
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const passwordChangeHandler = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
   const passwordConfirmChangeHandler = (e) => {
-    setPasswordConfirm(e.target.value)
-  }
+    setPasswordConfirm(e.target.value);
+  };
   const emailChangeHandler = (e) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
   const nameChangeHandler = (e) => {
-    setName(e.target.value)
-  }
-
+    setName(e.target.value);
+  };
 
   const submitHandler = () => {
     if (password !== passwordConfirm) {
-      setErrorMessage("Passwords don't match")
-      return
+      setErrorMessage("Passwords don't match");
+      return;
     }
-    setErrorMessage("")
-
+    setErrorMessage("");
 
     const auth = getAuth();
 
@@ -80,7 +77,7 @@ export default function SignUp() {
         // Signed in 
         axios({
           method: "post",
-          url: "/users",
+          url: "/api/v1/users",
           data: {
             name: name,
             email: email,
@@ -98,13 +95,13 @@ export default function SignUp() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)
-        setErrorMessage(error.message)
+        console.log(errorCode);
+        console.log(errorMessage);
+        setErrorMessage(error.message);
 
         // ..
       });
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -173,8 +170,8 @@ export default function SignUp() {
             color="primary"
             className={classes.submit}
             onClick={(e) => {
-              e.preventDefault()
-              submitHandler()
+              e.preventDefault();
+              submitHandler();
             }}
           >
             Sign Up

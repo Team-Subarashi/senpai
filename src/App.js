@@ -15,25 +15,24 @@ import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import SignOut from "./components/SignOut";
-import React, { useEffect, useState } from "react";
-//import Room from "./components/CodeRoom/Room";
+import React, { useEffect } from "react";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userState } from "./atoms";
 import { ThemeProvider } from '@material-ui/core';
 import theme from "./units/theme";
-import axios from 'axios'
-import { useRecoilState } from 'recoil';
-import { userState } from './atoms';
-import ScheduleBooking from './pages/ScheduleBooking'
-import SenpaiProfileView from './pages/SenpaiProfileView'
-import Checkout from './components/Checkout'
-import MyLessons from './pages/MyLessons'
+import ScheduleBooking from "./pages/ScheduleBooking";
+import SenpaiProfileView from "./pages/SenpaiProfileView";
+import Checkout from "./components/Checkout";
+import MyLessons from "./pages/MyLessons";
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   minHeight: "100vh",
-  //   backgroundColor: "#616161",
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: "cover",
-  // },
+  root: {
+    minHeight: "100vh",
+    backgroundColor: "#616161",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
 }));
 
 function App() {
@@ -43,20 +42,20 @@ function App() {
       if (user) {
         const response = await axios({
           method: "get",
-          url: `/users/${user.uid}`,
+          url: `/api/v1/users/${user.uid}`,
           data: {
-            authId: user.uid
-          }
-        })
+            authId: user.uid,
+          },
+        });
         if (response.data) {
-          console.log(response.data)
-          setUser(response.data)
+          console.log(response.data);
+          setUser(response.data);
         }
       } else {
         setUser({
           id: null,
-          email: null
-        })
+          email: null,
+        });
       }
     });
   }, []);
@@ -64,34 +63,29 @@ function App() {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      {/* // <Router> */}
 
-      <div className="App">
-        {/* <div > */}
-        <div className={classes.root}>
-          <Router>
-
-            <CssBaseline />
-
-            <NavBar user={user} />
-            <Switch>
-              <Route exact path="/" component={Splash} />
-              <Route path="/signup" component={SignUp} />
-              <Route exact path="/kouhai/:id" component={Kohai} />
-              <Route path="/login" component={SignIn} />
-              <Route exact path="/senpai/:id" component={SenpaiProfileView} />
-              <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
-              <Route path="/search" component={Search} />
-              <Route path="/room" component={Workspace} />
-              <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
-              <Route path="/mylessons" component={MyLessons} />
-            </Switch>
-          </Router>
-        </div>
+    <div className="App">
+      <div className={classes.root}>
+        <Router>
+          <CssBaseline />
+          <NavBar user={user} />
+          <Switch>
+            <Route exact path="/" component={Splash} />
+            <Route path="/signup" component={SignUp} />
+            <Route exact path="/kouhai/:id" component={Kohai} />
+            <Route path="/login" component={SignIn} />
+            <Route exact path="/senpai/:id" component={SenpaiProfileView} />
+            <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
+            <Route path="/search" component={Search} />
+            <Route path="/room" component={Workspace} />
+            <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+            <Route path="/mylessons" component={MyLessons} />
+          </Switch>
+        </Router>
       </div>
-      {/* // </Router> */}
-    </ThemeProvider>
-  );
+    </div>
+  </ThemeProvider>
+);
 }
 
 export default App;

@@ -3,10 +3,9 @@ import Editor from "@monaco-editor/react";
 import { firebaseConfig } from "../../firebase";
 import firebase from "firebase/compat/app";
 import "firebase/compat/database";
-import { fromMonaco } from "@hackerrank/firepad";
+import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
 import { useRecoilValueLoadable, useRecoilState } from "recoil";
-import { fileQuery } from "../../atoms";
 import axios from "axios";
 import { loadedFiles, loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
@@ -14,16 +13,13 @@ function CodeEditor({ activeFiles }) {
   const editorRef = useRef(null);
   const [editorLoaded, setEditorLoaded] = useState(false);
   const [fileName, setFileName] = useState("script.js");
+  const lessonId = window.location.href.split("room/")[1];
+
 
   const [html, setHTML] = useRecoilState(loadedHTML);
   const [css, setCSS] = useRecoilState(loadedCSS);
   const [js, setJS] = useRecoilState(loadedJS);
   // const [activeFiles, setActiveFiles] = useRecoilState(loadedFiles);
-
-  // useEffect(async () => {
-  //   const files = await axios.get("/files");
-  //   setActiveFiles(files.data[0]);
-  // }, []);
 
   useEffect(() => {
     setHTML(activeFiles.html);
@@ -50,9 +46,6 @@ function CodeEditor({ activeFiles }) {
   };
   // const loadedFiles = useRecoilValueLoadable(fileQuery)
 
-  // const loadedFilesJS =  loadedFiles.contents.data.js
-  // const loadedFilesCSS = loadedFiles.contents.data.css
-  // const loadedFilesHTML = loadedFiles.contents.data.html
 
   function handleEditorDidMount(editor, monaco) {
     editorRef.current = editor;
@@ -60,11 +53,6 @@ function CodeEditor({ activeFiles }) {
   }
 
   useEffect(() => {
-    // if (!firebase.app.length) {
-    //   firebase.initializeApp(firebaseConfig);
-    // } else {
-    //   firebase.app();
-    // }
 
     firebase.initializeApp(firebaseConfig);
   }, []);
@@ -74,7 +62,12 @@ function CodeEditor({ activeFiles }) {
       return;
     }
 
-    const dbRef = firebase.database().ref().child(`pair004`);
+    //TODO TRY ADDING LESSON ID AS REF
+    const dbRef = firebase.database()
+      .ref(
+        // lessonId
+      )
+      .child(`${lessonId}`);
     const firepad = fromMonaco(dbRef, editorRef.current);
 
     try {
@@ -122,8 +115,8 @@ function CodeEditor({ activeFiles }) {
           fileName === "script.js"
             ? handleJS
             : fileName === "index.html"
-            ? handleHTML
-            : handleCSS
+              ? handleHTML
+              : handleCSS
         }
       />
     </div>
