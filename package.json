@@ -70,7 +70,7 @@
     "serve": "node server/index.js",
     "dev": "nodemon server/index.js"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:8080",
   "eslintConfig": {
     "extends": [
       "react-app",

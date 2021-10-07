@@ -11,7 +11,9 @@ const lessons = require("./controllers/LessonController");
 const stripe = require("./controllers/StripeController");
 
 require("dotenv").config();
-const port = process.env.PORT || 8080;
+process.env.NODE_ENV === "production"
+  ? (port = process.env.PORT)
+  : (port = 8080);
 
 const uri = process.env.MONGODB_URI;
 const options = {
@@ -77,6 +79,12 @@ if (process.env.NODE_ENV === "production") {
     .post(stripe.createCheckoutSession);
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
+
+  app.get("/checkout", (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../../", "senpai", "build", "index.html")
+    );
+  });
 
   app.get("*", (req, res) => {
     routes(app);

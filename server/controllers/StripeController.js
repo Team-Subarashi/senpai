@@ -4,17 +4,12 @@ const stripe = require("stripe")(
 
 require("dotenv").config();
 
-// YOUR_DOMAIN = "http://localhost:5000/checkout";
-YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
-// else {
-//   YOUR_DOMAIN = window.location.href.split(".com")[1];
-// }
-
-// if (process.env.NODE_ENV === "development") {
-//   YOUR_DOMAIN = "http://localhost:3000/checkout";
-// } else {
-//   YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
-// }
+if (process.env.NODE_ENV === "development") {
+  YOUR_DOMAIN = "http://localhost:5000/checkout";
+} else {
+  YOUR_DOMAIN = "http://localhost:5000/checkout";
+  // "https://subarashi-senpai.herokuapp.com/checkout";
+}
 exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -27,7 +22,7 @@ exports.createCheckoutSession = async (req, res) => {
     ],
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}/${req.query.lesson_id}?success=true`,
+    success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
     // success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
     cancel_url: `${YOUR_DOMAIN}?canceled=true`,
   });
