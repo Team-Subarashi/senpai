@@ -1,40 +1,25 @@
-//import './index.css'
+import React, { useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js";
 import Splash from "./pages/Splash";
 import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
-
 import Kohai from "./pages/Kohai";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import { makeStyles } from "@material-ui/core/styles";
-import { CssBaseline } from "@material-ui/core";
-import { auth } from "./firebase";
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
-import SignOut from "./components/SignOut";
-import React, { useEffect, useState } from "react";
-//import Room from "./components/CodeRoom/Room";
-import { ThemeProvider } from '@material-ui/core';
+import ScheduleBooking from './pages/ScheduleBooking';
+import SenpaiProfileView from './pages/SenpaiProfileView';
+import Checkout from './components/Checkout';
+import MyLessons from './pages/MyLessons';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "@firebase/auth";
+import {ThemeProvider} from '@mui/material/styles';
 import theme from "./units/theme";
 import axios from 'axios'
 import { useRecoilState } from 'recoil';
 import { userState } from './atoms';
-import ScheduleBooking from './pages/ScheduleBooking'
-import SenpaiProfileView from './pages/SenpaiProfileView'
-import Checkout from './components/Checkout'
-import MyLessons from './pages/MyLessons'
-
-const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   minHeight: "100vh",
-  //   backgroundColor: "#616161",
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: "cover",
-  // },
-}));
+import CssBaseline from "@mui/material/CssBaseline";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -61,18 +46,11 @@ function App() {
     });
   }, []);
 
-  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      {/* // <Router> */}
-
-      <div className="App">
-        {/* <div > */}
-        <div className={classes.root}>
+      <CssBaseline>
+        <div className="App">
           <Router>
-
-            <CssBaseline />
-
             <NavBar user={user} />
             <Switch>
               <Route exact path="/" component={Splash} />
@@ -88,9 +66,9 @@ function App() {
             </Switch>
           </Router>
         </div>
-      </div>
-      {/* // </Router> */}
+      </CssBaseline>
     </ThemeProvider>
+
   );
 }
 

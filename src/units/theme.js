@@ -1,14 +1,17 @@
-import { createTheme } from '@material-ui/core'
+import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       main: '#673AB7',
-      secondary: '#616161',
-      contrastText: '#EEEEEE'
     },
-    type: 'dark'
+    background: {
+      default: '#616161'
+    },
   },
+  contrastThreshhold: 3,
+  tonalOffset: 0.2,
   shape: {
     borderRadius: "4px"
   },
@@ -23,11 +26,15 @@ const theme = createTheme({
     fontWeightLight: 300,
     fontWeightMedium: 400,
     fontWeightRegular: 500,
-    fontWeightBold: 700,
-    h1: {
+    fontWeightBold: 700,  
+    landingTitle: {
       fontFamily: "Nunito",
-    }
-  
+      fontSize: "3.5rem",
+    },
+    landingContent: {
+      fontFamily: "Nunito",
+      fontSize: "1rem",
+    },
   }
 })
 
