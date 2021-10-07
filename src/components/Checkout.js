@@ -32,10 +32,10 @@ export default function Checkout({ match, location }) {
     const query = new URLSearchParams(window.location.search);
 
     // console.log(query);
-    let trueMess = window.location.href.split("success=")[1];
+    let trueMess = window.location.href.split("?")[1];
     // console.log(trueMess);
 
-    if (trueMess === "true") {
+    if (trueMess === "success=true") {
       // if (query.get("success")) {
       setMessage("Lesson booked!");
       // console.log(user._id);
