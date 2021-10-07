@@ -11,53 +11,30 @@ import {
   DateNavigator
 } from '@devexpress/dx-react-scheduler-material-ui';
 import axios from 'axios';
-import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Room from '@material-ui/icons/Room';
-import { Redirect } from 'react-router-dom';
 import { userState } from '../atoms';
 import { useRecoilValue } from 'recoil';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = theme => ({
   textCenter: {
     textAlign: 'center',
-  },
-  firstRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/Lobby-4.jpg)',
-  },
-  secondRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-4.jpg)',
-  },
-  thirdRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
-  },
-  header: {
-    height: '260px',
-    backgroundSize: 'cover',
-  },
-  commandButton: {
-    backgroundColor: 'rgba(255,255,255,0.65)',
   },
   container: {
     display: 'flex',
     marginBottom: theme.spacing(2),
     justifyContent: 'flex-end',
   },
-  text: {
-    ...theme.typography.h6,
-    marginRight: theme.spacing(2),
-  },
 });
 
-export default function MyLessons({match}) {
+export default function MyLessons() {
   const user = useRecoilValue(userState)
-  const [selectedDate, setSelectedDate] = useState(Date.now())
   const [schedulerData , setSchedulerData] = useState([])
-  const [mainResourceName, setMainResourceName] = useState('members')
-  const [resources, setResources] = useState([])
+  const resources = [{
+    fieldName: 'userIsSenpai',
+    title: 'userIsSenpai',
+    instances: [{id: true, text: "Senpai", color: "#5c6bc0"}, {id: false, text: "Kohai", color: "#26a69a"}],
+  }]
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,40 +42,21 @@ export default function MyLessons({match}) {
       if (response.data) {
         console.log(response.data)
         const temp = response.data.map((lesson) => {
-          lesson.title = "Active Lesson"
-          
+          lesson.title = lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
+          lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
           return lesson
         })
         setSchedulerData(temp)
       }
     }
-    fetchData()
+    if (user._id) {
+      fetchData()
+    }
+
   }, [user])
 
-  const ResourceSwitcher = withStyles(styles, { name: 'ResourceSwitcher' })(
-    ({
-      mainResourceName, onChange, classes, resources,
-    }) => (
-      <div className={classes.container}>
-        <div className={classes.text}>
-          Main resource name:
-        </div>
-        <Select
-          value={mainResourceName}
-          onChange={e => onChange(e.target.value)}
-        >
-          {resources.map(resource => (
-            <MenuItem key={resource.fieldName} value={resource.fieldName}>
-              {resource.title}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-    ),
-  );
-
   const Content = withStyles(styles, { name: 'Content' })(({
-    children, appointmentData, classes, ...restProps
+    appointmentData, classes, ...restProps
   }) => (
     <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
       <Grid container alignItems="center">
@@ -111,23 +69,14 @@ export default function MyLessons({match}) {
     </AppointmentTooltip.Content>
   ));
 
-  function changeMainResource(mainResourceName) {
-    setMainResourceName(mainResourceName);
-  }
-
   return (
     <>
-      <ResourceSwitcher 
-        resources={resources}
-        mainResourceName={mainResourceName}
-        onChange={changeMainResource}
-      />
       <Paper>
         <Scheduler
           data={schedulerData}
         >
           <ViewState
-            defaultCurrentDate={selectedDate}
+            defaultCurrentDate={Date.now()}
           />
           <WeekView
             startDayHour={9}
@@ -138,7 +87,7 @@ export default function MyLessons({match}) {
           <AppointmentTooltip contentComponent={Content} />
           <Resources 
             data={resources}
-            mainResourceName={mainResourceName}
+            mainResourceName={'userIsSenpai'}
           />
           <Toolbar />
           <DateNavigator />

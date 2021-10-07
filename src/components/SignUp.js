@@ -91,6 +91,7 @@ export default function SignUp() {
           // Sign-out successful.
         }).catch((error) => {
           // An error happened.
+          console.log(error)
         });
         history.push('/login')
         // ...

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Grid } from "@material-ui/core";
+import React from "react";
+import Grid from "@mui/material/Grid";
 import { Avatar, Typography } from "@mui/material";
-import axios from "axios";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -10,40 +9,23 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 
-const Kohai = ({ match }) => {
-  const [state, setState] = useState([]);
+const Kohai = () => {
   const user = useRecoilValue(userState);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get(`/kouhai/${match.params.id}/lessons`);
-      setState(response.data);
-    };
-    fetchData();
-  }, []);
 
   return (
     <Grid
-      className="main"
       container
       xs={12}
-      justify="space-between"
-      style={{
-        height: "100vh",
-        padding: "50px",
-        backgroundColor: "#616161",
-      }}
+      justifyContent="center"
+      p={4}
+      bgcolor="#616161"
     >
       <Grid
-        className="left"
         item
         xs={3}
-        style={{
-          height: "85vh",
-          backgroundColor: "#424242",
-          borderRadius: "4px",
-          padding: "30px",
-        }}
+        p={5}
+        bgcolor="#424242"
+        
       >
         <Typography
           style={{ fontFamily: "Nunito", fontSize: "25px", color: "white" }}

@@ -10,7 +10,7 @@ const theme = createTheme({
     type: 'dark'
   },
   shape: {
-    // borderRadius: "4px"
+    borderRadius: "4px"
   },
   spacing: 4,
   text : {

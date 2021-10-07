@@ -5,8 +5,8 @@ module.exports = {
     "node": true
   },
   "extends": [
-    // "eslint:recommended",
-    // "plugin:react/recommended"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -19,6 +19,7 @@ module.exports = {
     "react"
   ],
   "rules": {
-    "indent": ["error", 2]
+    "indent": ["warn", 2],
+    "no-irregular-whitespace": "warn"
   }
 };

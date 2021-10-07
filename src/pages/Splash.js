@@ -1,16 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import images from '../images/round_edges.png'
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "200vh",
-    backgroundColor: '#616161',
+    backgroundColor: theme.palette.primary.secondary,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
