@@ -16,7 +16,7 @@ const ProductDisplay = () => (
         <h5>$20.00</h5>
       </div>
     </div>
-    <form action="/create-checkout-session/temp" method="POST">
+    <form action="/#/create-checkout-session/temp" method="POST">
       <button type="submit">Checkout</button>
     </form>
   </section>
@@ -31,10 +31,15 @@ export default function Checkout({ match, location }) {
 
     const query = new URLSearchParams(window.location.search);
 
-    if (query.get("success")) {
-      setMessage("Order placed! You will receive an email confirmation.");
-      console.log(user._id);
-      console.log(match.params.lessonId);
+    // console.log(query);
+    let trueMess = window.location.href.split("success=")[1];
+    // console.log(trueMess);
+
+    if (trueMess === "true") {
+      // if (query.get("success")) {
+      setMessage("Lesson booked!");
+      // console.log(user._id);
+      // console.log(match.params.lessonId);
       axios({
         method: "patch",
         url: `/lessons/${match.params.lessonId}`,
