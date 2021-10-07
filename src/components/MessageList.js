@@ -3,7 +3,7 @@ import React from 'react'
 const MessageList = () => {
     return (
         <div>
-            Hi this  is my Message
+            Fun Chatting Room!
         </div>
     )
 }
