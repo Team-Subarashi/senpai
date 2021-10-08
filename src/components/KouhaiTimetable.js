@@ -11,7 +11,7 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 import axios from 'axios';
 import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Room from '@material-ui/icons/Room';
 import { Redirect } from 'react-router-dom';
