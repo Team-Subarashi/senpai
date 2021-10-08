@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles'
+import { createTheme } from '@material-ui/core/styles'
 
 const theme = createTheme({
   palette: {
@@ -17,28 +17,52 @@ const theme = createTheme({
     borderRadius: "4px"
   },
   spacing: 4,
-  text : {
-    primary: "#fff",
-    secondary: "rgba(255,255,255,0.7)"
-  },
   typography: {
     htmlFontSize: 16,
     fontSize: 14,
     fontWeightLight: 300,
     fontWeightMedium: 400,
     fontWeightRegular: 500,
-    fontWeightBold: 700,  
-    landingTitle: {
+    fontWeightBold: 700,
+    h1: {
       fontFamily: "Nunito",
-      fontSize: "3.5rem",
+      fontSize: "2.5rem",
+      color: "white",
+      textAlign: "left",
+
     },
-    landingContent: {
+    h2: {
       fontFamily: "Nunito",
-      fontSize: "1rem",
+      fontSize: "2rem",
+      color: "white",
     },
-    navbar: {
+    h3: {
       fontFamily: "Nunito",
+      fontSize: "1.8rem",
+      color: "white",
+      textAlign: "left",
+
     },
+    h4: {
+      fontFamily: "Nunito",
+      fontSize: "1.6rem",
+      color: "white",
+      textAlign: "left",
+
+    },
+    h5: {
+      fontFamily: "Nunito",
+      fontSize: "1.4rem",
+      color: "white",
+      textAlign: "left",
+    },
+    h6: {
+      fontFamily: "Nunito",
+      fontSize: "1.2rem",
+      color: "white",
+      textAlign: "left",
+
+    }
   },
   components: {
     MuiAppBar: {
