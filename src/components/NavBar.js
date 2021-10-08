@@ -1,12 +1,13 @@
 import React from "react";
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import useTheme from '@mui/styles/useTheme';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@mui/material/Toolbar';
+import Toolbar from '@material-ui/core/Toolbar';
 import logo from '../logo/logo_cropped.png';
-import Box from '@mui/material/Box';
+import Box from '@material-ui/core/Box';
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from '@firebase/auth'
+import { useRecoilValue } from 'recoil'
+import { userState } from '../atoms'
 
 const useStyles = makeStyles(() => ({
   appbar: {
@@ -20,8 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }))
 
-const NavBar = () => {
-  const user = useRecoilValue(userState)
+const NavBar = ({user}) => {
   const classes = useStyles()
 
   const signOutHandler = () => {
