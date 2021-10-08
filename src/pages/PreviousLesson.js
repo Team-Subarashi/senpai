@@ -62,7 +62,6 @@ const PreviousLesson = ({ lessonProp }) => {
             ${date.getMinutes()}分`}
         </p>
       </Grid>
-      {console.log(lesson.endDate)}
       {console.log("timestamp", date)}
       <Grid item xs={3}>
         <DropDown />
@@ -72,4 +71,3 @@ const PreviousLesson = ({ lessonProp }) => {
 };
 
 export default PreviousLesson;
-//

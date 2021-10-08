@@ -63,7 +63,40 @@ export default function MyLessons({ match }) {
   const [schedulerData, setSchedulerData] = useState([]);
   const [mainResourceName, setMainResourceName] = useState("members");
   const [resources, setResources] = useState([]);
-  const [previewsLessons, setPreviewsLessons] = useState([]);
+  const [previousLessons, setPreviousLessons] = useState([]);
+  const [currentLessons, setCurrentLessons] = useState([]);
+
+  // please keep this to refactor
+  // to use this you need to take the useEffect out from PreviousLesson file since this no longer gives promise
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
+  //     if (response.data) {
+  //       const temp = response.data.map((lesson) => {
+  //         lesson.title = "Active Lesson";
+  //         return lesson;
+  //       });
+  //       setSchedulerData(temp);
+
+  //       setCurrentLessons(temp);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [user]);
+  // useEffect(() => {
+  //   const fetchLessonPartner = async (targetLessons) => {
+  //     const requestList = targetLessons.map((lesson) => {
+  //       return axios.get(`/senpai/${lesson.senpaiId}`);
+  //     });
+
+  //     Promise.all(requestList).then((response) => {
+  //       const lessons = response.map((r) => r.data);
+  //       setPreviousLessons(lessons);
+  //     });
+  //   };
+  // fetchLessonPartner(currentLessons);
+  // }, [currentLessons]);
 
   useEffect(() => {
     const fetchLessonPartner = async (targetLessons) => {
@@ -77,7 +110,7 @@ export default function MyLessons({ match }) {
         const combinedObject = _.assignIn(lesson, lessonPartnerObj);
         return combinedObject;
       });
-      setPreviewsLessons(resultLessons);
+      setPreviousLessons(resultLessons);
     };
 
     const fetchData = async () => {
@@ -162,7 +195,8 @@ export default function MyLessons({ match }) {
             overflow: "auto",
           }}
         >
-          {previewsLessons.map((lesson) => {
+          {previousLessons.map((lesson) => {
+            console.log(lesson);
             return <PreviousLesson lessonProp={lesson} />;
           })}
         </Paper>
