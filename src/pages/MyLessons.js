@@ -152,11 +152,21 @@ export default function MyLessons({ match }) {
           <DateNavigator />
         </Scheduler>
       </Paper>
-      {/* <Grid xs={12} style={{ height: "50vh" }}> */}
-      {previewsLessons.map((lesson) => {
-        return <PreviousLesson lessonProp={lesson} />;
-      })}
-      {/* </Grid> */}
+      <Grid xs={12} container>
+        <Paper
+          style={{
+            marginTop: "100px",
+            marginBottom: "100px",
+            maxHeight: 300,
+            width: "100%",
+            overflow: "auto",
+          }}
+        >
+          {previewsLessons.map((lesson) => {
+            return <PreviousLesson lessonProp={lesson} />;
+          })}
+        </Paper>
+      </Grid>
     </>
   );
 }
