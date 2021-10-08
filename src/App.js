@@ -14,13 +14,12 @@ import MyLessons from './pages/MyLessons';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "@firebase/auth";
-import {ThemeProvider} from '@mui/material/styles';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./units/theme";
 import axios from 'axios'
 import { useRecoilState } from 'recoil';
 import { userState } from './atoms';
-import CssBaseline from "@mui/material/CssBaseline";
-
 function App() {
   const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
@@ -68,7 +67,6 @@ function App() {
         </div>
       </CssBaseline>
     </ThemeProvider>
-
   );
 }
 
