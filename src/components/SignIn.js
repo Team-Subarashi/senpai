@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import Container from '@mui/material/Container';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { Link, useHistory } from 'react-router-dom';
@@ -112,6 +112,7 @@ export default function SignIn() {
             onChange={(e) => passwordChangeHandler(e)}
           />
           <Button
+            sx={{my:5}}
             type="submit"
             fullWidth
             variant="contained"

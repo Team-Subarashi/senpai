@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import makeStyles from '@mui/styles/makeStyles';
+import Container from '@mui/material/Container';
 import { getAuth, createUserWithEmailAndPassword, signOut } from '@firebase/auth';
 import { Link, useHistory } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Alert from '@material-ui/lab/Alert';
+import Grid from '@mui/material/Grid';
+import Alert from '@mui/lab/Alert';
 import axios from 'axios';
+import useTheme from '@mui/styles/useTheme'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,25 +23,15 @@ const useStyles = makeStyles((theme) => ({
     borderColor: 'gray',
     padding: theme.spacing(9)
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  signUpText: {
-    color: "#fff"
-  }
 }));
 
 export default function SignUp() {
   const history = useHistory();
-
+  const theme = useTheme();
   const classes = useStyles();
 
   const [name, setName] = useState("");
@@ -49,7 +39,6 @@ export default function SignUp() {
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
   const [errorMessage, setErrorMessage] = useState("")
-
 
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value)
@@ -64,14 +53,12 @@ export default function SignUp() {
     setName(e.target.value)
   }
 
-
   const submitHandler = () => {
     if (password !== passwordConfirm) {
       setErrorMessage("Passwords don't match")
       return
     }
     setErrorMessage("")
-
 
     const auth = getAuth();
 
@@ -102,19 +89,17 @@ export default function SignUp() {
         console.log(errorCode)
         console.log(errorMessage)
         setErrorMessage(error.message)
-
         // ..
       });
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Container component="main" maxWidth="xs" sx={{p:10}}>
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+        <Avatar>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography className={classes.signUpText} component="h1" variant="h5">
+        <Typography variant="h5" color={theme.palette.text.primary}>
           Sign Up
         </Typography>
         {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
@@ -168,6 +153,7 @@ export default function SignUp() {
             onChange={(e) => passwordConfirmChangeHandler(e)}
           />
           <Button
+            sx={{my:5}}
             type="submit"
             fullWidth
             variant="contained"
