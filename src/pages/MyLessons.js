@@ -11,8 +11,10 @@ import {
   DateNavigator
 } from '@devexpress/dx-react-scheduler-material-ui';
 import axios from 'axios';
-import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button'
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
 import { userState } from '../atoms';
 import { useRecoilValue } from 'recoil';
 
@@ -38,9 +40,9 @@ export default function MyLessons() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`/users/${user._id}/lessons`)
+      const response = await axios.get(`/api/v1/users/${user._id}/lessons`)
       if (response.data) {
-        console.log(response.data)
+        // console.log(response.data)
         const temp = response.data.map((lesson) => {
           lesson.title = lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
           lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
@@ -63,7 +65,11 @@ export default function MyLessons() {
         <Grid item xs={2} className={classes.textCenter}>
         </Grid>
         <Grid item xs={10}>
-          <button type="submit">Join Room</button>
+          <Link to={`/room/${appointmentData._id}`}>
+            <Button>
+                Join Room
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>

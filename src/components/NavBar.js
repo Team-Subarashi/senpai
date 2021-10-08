@@ -6,8 +6,6 @@ import Toolbar from '@mui/material/Toolbar';
 import logo from '../logo/logo_cropped.png';
 import Box from '@mui/material/Box';
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { userState } from "../atoms";
 import { getAuth, signOut } from '@firebase/auth'
 
 const useStyles = makeStyles(() => ({

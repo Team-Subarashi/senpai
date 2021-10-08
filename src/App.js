@@ -5,21 +5,21 @@ import Splash from "./pages/Splash";
 import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
 import Kohai from "./pages/Kohai";
-import SignUp from "./components/SignUp";
-import SignIn from "./components/SignIn";
-import ScheduleBooking from './pages/ScheduleBooking';
-import SenpaiProfileView from './pages/SenpaiProfileView';
-import Checkout from './components/Checkout';
-import MyLessons from './pages/MyLessons';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "@firebase/auth";
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
-import CssBaseline from "@material-ui/core/CssBaseline";
+import SignUp from "./components/SignUp";
+import SignIn from "./components/SignIn";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userState } from "./atoms";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
-import axios from 'axios'
-import { useRecoilState } from 'recoil';
-import { userState } from './atoms';
+import ScheduleBooking from "./pages/ScheduleBooking";
+import SenpaiProfileView from "./pages/SenpaiProfileView";
+import Checkout from "./components/Checkout";
+import MyLessons from "./pages/MyLessons";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -28,20 +28,20 @@ function App() {
       if (user) {
         const response = await axios({
           method: "get",
-          url: `/users/${user.uid}`,
+          url: `/api/v1/users/${user.uid}`,
           data: {
-            authId: user.uid
-          }
-        })
+            authId: user.uid,
+          },
+        });
         if (response.data) {
-          console.log(response.data)
-          setUser(response.data)
+          console.log(response.data);
+          setUser(response.data);
         }
       } else {
         setUser({
           id: null,
-          email: null
-        })
+          email: null,
+        });
       }
     });
   }, []);
@@ -50,7 +50,8 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
-        <Router>
+        <Router hashType="slash">
+          <CssBaseline />
           <NavBar user={user} />
           <Switch>
             <Route exact path="/" component={Splash} />
@@ -61,7 +62,10 @@ function App() {
             <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
             <Route path="/search" component={Search} />
             <Route path="/room" component={Workspace} />
-            <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+            <Route
+              path="/checkout/:senpaiId/:lessonId"
+              component={Checkout}
+            />
             <Route path="/mylessons" component={MyLessons} />
           </Switch>
         </Router>

@@ -6,9 +6,10 @@ require("dotenv").config();
 
 let YOUR_DOMAIN
 if (process.env.NODE_ENV === "development") {
-  YOUR_DOMAIN = "http://localhost:3000/checkout";
-} else {
-  YOUR_DOMAIN = "https://subarashi-senpai.herokuapp.com/checkout";
+  YOUR_DOMAIN = "http://localhost:5000";
+} else if (process.env.NODE_ENV === "production") {
+  YOUR_DOMAIN = "https://senpai-container-flsg4ziguq-uc.a.run.app";
+  // YOUR_DOMAIN = "http://localhost:5000";
 }
 exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -22,9 +23,10 @@ exports.createCheckoutSession = async (req, res) => {
     ],
     payment_method_types: ["card"],
     mode: "payment",
-    success_url: `${YOUR_DOMAIN}/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
-    cancel_url: `${YOUR_DOMAIN}?canceled=true`,
+    success_url: `${YOUR_DOMAIN}/#/checkout/${req.params.senpaiId}/${req.query.lesson_id}?success=true`,
+    cancel_url: `${YOUR_DOMAIN}/#?canceled=true`,
   });
+
   res.redirect(303, session.url);
 };
 
