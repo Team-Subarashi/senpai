@@ -103,7 +103,6 @@ export default function SenpaiList() {
                 Go to Profile
               </Button>
             </Link>
-            <Link></Link>
           </Grid>
           <Grid
             item

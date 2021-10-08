@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Button, Box } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { Avatar, Typography } from "@mui/material";
 import axios from "axios";
 import TwitterIcon from "@material-ui/icons/Twitter";
@@ -24,7 +25,19 @@ const Kohai = ({ match }) => {
 
   return (
     <Grid container>
-      <Box
+      <Grid
+        item
+        xs={12}
+        style={{
+          marginTop: "0.5vh",
+          marginBottom: "-6vh",
+        }}
+      >
+        <Link to={{ pathname: `/edit/${user._id}` }}>
+          <Button>Edit Profile</Button>
+        </Link>
+      </Grid>
+      {/* <Box
         style={{
           marginLeft: "80.75vw",
           marginBottom: "-5vh",
@@ -32,10 +45,10 @@ const Kohai = ({ match }) => {
         }}
       >
         <Button style={{ backgroundColor: "lightblue" }}>Edit Profile</Button>
-      </Box>
+      </Box> */}
       <Grid
-        className="main"
         container
+        className="main"
         xs={12}
         justify="space-between"
         style={{
@@ -45,8 +58,8 @@ const Kohai = ({ match }) => {
         }}
       >
         <Grid
-          className="left"
           item
+          className="left"
           xs={3}
           style={{
             height: "85vh",
@@ -61,8 +74,8 @@ const Kohai = ({ match }) => {
             {user.name}
           </Typography>
           <Grid
-            className="avatar-holder"
             container
+            className="avatar-holder"
             alignItems="center"
             justify="center"
             style={{
@@ -70,7 +83,7 @@ const Kohai = ({ match }) => {
               padding: "10px",
             }}
           >
-            <Grid>
+            <Grid item>
               <Avatar
                 className="kohai-photo"
                 alt="kohai"
@@ -79,7 +92,7 @@ const Kohai = ({ match }) => {
               />
             </Grid>
           </Grid>
-          <Grid class="detail" style={{ marginLeft: "10px" }}>
+          <Grid item class="detail" style={{ marginLeft: "10px" }}>
             {user.twitter || user.linkedIn || user.facebook ? (
               <Typography
                 style={{
@@ -153,6 +166,7 @@ const Kohai = ({ match }) => {
           </Grid>
         </Grid>
         <Grid
+          container
           className="right"
           xs={8}
           style={{
@@ -200,7 +214,7 @@ const Kohai = ({ match }) => {
               />
             </Grid>
             <Grid
-              container
+              item
               style={{
                 overflow: "hidden",
                 borderRadius: "4px",
@@ -216,7 +230,7 @@ const Kohai = ({ match }) => {
               />
             </Grid>
             <Grid
-              container
+              item
               style={{
                 overflow: "hidden",
                 borderRadius: "4px",
@@ -232,7 +246,7 @@ const Kohai = ({ match }) => {
               />
             </Grid>
             <Grid
-              container
+              item
               style={{
                 overflow: "hidden",
                 borderRadius: "4px",

@@ -25,6 +25,7 @@ import ScheduleBooking from "./pages/ScheduleBooking";
 import SenpaiProfileView from "./pages/SenpaiProfileView";
 import Checkout from "./components/Checkout";
 import MyLessons from "./pages/MyLessons";
+import Edit from "./pages/Edit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -82,6 +83,7 @@ function App() {
                 component={Checkout}
               />
               <Route path="/mylessons" component={MyLessons} />
+              <Route path="/edit" component={Edit} />
             </Switch>
           </Router>
         </div>
