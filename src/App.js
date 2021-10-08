@@ -20,6 +20,7 @@ import theme from "./units/theme";
 import axios from 'axios'
 import { useRecoilState } from 'recoil';
 import { userState } from './atoms';
+
 function App() {
   const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
