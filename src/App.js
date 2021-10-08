@@ -6,13 +6,7 @@ import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
 
 import Kohai from "./pages/Kohai";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  HashRouter,
-} from "react-router-dom";
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
@@ -71,7 +65,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <div className={classes.root}>
-          <HashRouter hashType="slash">
+          <Router hashType="slash">
             <CssBaseline />
             <NavBar user={user} />
             <Switch>
@@ -89,7 +83,7 @@ function App() {
               />
               <Route path="/mylessons" component={MyLessons} />
             </Switch>
-          </HashRouter>
+          </Router>
         </div>
       </div>
     </ThemeProvider>
