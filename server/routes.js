@@ -13,9 +13,8 @@ module.exports = function (app) {
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
-  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
-  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
-
+  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
 
   app
     .route("/lessons")
@@ -29,7 +28,6 @@ module.exports = function (app) {
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
 
-  app.route("/create-checkout-session/:priceId/:senpaiId").post(stripe.createCheckoutSession);
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
 
@@ -38,6 +36,8 @@ module.exports = function (app) {
   app
     .route("/create-checkout-session/:priceId/:senpaiId")
     .post(stripe.createCheckoutSession);
+
+
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({

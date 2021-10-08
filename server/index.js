@@ -3,7 +3,7 @@ require("dotenv").config();
 //   ? process.env.PORT
 //   : 8080;
 
-const port = process.env.PORT || 8080;
+//const port = process.env.PORT || 8080;
 
 const mongoose = require("mongoose");
 const morgan = require("morgan");
@@ -15,6 +15,14 @@ const { Server } = require("socket.io")
 const routes = require("./routes");
 const http = require('http');
 
+require("dotenv").config();
+
+let port;
+if (process.env.NODE_ENV === "production") {
+  port = process.env.PORT;
+} else {
+  port = 8080;
+}
 
 
 const server = http.createServer(app);
@@ -72,11 +80,59 @@ app.use(
     ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
   )
 );
+<<<<<<< HEAD
 
 // app.listen(port, () => {
 //   console.log(`Server running at http://localhost:${port}`);
 // });
 
 server.listen(port, () => {
+=======
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "..", "build")));
+
+  //Importing all routes to prod
+
+  app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
+  app
+    .route("/api/v1/users/:id")
+    .get(users.getOneUserByAuthId)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
+  app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
+  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
+
+  app
+    .route("/lessons")
+    .get(lessons.listAllLessons)
+    .post(lessons.createNewLesson);
+  app
+    .route("/lessons/:id")
+    .patch(lessons.updateLesson)
+    .delete(lessons.deleteLesson);
+
+  app.route("/files").get(files.listAllFiles).post(files.createNewFile);
+  app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
+
+  app
+    .route("/create-checkout-session/:priceId/:senpaiId")
+    .post(stripe.createCheckoutSession);
+  app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
+  app.route("/stripeLessons").get(stripe.getStripeLesson);
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../../", "senpai", "build", "index.html")
+    );
+  });
+  // } else {
+  //   app.get("/", (req, res) => {
+  //     res.send("api running");
+  // });
+}
+
+app.listen(port, () => {
+>>>>>>> b99f1e6660305763dd49a45851220968556c5516
   console.log(`Server running at http://localhost:${port}`);
 });
