@@ -6,7 +6,7 @@ import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
 
 import Kohai from "./pages/Kohai";
-import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
