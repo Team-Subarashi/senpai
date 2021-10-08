@@ -4,11 +4,12 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#673AB7',
+      main: '#6737b8',
     },
     background: {
       default: '#616161'
     },
+    type: 'dark',
   },
   contrastThreshhold: 3,
   tonalOffset: 0.2,
@@ -35,6 +36,16 @@ const theme = createTheme({
       fontFamily: "Nunito",
       fontSize: "1rem",
     },
+    navbar: {
+      fontFamily: "Nunito",
+    },
+  },
+  components: {
+    MuiAppBar: {
+      defaultProps: {
+        enableColorOnDark: true,
+      }
+    }
   }
 })
 
