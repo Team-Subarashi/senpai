@@ -20,6 +20,8 @@ module.exports = {
   ],
   "rules": {
     "indent": ["warn", 2],
-    "no-irregular-whitespace": "warn"
+    "no-irregular-whitespace": "warn",
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
   }
 };

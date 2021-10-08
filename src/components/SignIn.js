@@ -53,9 +53,8 @@ export default function SignIn() {
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in 
-        const user = userCredential.user;
         // ...
         history.push('/')
       })

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { category as categoryAtom } from "../atoms";
 import { Grid, Button } from "@material-ui/core";
-import { Menu, Popover, MenuItem } from "@mui/material";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/Popover";
 
 export default function Filter() {
   const [menuState, toggleMenuState] = useState(false);

@@ -6,8 +6,6 @@ import logo from '../logo/logo_cropped.png';
 import Box from '@material-ui/core/Box';
 import { Link } from "react-router-dom";
 import { getAuth, signOut } from '@firebase/auth'
-import { useRecoilValue } from 'recoil'
-import { userState } from '../atoms'
 
 const useStyles = makeStyles(() => ({
   appbar: {

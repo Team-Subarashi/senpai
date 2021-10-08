@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
@@ -10,11 +10,10 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   main: {
     height: "100vh",
     padding: "50px",
-    backgroundColor: "#616161",
   },
   left: {
     height: "85vh",
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const Kohai = ({ match }) => {
+const Kohai = () => {
   const user = useRecoilValue(userState);
   const classes = useStyles();
 

@@ -9,12 +9,8 @@ import {
   Toolbar,
   DateNavigator
 } from '@devexpress/dx-react-scheduler-material-ui';
-import axios from 'axios';
-import Button from '@material-ui/core/Button'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Room from '@material-ui/icons/Room';
-import { Redirect } from 'react-router-dom';
 
 const style = ({ palette }) => ({
   icon: {
@@ -41,8 +37,7 @@ const style = ({ palette }) => ({
   },
 });
 
-export default function KouhaiTimetable({lessons, match}) {
-  const [selectedDate, setSelectedDate] = useState(Date.now())
+export default function KouhaiTimetable({lessons}) {
   const [schedulerData , setSchedulerData] = useState([])
   useEffect(() => {
     //set schedulerData
@@ -59,7 +54,7 @@ export default function KouhaiTimetable({lessons, match}) {
   }, [lessons])
 
   const Content = withStyles(style, { name: 'Content' })(({
-    children, appointmentData, classes, ...restProps
+    appointmentData, classes, ...restProps
   }) => (
     <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
       <Grid container alignItems="center">
@@ -84,7 +79,7 @@ export default function KouhaiTimetable({lessons, match}) {
         data={schedulerData}
       >
         <ViewState
-          defaultCurrentDate={selectedDate}
+          defaultCurrentDate={Date.now()}
         />
         <WeekView
           startDayHour={9}
