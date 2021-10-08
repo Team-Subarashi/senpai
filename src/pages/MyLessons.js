@@ -116,14 +116,20 @@ export default function MyLessons({ match }) {
     const fetchData = async () => {
       const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
       if (response.data) {
-        // console.log(response.data)
-        const temp = response.data.map((lesson) => {
+        let temp = response.data.map((lesson) => {
           lesson.title = "Active Lesson";
 
           return lesson;
         });
+
+        const filteredTemp = temp.filter((lesson) => {
+          return new Date(lesson.endDate) < new Date();
+        });
+        const sortedTemp = filteredTemp.sort((a, b) => {
+          return new Date(a.endDate) - new Date(b.endDate);
+        });
         setSchedulerData(temp);
-        fetchLessonPartner(temp);
+        fetchLessonPartner(sortedTemp);
       }
     };
     fetchData();
@@ -196,7 +202,6 @@ export default function MyLessons({ match }) {
           }}
         >
           {previousLessons.map((lesson) => {
-            console.log(lesson);
             return <PreviousLesson lessonProp={lesson} />;
           })}
         </Paper>

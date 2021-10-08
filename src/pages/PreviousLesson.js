@@ -39,8 +39,21 @@ const PreviousLesson = ({ lessonProp }) => {
     lessonProp.then((data) => setLesson(data));
   }, []);
   return (
-    <Grid container xs={12} style={{ height: "10vh", marginTop: "10px" }}>
-      <Grid item xs={1} style={{ marginLeft: "10px", alignItems: "center" }}>
+    <Grid
+      container
+      border={1}
+      xs={12}
+      style={{
+        borderTop: "1px solid",
+        margin: "top",
+        height: "10vh",
+      }}
+    >
+      <Grid
+        item
+        xs={1}
+        style={{ marginLeft: "10px", padding: "10px", alignItems: "center" }}
+      >
         <Avatar
           className="lesson-partner-photo"
           alt="img"
@@ -54,15 +67,8 @@ const PreviousLesson = ({ lessonProp }) => {
       </Grid>
       <Grid item xs={3}>
         <div>Date</div>
-        <p>
-          {`${date.getFullYear()}年
-            ${date.getMonth() + 1}月
-            ${date.getDate()}日
-            ${date.getHours()}時
-            ${date.getMinutes()}分`}
-        </p>
+        <p>{date.toDateString()}</p>
       </Grid>
-      {console.log("timestamp", date)}
       <Grid item xs={3}>
         <DropDown />
       </Grid>
