@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
-import { Stack } from "@mui/material";
+import Grid from "@material-ui/core/Grid";
 import CodeView from "../components/CodeRoom/CodeView";
-import { useRecoilState } from "recoil";
 import axios from "axios";
 
 // import Video from "../components/Video";
@@ -50,12 +48,8 @@ export default function Workspace() {
         <CodeView/>
       </Grid>
       <Grid item xs={2} style={{ backgroundColor: "gray" }}>
-        <Stack spacing={2}>
-          <div>Video Comp 1</div>
-          <div>Video Comp 2</div>
-        </Stack>
+        {/* <Video /> */}
       </Grid>
-      {/* <Video /> */}
     </Grid>
   );
 }
