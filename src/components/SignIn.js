@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import makeStyles from '@mui/styles/makeStyles';
-import Container from '@mui/material/Container';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Container from '@material-ui/core/Container';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { Link, useHistory } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
-
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -20,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid',
     borderColor: 'gray',
     padding: theme.spacing(13)
-
   },
   avatar: {
     margin: theme.spacing(1),
@@ -36,18 +34,13 @@ const useStyles = makeStyles((theme) => ({
   signInText: {
     color: "#fff"
   },
-
 }));
 
 export default function SignIn() {
   const history = useHistory();
-
-
   const classes = useStyles();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
-
 
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value)
@@ -55,7 +48,6 @@ export default function SignIn() {
   const emailChangeHandler = (e) => {
     setEmail(e.target.value)
   }
-
 
   const submitHandler = () => {
     const auth = getAuth();
@@ -77,7 +69,6 @@ export default function SignIn() {
   }
 
   return (
-
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -112,7 +103,6 @@ export default function SignIn() {
             onChange={(e) => passwordChangeHandler(e)}
           />
           <Button
-            sx={{my:5}}
             type="submit"
             fullWidth
             variant="contained"
@@ -135,6 +125,5 @@ export default function SignIn() {
         </form>
       </div>
     </Container>
-
   );
 }
