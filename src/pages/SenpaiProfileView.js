@@ -1,14 +1,15 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";
-import BookNowPopover from "../components/BookNowPopover";
-import { Container } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import TwitterIcon from '@material-ui/icons/Twitter';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import InstagramIcon from '@material-ui/icons/Instagram';
+import Link from 'react-router-dom/Link';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -66,7 +67,12 @@ export default function SenpaiProfileView({ match, location }) {
               />
             </Grid>
           </Grid>
-          <BookNowPopover senpaiId={match.params.id} />
+          <Button
+            variant="contained"
+            color="primary"
+          >
+            <Link style={{color: "white"}} to={`/senpai/${match.params.senpaiId}/schedule`}>View schedule</Link>
+          </Button>
           <Grid container style={{ alignItems: "center", padding: "1rem", textAlign: "left" }}>
             {senpai.twitter || senpai.linkedIn || senpai.facebook || senpai.instagram ?
               <Typography variant="h5">

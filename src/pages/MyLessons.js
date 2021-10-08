@@ -14,7 +14,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
+import Link from 'react-router-dom/Link';
 import { userState } from '../atoms';
 import { useRecoilValue } from 'recoil';
 

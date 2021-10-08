@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import { category as categoryAtom } from "../atoms";
-import { Grid, Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/Popover";
 
