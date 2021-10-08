@@ -24,17 +24,19 @@ const Kohai = ({ match }) => {
   }, []);
 
   return (
-    <Grid container>
+    <Grid container xs={12}>
       <Grid
-        item
-        xs={12}
+        container
+        justify="flex-end"
         style={{
-          marginTop: "0.5vh",
+          textAlign: "right",
+          marginTop: "0.8vh",
           marginBottom: "-6vh",
+          marginRight: "5.5vw",
         }}
       >
         <Link to={{ pathname: `/edit/${user._id}` }}>
-          <Button>Edit Profile</Button>
+          <Button style={{ backgroundColor: "#673AB7" }}>Edit Profile</Button>
         </Link>
       </Grid>
       {/* <Box
@@ -104,24 +106,32 @@ const Kohai = ({ match }) => {
                 Socials:
                 <div>
                   {user.twitter ? (
-                    <a>
+                    <Button
+                      onClick={() => (window.location.href = user.twitter)}
+                    >
                       <TwitterIcon />
-                    </a>
+                    </Button>
                   ) : null}
                   {user.linkedIn ? (
-                    <a>
+                    <Button
+                      onClick={() => (window.location.href = user.linkedIn)}
+                    >
                       <LinkedInIcon />{" "}
-                    </a>
+                    </Button>
                   ) : null}
                   {user.facebook ? (
-                    <a>
+                    <Button
+                      onClick={() => (window.location.href = user.facebook)}
+                    >
                       <FacebookIcon />
-                    </a>
+                    </Button>
                   ) : null}
-                  {user.facebook ? (
-                    <a>
+                  {user.instagram ? (
+                    <Button
+                      onClick={() => (window.location.href = user.instagram)}
+                    >
                       <InstagramIcon />
-                    </a>
+                    </Button>
                   ) : null}
                 </div>
               </Typography>
@@ -173,29 +183,40 @@ const Kohai = ({ match }) => {
             height: "85vh",
             backgroundColor: "#424242",
             borderRadius: "4px",
-            padding: "30px",
+            padding: "2%",
           }}
         >
-          <Grid container xs={12} style={{ height: "50%" }}>
-            <Typography style={{ fontFamily: "Nunito", fontSize: "24px" }}>
-              About me
-            </Typography>
-            <Typography style={{ fontFamily: "Nunito", fontSize: "20px" }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Typography>
+          <Grid
+            container
+            xs={12}
+            style={{ height: "30vh", marginTop: "-3vh", marginBottom: "2vh" }}
+          >
+            <Grid item xs={12} style={{ paddingTop: "2%" }}>
+              <Typography style={{ fontFamily: "Nunito", fontSize: "26px" }}>
+                About me
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                overflowWrap: "break-word",
+                textAlign: "left",
+                // backgroundColor: "blue",
+                height: "25vh",
+              }}
+            >
+              <Typography style={{ fontFamily: "Nunito", fontSize: "20px" }}>
+                {user.bio}
+              </Typography>
+            </Grid>
           </Grid>
           <Grid
             container
             xs={12}
             alignItems="center"
             justify="space-between"
-            style={{ height: "50%" }}
+            style={{ height: "53vh" }}
           >
             <Grid
               item
