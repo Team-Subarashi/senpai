@@ -6,7 +6,7 @@ import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
 
 import Kohai from "./pages/Kohai";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
@@ -19,7 +19,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
-import { ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from "@material-ui/core";
 import theme from "./units/theme";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import SenpaiProfileView from "./pages/SenpaiProfileView";
@@ -63,29 +63,31 @@ function App() {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-
-    <div className="App">
-      <div className={classes.root}>
-        <Router>
-          <CssBaseline />
-          <NavBar user={user} />
-          <Switch>
-            <Route exact path="/" component={Splash} />
-            <Route path="/signup" component={SignUp} />
-            <Route exact path="/kouhai/:id" component={Kohai} />
-            <Route path="/login" component={SignIn} />
-            <Route exact path="/senpai/:id" component={SenpaiProfileView} />
-            <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
-            <Route path="/search" component={Search} />
-            <Route path="/room" component={Workspace} />
-            <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
-            <Route path="/mylessons" component={MyLessons} />
-          </Switch>
-        </Router>
+      <div className="App">
+        <div className={classes.root}>
+          <Router hashType="slash">
+            <CssBaseline />
+            <NavBar user={user} />
+            <Switch>
+              <Route exact path="/" component={Splash} />
+              <Route path="/signup" component={SignUp} />
+              <Route exact path="/kouhai/:id" component={Kohai} />
+              <Route path="/login" component={SignIn} />
+              <Route exact path="/senpai/:id" component={SenpaiProfileView} />
+              <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
+              <Route path="/search" component={Search} />
+              <Route path="/room" component={Workspace} />
+              <Route
+                path="/checkout/:senpaiId/:lessonId"
+                component={Checkout}
+              />
+              <Route path="/mylessons" component={MyLessons} />
+            </Switch>
+          </Router>
+        </div>
       </div>
-    </div>
-  </ThemeProvider>
-);
+    </ThemeProvider>
+  );
 }
 
 export default App;
