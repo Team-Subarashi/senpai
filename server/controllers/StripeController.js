@@ -4,6 +4,7 @@ const stripe = require("stripe")(
 
 require("dotenv").config();
 
+let YOUR_DOMAIN
 if (process.env.NODE_ENV === "development") {
   YOUR_DOMAIN = "http://localhost:5000";
 } else if (process.env.NODE_ENV === "production") {

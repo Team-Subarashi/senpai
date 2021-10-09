@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from '@material-ui/core/Container';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { Link, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -21,11 +19,10 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid',
     borderColor: 'gray',
     padding: theme.spacing(13)
-
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.common.white,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -37,18 +34,13 @@ const useStyles = makeStyles((theme) => ({
   signInText: {
     color: "#fff"
   },
-
 }));
 
 export default function SignIn() {
   const history = useHistory();
-
-
   const classes = useStyles();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
-
 
   const passwordChangeHandler = (e) => {
     setPassword(e.target.value)
@@ -57,14 +49,12 @@ export default function SignIn() {
     setEmail(e.target.value)
   }
 
-
   const submitHandler = () => {
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(() => {
         // Signed in 
-        const user = userCredential.user;
         // ...
         history.push('/')
       })
@@ -78,9 +68,7 @@ export default function SignIn() {
   }
 
   return (
-
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -136,6 +124,5 @@ export default function SignIn() {
         </form>
       </div>
     </Container>
-
   );
 }

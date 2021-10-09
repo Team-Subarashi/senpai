@@ -9,40 +9,16 @@ import {
   Toolbar,
   DateNavigator
 } from '@devexpress/dx-react-scheduler-material-ui';
-import axios from 'axios';
-import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Room from '@material-ui/icons/Room';
-import { Redirect } from 'react-router-dom';
 
-const style = ({ palette }) => ({
-  icon: {
-    color: palette.action.active,
-  },
+const style = () => ({
   textCenter: {
     textAlign: 'center',
   },
-  firstRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/Lobby-4.jpg)',
-  },
-  secondRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-4.jpg)',
-  },
-  thirdRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
-  },
-  header: {
-    height: '260px',
-    backgroundSize: 'cover',
-  },
-  commandButton: {
-    backgroundColor: 'rgba(255,255,255,0.65)',
-  },
 });
 
-export default function Timetable({senpaiLessons, match}) {
-  const [selectedDate, setSelectedDate] = useState(Date.now())
+export default function Timetable({senpaiLessons}) {
   const [schedulerData , setSchedulerData] = useState([])
   useEffect(() => {
     //set schedulerData
@@ -59,7 +35,7 @@ export default function Timetable({senpaiLessons, match}) {
   }, [senpaiLessons])
 
   const Content = withStyles(style, { name: 'Content' })(({
-    children, appointmentData, classes, ...restProps
+    appointmentData, classes, ...restProps
   }) => (
     <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
       <Grid container alignItems="center">
@@ -67,12 +43,10 @@ export default function Timetable({senpaiLessons, match}) {
         </Grid>
         <Grid item xs={10}>
           {appointmentData.title === "Available" ? 
-          <form name="checkoutForm" action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`} method="POST">
-            <button type="submit">Book Now</button>
-          </form>
-          : null
+            <form name="checkoutForm" action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`} method="POST">
+              <button type="submit">Book Now</button>
+            </form> : null
           }
-        
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>
@@ -84,7 +58,7 @@ export default function Timetable({senpaiLessons, match}) {
         data={schedulerData}
       >
         <ViewState
-          defaultCurrentDate={selectedDate}
+          defaultCurrentDate={Date.now()}
         />
         <WeekView
           startDayHour={9}

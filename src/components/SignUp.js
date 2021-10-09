@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Container from '@material-ui/core/Container';
 import { getAuth, createUserWithEmailAndPassword, signOut } from '@firebase/auth';
 import { Link, useHistory } from 'react-router-dom';
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.common.white,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -88,6 +88,7 @@ export default function SignUp() {
           // Sign-out successful.
         }).catch((error) => {
           // An error happened.
+          console.log(error)
         });
         history.push('/login')
         // ...

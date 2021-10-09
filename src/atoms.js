@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 
 
 export const category = atom({
@@ -27,8 +27,8 @@ export const loadedFiles = atom({
 export const userState = atom({
   key: 'userState',
   default: {
-      id: null,
-      email: null,
+    id: null,
+    email: null,
   },
 })
 
