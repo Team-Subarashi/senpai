@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import CodeView from "../components/CodeRoom/CodeView";
 import axios from "axios";
+import Video from "../components/Video"
 
-// import Video from "../components/Video";
 import CodeEditor from "../components/CodeRoom/CodeEditor";
-// import CodeView from "../components/CodeRoom/CodeView";
 
 export default function Workspace() {
   
@@ -48,7 +47,7 @@ export default function Workspace() {
         <CodeView/>
       </Grid>
       <Grid item xs={2} style={{ backgroundColor: "gray" }}>
-        {/* <Video /> */}
+        <Video />
       </Grid>
     </Grid>
   );
