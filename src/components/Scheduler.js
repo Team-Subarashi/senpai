@@ -12,28 +12,9 @@ import {
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 
-const style = ({ palette }) => ({
-  icon: {
-    color: palette.action.active,
-  },
+const style = () => ({
   textCenter: {
     textAlign: 'center',
-  },
-  firstRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/Lobby-4.jpg)',
-  },
-  secondRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-4.jpg)',
-  },
-  thirdRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
-  },
-  header: {
-    height: '260px',
-    backgroundSize: 'cover',
-  },
-  commandButton: {
-    backgroundColor: 'rgba(255,255,255,0.65)',
   },
 });
 
@@ -64,10 +45,8 @@ export default function Timetable({senpaiLessons}) {
           {appointmentData.title === "Available" ? 
             <form name="checkoutForm" action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`} method="POST">
               <button type="submit">Book Now</button>
-            </form>
-            : null
+            </form> : null
           }
-        
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>
