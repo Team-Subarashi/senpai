@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Grid, Box, Button } from "@material-ui/core";
-import { FormControl, InputLabel, Input, Alert } from "@mui/material";
+import { Link } from "react-router-dom";
+import { FormControl, InputLabel, Input } from "@mui/material";
 
 import axios from "axios";
 
@@ -12,6 +13,15 @@ export default function Edit() {
 
   useEffect(() => {
     console.log(user);
+  }, []);
+
+  useEffect(() => {
+    if (user.linkedIn) {
+      document.getElementById("linkedin").value = user.linkedIn;
+      document.getElementById("twitter").value = user.twitter;
+      document.getElementById("facebook").value = user.facebook;
+      document.getElementById("website").value = user.website;
+    }
   }, []);
 
   return (
@@ -114,7 +124,23 @@ export default function Edit() {
                     // instagram: body.instagram,
                   },
                 });
-                window.location.reload();
+
+                let successMessage = document.createElement("div");
+                successMessage.innerText = "Socials updated!";
+                successMessage.style.color = "white";
+                successMessage.style.fontWeight = "bold";
+                successMessage.style.fontSize = "large";
+                successMessage.style.backgroundColor = "#4BB543";
+                successMessage.style.width = "33%";
+                successMessage.style.height = "5vh";
+                successMessage.style.marginLeft = "33%";
+                successMessage.style.paddingTop = "1vh";
+
+                document.getElementById("navbar").append(successMessage);
+
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1500);
               }}
               style={{
                 height: "4vh",
@@ -194,7 +220,22 @@ export default function Edit() {
                   // </div>
                   // );
                 }
-                window.location.reload();
+                let successMessage = document.createElement("div");
+                successMessage.innerText = "Bio updated!";
+                successMessage.style.color = "white";
+                successMessage.style.fontWeight = "bold";
+                successMessage.style.fontSize = "large";
+                successMessage.style.backgroundColor = "#4BB543";
+                successMessage.style.width = "33%";
+                successMessage.style.height = "5vh";
+                successMessage.style.marginLeft = "33%";
+                successMessage.style.paddingTop = "1vh";
+
+                document.getElementById("navbar").append(successMessage);
+
+                setTimeout(() => {
+                  window.location.reload();
+                }, 1500);
               }}
               style={{
                 height: "4vh",
@@ -205,6 +246,55 @@ export default function Edit() {
               Update Bio
             </Button>
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        id="senpai-area"
+        alignItems="center"
+        style={{
+          backgroundColor: "#424242",
+          borderRadius: "4px",
+          padding: "0.5%",
+          marginLeft: "25%",
+          marginRight: "25%",
+          marginTop: "2vh",
+          marginBottom: "2vh",
+        }}
+      >
+        <Grid
+          item
+          xs={12}
+          style={{
+            marginLeft: "40%",
+            marginRight: "40%",
+            marginBottom: "2vh",
+            height: "5vh",
+            borderRadius: "4px",
+            backgroundColor: "#673AB7",
+          }}
+        >
+          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+            Are you a Senpai?
+          </h2>
+        </Grid>
+        <Grid item xs={12} style={{ fontSize: "large" }}>
+          Are you looking to spread some knowledge? Click here to get started on
+          your journey as a senpai!
+        </Grid>
+        <Grid item xs={3} style={{ marginLeft: "40vw" }}>
+          <Link to={{ pathname: `/senpai-settings/${user._id}` }}>
+            <Button
+              onClick={() => {}}
+              style={{
+                height: "4vh",
+                width: "7vw",
+                backgroundColor: "#673AB7",
+              }}
+            >
+              Senpai Settings
+            </Button>
+          </Link>
         </Grid>
       </Grid>
     </Grid>

@@ -106,32 +106,48 @@ const Kohai = ({ match }) => {
                 Socials:
                 <div>
                   {user.twitter ? (
-                    <Button
-                      onClick={() => (window.location.href = user.twitter)}
+                    <a
+                      target="_blank"
+                      href={`https://${user.twitter}`}
+                      rel="noopener"
                     >
-                      <TwitterIcon />
-                    </Button>
+                      <Button>
+                        <TwitterIcon />
+                      </Button>
+                    </a>
                   ) : null}
                   {user.linkedIn ? (
-                    <Button
-                      onClick={() => (window.location.href = user.linkedIn)}
+                    <a
+                      target="_blank"
+                      href={`https://${user.linkedIn}`}
+                      rel="noopener"
                     >
-                      <LinkedInIcon />{" "}
-                    </Button>
+                      <Button>
+                        <LinkedInIcon />
+                      </Button>
+                    </a>
                   ) : null}
                   {user.facebook ? (
-                    <Button
-                      onClick={() => (window.location.href = user.facebook)}
+                    <a
+                      target="_blank"
+                      href={`https://${user.facebook}`}
+                      rel="noopener"
                     >
-                      <FacebookIcon />
-                    </Button>
+                      <Button>
+                        <FacebookIcon />
+                      </Button>
+                    </a>
                   ) : null}
                   {user.instagram ? (
-                    <Button
-                      onClick={() => (window.location.href = user.instagram)}
+                    <a
+                      target="_blank"
+                      href={`https://${user.instagram}`}
+                      rel="noopener"
                     >
-                      <InstagramIcon />
-                    </Button>
+                      <Button>
+                        <InstagramIcon />
+                      </Button>
+                    </a>
                   ) : null}
                 </div>
               </Typography>
@@ -146,7 +162,8 @@ const Kohai = ({ match }) => {
                 }}
               >
                 <div>Email:</div>
-                <a href={user.email}>{user.email}</a>
+                <p>{user.email}</p>
+                {/* <a href={user.email}>{user.email}</a> */}
               </Typography>
             ) : null}
             {user.location ? (
@@ -169,8 +186,14 @@ const Kohai = ({ match }) => {
                   fontSize: "20px",
                 }}
               >
-                <div>Personal Website:</div>
-                <a href={user.website}>{user.website}</a>
+                <div>Website:</div>
+                <a
+                  target="_blank"
+                  href={`https://${user.website}`}
+                  rel="noopener"
+                >
+                  <a>{user.website}</a>
+                </a>
               </Typography>
             ) : null}
           </Grid>
