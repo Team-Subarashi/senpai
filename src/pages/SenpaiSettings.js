@@ -21,9 +21,9 @@ import { userState } from "../atoms";
 export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
   const [senpaiCheck, setSenpaiCheck] = useState(user.isSenpai);
-  const [skillOne, setSkillOne] = useState("Skill One");
-  const [skillTwo, setSkillTwo] = useState("Skill Two");
-  const [skillThree, setSkillThree] = useState("Skill Three");
+  const [skillOne, setSkillOne] = useState("user.category[0]");
+  const [skillTwo, setSkillTwo] = useState("user.category[1]");
+  const [skillThree, setSkillThree] = useState("user.category[2]");
 
   const changeSkillOne = (skill) => {
     setSkillOne(skill);
@@ -63,14 +63,15 @@ export default function SenpaiSettings() {
       </Grid>
       <Grid item xs={12}>
         <Checkbox
+          defaultChecked={user.isSenpai}
           onChange={() =>
             setSenpaiCheck(document.getElementById("senpai-check").checked)
           }
           id="senpai-check"
           sx={{
-            color: "pink",
+            color: "white",
             "&.Mui-checked": {
-              color: "black",
+              color: "#673AB7",
             },
           }}
         />
@@ -111,7 +112,11 @@ export default function SenpaiSettings() {
                 <Select
                   id="skill-one"
                   value={skillOne}
-                  style={{ width: "25vw", color: "#fff", marginBottom: "1vh" }}
+                  style={{
+                    width: "25vw",
+                    color: "#fff",
+                    marginBottom: "1vh",
+                  }}
                   onChange={(e) => {
                     changeSkillOne(e.target.value);
                   }}
@@ -126,7 +131,11 @@ export default function SenpaiSettings() {
                 </Select>
                 <FormControl>
                   <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
-                  <Input id="rate-one" />
+                  <Input
+                    id="rate-one"
+                    style={{ color: "#fff" }}
+                    defaultValue={"user.rates[0]"}
+                  />
                 </FormControl>
               </FormControl>
             </Grid>
@@ -136,7 +145,11 @@ export default function SenpaiSettings() {
                 <Select
                   id="skill-two"
                   value={skillTwo}
-                  style={{ width: "25vw", color: "#fff", marginBottom: "1vh" }}
+                  style={{
+                    width: "25vw",
+                    color: "#fff",
+                    marginBottom: "1vh",
+                  }}
                   onChange={(e) => {
                     changeSkillTwo(e.target.value);
                   }}
@@ -151,7 +164,11 @@ export default function SenpaiSettings() {
                 </Select>
                 <FormControl>
                   <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
-                  <Input id="rate-two" />
+                  <Input
+                    id="rate-two"
+                    style={{ color: "#fff" }}
+                    defaultValue={"user.rates[1]"}
+                  />
                 </FormControl>
               </FormControl>
             </Grid>
@@ -161,7 +178,11 @@ export default function SenpaiSettings() {
                 <Select
                   id="skill-three"
                   value={skillThree}
-                  style={{ width: "25vw", color: "#fff", marginBottom: "1vh" }}
+                  style={{
+                    width: "25vw",
+                    color: "#fff",
+                    marginBottom: "1vh",
+                  }}
                   onChange={(e) => {
                     changeSkillThree(e.target.value);
                   }}
@@ -176,7 +197,11 @@ export default function SenpaiSettings() {
                 </Select>
                 <FormControl>
                   <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
-                  <Input id="rate-three" />
+                  <Input
+                    id="rate-three"
+                    style={{ color: "#fff" }}
+                    defaultValue={"user.rates[2]"}
+                  />
                 </FormControl>
               </FormControl>
             </Grid>
@@ -184,17 +209,29 @@ export default function SenpaiSettings() {
           <Grid item xs={3} style={{ marginLeft: "40vw" }}>
             <Button
               onClick={() => {
-                let body = [
-                  `${document.getElementById("skill-one").innerText}`,
-                  `${document.getElementById("skill-two").innerText}`,
-                  `${document.getElementById("skill-three").innerText}`,
+                let skills = [
+                  document.getElementById("skill-one").innerText !== ""
+                    ? `${document.getElementById("skill-one").innerText}`
+                    : null,
+                  document.getElementById("skill-two").innerText !== ""
+                    ? `${document.getElementById("skill-two").innerText}`
+                    : null,
+                  document.getElementById("skill-three").innerText !== ""
+                    ? `${document.getElementById("skill-three").innerText}`
+                    : null,
+                ];
+                let rates = [
+                  Number(document.getElementById("rate-one").value),
+                  Number(document.getElementById("rate-two").value),
+                  Number(document.getElementById("rate-three").value),
                 ];
                 axios({
                   method: "patch",
                   url: `/api/v1/users/${user._id}`,
                   data: {
                     isSenpai: senpaiCheck,
-                    category: body,
+                    category: skills,
+                    rates: rates,
                   },
                 });
 
@@ -213,7 +250,7 @@ export default function SenpaiSettings() {
 
                 setTimeout(() => {
                   window.location.reload();
-                }, 1500);
+                }, 750);
               }}
               style={{
                 height: "4vh",

@@ -75,25 +75,25 @@ export default function Edit() {
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
                 <InputLabel style={{ color: "#fff" }}>Twitter</InputLabel>
-                <Input id="twitter" />
+                <Input id="twitter" style={{ color: "#fff" }} />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
                 <InputLabel style={{ color: "#fff" }}>LinkedIn</InputLabel>
-                <Input id="linkedin" />
+                <Input id="linkedin" style={{ color: "#fff" }} />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
                 <InputLabel style={{ color: "#fff" }}>Facebook</InputLabel>
-                <Input id="facebook" />
+                <Input id="facebook" style={{ color: "#fff" }} />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
                 <InputLabel style={{ color: "#fff" }}>Website</InputLabel>
-                <Input id="website" />
+                <Input id="website" style={{ color: "#fff" }} />
               </FormControl>
             </Grid>
             {/* <Grid item style={{ marginBottom: "1vh" }}>
@@ -140,7 +140,7 @@ export default function Edit() {
 
                 setTimeout(() => {
                   window.location.reload();
-                }, 1500);
+                }, 750);
               }}
               style={{
                 height: "4vh",
@@ -188,6 +188,7 @@ export default function Edit() {
             <textarea
               id="bio-input"
               placeholder="Tell us a little about yourself!"
+              defaultValue={user.bio ? user.bio : null}
               style={{ height: "28vh", width: "95%", color: "black" }}
             ></textarea>
           </Box>
@@ -274,9 +275,9 @@ export default function Edit() {
             backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
-            Are you a Senpai?
-          </h2>
+          {/* <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}> */}
+          Are you a Senpai?
+          {/* </h2> */}
         </Grid>
         <Grid item xs={12} style={{ fontSize: "large" }}>
           Are you looking to spread some knowledge? Click here to get started on
