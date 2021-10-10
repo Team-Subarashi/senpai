@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { useRecoilValue } from "recoil";
 import { selectedDate } from "../atoms";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -11,17 +10,7 @@ import moment from "moment";
 import Timetable from "../components/Scheduler";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
-
-export default function ScheduleBooking({ match, location }) {
+export default function ScheduleBooking({ match }) {
   const [state, setState] = useState([]);
 
   useEffect(() => {

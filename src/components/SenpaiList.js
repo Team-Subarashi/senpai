@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Calendar from "./Calendar";
-import { Grid, Box, Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import { useRecoilValue } from "recoil";
 import "antd/dist/antd.css";
 import { Tabs } from "antd";
@@ -12,7 +14,6 @@ export default function SenpaiList() {
   const [senpaiList, setSenpaiList] = useState([]);
   const category = useRecoilValue(categoryAtom);
 
-  const [toggleState, setToggleState] = useState(1);
   // const { Tabs } = antd;
   const { TabPane } = Tabs;
 
@@ -65,7 +66,7 @@ export default function SenpaiList() {
   };
 
   const senpaiPopulator = () => {
-    return senpaiList.map((senpai, index) => {
+    return senpaiList.map((senpai) => {
       return (
         <Grid
           container
@@ -119,7 +120,7 @@ export default function SenpaiList() {
           >
             <div>
               {senpai.category.map((skill) => {
-                return <div>{skill}</div>;
+                return <div key={skill}>{skill}</div>;
               })}
             </div>
 
@@ -162,11 +163,6 @@ export default function SenpaiList() {
         </Grid>
       );
     });
-  };
-
-  const toggleTab = (event, index) => {
-    console.log(event.target.id);
-    setToggleState(index);
   };
 
   useEffect(() => {
