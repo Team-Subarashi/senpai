@@ -21,7 +21,7 @@ const userSchema = new Schema({
   },
   isSenpai: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   rates: {
     type: String,

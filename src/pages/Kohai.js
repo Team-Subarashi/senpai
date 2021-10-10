@@ -95,7 +95,7 @@ const Kohai = () => {
                     <a
                       target="_blank"
                       href={`https://${user.twitter}`}
-                      rel="noopener"
+                      rel="noreferrer"
                     >
                       <Button>
                         <TwitterIcon />
@@ -106,7 +106,7 @@ const Kohai = () => {
                     <a
                       target="_blank"
                       href={`https://${user.linkedIn}`}
-                      rel="noopener"
+                      rel="noreferrer"
                     >
                       <Button>
                         <LinkedInIcon />
@@ -116,8 +116,8 @@ const Kohai = () => {
                   {user.facebook ? (
                     <a
                       target="_blank"
-                      href={`https://${user.facebook}`}
-                      rel="noopener"
+                      href={`${user.facebook}`}
+                      rel="noreferrer"
                     >
                       <Button>
                         <FacebookIcon />
@@ -128,7 +128,7 @@ const Kohai = () => {
                     <a
                       target="_blank"
                       href={`https://${user.instagram}`}
-                      rel="noopener"
+                      rel="noreferrer"
                     >
                       <Button>
                         <InstagramIcon />
@@ -153,7 +153,7 @@ const Kohai = () => {
                   <a
                     target="_blank"
                     href={`https://${user.website}`}
-                    rel="noopener"
+                    rel="noreferrer"
                   >
                     <a>{user.website}</a>
                   </a>
