@@ -25,36 +25,38 @@ export default function SenpaiList() {
     await axios.get("/api/v1/users").then((res) => {
       console.log(res);
       for (const senpai of res.data) {
-        if (category.toLowerCase() === "all") {
-          temp.push({
-            id: senpai._id,
-            avatar: senpai.avatar,
-            name: senpai.name,
-            category: senpai.category,
-            rates: senpai.rates,
-            bio: senpai.bio,
-            email: senpai.email,
-            location: senpai.location,
-            twitter: senpai.twitter,
-            facebook: senpai.facebook,
-            linkedIn: senpai.linkedIn,
-            website: senpai.website,
-          });
-        } else if (senpai.category.includes(category)) {
-          temp.push({
-            id: senpai._id,
-            avatar: senpai.avatar,
-            name: senpai.name,
-            category: senpai.category,
-            rates: senpai.rates,
-            bio: senpai.bio,
-            email: senpai.email,
-            location: senpai.location,
-            twitter: senpai.twitter,
-            facebook: senpai.facebook,
-            linkedIn: senpai.linkedIn,
-            website: senpai.website,
-          });
+        if (senpai.isSenpai === true) {
+          if (category.toLowerCase() === "all") {
+            temp.push({
+              id: senpai._id,
+              avatar: senpai.avatar,
+              name: senpai.name,
+              category: senpai.category,
+              rates: senpai.rates,
+              bio: senpai.bio,
+              email: senpai.email,
+              location: senpai.location,
+              twitter: senpai.twitter,
+              facebook: senpai.facebook,
+              linkedIn: senpai.linkedIn,
+              website: senpai.website,
+            });
+          } else if (senpai.category.includes(category)) {
+            temp.push({
+              id: senpai._id,
+              avatar: senpai.avatar,
+              name: senpai.name,
+              category: senpai.category,
+              rates: senpai.rates,
+              bio: senpai.bio,
+              email: senpai.email,
+              location: senpai.location,
+              twitter: senpai.twitter,
+              facebook: senpai.facebook,
+              linkedIn: senpai.linkedIn,
+              website: senpai.website,
+            });
+          }
         }
       }
       console.log(temp);

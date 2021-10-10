@@ -17,7 +17,7 @@ import { userState } from "../atoms";
 
 export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
-  const [senpaiCheck, setSenpaiCheck] = useState(false);
+  const [senpaiCheck, setSenpaiCheck] = useState(user.isSenpai);
   const [skillOne, setSkillOne] = useState("Skill One");
   const [skillTwo, setSkillTwo] = useState("Skill Two");
   const [skillThree, setSkillThree] = useState("Skill Three");
@@ -32,9 +32,12 @@ export default function SenpaiSettings() {
     setSkillThree(skill);
   };
 
-  useEffect(() => {
-    console.log(user);
-  }, []);
+  //   useEffect(() => {
+  //     if (user.isSenpai === true) {
+  //       document.getElementById("senpai-check").checked = true;
+  //     }
+  //     console.log(user);
+  //   }, []);
 
   return (
     <Grid container style={{ fontFamily: "Nunito" }}>
@@ -105,7 +108,7 @@ export default function SenpaiSettings() {
                 <Select
                   id="skill-one"
                   value={skillOne}
-                  style={{ width: "25vw", color: "#fff" }}
+                  style={{ width: "25vw", color: "#fff", marginBottom: "1vh" }}
                   onChange={(e) => {
                     changeSkillOne(e.target.value);
                   }}
@@ -118,6 +121,10 @@ export default function SenpaiSettings() {
                   <MenuItem value="WebGPU">WebGPU</MenuItem>
                   <MenuItem value="three.js">three.js</MenuItem>
                 </Select>
+                <FormControl>
+                  <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
+                  <Input id="rate-one" />
+                </FormControl>
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "2vh" }}>
@@ -126,7 +133,7 @@ export default function SenpaiSettings() {
                 <Select
                   id="skill-two"
                   value={skillTwo}
-                  style={{ width: "25vw", color: "#fff" }}
+                  style={{ width: "25vw", color: "#fff", marginBottom: "1vh" }}
                   onChange={(e) => {
                     changeSkillTwo(e.target.value);
                   }}
@@ -139,6 +146,10 @@ export default function SenpaiSettings() {
                   <MenuItem value="WebGPU">WebGPU</MenuItem>
                   <MenuItem value="three.js">three.js</MenuItem>
                 </Select>
+                <FormControl>
+                  <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
+                  <Input id="rate-two" />
+                </FormControl>
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "2vh" }}>
@@ -147,7 +158,7 @@ export default function SenpaiSettings() {
                 <Select
                   id="skill-three"
                   value={skillThree}
-                  style={{ width: "25vw", color: "#fff" }}
+                  style={{ width: "25vw", color: "#fff", marginBottom: "1vh" }}
                   onChange={(e) => {
                     changeSkillThree(e.target.value);
                   }}
@@ -160,25 +171,27 @@ export default function SenpaiSettings() {
                   <MenuItem value="WebGPU">WebGPU</MenuItem>
                   <MenuItem value="three.js">three.js</MenuItem>
                 </Select>
+                <FormControl>
+                  <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
+                  <Input id="rate-three" />
+                </FormControl>
               </FormControl>
             </Grid>
           </Box>
           <Grid item xs={3} style={{ marginLeft: "40vw" }}>
             <Button
               onClick={() => {
-                let body = {
-                  skillOne: document.getElementById("skill-one").value,
-                  skillTwo: document.getElementById("skill-two").value,
-                  skillThree: document.getElementById("skill-three").value,
-                };
+                let body = [
+                  `${document.getElementById("skill-one").innerText}`,
+                  `${document.getElementById("skill-two").innerText}`,
+                  `${document.getElementById("skill-three").innerText}`,
+                ];
                 axios({
                   method: "patch",
                   url: `/api/v1/users/${user._id}`,
                   data: {
                     isSenpai: senpaiCheck,
-                    // skillone: body.skillOne,
-                    // skilltwo: body.skillTwo,
-                    // skillthree: body.skillThree,
+                    category: body,
                   },
                 });
 
