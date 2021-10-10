@@ -71,7 +71,7 @@ export default function SenpaiProfileView({ match, location }) {
             variant="contained"
             color="primary"
           >
-            <Link style={{color: "white"}} to={`/senpai/${match.params.senpaiId}/schedule`}>View schedule</Link>
+            <Link style={{color: "white"}} to={`/senpai/${match.params.id}/schedule`}>View schedule</Link>
           </Button>
           <Grid container style={{ alignItems: "center", padding: "1rem", textAlign: "left" }}>
             {senpai.twitter || senpai.linkedIn || senpai.facebook || senpai.instagram ?
