@@ -5,6 +5,5 @@ let opentok = new OpenTok(process.env.API_KEY, process.env.SECRET);
 
 exports.getSessionToken = async (req, res) => {
   const token = opentok.generateToken(req.params.sessionId)
-  console.log(token);
   res.send(token)
 }

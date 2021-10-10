@@ -26,7 +26,6 @@ export default function Video({lesson}) {
 
   const toggleVideo = () => {
     setCameraState(!cameraState)
-    console.log(cameraState)
   }
 
   return (
