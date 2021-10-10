@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Splash() {
   const classes = useStyles();
   const theme = useTheme();
-  console.log(theme)
   return (
     <>
       <Grid className={classes.padding} container >

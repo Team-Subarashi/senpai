@@ -32,6 +32,11 @@ export const userState = atom({
   },
 })
 
+export const lessonState = atom({
+  key: 'lessonState',
+  default: {},
+})
+
 export const selectedSenpaiState = atom({
   key: 'selectedSenpaiState',
   default: null,

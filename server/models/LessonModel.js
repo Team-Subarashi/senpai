@@ -25,6 +25,9 @@ const lessonSchema = new Schema({
   productId: {
     type: String,
   },
+  vonageSessionId: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("lesson", lessonSchema);
