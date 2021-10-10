@@ -47,8 +47,6 @@ const theme = createTheme({
       fontFamily: "Nunito",
       fontSize: "1.6rem",
       color: "white",
-      textAlign: "left",
-
     },
     h5: {
       fontFamily: "Nunito",

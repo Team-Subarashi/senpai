@@ -14,9 +14,9 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button'
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
-import Link from 'react-router-dom/Link';
-import { userState } from '../atoms';
-import { useRecoilValue } from 'recoil';
+import { lessonState, userState } from '../atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useHistory } from 'react-router';
 
 const styles = theme => ({
   textCenter: {
@@ -32,11 +32,13 @@ const styles = theme => ({
 export default function MyLessons() {
   const user = useRecoilValue(userState)
   const [schedulerData , setSchedulerData] = useState([])
+  const setLesson = useSetRecoilState(lessonState)
   const resources = [{
     fieldName: 'userIsSenpai',
     title: 'userIsSenpai',
     instances: [{id: true, text: "Senpai", color: "#5c6bc0"}, {id: false, text: "Kohai", color: "#26a69a"}],
   }]
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +59,11 @@ export default function MyLessons() {
 
   }, [user])
 
+  const joinClickHandler = (appointmentData) => {
+    setLesson(appointmentData)
+    history.push(`/room/${appointmentData._id}`)
+  }
+
   const Content = withStyles(styles, { name: 'Content' })(({
     appointmentData, classes, ...restProps
   }) => (
@@ -65,11 +72,9 @@ export default function MyLessons() {
         <Grid item xs={2} className={classes.textCenter}>
         </Grid>
         <Grid item xs={10}>
-          <Link to={`/room/${appointmentData._id}`}>
-            <Button>
+          <Button onClick={() => joinClickHandler(appointmentData)}>
                 Join Room
-            </Button>
-          </Link>
+          </Button>
         </Grid>
       </Grid>
     </AppointmentTooltip.Content>
