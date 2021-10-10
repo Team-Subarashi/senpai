@@ -1,10 +1,17 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js";
+import Checkout from "./components/Checkout";
 import Splash from "./pages/Splash";
 import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
+import ScheduleBooking from "./pages/ScheduleBooking";
+import SenpaiProfileView from "./pages/SenpaiProfileView";
 import Kohai from "./pages/Kohai";
+import MyLessons from "./pages/MyLessons";
+import Edit from "./pages/Edit";
+import SenpaiSettings from "./pages/SenpaiSettings";
+
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { auth } from "./firebase";
@@ -16,10 +23,6 @@ import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
-import ScheduleBooking from "./pages/ScheduleBooking";
-import SenpaiProfileView from "./pages/SenpaiProfileView";
-import Checkout from "./components/Checkout";
-import MyLessons from "./pages/MyLessons";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -62,11 +65,10 @@ function App() {
             <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
             <Route path="/search" component={Search} />
             <Route path="/room" component={Workspace} />
-            <Route
-              path="/checkout/:senpaiId/:lessonId"
-              component={Checkout}
-            />
+            <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
             <Route path="/mylessons" component={MyLessons} />
+            <Route path="/edit" component={Edit} />
+            <Route path="/senpai-settings" component={SenpaiSettings} />
           </Switch>
         </Router>
       </div>

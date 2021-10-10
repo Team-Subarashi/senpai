@@ -26,36 +26,38 @@ export default function SenpaiList() {
     await axios.get("/api/v1/users").then((res) => {
       console.log(res);
       for (const senpai of res.data) {
-        if (category.toLowerCase() === "all") {
-          temp.push({
-            id: senpai._id,
-            avatar: senpai.avatar,
-            name: senpai.name,
-            category: senpai.category,
-            rates: senpai.rates,
-            bio: senpai.bio,
-            email: senpai.email,
-            location: senpai.location,
-            twitter: senpai.twitter,
-            facebook: senpai.facebook,
-            linkedIn: senpai.linkedIn,
-            website: senpai.website,
-          });
-        } else if (senpai.category.includes(category)) {
-          temp.push({
-            id: senpai._id,
-            avatar: senpai.avatar,
-            name: senpai.name,
-            category: senpai.category,
-            rates: senpai.rates,
-            bio: senpai.bio,
-            email: senpai.email,
-            location: senpai.location,
-            twitter: senpai.twitter,
-            facebook: senpai.facebook,
-            linkedIn: senpai.linkedIn,
-            website: senpai.website,
-          });
+        if (senpai.isSenpai === true) {
+          if (category.toLowerCase() === "all") {
+            temp.push({
+              id: senpai._id,
+              avatar: senpai.avatar,
+              name: senpai.name,
+              category: senpai.category,
+              rates: senpai.rates,
+              bio: senpai.bio,
+              email: senpai.email,
+              location: senpai.location,
+              twitter: senpai.twitter,
+              facebook: senpai.facebook,
+              linkedIn: senpai.linkedIn,
+              website: senpai.website,
+            });
+          } else if (senpai.category.includes(category)) {
+            temp.push({
+              id: senpai._id,
+              avatar: senpai.avatar,
+              name: senpai.name,
+              category: senpai.category,
+              rates: senpai.rates,
+              bio: senpai.bio,
+              email: senpai.email,
+              location: senpai.location,
+              twitter: senpai.twitter,
+              facebook: senpai.facebook,
+              linkedIn: senpai.linkedIn,
+              website: senpai.website,
+            });
+          }
         }
       }
       console.log(temp);
@@ -104,7 +106,6 @@ export default function SenpaiList() {
                 Go to Profile
               </Button>
             </Link>
-            <Link></Link>
           </Grid>
           <Grid
             item
@@ -118,12 +119,17 @@ export default function SenpaiList() {
             }}
           >
             <div>
-              {senpai.category.map((skill) => {
-                return <div key={skill}>{skill}</div>;
+              {senpai.category.map((skill, index) => {
+                return (
+                  <div key={skill}>
+                    {skill} - {senpai.rates[index]}/hour
+                  </div>
+                );
               })}
             </div>
-
-            {senpai.rates}
+            {/* {senpai.skillOneRate}
+            {senpai.skillTwoRate}
+            {senpai.skillThreeRate} */}
           </Grid>
           <Grid
             item

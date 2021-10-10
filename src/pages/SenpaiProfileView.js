@@ -5,11 +5,11 @@ import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import TwitterIcon from '@material-ui/icons/Twitter';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import Link from 'react-router-dom/Link';
+import TwitterIcon from "@material-ui/icons/Twitter";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import Link from "react-router-dom/Link";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -23,11 +23,11 @@ const useStyles = makeStyles(() => ({
     alignContent: "center",
     padding: "1rem",
   },
-  avatarHolder : {
+  avatarHolder: {
     alignItems: "center",
     justifyContent: "center",
     height: "25vh",
-  }
+  },
 }));
 
 export default function SenpaiProfileView({ match, location }) {
@@ -36,11 +36,7 @@ export default function SenpaiProfileView({ match, location }) {
 
   return (
     <div>
-      <Grid
-        container
-        spacing={3}
-        className={classes.root}
-      >
+      <Grid container spacing={3} className={classes.root}>
         <Grid
           className={classes.container}
           item
@@ -54,10 +50,7 @@ export default function SenpaiProfileView({ match, location }) {
           }}
         >
           <Typography variant="h2">{senpai.name}</Typography>
-          <Grid
-            className={classes.avatarHolder}
-            container
-          >
+          <Grid className={classes.avatarHolder} container>
             <Grid>
               <Avatar
                 className="senpai-photo"
@@ -67,53 +60,70 @@ export default function SenpaiProfileView({ match, location }) {
               />
             </Grid>
           </Grid>
-          <Button
-            variant="contained"
-            color="primary"
-          >
-            <Link style={{color: "white"}} to={`/senpai/${match.params.id}/schedule`}>View schedule</Link>
+          <Button variant="contained" color="primary">
+            <Link
+              style={{ color: "white" }}
+              to={`/senpai/${match.params.id}/schedule`}
+            >
+              View schedule
+            </Link>
           </Button>
-          <Grid container style={{ alignItems: "center", padding: "1rem", textAlign: "left" }}>
-            {senpai.twitter || senpai.linkedIn || senpai.facebook || senpai.instagram ?
-              <Typography variant="h5">
-                Socials:
-              </Typography>
-              : null }  
+          <Grid
+            container
+            style={{ alignItems: "center", padding: "1rem", textAlign: "left" }}
+          >
+            {senpai.twitter ||
+            senpai.linkedIn ||
+            senpai.facebook ||
+            senpai.instagram ? (
+              <Typography variant="h5">Socials:</Typography>
+            ) : null}
             <div>
               <Typography variant="h6">
-                {senpai.twitter ? <a ><TwitterIcon /></a> : null}
-                {senpai.linkedIn ? <a ><LinkedInIcon /> </a> : null}
-                {senpai.facebook ? <a ><FacebookIcon /></a> : null}
-                {senpai.instagram ? <a ><InstagramIcon /></a> : null}
+                {senpai.twitter ? (
+                  <a>
+                    <TwitterIcon />
+                  </a>
+                ) : null}
+                {senpai.linkedIn ? (
+                  <a>
+                    <LinkedInIcon />{" "}
+                  </a>
+                ) : null}
+                {senpai.facebook ? (
+                  <a>
+                    <FacebookIcon />
+                  </a>
+                ) : null}
+                {senpai.instagram ? (
+                  <a>
+                    <InstagramIcon />
+                  </a>
+                ) : null}
               </Typography>
             </div>
-            {senpai.email ? 
+            {senpai.email ? (
               <div>
-                <Typography variant="h5">
-                  Email:
-                </Typography>
+                <Typography variant="h5">Email:</Typography>
                 <Typography variant="h6">
                   <a href={senpai.email}>{senpai.email}</a>
                 </Typography>
-              </div> : null}
-            {senpai.location ? 
+              </div>
+            ) : null}
+            {senpai.location ? (
               <div>
-                <Typography variant="h5">
-                  Location:
-                </Typography>
-                <Typography variant="h6">
-                  {senpai.location}
-                </Typography>
-              </div> : null}
-            {senpai.website ? 
+                <Typography variant="h5">Location:</Typography>
+                <Typography variant="h6">{senpai.location}</Typography>
+              </div>
+            ) : null}
+            {senpai.website ? (
               <div>
-                <Typography variant="h5">
-                  Personal Website:
-                </Typography>
+                <Typography variant="h5">Personal Website:</Typography>
                 <Typography variant="h6">
                   <a href={senpai.website}>{senpai.website}</a>
                 </Typography>
-              </div> : null}
+              </div>
+            ) : null}
           </Grid>
         </Grid>
         <Grid
