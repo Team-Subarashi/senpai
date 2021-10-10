@@ -63,7 +63,7 @@ export default function SenpaiProfileView({ match, location }) {
           <Button variant="contained" color="primary">
             <Link
               style={{ color: "white" }}
-              to={`/senpai/${match.params.senpaiId}/schedule`}
+              to={`/senpai/${match.params.id}/schedule`}
             >
               View schedule
             </Link>
