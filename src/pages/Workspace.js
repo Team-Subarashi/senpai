@@ -5,13 +5,19 @@ import axios from "axios";
 import Video from "../components/Video"
 
 import CodeEditor from "../components/CodeRoom/CodeEditor";
+import { useRecoilState } from "recoil";
+import { lessonState } from "../atoms";
 
 export default function Workspace() {
-  
   const [activeFiles, setActiveFiles] = useState("")
+  const [lesson, setLesson] = useRecoilState(lessonState)
   useEffect(async () => {
     const files = await axios.get("/files");
     setActiveFiles(files.data[0]);
+
+    return () => {
+      setLesson({})
+    }
   }, []);
   
   return (
@@ -47,7 +53,7 @@ export default function Workspace() {
         <CodeView/>
       </Grid>
       <Grid item xs={2} style={{ backgroundColor: "gray" }}>
-        <Video />
+        <Video lesson={lesson} />
       </Grid>
     </Grid>
   );
