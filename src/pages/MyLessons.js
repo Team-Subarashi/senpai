@@ -77,13 +77,8 @@ export default function MyLessons({ match }) {
         senpaiId: user._id,
         startDate: date._d,
         endDate: endtime,
-        category: document.getElementById("category-input").innerText,
-        price:
-          user.rates[
-            user.category.indexOf(
-              document.getElementById("category-input").innerText
-            )
-          ],
+        category: category,
+        price: user.rates[user.category.indexOf(category)],
         priceId: "price_1Jg1LrEp77X0l0jdvmgYUpwP", //temp until we have a create your own rate page
       },
     });
@@ -199,13 +194,13 @@ export default function MyLessons({ match }) {
                       }}
                     >
                       <MenuItem value={`${user.category[0]}`}>
-                        {user.category[0]}
+                        {`${user.category[0]} - $${user.rates[0]}/hr`}
                       </MenuItem>
                       <MenuItem value={`${user.category[1]}`}>
-                        {user.category[1]}
+                        {`${user.category[1]} - $${user.rates[1]}/hr`}
                       </MenuItem>
                       <MenuItem value={`${user.category[2]}`}>
-                        {user.category[2]}
+                        {`${user.category[2]} - $${user.rates[2]}/hr`}
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -225,10 +220,10 @@ export default function MyLessons({ match }) {
                       }}
                     >
                       <MenuItem value={`${user.category[0]}`}>
-                        {user.category[0]}
+                        {`${user.category[0]} - $${user.rates[0]}/hr`}
                       </MenuItem>
                       <MenuItem value={`${user.category[1]}`}>
-                        {user.category[1]}
+                        {`${user.category[1]} - $${user.rates[1]}/hr`}
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -248,7 +243,7 @@ export default function MyLessons({ match }) {
                       }}
                     >
                       <MenuItem value={`${user.category[0]}`}>
-                        {user.category[0]}
+                        {`${user.category[0]} - $${user.rates[0]}/hr`}
                       </MenuItem>
                     </Select>
                   </FormControl>
