@@ -38,16 +38,12 @@ export default function SenpaiProfileView({ match, location }) {
   
   const fetchData = async () => {
     const response = await axios.get('/api/v1/users/' + match.params.id)
-    console.log('ollo')
-    console.log(response)
     if (response.data) {
       setSenpai(response.data)
     }
   }
 
   useEffect(() => {
-    console.log('test')
-    console.log(senpai)
     fetchData()
   }, [])
 
