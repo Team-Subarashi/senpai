@@ -4,12 +4,11 @@ const stripe = require("stripe")(
 
 require("dotenv").config();
 
-let YOUR_DOMAIN
+let YOUR_DOMAIN;
 if (process.env.NODE_ENV === "development") {
   YOUR_DOMAIN = "http://localhost:5000";
 } else if (process.env.NODE_ENV === "production") {
   YOUR_DOMAIN = "https://senpai-container-flsg4ziguq-uc.a.run.app";
-  // YOUR_DOMAIN = "http://localhost:5000";
 }
 exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -39,7 +38,7 @@ exports.createLessonAndPrice = async (req, res) => {
   const price = await stripe.prices.create({
     product: product.id,
     unit_amount: inputPrice.price,
-    currency: "jpy",
+    currency: "USD",
   });
   res.send(200);
 };
