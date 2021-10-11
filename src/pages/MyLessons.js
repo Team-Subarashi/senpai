@@ -14,14 +14,7 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import {
-  FormControl,
-  InputLabel,
-  Input,
-  Checkbox,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { lessonState, userState, selectedDate } from "../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -41,7 +34,7 @@ const styles = (theme) => ({
   },
 });
 
-export default function MyLessons({ match }) {
+export default function MyLessons() {
   const user = useRecoilValue(userState);
   const date = useRecoilValue(selectedDate);
   const setLesson = useSetRecoilState(lessonState);

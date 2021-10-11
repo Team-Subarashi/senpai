@@ -38,7 +38,7 @@ exports.createLessonAndPrice = async (req, res) => {
   const price = await stripe.prices.create({
     product: product.id,
     unit_amount: inputPrice.price,
-    currency: "USD",
+    currency: "jpy",
   });
   res.send(200);
 };
