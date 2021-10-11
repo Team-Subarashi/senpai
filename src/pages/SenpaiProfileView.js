@@ -16,6 +16,7 @@ import axios from 'axios';
 const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: "#424242",
+    margin: "1rem",
   },
   root: {
     marginTop: "0px",
@@ -65,7 +66,7 @@ export default function SenpaiProfileView({ match, location }) {
             }}
           >
             <Typography variant="h2">{senpai.name}</Typography>
-            <Grid className={classes.avatarHolder} container>
+            <Grid xs={3} className={classes.avatarHolder} container>
               <Grid>
                 <Avatar
                   className="senpai-photo"
@@ -133,7 +134,7 @@ export default function SenpaiProfileView({ match, location }) {
               ) : null}
               {senpai.website ? (
                 <div>
-                  <Typography variant="h5">Personal Website:</Typography>
+                  <Typography xs={3} variant="h5">Personal Website:</Typography>
                   <Typography variant="h6">
                     <a href={senpai.website}>{senpai.website}</a>
                   </Typography>
@@ -147,26 +148,31 @@ export default function SenpaiProfileView({ match, location }) {
             style={{
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
+              justifyContent: "start",
             }}
           >
             <Container
               fixed
               className={classes.container}
-              style={{
-                padding: "1rem",
-                height: "65vh",
-              }}
+              style={{padding: "1rem"}}
             >
-              <iframe
-                width="854"
-                height="480"
-                src="https://www.youtube.com/embed/dHRO8M6elcQ"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              <div               
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  height: 0,
+                  paddingBottom: "56.25%"
+                }}>
+                <iframe
+                  src="https://www.youtube.com/embed/dHRO8M6elcQ"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}
+                >
+                </iframe>
+              </div>
             </Container>
             <Container
               fixed
