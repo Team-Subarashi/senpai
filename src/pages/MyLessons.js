@@ -39,9 +39,6 @@ const styles = (theme) => ({
     marginBottom: theme.spacing(2),
     justifyContent: "flex-end",
   },
-  underline: {
-    underline: "2px solid white",
-  },
 });
 
 export default function MyLessons({ match }) {
@@ -117,7 +114,11 @@ export default function MyLessons({ match }) {
         <Grid container alignItems="center">
           <Grid item xs={2} className={classes.textCenter}></Grid>
           <Grid item xs={6}>
-            <Button onClick={() => joinClickHandler(appointmentData)}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => joinClickHandler(appointmentData)}
+            >
               Join Room
             </Button>
           </Grid>
@@ -163,22 +164,6 @@ export default function MyLessons({ match }) {
                 }}
               >
                 <BasicDateTimePicker />
-                {/* <InputLabel
-                    style={{
-                      color: "#fff",
-                    }}
-                  >
-                    Hourly Rate
-                  </InputLabel>
-                  <Input
-                    id="price-input"
-                    style={{
-                      color: "#fff",
-                      marginTop: "1vh",
-                      marginBottom: "1vh",
-                    }}
-                    defaultValue={""}
-                  /> */}
                 {user.category.length === 3 ? (
                   <FormControl style={{ marginTop: "1vh" }}>
                     <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
@@ -258,10 +243,6 @@ export default function MyLessons({ match }) {
                 </Button>
               </div>
             </Grid>
-
-            {/* <Grid item xs={4} style={{ backgroundColor: "blue" }}>
-          Test
-        </Grid> */}
           </Grid>
         </MuiPickersUtilsProvider>
       </>
@@ -283,10 +264,6 @@ export default function MyLessons({ match }) {
               </Scheduler>
             </Paper>
           </Grid>
-
-          {/* <Grid item xs={4} style={{ backgroundColor: "blue" }}>
-          Test
-        </Grid> */}
         </Grid>
       </>
     );

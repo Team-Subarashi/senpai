@@ -11,6 +11,7 @@ import {
 } from "@devexpress/dx-react-scheduler-material-ui";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
 
 const style = () => ({
   textCenter: {
@@ -48,7 +49,9 @@ export default function Timetable({ senpaiLessons }) {
                 action={`/create-checkout-session/${appointmentData.priceId}/${appointmentData.senpaiId}?lesson_id=${appointmentData._id}`}
                 method="POST"
               >
-                <button type="submit">Book Now</button>
+                <Button variant="contained" color="primary" type="submit">
+                  Book Now
+                </Button>
               </form>
             ) : null}
           </Grid>
