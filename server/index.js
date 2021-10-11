@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === "production") {
   app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
   app
     .route("/api/v1/users/:id")
-    .get(users.getOneUserByAuthId)
+    .get(users.getOneUserById)
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
@@ -83,6 +83,9 @@ if (process.env.NODE_ENV === "production") {
     .post(stripe.createCheckoutSession);
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
+
+  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId)
+
 
   app.get("*", (req, res) => {
     res.sendFile(

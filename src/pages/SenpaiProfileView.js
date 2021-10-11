@@ -9,7 +9,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
-import Link from "react-router-dom/Link";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -76,8 +76,8 @@ export default function SenpaiProfileView({ match, location }) {
             senpai.linkedIn ||
             senpai.facebook ||
             senpai.instagram ? (
-              <Typography variant="h5">Socials:</Typography>
-            ) : null}
+                <Typography variant="h5">Socials:</Typography>
+              ) : null}
             <div>
               <Typography variant="h6">
                 {senpai.twitter ? (
