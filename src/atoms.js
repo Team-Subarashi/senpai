@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 
 
 export const category = atom({
@@ -30,6 +30,11 @@ export const userState = atom({
     id: null,
     email: null,
   },
+})
+
+export const lessonState = atom({
+  key: 'lessonState',
+  default: {},
 })
 
 export const selectedSenpaiState = atom({

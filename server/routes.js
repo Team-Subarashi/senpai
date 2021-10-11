@@ -5,11 +5,12 @@ module.exports = function (app) {
   const lessons = require("./controllers/LessonController");
   const stripe = require("./controllers/StripeController");
   const messages = require("./controllers/MessageController")
+  const vonage = require("./controllers/vonageController");
 
   app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
   app
     .route("/api/v1/users/:id")
-    .get(users.getOneUserByAuthId)
+    .get(users.getOneUserById)
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
@@ -36,6 +37,13 @@ module.exports = function (app) {
   app
     .route("/create-checkout-session/:priceId/:senpaiId")
     .post(stripe.createCheckoutSession);
+
+
+
+
+  app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
+
+  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId)
 
 
 

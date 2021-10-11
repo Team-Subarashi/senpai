@@ -1,4 +1,8 @@
 const Lesson = require("../models/LessonModel");
+require("dotenv").config();
+
+let OpenTok = require('opentok');
+let opentok = new OpenTok(process.env.API_KEY, process.env.SECRET);
 
 exports.listAllLessons = (req, res) => {
   Lesson.find({}, (err, lesson) => {
@@ -36,16 +40,20 @@ exports.getLessonsByKouhaiId = (req, res) => {
   });
 };
 
-exports.createNewLesson = (req, res) => {
-  console.log(req.body)
-  let newLesson = new Lesson(req.body);
-  newLesson.save((err, lesson) => {
-    if (err) {
-      console.log
-      res.status(500).send(err);
-    }
-    res.status(201).json(lesson);
+exports.createNewLesson = async (req, res) => {
+  await opentok.createSession(function(err, session) {
+    if (err) return console.log(err);
+    req.body.vonageSessionId = session.sessionId
+    let newLesson = new Lesson(req.body);
+    newLesson.save((err, lesson) => {
+      if (err) {
+        console.log
+        res.status(500).send(err);
+      }
+      res.status(201).json(lesson);
+    });
   });
+  
 };
 // updateTodo function — To update todo status by id
 exports.updateLesson = (req, res) => {

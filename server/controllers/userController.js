@@ -9,8 +9,17 @@ exports.listAllUsers = (req, res) => {
   });
 };
 
+exports.getOneUserById = (req, res) => {
+  User.findOne({ _id: req.params.id }, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.status(200).json(user);
+  })
+}
+
 exports.getOneUserByAuthId = (req, res) => {
-  User.findOne({ authId: req.params.id }, (err, user) => {
+  User.findOne({ authId: req.params.authId }, (err, user) => {
     if (err) {
       res.status(500).send(err);
     }

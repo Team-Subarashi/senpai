@@ -1,7 +1,7 @@
 import React from "react";
 import Filter from "../components/Filter";
 import SenpaiList from "../components/SenpaiList";
-import { Grid } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 export default function Search() {
   return (

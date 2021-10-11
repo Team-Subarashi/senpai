@@ -1,31 +1,30 @@
-//import './index.css'
+import React, { useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js";
+import Checkout from "./components/Checkout";
 import Splash from "./pages/Splash";
 import Search from "./pages/Search";
 import Workspace from "./pages/Workspace";
-
+import ScheduleBooking from "./pages/ScheduleBooking";
+import SenpaiProfileView from "./pages/SenpaiProfileView";
 import Kohai from "./pages/Kohai";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import MyLessons from "./pages/MyLessons";
+import Edit from "./pages/Edit";
+import SenpaiSettings from "./pages/SenpaiSettings";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { CssBaseline } from "@material-ui/core";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { auth } from "./firebase";
-import { getAuth, onAuthStateChanged } from "@firebase/auth";
+import { onAuthStateChanged } from "@firebase/auth";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
-import SignOut from "./components/SignOut";
-import React, { useEffect } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
-import { ThemeProvider } from "@material-ui/core";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
-import ScheduleBooking from './pages/ScheduleBooking'
-import SenpaiProfileView from './pages/SenpaiProfileView'
-import Checkout from './components/Checkout'
-import MyLessons from './pages/MyLessons'
-import Messages from './pages/Messages'
+import Messages from './pages/Messages';
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,10 +42,7 @@ function App() {
       if (user) {
         const response = await axios({
           method: "get",
-          url: `/api/v1/users/${user.uid}`,
-          data: {
-            authId: user.uid,
-          },
+          url: `/api/v1/firebase/${user.uid}`,
         });
         if (response.data) {
           console.log(response.data);
@@ -61,11 +57,11 @@ function App() {
     });
   }, []);
 
-  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <div className="App">
-        <div className={classes.root}>
+        <div >
           <Router hashType="slash">
             <CssBaseline />
             <NavBar user={user} />
@@ -81,11 +77,13 @@ function App() {
               <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
               <Route path="/mylessons" component={MyLessons} />
               <Route path="/messages" component={Messages} />
+              <Route path="/edit" component={Edit} />
+              <Route path="/senpai-settings" component={SenpaiSettings} />
             </Switch>
           </Router>
         </div>
-      </div>
-    </ThemeProvider>
+      </div >
+    </ThemeProvider >
   );
 }
 

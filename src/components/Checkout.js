@@ -22,7 +22,10 @@ const ProductDisplay = () => (
   </section>
 );
 
-export default function Checkout({ match, location }) {
+export default function Checkout({
+  match,
+  // location
+}) {
   const [message, setMessage] = useState("");
   const user = useRecoilValue(userState);
 

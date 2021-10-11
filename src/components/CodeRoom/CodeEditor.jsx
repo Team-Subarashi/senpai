@@ -5,9 +5,13 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
-import { useRecoilValueLoadable, useRecoilState } from "recoil";
+import {
+  //  useRecoilValueLoadable,
+   useRecoilState } from "recoil";
 import axios from "axios";
-import { loadedFiles, loadedCSS, loadedHTML, loadedJS } from "../../atoms";
+import {
+  //  loadedFiles,
+    loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
 function CodeEditor({ activeFiles }) {
   const editorRef = useRef(null);
@@ -27,17 +31,25 @@ function CodeEditor({ activeFiles }) {
     setCSS(activeFiles.css);
   }, [activeFiles]);
 
-  const handleHTML = (value, event) => {
+  const handleHTML = (value,
+    //  event
+     ) => {
     setHTML(value);
   };
-  const handleJS = (value, event) => {
+  const handleJS = (value,
+    //  event
+     ) => {
     setJS(value);
   };
-  const handleCSS = (value, event) => {
+  const handleCSS = (value,
+    //  event
+     ) => {
     setCSS(value);
   };
 
-  const handleSave = async (value, event) => {
+  const handleSave = async (
+    // value, event
+    ) => {
     return await axios.patch(`/files/${activeFiles._id}`, {
       js: js,
       css: css,
@@ -47,7 +59,9 @@ function CodeEditor({ activeFiles }) {
   // const loadedFiles = useRecoilValueLoadable(fileQuery)
 
 
-  function handleEditorDidMount(editor, monaco) {
+  function handleEditorDidMount(editor, 
+    // monaco
+    ) {
     editorRef.current = editor;
     setEditorLoaded(true);
   }
