@@ -16,31 +16,40 @@ const ProductDisplay = () => (
         <h5>$20.00</h5>
       </div>
     </div>
-    <form action="/create-checkout-session/temp" method="POST">
+    <form action="/#/create-checkout-session/temp" method="POST">
       <button type="submit">Checkout</button>
     </form>
   </section>
 );
 
-
-
-export default function Checkout({match, location}) {
+export default function Checkout({
+  match,
+  // location
+}) {
   const [message, setMessage] = useState("");
   const user = useRecoilValue(userState);
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
+
     const query = new URLSearchParams(window.location.search);
 
-    if (query.get("success")) {
-      setMessage("Order placed! You will receive an email confirmation.");
+    // console.log(query);
+    let trueMess = window.location.href.split("?")[1];
+    // console.log(trueMess);
+
+    if (trueMess === "success=true") {
+      // if (query.get("success")) {
+      setMessage("Lesson booked!");
+      // console.log(user._id);
+      // console.log(match.params.lessonId);
       axios({
-        method: 'patch',
+        method: "patch",
         url: `/lessons/${match.params.lessonId}`,
         data: {
           kouhaiId: user._id,
-        }
-      })
+        },
+      });
     }
 
     if (query.get("canceled")) {
@@ -53,7 +62,9 @@ export default function Checkout({match, location}) {
   const Message = ({ message }) => (
     <section>
       <p>{message}</p>
-      <Link to={`/senpai/${match.params.senpaiId}/schedule`}>Return to Senpai schedule</Link>
+      <Link to={`/senpai/${match.params.senpaiId}/schedule`}>
+        Return to Senpai schedule
+      </Link>
     </section>
   );
 

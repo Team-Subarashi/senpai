@@ -11,7 +11,13 @@ const lessons = require("./controllers/LessonController");
 const stripe = require("./controllers/StripeController");
 
 require("dotenv").config();
-const port = process.env.PORT || 8080;
+
+let port;
+if (process.env.NODE_ENV === "production") {
+  port = process.env.PORT;
+} else {
+  port = 8080;
+}
 
 const uri = process.env.MONGODB_URI;
 const options = {
@@ -23,7 +29,7 @@ const options = {
 
 mongoose.connect(uri, options).then(
   () => {
-    console.log("Database connection established in prod!");
+    console.log("Connection established!");
     routes(app);
   },
   (err) => {
@@ -31,22 +37,22 @@ mongoose.connect(uri, options).then(
       console.log("Error connecting Database instance due to:", err);
     }
   }
-  );
-  
-  mongoose.connection.once("open", () => {
-    console.log("MongoDB connected!");
-  });
-  
-  app.use(cors());
-  app.use(express.urlencoded());
-  app.use(express.json());
-  app.use(
-    morgan(
-      ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
-      )
-      );
-      if (process.env.NODE_ENV === "production") {
-        app.use(express.static(path.resolve(__dirname, "..", "build")));
+);
+
+mongoose.connection.once("open", () => {
+  console.log("MongoDB has been connected to");
+});
+
+app.use(cors());
+app.use(express.urlencoded());
+app.use(express.json());
+app.use(
+  morgan(
+    ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
+  )
+);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "..", "build")));
 
   //Importing all routes to prod
 
@@ -57,9 +63,8 @@ mongoose.connect(uri, options).then(
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
-  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId)
-  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId)
-
+  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
 
   app
     .route("/lessons")
@@ -71,21 +76,15 @@ mongoose.connect(uri, options).then(
     .delete(lessons.deleteLesson);
 
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
-  app
-    .route("/files/:id")
-    .patch(files.updateFile)
-    .delete(files.deleteFile);
+  app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
 
   app
     .route("/create-checkout-session/:priceId/:senpaiId")
     .post(stripe.createCheckoutSession);
-  app
-    .route("/create-lesson-and-price")
-    .post(stripe.createLessonAndPrice);
+  app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
 
   app.get("*", (req, res) => {
-    routes(app);
     res.sendFile(
       path.join(__dirname, "../../", "senpai", "build", "index.html")
     );

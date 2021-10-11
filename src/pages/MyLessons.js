@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import Paper from '@material-ui/core/Paper';
-import { ViewState } from '@devexpress/dx-react-scheduler';
+import React, { useEffect, useState } from "react";
+import Paper from "@material-ui/core/Paper";
+import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
   Resources,
@@ -8,147 +8,292 @@ import {
   Appointments,
   AppointmentTooltip,
   Toolbar,
-  DateNavigator
-} from '@devexpress/dx-react-scheduler-material-ui';
-import axios from 'axios';
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Button from '@material-ui/core/Button'
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
-import { userState } from '../atoms';
-import { useRecoilValue } from 'recoil';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
+  DateNavigator,
+} from "@devexpress/dx-react-scheduler-material-ui";
+import axios from "axios";
+import Button from "@material-ui/core/Button";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
+import {
+  FormControl,
+  InputLabel,
+  Input,
+  Checkbox,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { lessonState, userState, selectedDate } from "../atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useHistory } from "react-router";
+import BasicDateTimePicker from "../components/DateTimePicker";
+import MomentUtils from "@date-io/moment";
+import moment from "moment";
 
-const styles = theme => ({
+const styles = (theme) => ({
   textCenter: {
-    textAlign: 'center',
-  },
-  firstRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/Lobby-4.jpg)',
-  },
-  secondRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-4.jpg)',
-  },
-  thirdRoom: {
-    background: 'url(https://js.devexpress.com/Demos/DXHotels/Content/Pictures/MeetingRoom-0.jpg)',
-  },
-  header: {
-    height: '260px',
-    backgroundSize: 'cover',
-  },
-  commandButton: {
-    backgroundColor: 'rgba(255,255,255,0.65)',
+    textAlign: "center",
   },
   container: {
-    display: 'flex',
+    display: "flex",
     marginBottom: theme.spacing(2),
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
-  text: {
-    ...theme.typography.h6,
-    marginRight: theme.spacing(2),
+  underline: {
+    underline: "2px solid white",
   },
 });
 
-export default function MyLessons({match}) {
-  const user = useRecoilValue(userState)
-  const [selectedDate, setSelectedDate] = useState(Date.now())
-  const [schedulerData , setSchedulerData] = useState([])
-  const [mainResourceName, setMainResourceName] = useState('members')
-  const [resources, setResources] = useState([])
+export default function MyLessons({ match }) {
+  const user = useRecoilValue(userState);
+  const date = useRecoilValue(selectedDate);
+  const setLesson = useSetRecoilState(lessonState);
+  const [schedulerData, setSchedulerData] = useState([]);
+  const [category, setCategory] = useState("user.category[0]");
+
+  const changeCategory = (skill) => {
+    setCategory(skill);
+  };
+
+  const resources = [
+    {
+      fieldName: "userIsSenpai",
+      title: "userIsSenpai",
+      instances: [
+        { id: true, text: "Senpai", color: "#5c6bc0" },
+        { id: false, text: "Kohai", color: "#26a69a" },
+      ],
+    },
+  ];
+  const history = useHistory();
+
+  const bookButtonHandler = () => {
+    // match.params.senpaiId should be senpai's id
+    let endtime = moment(date).add(1, "hours");
+    axios({
+      method: "post",
+      url: "/lessons",
+      data: {
+        senpaiId: user._id,
+        startDate: date._d,
+        endDate: endtime,
+        category: document.getElementById("category-input").innerText,
+        price:
+          user.rates[
+            user.category.indexOf(
+              document.getElementById("category-input").innerText
+            )
+          ],
+        priceId: "price_1Jg1LrEp77X0l0jdvmgYUpwP", //temp until we have a create your own rate page
+      },
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`/api/v1/users/${user._id}/lessons`)
+      const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
       if (response.data) {
         // console.log(response.data)
         const temp = response.data.map((lesson) => {
-          lesson.title = "Active Lesson"
-          
-          return lesson
-        })
-        setSchedulerData(temp)
+          lesson.title =
+            lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
+          lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
+          return lesson;
+        });
+        setSchedulerData(temp);
       }
+    };
+    if (user._id) {
+      fetchData();
     }
-    fetchData()
-  }, [user])
+  }, [user]);
 
-  const ResourceSwitcher = withStyles(styles, { name: 'ResourceSwitcher' })(
-    ({
-      mainResourceName, onChange, classes, resources,
-    }) => (
-      <div className={classes.container}>
-        <div className={classes.text}>
-          Main resource name:
-        </div>
-        <Select
-          value={mainResourceName}
-          onChange={e => onChange(e.target.value)}
-        >
-          {resources.map(resource => (
-            <MenuItem key={resource.fieldName} value={resource.fieldName}>
-              {resource.title}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-    ),
+  const joinClickHandler = (appointmentData) => {
+    setLesson(appointmentData);
+    history.push(`/room/${appointmentData._id}`);
+  };
+
+  const Content = withStyles(styles, { name: "Content" })(
+    ({ appointmentData, classes, ...restProps }) => (
+      <AppointmentTooltip.Content
+        {...restProps}
+        appointmentData={appointmentData}
+      >
+        <Grid container alignItems="center">
+          <Grid item xs={2} className={classes.textCenter}></Grid>
+          <Grid item xs={6}>
+            <Button onClick={() => joinClickHandler(appointmentData)}>
+              Join Room
+            </Button>
+          </Grid>
+        </Grid>
+      </AppointmentTooltip.Content>
+    )
   );
 
-  const Content = withStyles(styles, { name: 'Content' })(({
-    children, appointmentData, classes, ...restProps
-  }) => (
-    <AppointmentTooltip.Content {...restProps} appointmentData={appointmentData}>
-      <Grid container alignItems="center">
-        <Grid item xs={2} className={classes.textCenter}>
-        </Grid>
-        <Grid item xs={10}>
-           <Link to={`/room/${appointmentData._id}`}>
-              <Button>
-                Join Room
-              </Button>
-            </Link>
-        </Grid>
-      </Grid>
-    </AppointmentTooltip.Content>
-  ));
+  if (user.isSenpai === true) {
+    return (
+      <>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+          <Grid container>
+            <Grid item xs={9}>
+              <Paper>
+                <Scheduler data={schedulerData}>
+                  <ViewState defaultCurrentDate={Date.now()} />
+                  <WeekView
+                    startDayHour={9}
+                    endDayHour={24}
+                    cellDuration={60}
+                  />
+                  <Appointments />
+                  <AppointmentTooltip contentComponent={Content} />
+                  <Resources
+                    data={resources}
+                    mainResourceName={"userIsSenpai"}
+                  />
+                  <Toolbar />
+                  <DateNavigator />
+                </Scheduler>
+              </Paper>
+            </Grid>
+            <Grid item xs={3}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignContent: "center",
+                  marginTop: "2vh",
+                  marginLeft: "3vw",
+                  marginRight: "3vw",
+                }}
+              >
+                <BasicDateTimePicker />
+                {/* <InputLabel
+                    style={{
+                      color: "#fff",
+                    }}
+                  >
+                    Hourly Rate
+                  </InputLabel>
+                  <Input
+                    id="price-input"
+                    style={{
+                      color: "#fff",
+                      marginTop: "1vh",
+                      marginBottom: "1vh",
+                    }}
+                    defaultValue={""}
+                  /> */}
+                {user.category.length === 3 ? (
+                  <FormControl style={{ marginTop: "1vh" }}>
+                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
+                    <Select
+                      id="category-input"
+                      value={category}
+                      style={{
+                        color: "#fff",
+                        marginBottom: "1vh",
+                      }}
+                      onChange={(e) => {
+                        changeCategory(e.target.value);
+                      }}
+                    >
+                      <MenuItem value={`${user.category[0]}`}>
+                        {user.category[0]}
+                      </MenuItem>
+                      <MenuItem value={`${user.category[1]}`}>
+                        {user.category[1]}
+                      </MenuItem>
+                      <MenuItem value={`${user.category[2]}`}>
+                        {user.category[2]}
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                ) : null}
+                {user.category.length === 2 ? (
+                  <FormControl style={{ marginTop: "1vh" }}>
+                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
+                    <Select
+                      id="category-input"
+                      value={category}
+                      style={{
+                        color: "#fff",
+                        marginBottom: "1vh",
+                      }}
+                      onChange={(e) => {
+                        changeCategory(e.target.value);
+                      }}
+                    >
+                      <MenuItem value={`${user.category[0]}`}>
+                        {user.category[0]}
+                      </MenuItem>
+                      <MenuItem value={`${user.category[1]}`}>
+                        {user.category[1]}
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                ) : null}
+                {user.category.length === 1 ? (
+                  <FormControl style={{ marginTop: "1vh" }}>
+                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
+                    <Select
+                      id="category-input"
+                      value={category}
+                      style={{
+                        color: "#fff",
+                        marginBottom: "1vh",
+                      }}
+                      onChange={(e) => {
+                        changeCategory(e.target.value);
+                      }}
+                    >
+                      <MenuItem value={`${user.category[0]}`}>
+                        {user.category[0]}
+                      </MenuItem>
+                    </Select>
+                  </FormControl>
+                ) : null}
 
-  function changeMainResource(mainResourceName) {
-    setMainResourceName(mainResourceName);
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={bookButtonHandler}
+                >
+                  Create Lesson Slot
+                </Button>
+              </div>
+            </Grid>
+
+            {/* <Grid item xs={4} style={{ backgroundColor: "blue" }}>
+          Test
+        </Grid> */}
+          </Grid>
+        </MuiPickersUtilsProvider>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Grid container>
+          <Grid item xs={12} style={{ backgroundColor: "blue" }}>
+            <Paper>
+              <Scheduler data={schedulerData}>
+                <ViewState defaultCurrentDate={Date.now()} />
+                <WeekView startDayHour={9} endDayHour={24} cellDuration={60} />
+                <Appointments />
+                <AppointmentTooltip contentComponent={Content} />
+                <Resources data={resources} mainResourceName={"userIsSenpai"} />
+                <Toolbar />
+                <DateNavigator />
+              </Scheduler>
+            </Paper>
+          </Grid>
+
+          {/* <Grid item xs={4} style={{ backgroundColor: "blue" }}>
+          Test
+        </Grid> */}
+        </Grid>
+      </>
+    );
   }
-
-  return (
-    <>
-      <ResourceSwitcher 
-        resources={resources}
-        mainResourceName={mainResourceName}
-        onChange={changeMainResource}
-      />
-      <Paper>
-        <Scheduler
-          data={schedulerData}
-        >
-          <ViewState
-            defaultCurrentDate={selectedDate}
-          />
-          <WeekView
-            startDayHour={9}
-            endDayHour={24}
-            cellDuration={60}
-          />
-          <Appointments />
-          <AppointmentTooltip contentComponent={Content} />
-          <Resources 
-            data={resources}
-            mainResourceName={mainResourceName}
-          />
-          <Toolbar />
-          <DateNavigator />
-        </Scheduler>
-      </Paper>
-    </>
-  )
 }
-

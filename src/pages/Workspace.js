@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
-import { Stack } from "@mui/material";
+import Grid from "@material-ui/core/Grid";
 import CodeView from "../components/CodeRoom/CodeView";
-import { useRecoilState } from "recoil";
 import axios from "axios";
+import Video from "../components/Video"
 
-// import Video from "../components/Video";
 import CodeEditor from "../components/CodeRoom/CodeEditor";
-// import CodeView from "../components/CodeRoom/CodeView";
+import { useRecoilState } from "recoil";
+import { lessonState } from "../atoms";
 
 export default function Workspace() {
-  
   const [activeFiles, setActiveFiles] = useState("")
+  const [lesson, setLesson] = useRecoilState(lessonState)
   useEffect(async () => {
     const files = await axios.get("/files");
     setActiveFiles(files.data[0]);
+
+    return () => {
+      setLesson({})
+    }
   }, []);
   
   return (
@@ -50,12 +53,8 @@ export default function Workspace() {
         <CodeView/>
       </Grid>
       <Grid item xs={2} style={{ backgroundColor: "gray" }}>
-        <Stack spacing={2}>
-          <div>Video Comp 1</div>
-          <div>Video Comp 2</div>
-        </Stack>
+        <Video lesson={lesson} />
       </Grid>
-      {/* <Video /> */}
     </Grid>
   );
 }

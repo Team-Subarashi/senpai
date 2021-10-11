@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Calendar from "./Calendar";
-import { Grid, Box, Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import { useRecoilValue } from "recoil";
 import "antd/dist/antd.css";
 import { Tabs } from "antd";
@@ -12,7 +14,6 @@ export default function SenpaiList() {
   const [senpaiList, setSenpaiList] = useState([]);
   const category = useRecoilValue(categoryAtom);
 
-  const [toggleState, setToggleState] = useState(1);
   // const { Tabs } = antd;
   const { TabPane } = Tabs;
 
@@ -25,45 +26,47 @@ export default function SenpaiList() {
     await axios.get("/api/v1/users").then((res) => {
       console.log(res);
       for (const senpai of res.data) {
-        if (category.toLowerCase() === "all") {
-          temp.push({
-            id: senpai._id,
-            avatar: senpai.avatar,
-            name: senpai.name,
-            category: senpai.category,
-            rates: senpai.rates,
-            bio: senpai.bio,
-            email: senpai.email,
-            location: senpai.location,
-            twitter: senpai.twitter,
-            facebook: senpai.facebook,
-            linkedIn: senpai.linkedIn,
-            website: senpai.website,
-          });
-        } else if (senpai.category.includes(category)) {
-          temp.push({
-            id: senpai._id,
-            avatar: senpai.avatar,
-            name: senpai.name,
-            category: senpai.category,
-            rates: senpai.rates,
-            bio: senpai.bio,
-            email: senpai.email,
-            location: senpai.location,
-            twitter: senpai.twitter,
-            facebook: senpai.facebook,
-            linkedIn: senpai.linkedIn,
-            website: senpai.website,
-          });
+        if (senpai.isSenpai === true) {
+          if (category.toLowerCase() === "all") {
+            temp.push({
+              id: senpai._id,
+              avatar: senpai.avatar,
+              name: senpai.name,
+              category: senpai.category,
+              rates: senpai.rates,
+              bio: senpai.bio,
+              email: senpai.email,
+              location: senpai.location,
+              twitter: senpai.twitter,
+              facebook: senpai.facebook,
+              linkedIn: senpai.linkedIn,
+              website: senpai.website,
+            });
+          } else if (senpai.category.includes(category)) {
+            temp.push({
+              id: senpai._id,
+              avatar: senpai.avatar,
+              name: senpai.name,
+              category: senpai.category,
+              rates: senpai.rates,
+              bio: senpai.bio,
+              email: senpai.email,
+              location: senpai.location,
+              twitter: senpai.twitter,
+              facebook: senpai.facebook,
+              linkedIn: senpai.linkedIn,
+              website: senpai.website,
+            });
+          }
         }
       }
-      console.log(temp)
+      console.log(temp);
       setSenpaiList(temp);
     });
   };
 
   const senpaiPopulator = () => {
-    return senpaiList.map((senpai, index) => {
+    return senpaiList.map((senpai) => {
       return (
         <Grid
           container
@@ -71,22 +74,21 @@ export default function SenpaiList() {
           style={{
             marginBottom: "3vh",
             height: "25vh",
-
           }}
           key={senpai._id}
         >
           <Grid
             item
             xs={4}
-            style={{ height: "90%", backgroundColor: "#616162", border: "1px solid white" }}
+            style={{
+              height: "90%",
+              backgroundColor: "#616162",
+              border: "1px solid white",
+            }}
           >
             {senpai.name}
             <Box mt={2}>
-              <img
-                height="125px"
-                width="125px"
-                src={senpai.avatar}
-              />
+              <img height="125px" width="125px" src={senpai.avatar} />
             </Box>
 
             <Link to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}>
@@ -104,7 +106,6 @@ export default function SenpaiList() {
                 Go to Profile
               </Button>
             </Link>
-            <Link></Link>
           </Grid>
           <Grid
             item
@@ -114,23 +115,29 @@ export default function SenpaiList() {
               paddingTop: "1.cl.2vh",
               height: "90%",
               backgroundColor: "#616162",
-              border: "1px solid white"
+              border: "1px solid white",
             }}
           >
             <div>
-              {senpai.category.map((skill) => {
-                return <div>{skill}</div>;
+              {senpai.category.map((skill, index) => {
+                return (
+                  <div key={skill}>
+                    {skill} - {senpai.rates[index]}/hour
+                  </div>
+                );
               })}
             </div>
-
-            {senpai.rates}
+            {/* {senpai.skillOneRate}
+            {senpai.skillTwoRate}
+            {senpai.skillThreeRate} */}
           </Grid>
           <Grid
             item
             xs={4}
             style={{
-              height: "90%", backgroundColor: "#616162",
-              border: "1px solid white"
+              height: "90%",
+              backgroundColor: "#616162",
+              border: "1px solid white",
             }}
           >
             <Tabs class="my-tabs" defaultActiveKey="1" onChange={callback}>
@@ -149,21 +156,18 @@ export default function SenpaiList() {
               </TabPane>
             </Tabs>
           </Grid>
-          <Grid item xs={12} style={{
-            height: "100%", backgroundColor: "#303030",
-            //border: "1px solid white"
-          }} >
-
-
-          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{
+              height: "100%",
+              backgroundColor: "#303030",
+              //border: "1px solid white"
+            }}
+          ></Grid>
         </Grid>
       );
     });
-  };
-
-  const toggleTab = (event, index) => {
-    console.log(event.target.id);
-    setToggleState(index);
   };
 
   useEffect(() => {
@@ -180,7 +184,11 @@ export default function SenpaiList() {
 
   return (
     <>
-      {senpaiList.length > 0 ? senpaiPopulator() : <div>No Senpai Found</div>}
+      {senpaiList.length > 0 ? (
+        senpaiPopulator()
+      ) : (
+        <div>We couldn't find any senpai that fit these filters!</div>
+      )}
     </>
   );
 }
