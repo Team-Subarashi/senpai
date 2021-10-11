@@ -44,7 +44,7 @@ const PreviousLesson = ({ lessonProp }) => {
       border={1}
       xs={12}
       style={{
-        borderTop: "1px solid",
+        borderTop: "0.1px groove",
         margin: "top",
         height: "10vh",
       }}
