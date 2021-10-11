@@ -1,17 +1,32 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import BookNowPopover from "../components/BookNowPopover";
-import { Container } from "@material-ui/core";
-import { Avatar, Typography } from "@mui/material";
-import TwitterIcon from '@material-ui/icons/Twitter';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import InstagramIcon from '@material-ui/icons/Instagram';
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Container from "@material-ui/core/Container";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import Link from "react-router-dom/Link";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
-    backgroundColor: "#303030",
+    backgroundColor: "#424242",
+  },
+  root: {
+    marginTop: "0px",
+    height: "100vh",
+    display: "flex",
+    justifyContent: "space-evenly",
+    alignContent: "center",
+    padding: "1rem",
+  },
+  avatarHolder: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "25vh",
   },
 }));
 
@@ -20,97 +35,95 @@ export default function SenpaiProfileView({ match, location }) {
   const senpai = location.state.senpai;
 
   return (
-    <div style={{ color: "white" }}>
-      <Grid
-        container
-        spacing={3}
-        style={{
-          backgroundColor: "#616161",
-          marginTop: "0px",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "space-evenly",
-          padding: "1rem",
-        }}
-      >
+    <div>
+      <Grid container spacing={3} className={classes.root}>
         <Grid
           className={classes.container}
           item
           xs={3}
           style={{
+            display: "flex",
+            flexDirection: "column",
             height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
-          <Typography style={{ fontSize: "25px" }}>{senpai.name}</Typography>
-          <Grid
-            className="avatar-holder"
-            container
-            alignItems="center"
-            justify="center"
-            style={{
-              height: "25vh",
-            }}
-          >
+          <Typography variant="h2">{senpai.name}</Typography>
+          <Grid className={classes.avatarHolder} container>
             <Grid>
               <Avatar
                 className="senpai-photo"
                 alt="senpai"
                 src={senpai.avatar}
-                sx={{ width: 150, height: 150 }}
+                style={{ width: 150, height: 150 }}
               />
             </Grid>
           </Grid>
-          <BookNowPopover senpaiId={match.params.id} />
-          <Grid style={{ margin: "10px", padding: "2rem" }}>
-          <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
+          <Button variant="contained" color="primary">
+            <Link
+              style={{ color: "white" }}
+              to={`/senpai/${match.params.id}/schedule`}
             >
-              Socials:
-            </Typography>
-            <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              {senpai.twitter ? <a ><TwitterIcon /></a> : null}
-              {senpai.linkedIn ? <a ><LinkedInIcon /> </a> : null}
-              {senpai.facebook ? <a ><FacebookIcon /></a> : null}
-              {senpai.facebook ? <a ><InstagramIcon /></a> : null}
-              {/* {senpai.twitter ? <a href={senpai.twitter}><TwitterIcon /></a> : null}
-              {senpai.linkedIn ? <a href={senpai.linkedIn}><LinkedInIcon /> </a> : null}
-              {senpai.facebook ? <a href={senpai.facebook}><FacebookIcon /></a> : null}
-              {senpai.facebook ? <a href={senpai.instagram}><InstagramIcon /></a> : null} */}
-            </Typography>
-            {senpai.email ? <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <div>Email:</div>
-               <a href={senpai.email}>{senpai.email}</a>
-            </Typography> : null}
-            {senpai.location ? <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              Location: {senpai.location}
-            </Typography> : null}
-            {senpai.website ? <Typography
-              style={{
-                textAlign: "left",
-                fontSize: "20px",
-              }}
-            >
-              <div>Personal Website:</div>
-              <a href={senpai.website}>{senpai.website}</a>
-            </Typography> : null}
+              View schedule
+            </Link>
+          </Button>
+          <Grid
+            container
+            style={{ alignItems: "center", padding: "1rem", textAlign: "left" }}
+          >
+            {senpai.twitter ||
+            senpai.linkedIn ||
+            senpai.facebook ||
+            senpai.instagram ? (
+              <Typography variant="h5">Socials:</Typography>
+            ) : null}
+            <div>
+              <Typography variant="h6">
+                {senpai.twitter ? (
+                  <a>
+                    <TwitterIcon />
+                  </a>
+                ) : null}
+                {senpai.linkedIn ? (
+                  <a>
+                    <LinkedInIcon />{" "}
+                  </a>
+                ) : null}
+                {senpai.facebook ? (
+                  <a>
+                    <FacebookIcon />
+                  </a>
+                ) : null}
+                {senpai.instagram ? (
+                  <a>
+                    <InstagramIcon />
+                  </a>
+                ) : null}
+              </Typography>
+            </div>
+            {senpai.email ? (
+              <div>
+                <Typography variant="h5">Email:</Typography>
+                <Typography variant="h6">
+                  <a href={senpai.email}>{senpai.email}</a>
+                </Typography>
+              </div>
+            ) : null}
+            {senpai.location ? (
+              <div>
+                <Typography variant="h5">Location:</Typography>
+                <Typography variant="h6">{senpai.location}</Typography>
+              </div>
+            ) : null}
+            {senpai.website ? (
+              <div>
+                <Typography variant="h5">Personal Website:</Typography>
+                <Typography variant="h6">
+                  <a href={senpai.website}>{senpai.website}</a>
+                </Typography>
+              </div>
+            ) : null}
           </Grid>
         </Grid>
         <Grid
@@ -135,9 +148,9 @@ export default function SenpaiProfileView({ match, location }) {
               height="480"
               src="https://www.youtube.com/embed/dHRO8M6elcQ"
               title="YouTube video player"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
+              allowFullScreen
             ></iframe>
           </Container>
           <Container
@@ -146,24 +159,17 @@ export default function SenpaiProfileView({ match, location }) {
             style={{ height: "30vh", padding: "2rem" }}
           >
             {senpai.bio ? (
-              <Typography
-                style={{
-                  textAlign: "left",
-                  fontSize: "20px",
-                }}
-              >
-                Bio: {senpai.bio}
+              <Typography variant="h5" component="p">
+                Bio
+              </Typography>
+            ) : null}
+            {senpai.bio ? (
+              <Typography variant="h6" component="p">
+                {senpai.bio}
               </Typography>
             ) : null}
           </Container>
         </Grid>
-
-        {/* <Grid item xs={4} className={classes.test2}>
-          <Container fixed style={{ height: "25vh" }}>
-            <div>Schedule Here</div>
-          </Container>
-          <BookNowPopover senpaiId={match.params.id} />
-        </Grid> */}
       </Grid>
     </div>
   );
