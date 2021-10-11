@@ -9,7 +9,7 @@ module.exports = function (app) {
   app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
   app
     .route("/api/v1/users/:id")
-    .get(users.getOneUserByAuthId)
+    .get(users.getOneUserById)
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
@@ -36,6 +36,8 @@ module.exports = function (app) {
 
 
   app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
+
+  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId)
 
   
 

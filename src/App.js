@@ -31,10 +31,7 @@ function App() {
       if (user) {
         const response = await axios({
           method: "get",
-          url: `/api/v1/users/${user.uid}`,
-          data: {
-            authId: user.uid,
-          },
+          url: `/api/v1/firebase/${user.uid}`,
         });
         if (response.data) {
           console.log(response.data);
