@@ -15,24 +15,22 @@ exports.getOneUserById = (req, res) => {
       res.status(500).send(err);
     }
     res.status(200).json(user);
-  })
-}
-
+  });
+};
 exports.getOneUserByAuthId = (req, res) => {
   User.findOne({ authId: req.params.authId }, (err, user) => {
     if (err) {
       res.status(500).send(err);
     }
     res.status(200).json(user);
-  })
-}
+  });
+};
 
 exports.createNewUser = (req, res) => {
-  console.log(req.body)
   let newUser = new User(req.body);
   newUser.save((err, user) => {
     if (err) {
-      console.log
+      console.log;
       res.status(500).send(err);
     }
     res.status(201).json(user);
