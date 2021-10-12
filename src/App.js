@@ -45,7 +45,6 @@ function App() {
           url: `/api/v1/firebase/${user.uid}`,
         });
         if (response.data) {
-          console.log(response.data);
           setUser(response.data);
         }
       } else {
