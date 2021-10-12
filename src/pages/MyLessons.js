@@ -35,7 +35,6 @@ const styles = (theme) => ({
 
 export default function MyLessons() {
   const [previousLessons, setPreviousLessons] = useState([]);
-  const [currentLessons, setCurrentLessons] = useState([]);
   const user = useRecoilValue(userState);
   const [schedulerData, setSchedulerData] = useState([]);
   const setLesson = useSetRecoilState(lessonState);
@@ -86,16 +85,36 @@ export default function MyLessons() {
   useEffect(() => {
     const fetchLessonPartner = async (targetLessons) => {
       const resultLessons = targetLessons.map(async (lesson) => {
-        const response = await axios.get(`/senpai/${lesson.senpaiId}`);
-        const lessonPartnerObj = {
-          name: response.data.name,
-          avatar: response.data.avatar,
-          endDate: lesson.endDate,
-        };
-        const combinedObject = _.assignIn(lesson, lessonPartnerObj);
-        return combinedObject;
+        if (lesson.kouhaiId) {
+          if (lesson.userIsSenpai) {
+            const response = await axios.get(`/user/${lesson.kouhaiId}`);
+            const lessonPartnerObj = {
+              name: response.data.name,
+              avatar: response.data.avatar,
+              endDate: lesson.endDate,
+            };
+            const combinedObject = _.assignIn(lesson, lessonPartnerObj);
+            return combinedObject;
+          } else {
+            const response = await axios.get(`/user/${lesson.senpaiId}`);
+            const lessonPartnerObj = {
+              name: response.data.name,
+              avatar: response.data.avatar,
+              endDate: lesson.endDate,
+            };
+            const combinedObject = _.assignIn(lesson, lessonPartnerObj);
+            return combinedObject;
+          }
+        } else {
+          return;
+        }
       });
-      setPreviousLessons(resultLessons);
+      Promise.all(resultLessons).then((data) => {
+        const result = data.filter((lesson) => {
+          return lesson && lesson.kouhaiId;
+        });
+        setPreviousLessons(result);
+      });
     };
 
     const fetchData = async () => {
@@ -109,13 +128,13 @@ export default function MyLessons() {
         });
 
         const filteredTemp = temp.filter((lesson) => {
-          return new Date(lesson.endDate) < new Date();
+          return new Date(lesson.endDate) > new Date();
         });
         const sortedTemp = filteredTemp.sort((a, b) => {
           return new Date(a.endDate) - new Date(b.endDate);
         });
         setSchedulerData(temp);
-        fetchLessonPartner(sortedTemp);
+        setPreviousLessons(fetchLessonPartner(sortedTemp));
       }
     };
     if (user._id) {
@@ -145,6 +164,16 @@ export default function MyLessons() {
       </AppointmentTooltip.Content>
     )
   );
+  const checkRenderLesson = () => {
+    if (previousLessons.length > 0) {
+      return previousLessons.map((lesson) => {
+        console.log(lesson);
+        return <PreviousLesson key={lesson._id} lesson={lesson} />;
+      });
+    } else {
+      return null;
+    }
+  };
 
   return (
     <>
@@ -169,9 +198,7 @@ export default function MyLessons() {
             overflow: "auto",
           }}
         >
-          {previousLessons.map((lesson) => {
-            return <PreviousLesson lessonProp={lesson} />;
-          })}
+          {checkRenderLesson()}
         </Paper>
       </Grid>
     </>

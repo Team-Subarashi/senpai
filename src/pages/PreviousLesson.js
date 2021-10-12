@@ -10,8 +10,7 @@ import {
   InputLabel,
 } from "@material-ui/core";
 
-const PreviousLesson = ({ lessonProp }) => {
-  const [lesson, setLesson] = useState("");
+const PreviousLesson = ({ lesson }) => {
   const date = new Date(lesson.endDate);
   const DropDown = () => {
     return (
@@ -35,9 +34,6 @@ const PreviousLesson = ({ lessonProp }) => {
       </>
     );
   };
-  useEffect(async () => {
-    lessonProp.then((data) => setLesson(data));
-  }, []);
   return (
     <Grid
       container

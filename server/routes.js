@@ -12,7 +12,7 @@ module.exports = function (app) {
     .get(users.getOneUserByAuthId)
     .patch(users.updateUser)
     .delete(users.deleteUser);
-  app.route("/senpai/:id").get(users.getOneUserById);
+  app.route("/user/:id").get(users.getOneUserById);
 
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
@@ -36,10 +36,7 @@ module.exports = function (app) {
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
 
-
   app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
-
-  
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({

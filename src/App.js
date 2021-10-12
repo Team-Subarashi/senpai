@@ -37,7 +37,6 @@ function App() {
           },
         });
         if (response.data) {
-          console.log(response.data);
           setUser(response.data);
         }
       } else {
