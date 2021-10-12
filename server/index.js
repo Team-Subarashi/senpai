@@ -78,14 +78,11 @@ if (process.env.NODE_ENV === "production") {
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
 
-  app
-    .route("/create-checkout-session/:priceId/:senpaiId")
-    .post(stripe.createCheckoutSession);
+  app.route("/create-checkout-session").post(stripe.createCheckoutSession);
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
 
-  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId)
-
+  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId);
 
   app.get("*", (req, res) => {
     res.sendFile(

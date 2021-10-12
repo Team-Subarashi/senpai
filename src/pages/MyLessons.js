@@ -40,10 +40,61 @@ export default function MyLessons() {
   const setLesson = useSetRecoilState(lessonState);
   const [schedulerData, setSchedulerData] = useState([]);
   const [category, setCategory] = useState("user.category[0]");
+  const [prices, setPrices] = useState([]);
+  const [selectedPrice, setSelectedPrice] = useState({});
+  const [products, setProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   const changeCategory = (skill) => {
     setCategory(skill);
+    // console.log(skill);
   };
+
+  useEffect(() => {
+    for (const product of products) {
+      if (product.name === `${category} Lesson with ${user.name}`) {
+        setSelectedProduct(product);
+        // console.log(selectedProduct);
+      }
+    }
+  }, [category]);
+
+  useEffect(() => {
+    for (const price of prices) {
+      if (price.product === selectedProduct.id) {
+        setSelectedPrice(price);
+        // console.log(selectedPrice);
+      }
+    }
+  }, [selectedProduct]);
+
+  let tempProducts = [];
+  useEffect(() => {
+    axios.get("/stripeLessons").then((res) => {
+      {
+        return res.data.data.map((product) => {
+          if (product.metadata.userId === user._id) {
+            tempProducts.push(product);
+          }
+          setProducts([...tempProducts]);
+        });
+      }
+    });
+  }, []);
+
+  let tempPrices = [];
+  useEffect(() => {
+    axios.get("/stripePrices").then((res) => {
+      {
+        return res.data.data.map((price) => {
+          if (price.metadata.userId === user._id) {
+            tempPrices.push(price);
+          }
+          setPrices([...tempPrices]);
+        });
+      }
+    });
+  }, []);
 
   const resources = [
     {
@@ -58,7 +109,6 @@ export default function MyLessons() {
   const history = useHistory();
 
   const bookButtonHandler = () => {
-    // match.params.senpaiId should be senpai's id
     let endtime = moment(date).add(1, "hours");
     axios({
       method: "post",
@@ -69,7 +119,7 @@ export default function MyLessons() {
         endDate: endtime,
         category: category,
         price: user.rates[user.category.indexOf(category)],
-        priceId: "price_1Jg1LrEp77X0l0jdvmgYUpwP", //temp until we have a create your own rate page
+        priceId: `${selectedPrice.id}`, //temp until we have a create your own rate page
       },
     });
   };
@@ -233,6 +283,26 @@ export default function MyLessons() {
                   onClick={bookButtonHandler}
                 >
                   Create Lesson Slot
+                </Button>
+                <Button
+                  onClick={() => {
+                    // for (const price of prices) {
+                    //   if (price.product === products[0].id) {
+                    //     console.log(price.unit_amount, products[0].name);
+                    //   }
+                    //   if (price.product === products[1].id) {
+                    //     console.log(price.unit_amount, products[1].name);
+                    //   }
+                    //   if (price.product === products[2].id) {
+                    //     console.log(price.unit_amount, products[2].name);
+                    //   }
+                    // }
+                    console.log(selectedProduct.id, selectedPrice.product);
+                    // console.log(prices[2].unit_amount, products[1].name);
+                    // }
+                  }}
+                >
+                  Price Test
                 </Button>
               </div>
             </Grid>

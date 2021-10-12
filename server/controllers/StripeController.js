@@ -30,22 +30,35 @@ exports.createCheckoutSession = async (req, res) => {
 };
 
 exports.createLessonAndPrice = async (req, res) => {
+  console.log(req);
   const inputNewLesson = req.body;
   const product = await stripe.products.create({
-    name: inputNewLesson.lessonName,
+    name: inputNewLesson.name,
+    metadata: inputNewLesson.metadata,
   });
   const inputPrice = req.body;
   const price = await stripe.prices.create({
     product: product.id,
     unit_amount: inputPrice.price,
     currency: "jpy",
+    metadata: inputPrice.metadata,
   });
-  res.send(200);
+  // res.send(product);
+  res.sendStatus(200);
 };
 
 exports.getStripeLesson = async (req, res) => {
   const products = await stripe.products.list({
     limit: 100,
+    active: true,
   });
   res.send(products);
+};
+
+exports.getStripePrice = async (req, res) => {
+  const prices = await stripe.prices.list({
+    limit: 100,
+    active: true,
+  });
+  res.send(prices);
 };

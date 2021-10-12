@@ -33,13 +33,11 @@ module.exports = function (app) {
     .post(stripe.createCheckoutSession);
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
-
+  app.route("/stripePrices").get(stripe.getStripePrice);
 
   app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
 
-  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId)
-
-  
+  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId);
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({

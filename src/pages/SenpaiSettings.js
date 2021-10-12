@@ -234,6 +234,41 @@ export default function SenpaiSettings() {
                     rates: rates,
                   },
                 });
+                if (document.getElementById("skill-one").innerText !== "") {
+                  axios({
+                    method: "post",
+                    url: `/create-lesson-and-price`,
+                    data: {
+                      name: `${skillOne} Lesson with ${user.name}`,
+                      price: rates[0],
+                      priceId: `price_${user._id}:${skillOne}`,
+                      metadata: { userId: `${user._id}` },
+                    },
+                  });
+                }
+                if (document.getElementById("skill-two").innerText !== "") {
+                  axios({
+                    method: "post",
+                    url: `/create-lesson-and-price`,
+                    data: {
+                      name: `${skillTwo} Lesson with ${user.name}`,
+                      price: rates[1],
+                      priceId: `price_${user._id}:${skillTwo}`,
+                      metadata: { userId: `${user._id}` },
+                    },
+                  });
+                }
+                if (document.getElementById("skill-three").innerText !== "") {
+                  axios({
+                    method: "post",
+                    url: `/create-lesson-and-price`,
+                    data: {
+                      name: `${skillThree} Lesson with ${user.name}`,
+                      price: rates[2],
+                      metadata: { userId: `${user._id}` },
+                    },
+                  });
+                }
 
                 let successMessage = document.createElement("div");
                 successMessage.innerText = "Settings updated!";
