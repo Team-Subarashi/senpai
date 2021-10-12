@@ -5,6 +5,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
+
 import {
   //  useRecoilValueLoadable,
    useRecoilState } from "recoil";
@@ -29,6 +30,7 @@ function CodeEditor({ activeFiles }) {
     setHTML(activeFiles.html);
     setJS(activeFiles.js);
     setCSS(activeFiles.css);
+    console.log(activeFiles)
   }, [activeFiles]);
 
   const handleHTML = (value,
@@ -77,12 +79,9 @@ function CodeEditor({ activeFiles }) {
     }
 
     //TODO TRY ADDING LESSON ID AS REF
-    const dbRef = firebase.database()
-      .ref(
-        // lessonId
-      )
-      .child(`${lessonId}`);
+    const dbRef = firebase.database().ref().child(`${lessonId}`);
     const firepad = fromMonaco(dbRef, editorRef.current);
+    
 
     try {
       const name = prompt("Enter your Name :"); // Name to highlight who is editing where in the code
@@ -120,11 +119,11 @@ function CodeEditor({ activeFiles }) {
         theme="vs-dark"
         onMount={handleEditorDidMount}
         path={fileName}
-        // defaultLanguage={file.language}
-        defaultValue={
-          fileName === "script.js" ? js : fileName === "index.html" ? html : css
+        defaultLanguage={fileName === "script.js" ? "javascript" : fileName === "index.html" ? "xml" : "css"}
+        value={
+          fileName === "script.js" ? js : fileName === "index.html" ? html : fileName === "style.css" ? css : ""
         }
-        options={{ fontSize: 8 }}
+        options={{ fontSize: 9 }}
         onChange={
           fileName === "script.js"
             ? handleJS
@@ -133,6 +132,7 @@ function CodeEditor({ activeFiles }) {
               : handleCSS
         }
       />
+     
     </div>
   );
 }
