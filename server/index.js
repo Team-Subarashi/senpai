@@ -14,6 +14,12 @@ const app = express();
 const { Server } = require("socket.io");
 const routes = require("./routes");
 const http = require("http");
+const users = require("./controllers/userController");
+const files = require("./controllers/fileController");
+const lessons = require("./controllers/LessonController");
+const stripe = require("./controllers/StripeController");
+// const messages = require("./controllers/MessageController");
+const vonage = require("./controllers/vonageController");
 
 require("dotenv").config();
 
@@ -26,30 +32,11 @@ if (process.env.NODE_ENV === "production") {
 
 const server = http.createServer(app);
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello world</h1>");
-});
+// app.get("/", (req, res) => {
+//   res.send("<h1>Hello world</h1>");
+// });
 
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
-
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-
-  socket.on("join_room", (data) => {
-    socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room: ${data}`);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id);
-  });
-});
-
-const uri = `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
+const uri = process.env.MONGODB_URI;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -86,6 +73,8 @@ if (process.env.NODE_ENV === "production") {
     .get(users.getOneUserById)
     .patch(users.updateUser)
     .delete(users.deleteUser);
+  app.route("/user/:id").get(users.getOneUserById);
+
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
   app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
@@ -99,12 +88,20 @@ if (process.env.NODE_ENV === "production") {
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
+  // app.route("/messages").get(messages.getMessages);
+
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
 
-  app.route("/create-checkout-session").post(stripe.createCheckoutSession);
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
+  app.route("/stripePrices").get(stripe.getStripePrice);
+
+  app
+    .route("/create-checkout-session/:priceId/:senpaiId")
+    .post(stripe.createCheckoutSession);
+
+  app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
 
   app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId);
 
@@ -119,10 +116,10 @@ if (process.env.NODE_ENV === "production") {
   // });
 }
 
-// app.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
-
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+// server.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });

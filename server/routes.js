@@ -4,7 +4,7 @@ module.exports = function (app) {
   const files = require("./controllers/fileController");
   const lessons = require("./controllers/LessonController");
   const stripe = require("./controllers/StripeController");
-  const messages = require("./controllers/MessageController");
+  // const messages = require("./controllers/MessageController");
   const vonage = require("./controllers/vonageController");
 
   app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
@@ -28,7 +28,7 @@ module.exports = function (app) {
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
-  app.route("/messages").get(messages.getMessages);
+  // app.route("/messages").get(messages.getMessages);
 
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
