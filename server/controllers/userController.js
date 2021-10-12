@@ -18,7 +18,7 @@ exports.getOneUserById = (req, res) => {
   });
 };
 exports.getOneUserByAuthId = (req, res) => {
-  User.findOne({ authId: req.params.id }, (err, user) => {
+  User.findOne({ authId: req.params.authId }, (err, user) => {
     if (err) {
       res.status(500).send(err);
     }
