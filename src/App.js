@@ -23,6 +23,17 @@ import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
+import Messages from './pages/Messages';
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    minHeight: "100vh",
+    backgroundColor: "#616161",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+}));
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -34,7 +45,6 @@ function App() {
           url: `/api/v1/firebase/${user.uid}`,
         });
         if (response.data) {
-          console.log(response.data);
           setUser(response.data);
         }
       } else {
@@ -50,26 +60,29 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
-        <Router hashType="slash">
-          <CssBaseline />
-          <NavBar user={user} />
-          <Switch>
-            <Route exact path="/" component={Splash} />
-            <Route path="/signup" component={SignUp} />
-            <Route exact path="/kouhai/:id" component={Kohai} />
-            <Route path="/login" component={SignIn} />
-            <Route exact path="/senpai/:id" component={SenpaiProfileView} />
-            <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
-            <Route path="/search" component={Search} />
-            <Route path="/room" component={Workspace} />
-            <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
-            <Route path="/mylessons" component={MyLessons} />
-            <Route path="/edit" component={Edit} />
-            <Route path="/senpai-settings" component={SenpaiSettings} />
-          </Switch>
-        </Router>
-      </div>
-    </ThemeProvider>
+        <div >
+          <Router hashType="slash">
+            <CssBaseline />
+            <NavBar user={user} />
+            <Switch>
+              <Route exact path="/" component={Splash} />
+              <Route path="/signup" component={SignUp} />
+              <Route exact path="/kouhai/:id" component={Kohai} />
+              <Route path="/login" component={SignIn} />
+              <Route exact path="/senpai/:id" component={SenpaiProfileView} />
+              <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
+              <Route path="/search" component={Search} />
+              <Route path="/room" component={Workspace} />
+              <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+              <Route path="/mylessons" component={MyLessons} />
+              <Route path="/messages" component={Messages} />
+              <Route path="/edit" component={Edit} />
+              <Route path="/senpai-settings" component={SenpaiSettings} />
+            </Switch>
+          </Router>
+        </div>
+      </div >
+    </ThemeProvider >
   );
 }
 

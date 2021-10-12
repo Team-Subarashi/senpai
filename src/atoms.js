@@ -47,4 +47,9 @@ export const selectedDate = atom({
   default: new Date().setMinutes(0)
 })
 
+export const roomAtom = atom({
+  key: 'roomAtom',
+  default: "default"
+})
+
 

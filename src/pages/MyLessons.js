@@ -14,7 +14,7 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { FormControl, InputLabel } from "@mui/material";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { lessonState, userState, selectedDate } from "../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -22,6 +22,10 @@ import { useHistory } from "react-router";
 import BasicDateTimePicker from "../components/DateTimePicker";
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import _ from "lodash";
+import PreviousLesson from "./PreviousLesson";
 
 const styles = (theme) => ({
   textCenter: {
@@ -44,6 +48,7 @@ export default function MyLessons() {
   const [selectedPrice, setSelectedPrice] = useState({});
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState({});
+  const [previousLessons, setPreviousLessons] = useState([]);
 
   const changeCategory = (skill) => {
     setCategory(skill);
@@ -123,19 +128,91 @@ export default function MyLessons() {
       },
     });
   };
+  // please keep this to refactor
+  // to use this you need to take the useEffect out from PreviousLesson file since this no longer gives promise
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
+  //     if (response.data) {
+  //       const temp = response.data.map((lesson) => {
+  //         lesson.title = "Active Lesson";
+  //         return lesson;
+  //       });
+  //       setSchedulerData(temp);
+
+  //       setCurrentLessons(temp);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [user]);
+  // useEffect(() => {
+  //   const fetchLessonPartner = async (targetLessons) => {
+  //     const requestList = targetLessons.map((lesson) => {
+  //       return axios.get(`/senpai/${lesson.senpaiId}`);
+  //     });
+
+  //     Promise.all(requestList).then((response) => {
+  //       const lessons = response.map((r) => r.data);
+  //       setPreviousLessons(lessons);
+  //     });
+  //   };
+  // fetchLessonPartner(currentLessons);
+  // }, [currentLessons]);
 
   useEffect(() => {
+    const fetchLessonPartner = async (targetLessons) => {
+      const resultLessons = targetLessons.map(async (lesson) => {
+        if (lesson.kouhaiId) {
+          if (lesson.userIsSenpai) {
+            const response = await axios.get(`/user/${lesson.kouhaiId}`);
+            const lessonPartnerObj = {
+              name: response.data.name,
+              avatar: response.data.avatar,
+              endDate: lesson.endDate,
+            };
+            const combinedObject = _.assignIn(lesson, lessonPartnerObj);
+            return combinedObject;
+          } else {
+            const response = await axios.get(`/user/${lesson.senpaiId}`);
+            const lessonPartnerObj = {
+              name: response.data.name,
+              avatar: response.data.avatar,
+              endDate: lesson.endDate,
+            };
+            const combinedObject = _.assignIn(lesson, lessonPartnerObj);
+            return combinedObject;
+          }
+        } else {
+          return;
+        }
+      });
+      Promise.all(resultLessons).then((data) => {
+        const result = data.filter((lesson) => {
+          return lesson && lesson.kouhaiId;
+        });
+        setPreviousLessons(result);
+      });
+    };
+
     const fetchData = async () => {
       const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
       if (response.data) {
-        // console.log(response.data)
-        const temp = response.data.map((lesson) => {
+        let temp = response.data.map((lesson) => {
           lesson.title =
             lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
           lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
           return lesson;
         });
+
+        const filteredTemp = temp.filter((lesson) => {
+          return new Date(lesson.endDate) > new Date();
+        });
+        const sortedTemp = filteredTemp.sort((a, b) => {
+          return new Date(a.endDate) - new Date(b.endDate);
+        });
         setSchedulerData(temp);
+        setPreviousLessons(fetchLessonPartner(sortedTemp));
       }
     };
     if (user._id) {
@@ -169,6 +246,16 @@ export default function MyLessons() {
       </AppointmentTooltip.Content>
     )
   );
+  const checkRenderLesson = () => {
+    if (previousLessons.length > 0) {
+      return previousLessons.map((lesson) => {
+        console.log(lesson);
+        return <PreviousLesson key={lesson._id} lesson={lesson} />;
+      });
+    } else {
+      return null;
+    }
+  };
 
   if (user.isSenpai === true) {
     return (
@@ -306,6 +393,19 @@ export default function MyLessons() {
                 </Button>
               </div>
             </Grid>
+            <Grid xs={12} container>
+              <Paper
+                style={{
+                  marginTop: "100px",
+                  marginBottom: "100px",
+                  maxHeight: 300,
+                  width: "100%",
+                  overflow: "auto",
+                }}
+              >
+                {checkRenderLesson()}
+              </Paper>
+            </Grid>
           </Grid>
         </MuiPickersUtilsProvider>
       </>
@@ -325,6 +425,19 @@ export default function MyLessons() {
                 <Toolbar />
                 <DateNavigator />
               </Scheduler>
+            </Paper>
+          </Grid>
+          <Grid xs={12} container>
+            <Paper
+              style={{
+                marginTop: "100px",
+                marginBottom: "100px",
+                maxHeight: 300,
+                width: "100%",
+                overflow: "auto",
+              }}
+            >
+              {checkRenderLesson()}
             </Paper>
           </Grid>
         </Grid>

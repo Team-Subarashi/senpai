@@ -4,6 +4,7 @@ module.exports = function (app) {
   const files = require("./controllers/fileController");
   const lessons = require("./controllers/LessonController");
   const stripe = require("./controllers/StripeController");
+  const messages = require("./controllers/MessageController");
   const vonage = require("./controllers/vonageController");
 
   app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
@@ -12,6 +13,8 @@ module.exports = function (app) {
     .get(users.getOneUserById)
     .patch(users.updateUser)
     .delete(users.deleteUser);
+  app.route("/user/:id").get(users.getOneUserById);
+
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
   app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
@@ -25,15 +28,18 @@ module.exports = function (app) {
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
+  app.route("/messages").get(messages.getMessages);
+
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
+
+  app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
+  app.route("/stripeLessons").get(stripe.getStripeLesson);
+  app.route("/stripePrices").get(stripe.getStripePrice);
 
   app
     .route("/create-checkout-session/:priceId/:senpaiId")
     .post(stripe.createCheckoutSession);
-  app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
-  app.route("/stripeLessons").get(stripe.getStripeLesson);
-  app.route("/stripePrices").get(stripe.getStripePrice);
 
   app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
 
