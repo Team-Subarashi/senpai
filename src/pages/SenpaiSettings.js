@@ -1,9 +1,6 @@
-import React, {
-  useState,
-  // useEffect
-} from "react";
-import { Grid, Box, Button } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
 
+import { Grid, Box, Button } from "@material-ui/core";
 import {
   FormControl,
   InputLabel,
@@ -21,9 +18,9 @@ import { userState } from "../atoms";
 export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
   const [senpaiCheck, setSenpaiCheck] = useState(user.isSenpai);
-  const [skillOne, setSkillOne] = useState("user.category[0]");
-  const [skillTwo, setSkillTwo] = useState("user.category[1]");
-  const [skillThree, setSkillThree] = useState("user.category[2]");
+  const [skillOne, setSkillOne] = useState("");
+  const [skillTwo, setSkillTwo] = useState("");
+  const [skillThree, setSkillThree] = useState("");
 
   const changeSkillOne = (skill) => {
     setSkillOne(skill);
@@ -35,12 +32,24 @@ export default function SenpaiSettings() {
     setSkillThree(skill);
   };
 
-  //   useEffect(() => {
-  //     if (user.isSenpai === true) {
-  //       document.getElementById("senpai-check").checked = true;
-  //     }
-  //     console.log(user);
-  //   }, []);
+  useEffect(() => {
+    console.log(user);
+    // if (user.category[0]) {
+    //   setSkillOne(user.category[0]);
+    // } else {
+    //   null;
+    // }
+    // if (user.category[1]) {
+    //   setSkillTwo(user.category[1]);
+    // } else {
+    //   null;
+    // }
+    // if (user.category[2]) {
+    //   setSkillThree(user.category[2]);
+    // } else {
+    //   null;
+    // }
+  }, []);
 
   return (
     <Grid container style={{ fontFamily: "Nunito" }}>
@@ -134,7 +143,7 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-one"
                     style={{ color: "#fff" }}
-                    defaultValue={"user.rates[0]"}
+                    // defaultValue={"user.rates ? user.rates[0] : null"}
                   />
                 </FormControl>
               </FormControl>
@@ -167,7 +176,7 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-two"
                     style={{ color: "#fff" }}
-                    defaultValue={"user.rates[1]"}
+                    // defaultValue={"user.rates ? user.rates[1] : null"}
                   />
                 </FormControl>
               </FormControl>
@@ -200,7 +209,7 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-three"
                     style={{ color: "#fff" }}
-                    defaultValue={"user.rates[2]"}
+                    // defaultValue={"user.rates ? user.rates[2] : null"}
                   />
                 </FormControl>
               </FormControl>

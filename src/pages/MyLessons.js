@@ -43,7 +43,7 @@ export default function MyLessons() {
   const date = useRecoilValue(selectedDate);
   const setLesson = useSetRecoilState(lessonState);
   const [schedulerData, setSchedulerData] = useState([]);
-  const [category, setCategory] = useState("user.category[0]");
+  const [category, setCategory] = useState("");
   const [prices, setPrices] = useState([]);
   const [selectedPrice, setSelectedPrice] = useState({});
   const [products, setProducts] = useState([]);
@@ -52,14 +52,14 @@ export default function MyLessons() {
 
   const changeCategory = (skill) => {
     setCategory(skill);
-    // console.log(skill);
+    console.log(skill);
   };
 
   useEffect(() => {
     for (const product of products) {
       if (product.name === `${category} Lesson with ${user.name}`) {
         setSelectedProduct(product);
-        // console.log(selectedProduct);
+        console.log(selectedProduct);
       }
     }
   }, [category]);
@@ -74,8 +74,8 @@ export default function MyLessons() {
   }, [selectedProduct]);
 
   let tempProducts = [];
-  useEffect(() => {
-    axios.get("/stripeLessons").then((res) => {
+  useEffect(async () => {
+    await axios.get("/stripeLessons").then((res) => {
       {
         return res.data.data.map((product) => {
           if (product.metadata.userId === user._id) {
@@ -88,8 +88,8 @@ export default function MyLessons() {
   }, []);
 
   let tempPrices = [];
-  useEffect(() => {
-    axios.get("/stripePrices").then((res) => {
+  useEffect(async () => {
+    await axios.get("/stripePrices").then((res) => {
       {
         return res.data.data.map((price) => {
           if (price.metadata.userId === user._id) {
@@ -124,7 +124,7 @@ export default function MyLessons() {
         endDate: endtime,
         category: category,
         price: user.rates[user.category.indexOf(category)],
-        priceId: `${selectedPrice.id}`, //temp until we have a create your own rate page
+        priceId: `${selectedPrice.id}`,
       },
     });
   };
@@ -309,13 +309,13 @@ export default function MyLessons() {
                       }}
                     >
                       <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - $${user.rates[0]}/hr`}
+                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
                       </MenuItem>
                       <MenuItem value={`${user.category[1]}`}>
-                        {`${user.category[1]} - $${user.rates[1]}/hr`}
+                        {`${user.category[1]} - ￥${user.rates[1]}/hr`}
                       </MenuItem>
                       <MenuItem value={`${user.category[2]}`}>
-                        {`${user.category[2]} - $${user.rates[2]}/hr`}
+                        {`${user.category[2]} - ￥${user.rates[2]}/hr`}
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -335,10 +335,10 @@ export default function MyLessons() {
                       }}
                     >
                       <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - $${user.rates[0]}/hr`}
+                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
                       </MenuItem>
                       <MenuItem value={`${user.category[1]}`}>
-                        {`${user.category[1]} - $${user.rates[1]}/hr`}
+                        {`${user.category[1]} - ￥${user.rates[1]}/hr`}
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -358,7 +358,7 @@ export default function MyLessons() {
                       }}
                     >
                       <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - $${user.rates[0]}/hr`}
+                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
                       </MenuItem>
                     </Select>
                   </FormControl>
@@ -384,7 +384,8 @@ export default function MyLessons() {
                     //     console.log(price.unit_amount, products[2].name);
                     //   }
                     // }
-                    console.log(selectedProduct.id, selectedPrice.product);
+                    // console.log(selectedProduct.id, selectedPrice.product);
+                    console.log(selectedProduct, prices);
                     // console.log(prices[2].unit_amount, products[1].name);
                     // }
                   }}
