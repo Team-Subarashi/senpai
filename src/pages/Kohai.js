@@ -60,7 +60,7 @@ const Kohai = () => {
             justify="flex-end"
             style={{
               textAlign: "right",
-              marginTop: "0.8vh",
+              marginTop: "2.5vh",
               marginBottom: "-6vh",
               marginRight: "6.5vw",
             }}
