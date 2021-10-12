@@ -12,12 +12,19 @@ const stripe = require("./controllers/StripeController");
 
 require("dotenv").config();
 
+
 let port;
 if (process.env.NODE_ENV === "production") {
   port = process.env.PORT;
 } else {
   port = 8080;
 }
+
+
+
+
+
+
 
 const uri = process.env.MONGODB_URI;
 const options = {

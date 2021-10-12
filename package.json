@@ -59,7 +59,11 @@
     "react-scripts": "4.0.3",
     "react-virtualized": "^9.22.3",
     "recoil": "^0.4.1",
-    "stripe": "^8.178.0"
+    "stripe": "^8.178.0",
+    "ws": "^8.2.3",
+    "y-monaco": "^0.1.2",
+    "y-websocket": "^1.3.16",
+    "yjs": "^13.5.13"
   },
   "scripts": {
     "start": "node server/index.js",
