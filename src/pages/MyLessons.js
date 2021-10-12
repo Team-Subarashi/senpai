@@ -59,7 +59,6 @@ export default function MyLessons() {
     for (const product of products) {
       if (product.name === `${category} Lesson with ${user.name}`) {
         setSelectedProduct(product);
-        console.log(selectedProduct);
       }
     }
   }, [category]);
@@ -68,7 +67,6 @@ export default function MyLessons() {
     for (const price of prices) {
       if (price.product === selectedProduct.id) {
         setSelectedPrice(price);
-        // console.log(selectedPrice);
       }
     }
   }, [selectedProduct]);
@@ -85,7 +83,7 @@ export default function MyLessons() {
         });
       }
     });
-  }, []);
+  }, [user]);
 
   let tempPrices = [];
   useEffect(async () => {
@@ -99,7 +97,7 @@ export default function MyLessons() {
         });
       }
     });
-  }, []);
+  }, [user]);
 
   const resources = [
     {
@@ -296,7 +294,9 @@ export default function MyLessons() {
                 <BasicDateTimePicker />
                 {user.category.length === 3 ? (
                   <FormControl style={{ marginTop: "1vh" }}>
-                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
+                    <InputLabel style={{ color: "#fff", marginTop: "-1vh" }}>
+                      Category
+                    </InputLabel>
                     <Select
                       id="category-input"
                       value={category}
@@ -385,7 +385,7 @@ export default function MyLessons() {
                     //   }
                     // }
                     // console.log(selectedProduct.id, selectedPrice.product);
-                    console.log(selectedProduct, prices);
+                    console.log(selectedProduct, selectedPrice);
                     // console.log(prices[2].unit_amount, products[1].name);
                     // }
                   }}

@@ -14,42 +14,73 @@ import axios from "axios";
 
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
+import { SettingsBackupRestoreOutlined } from "@material-ui/icons";
 
 export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
-  const [senpaiCheck, setSenpaiCheck] = useState(user.isSenpai);
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, async (user) => {
+  //     if (user._id === null) {
+  //       const response = await axios({
+  //         method: "get",
+  //         url: `/api/v1/firebase/${user.uid}`,
+  //       });
+  //       if (response.data) {
+  //         setUser(response.data);
+  //       }
+  //     }
+  //   });
+  // }, []);
+
+  const [senpaiCheck, setSenpaiCheck] = useState(false);
   const [skillOne, setSkillOne] = useState("");
+  const [rateOne, setRateOne] = useState(0);
   const [skillTwo, setSkillTwo] = useState("");
+  const [rateTwo, setRateTwo] = useState(0);
   const [skillThree, setSkillThree] = useState("");
+  const [rateThree, setRateThree] = useState(0);
 
   const changeSkillOne = (skill) => {
     setSkillOne(skill);
   };
+  const changeRateOne = (rate) => {
+    setRateOne(rate);
+  };
+
   const changeSkillTwo = (skill) => {
     setSkillTwo(skill);
   };
+  const changeRateTwo = (rate) => {
+    setRateTwo(rate);
+  };
+
   const changeSkillThree = (skill) => {
     setSkillThree(skill);
+  };
+  const changeRateThree = (rate) => {
+    setRateThree(rate);
   };
 
   useEffect(() => {
     console.log(user);
-    // if (user.category[0]) {
-    //   setSkillOne(user.category[0]);
-    // } else {
-    //   null;
-    // }
-    // if (user.category[1]) {
-    //   setSkillTwo(user.category[1]);
-    // } else {
-    //   null;
-    // }
-    // if (user.category[2]) {
-    //   setSkillThree(user.category[2]);
-    // } else {
-    //   null;
-    // }
-  }, []);
+
+    if (user.category) {
+      setSkillOne(user.category[0]);
+      setRateOne(user.rates[0]);
+    }
+
+    if (user.category) {
+      setSkillTwo(user.category[1]);
+      setRateTwo(user.rates[1]);
+    }
+    if (user.category) {
+      setSkillThree(user.category[2]);
+      setRateThree(user.rates[2]);
+    }
+    if (user.isSenpai) {
+      setSenpaiCheck(user.isSenpai);
+    }
+  }, [user]);
 
   return (
     <Grid container style={{ fontFamily: "Nunito" }}>
@@ -72,7 +103,8 @@ export default function SenpaiSettings() {
       </Grid>
       <Grid item xs={12}>
         <Checkbox
-          defaultChecked={user.isSenpai}
+          // defaultChecked={senpaiCheck}
+          checked={senpaiCheck}
           onChange={() =>
             setSenpaiCheck(document.getElementById("senpai-check").checked)
           }
@@ -143,7 +175,10 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-one"
                     style={{ color: "#fff" }}
-                    // defaultValue={"user.rates ? user.rates[0] : null"}
+                    value={rateOne}
+                    onChange={(e) => {
+                      changeRateOne(e.target.value);
+                    }}
                   />
                 </FormControl>
               </FormControl>
@@ -176,7 +211,10 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-two"
                     style={{ color: "#fff" }}
-                    // defaultValue={"user.rates ? user.rates[1] : null"}
+                    value={rateTwo}
+                    onChange={(e) => {
+                      changeRateTwo(e.target.value);
+                    }}
                   />
                 </FormControl>
               </FormControl>
@@ -209,7 +247,10 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-three"
                     style={{ color: "#fff" }}
-                    // defaultValue={"user.rates ? user.rates[2] : null"}
+                    value={rateThree}
+                    onChange={(e) => {
+                      changeRateThree(e.target.value);
+                    }}
                   />
                 </FormControl>
               </FormControl>
