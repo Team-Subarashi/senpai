@@ -21,18 +21,17 @@ export default function Filter() {
 
   return (
     <Grid
-      container
+      item
       xs={12}
-      style={{ height: "inherit", backgroundColor: "lightblue" }}
+      style={{ height: "inherit", backgroundColor: "lightblue", display: "flex", alignItems:"center" }}
     >
       <Button
         id="categoryButton"
         style={{
           backgroundColor: "purple",
           color: "white",
-          marginLeft: "3vw",
-          marginTop: "1vh",
-          marginBottom: "1vh",
+          height: "2rem",
+          marginLeft: "1rem"
         }}
         onClick={() => toggleMenuState(!menuState)}
       >
