@@ -29,13 +29,13 @@ export default function SenpaiList() {
   const { TabPane } = Tabs;
 
   function callback(key) {
-    console.log(key);
+    // console.log(key);
   }
 
   const temp = [];
   const senpaiSetter = async () => {
     await axios.get("/api/v1/users").then((res) => {
-      console.log(res);
+      // console.log(res);
       for (const senpai of res.data) {
         if (senpai.isSenpai === true) {
           if (category.toLowerCase() === "all") {
@@ -71,7 +71,7 @@ export default function SenpaiList() {
           }
         }
       }
-      console.log(temp);
+      // console.log(temp);
       setSenpaiList(temp);
     });
   };

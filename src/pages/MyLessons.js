@@ -53,7 +53,6 @@ export default function MyLessons() {
 
   const changeCategory = (skill) => {
     setCategory(skill);
-    console.log(skill);
   };
 
   useEffect(() => {
@@ -127,7 +126,6 @@ export default function MyLessons() {
       },
     });
     setScheduleToggler(!scheduleToggler);
-    console.log(scheduleToggler);
   };
 
   // please keep this to refactor
@@ -212,11 +210,8 @@ export default function MyLessons() {
       const sortedTemp = filteredTemp.sort((a, b) => {
         return new Date(a.endDate) - new Date(b.endDate);
       });
-      // console.log(schedulerData);
-      // console.log("HERE");
       setSchedulerData(temp);
       setPreviousLessons(fetchLessonPartner(sortedTemp));
-      // console.log(temp);
     }
   };
 
@@ -224,7 +219,6 @@ export default function MyLessons() {
     if (user._id) {
       fetchData();
     }
-    console.log(scheduleToggler);
   }, [user]);
 
   useEffect(() => {
@@ -260,7 +254,6 @@ export default function MyLessons() {
   const checkRenderLesson = () => {
     if (previousLessons.length > 0) {
       return previousLessons.map((lesson) => {
-        // console.log(lesson);
         return <PreviousLesson key={lesson._id} lesson={lesson} />;
       });
     } else {
@@ -384,27 +377,6 @@ export default function MyLessons() {
                 >
                   Create Lesson Slot
                 </Button>
-                {/* <Button
-                  onClick={() => {
-                    // for (const price of prices) {
-                    //   if (price.product === products[0].id) {
-                    //     console.log(price.unit_amount, products[0].name);
-                    //   }
-                    //   if (price.product === products[1].id) {
-                    //     console.log(price.unit_amount, products[1].name);
-                    //   }
-                    //   if (price.product === products[2].id) {
-                    //     console.log(price.unit_amount, products[2].name);
-                    //   }
-                    // }
-                    // console.log(selectedProduct.id, selectedPrice.product);
-                    console.log(selectedProduct, selectedPrice);
-                    // console.log(prices[2].unit_amount, products[1].name);
-                    // }
-                  }}
-                >
-                  Price Test
-                </Button> */}
               </div>
             </Grid>
             <Grid xs={12} container>
