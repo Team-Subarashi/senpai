@@ -267,13 +267,15 @@ export default function MyLessons() {
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
             <Grid item xs={9}>
-              <Paper>
+              <Paper
+              // style={{ height: "80vh" }}
+              >
                 <Scheduler data={schedulerData}>
                   <ViewState defaultCurrentDate={Date.now()} />
                   <WeekView
                     startDayHour={9}
                     endDayHour={24}
-                    cellDuration={60}
+                    cellDuration={30}
                   />
                   <Appointments />
                   <AppointmentTooltip contentComponent={Content} />

@@ -14,6 +14,7 @@ module.exports = function (app) {
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/user/:id").get(users.getOneUserById);
+  // app.route("/api/v1/seed").patch(users.userSeed);
 
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
