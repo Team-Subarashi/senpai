@@ -12,8 +12,7 @@ import { category as categoryAtom } from "../atoms";
 import axios from "axios";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   section: {
     backgroundColor: "#616162",
     border: "1px solid white",
@@ -89,17 +88,21 @@ export default function SenpaiList() {
           }}
           key={senpai._id}
         >
-          <Grid
-            item
-            xs={4}
-            className={classes.section}
-          >
-            <Typography variant="h4">
-              {senpai.name}
-            </Typography>
-            <Box style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} mt={2}>
+          <Grid item xs={4} className={classes.section}>
+            <Typography variant="h4">{senpai.name}</Typography>
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              mt={2}
+            >
               <img height="125px" width="125px" src={senpai.avatar} />
-              <Link to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}>
+              <Link
+                to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
+              >
                 <Button
                   variant="contained"
                   style={{
@@ -111,12 +114,10 @@ export default function SenpaiList() {
                     senpaiSetter();
                   }}
                 >
-                Go to Profile
+                  Go to Profile
                 </Button>
               </Link>
             </Box>
-
-
           </Grid>
           <Grid
             container
@@ -135,7 +136,7 @@ export default function SenpaiList() {
               {senpai.category.map((skill, index) => {
                 return (
                   <div key={skill}>
-                    {skill} - {senpai.rates[index]}/hour
+                    {skill} - ￥{senpai.rates[index]}/hour
                   </div>
                 );
               })}
