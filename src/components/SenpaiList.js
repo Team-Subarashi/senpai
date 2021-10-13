@@ -179,10 +179,6 @@ export default function SenpaiList() {
   }, [category]);
 
   useEffect(() => {
-    senpaiSetter();
-  }, []);
-
-  useEffect(() => {
     senpaiPopulator();
   }, [senpaiList]);
 

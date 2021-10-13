@@ -23,35 +23,38 @@ if (process.env.NODE_ENV === "production") {
   port = 8080;
 }
 
+let socket_port = process.env.SOCKET_PORT;
+
 const server = http.createServer(app);
 
 // app.get("/", (req, res) => {
 //   res.send("<h1>Hello world</h1>");
 // });
 
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:5000",
-//     methods: ["GET", "POST"],
-//   },
-// });
+//Look at for GCP
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:5000",
+    methods: ["GET", "POST"],
+  },
+});
 
-// io.on("connection", (socket) => {
-//   console.log(`User Connected: ${socket.id}`);
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
 
-//   socket.on("join_room", (data) => {
-//     socket.join(data);
-//     console.log(`User with ID: ${socket.id} joined room: ${data}`);
-//   });
+  socket.on("join_room", (data) => {
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
 
-//   socket.on("send_message", (data) => {
-//     socket.to(data.room).emit("receive_message", data);
-//   });
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+  });
 
-//   socket.on("disconnect", () => {
-//     console.log("User Disconnected", socket.id);
-//   });
-// });
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
 
 const uri = process.env.MONGODB_URI;
 
@@ -138,6 +141,6 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 
-// server.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
+server.listen(socket_port, () => {
+  console.log(`Server running at http://localhost:${socket_port}`);
+});

@@ -49,6 +49,7 @@ export default function MyLessons() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [previousLessons, setPreviousLessons] = useState([]);
+  const [scheduleToggler, setScheduleToggler] = useState(false);
 
   const changeCategory = (skill) => {
     setCategory(skill);
@@ -111,9 +112,9 @@ export default function MyLessons() {
   ];
   const history = useHistory();
 
-  const bookButtonHandler = () => {
+  const bookButtonHandler = async () => {
     let endtime = moment(date).add(1, "hours");
-    axios({
+    await axios({
       method: "post",
       url: "/lessons",
       data: {
@@ -125,7 +126,10 @@ export default function MyLessons() {
         priceId: `${selectedPrice.id}`,
       },
     });
+    setScheduleToggler(!scheduleToggler);
+    console.log(scheduleToggler);
   };
+
   // please keep this to refactor
   // to use this you need to take the useEffect out from PreviousLesson file since this no longer gives promise
 
@@ -158,65 +162,74 @@ export default function MyLessons() {
   // fetchLessonPartner(currentLessons);
   // }, [currentLessons]);
 
-  useEffect(() => {
-    const fetchLessonPartner = async (targetLessons) => {
-      const resultLessons = targetLessons.map(async (lesson) => {
-        if (lesson.kouhaiId) {
-          if (lesson.userIsSenpai) {
-            const response = await axios.get(`/user/${lesson.kouhaiId}`);
-            const lessonPartnerObj = {
-              name: response.data.name,
-              avatar: response.data.avatar,
-              endDate: lesson.endDate,
-            };
-            const combinedObject = _.assignIn(lesson, lessonPartnerObj);
-            return combinedObject;
-          } else {
-            const response = await axios.get(`/user/${lesson.senpaiId}`);
-            const lessonPartnerObj = {
-              name: response.data.name,
-              avatar: response.data.avatar,
-              endDate: lesson.endDate,
-            };
-            const combinedObject = _.assignIn(lesson, lessonPartnerObj);
-            return combinedObject;
-          }
+  const fetchLessonPartner = async (targetLessons) => {
+    const resultLessons = targetLessons.map(async (lesson) => {
+      if (lesson.kouhaiId) {
+        if (lesson.userIsSenpai) {
+          const response = await axios.get(`/user/${lesson.kouhaiId}`);
+          const lessonPartnerObj = {
+            name: response.data.name,
+            avatar: response.data.avatar,
+            endDate: lesson.endDate,
+          };
+          const combinedObject = _.assignIn(lesson, lessonPartnerObj);
+          return combinedObject;
         } else {
-          return;
+          const response = await axios.get(`/user/${lesson.senpaiId}`);
+          const lessonPartnerObj = {
+            name: response.data.name,
+            avatar: response.data.avatar,
+            endDate: lesson.endDate,
+          };
+          const combinedObject = _.assignIn(lesson, lessonPartnerObj);
+          return combinedObject;
         }
-      });
-      Promise.all(resultLessons).then((data) => {
-        const result = data.filter((lesson) => {
-          return lesson && lesson.kouhaiId;
-        });
-        setPreviousLessons(result);
-      });
-    };
-
-    const fetchData = async () => {
-      const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
-      if (response.data) {
-        let temp = response.data.map((lesson) => {
-          lesson.title =
-            lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
-          lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
-          return lesson;
-        });
-
-        const filteredTemp = temp.filter((lesson) => {
-          return new Date(lesson.endDate) > new Date();
-        });
-        const sortedTemp = filteredTemp.sort((a, b) => {
-          return new Date(a.endDate) - new Date(b.endDate);
-        });
-        setSchedulerData(temp);
-        setPreviousLessons(fetchLessonPartner(sortedTemp));
+      } else {
+        return;
       }
-    };
+    });
+    Promise.all(resultLessons).then((data) => {
+      const result = data.filter((lesson) => {
+        return lesson && lesson.kouhaiId;
+      });
+      setPreviousLessons(result);
+    });
+  };
+
+  const fetchData = async () => {
+    const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
+    if (response.data) {
+      let temp = response.data.map((lesson) => {
+        lesson.title =
+          lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
+        lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
+        return lesson;
+      });
+
+      const filteredTemp = temp.filter((lesson) => {
+        return new Date(lesson.endDate) < new Date();
+      });
+      const sortedTemp = filteredTemp.sort((a, b) => {
+        return new Date(a.endDate) - new Date(b.endDate);
+      });
+      // console.log(schedulerData);
+      // console.log("HERE");
+      setSchedulerData(temp);
+      setPreviousLessons(fetchLessonPartner(sortedTemp));
+      // console.log(temp);
+    }
+  };
+
+  useEffect(() => {
     if (user._id) {
       fetchData();
     }
+    console.log(scheduleToggler);
   }, [user]);
+
+  useEffect(() => {
+    fetchData();
+  }, [scheduleToggler]);
 
   const joinClickHandler = (appointmentData) => {
     setLesson(appointmentData);
@@ -247,7 +260,7 @@ export default function MyLessons() {
   const checkRenderLesson = () => {
     if (previousLessons.length > 0) {
       return previousLessons.map((lesson) => {
-        console.log(lesson);
+        // console.log(lesson);
         return <PreviousLesson key={lesson._id} lesson={lesson} />;
       });
     } else {
@@ -371,7 +384,7 @@ export default function MyLessons() {
                 >
                   Create Lesson Slot
                 </Button>
-                <Button
+                {/* <Button
                   onClick={() => {
                     // for (const price of prices) {
                     //   if (price.product === products[0].id) {
@@ -391,7 +404,7 @@ export default function MyLessons() {
                   }}
                 >
                   Price Test
-                </Button>
+                </Button> */}
               </div>
             </Grid>
             <Grid xs={12} container>

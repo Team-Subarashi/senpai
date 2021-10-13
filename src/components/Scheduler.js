@@ -54,7 +54,7 @@ export default function Timetable({ senpaiLessons }) {
                 </Button>
               </form>
             ) : null}
-            <Button onClick={() => console.log(appointmentData)}>Test</Button>
+            {/* <Button onClick={() => console.log(appointmentData)}>Test</Button> */}
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>

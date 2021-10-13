@@ -1,7 +1,4 @@
-import React, {
-  // useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Box, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { FormControl, InputLabel, Input } from "@mui/material";
@@ -13,33 +10,29 @@ import { userState } from "../atoms";
 
 export default function Edit() {
   const user = useRecoilValue(userState);
-  // const [linkedIn, setLinkedIn] = useState(user.linkedIn || "LinkedIn");
-  // const [twitter, setTwitter] = useState(user.twitter || "Twitter");
-  // const [facebook, setFacebook] = useState(user.facebook || "Facebook");
-  // const [website, setWebsite] = useState(user.website || "Personal Website");
+  const [linkedIn, setLinkedIn] = useState(user.linkedIn || "LinkedIn");
+  const [twitter, setTwitter] = useState(user.twitter || "Twitter");
+  const [facebook, setFacebook] = useState(user.facebook || "Facebook");
+  const [website, setWebsite] = useState(user.website || "Personal Website");
 
   useEffect(() => {
-    console.log(user);
-  }, []);
-
-  // useEffect(() => {
-  //   if (user.linkedIn) {
-  //     setLinkedIn(user.linkedIn);
-  //     // document.getElementById("linkedin").value = linkedIn;
-  //   }
-  //   if (user.twitter) {
-  //     setTwitter(user.twitter);
-  //     //   document.getElementById("twitter").value = twitter;
-  //   }
-  //   if (user.facebook) {
-  //     setFacebook(user.facebook);
-  //     // document.getElementById("facebook").value = facebook;
-  //   }
-  //   if (user.website) {
-  //     setWebsite(user.website);
-  //     // document.getElementById("website").value = website;
-  //   }
-  // }, []);
+    if (user.linkedIn) {
+      setLinkedIn(user.linkedIn);
+      document.getElementById("linkedin").value = linkedIn;
+    }
+    if (user.twitter) {
+      setTwitter(user.twitter);
+      document.getElementById("twitter").value = twitter;
+    }
+    if (user.facebook) {
+      setFacebook(user.facebook);
+      document.getElementById("facebook").value = facebook;
+    }
+    if (user.website) {
+      setWebsite(user.website);
+      document.getElementById("website").value = website;
+    }
+  }, [user]);
 
   return (
     <Grid container style={{ fontFamily: "Nunito" }}>

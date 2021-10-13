@@ -61,8 +61,6 @@ export default function SenpaiSettings() {
   };
 
   useEffect(() => {
-    console.log(user);
-
     if (user.category) {
       setSkillOne(user.category[0]);
       setRateOne(user.rates[0]);
@@ -102,7 +100,6 @@ export default function SenpaiSettings() {
       </Grid>
       <Grid item xs={12}>
         <Checkbox
-          // defaultChecked={senpaiCheck}
           checked={senpaiCheck}
           onChange={() =>
             setSenpaiCheck(document.getElementById("senpai-check").checked)
