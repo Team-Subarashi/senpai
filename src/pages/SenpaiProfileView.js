@@ -33,8 +33,6 @@ const useStyles = makeStyles(() => ({
     maxWidth: "260px",
   },
   root: {
-    marginTop: "1rem",
-    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
@@ -93,8 +91,8 @@ export default function SenpaiProfileView({ match, location }) {
 
   return (
     <Vanta>
-      <Container>
-        <Box>
+      <Container style={{height: "92vh"}}>
+        <Box style={{height: "100%"}}>
           {senpai ?
             <Grid container spacing={3} className={classes.root}>
               <Grid
