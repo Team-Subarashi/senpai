@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  //  useState,
+  useEffect,
+} from "react";
 import { Grid, Box, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { FormControl, InputLabel, Input } from "@mui/material";
+import {
+  FormControl,
+  //  InputLabel,
+  Input,
+} from "@mui/material";
 
 import axios from "axios";
 
@@ -10,27 +17,35 @@ import { userState } from "../atoms";
 
 export default function Edit() {
   const user = useRecoilValue(userState);
-  const [linkedIn, setLinkedIn] = useState(user.linkedIn || "LinkedIn");
-  const [twitter, setTwitter] = useState(user.twitter || "Twitter");
-  const [facebook, setFacebook] = useState(user.facebook || "Facebook");
-  const [website, setWebsite] = useState(user.website || "Personal Website");
+  // const [linkedIn, setLinkedIn] = useState("LinkedIn");
+  // const [twitter, setTwitter] = useState("Twitter");
+  // const [facebook, setFacebook] = useState("Facebook");
+  // const [website, setWebsite] = useState("Personal Website");
 
   useEffect(() => {
     if (user.linkedIn) {
-      setLinkedIn(user.linkedIn);
-      document.getElementById("linkedin").value = linkedIn;
+      // setLinkedIn(user.linkedIn);
+      document.getElementById("linkedin").value = user.linkedIn;
+    } else {
+      return;
     }
     if (user.twitter) {
-      setTwitter(user.twitter);
-      document.getElementById("twitter").value = twitter;
+      // setTwitter(user.twitter);
+      document.getElementById("twitter").value = user.twitter;
+    } else {
+      return;
     }
     if (user.facebook) {
-      setFacebook(user.facebook);
-      document.getElementById("facebook").value = facebook;
+      // setFacebook(user.facebook);
+      document.getElementById("facebook").value = user.facebook;
+    } else {
+      return;
     }
     if (user.website) {
-      setWebsite(user.website);
-      document.getElementById("website").value = website;
+      // setWebsite(user.website);
+      document.getElementById("website").value = user.website;
+    } else {
+      return;
     }
   }, [user]);
 
@@ -84,34 +99,46 @@ export default function Edit() {
           <Box>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>
-                  {user.twitter ? user.twitter : "Twitter"}
-                </InputLabel>
-                <Input id="twitter" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{twitter}</InputLabel> */}
+                <Input
+                  id="twitter"
+                  placeholder="Twitter"
+                  style={{ color: "#fff" }}
+                  // value={twitter}
+                />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>
-                  {user.linkedIn ? user.linkedIn : "LinkedIn"}
-                </InputLabel>
-                <Input id="linkedin" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{linkedIn}</InputLabel> */}
+                <Input
+                  id="linkedin"
+                  placeholder="LinkedIn"
+                  style={{ color: "#fff" }}
+                  // value={linkedIn}
+                />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>
-                  {user.facebook ? user.facebook : "Facebook"}
-                </InputLabel>
-                <Input id="facebook" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{facebook}</InputLabel> */}
+                <Input
+                  id="facebook"
+                  placeholder="Facebook"
+                  style={{ color: "#fff" }}
+                  // value={facebook}
+                />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>
-                  {user.website ? user.website : "Personal Website"}
-                </InputLabel>
-                <Input id="website" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{website}</InputLabel> */}
+                <Input
+                  id="website"
+                  placeholder="Personal Website"
+                  style={{ color: "#fff" }}
+                  // value={website}
+                />
               </FormControl>
             </Grid>
             {/* <Grid item style={{ marginBottom: "1vh" }}>
