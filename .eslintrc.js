@@ -23,5 +23,8 @@ module.exports = {
     "no-irregular-whitespace": "warn",
     "react/prop-types": "off",
     "react/no-unescaped-entities": "off",
+    "no-trailing-spaces": "error",
+    "semi": ["error", "always"],
+    "semi-style": ["error", "last"],
   }
 };
