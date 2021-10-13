@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { category as categoryAtom } from "../atoms";
+import React from "react";
 import Filter from "../components/Filter";
 import SenpaiList from "../components/SenpaiList";
-import { Grid, Box, Button } from "@material-ui/core";
-
-import axios from "axios";
+import Grid from "@material-ui/core/Grid";
 
 export default function Search() {
   return (
@@ -30,7 +26,8 @@ export default function Search() {
           marginLeft: "8.5vw",
           marginTop: "3vh",
           // height: "80vh",
-          backgroundColor: "lightblue",
+          backgroundColor: "#616162",
+          //border: "1px solid white"
           // overflow: "scroll",
         }}
       >

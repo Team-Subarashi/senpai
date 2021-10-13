@@ -1,52 +1,76 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import axios from "axios";
+import * as Y from "yjs";
+import { WebsocketProvider } from "y-websocket";
+import { MonacoBinding } from "y-monaco";
 import Editor from "@monaco-editor/react";
-import { firebaseConfig } from "../../firebase";
-import firebase from "firebase/compat/app";
-import "firebase/compat/database";
-import { fromMonaco } from "@hackerrank/firepad";
 import "./CodeEditor.css";
-import files from "./files";
+import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
-function CodeEditor() {
+export const CodeEditor = ({ activeFiles }) => {
+  const [fileName, setFileName] = useState();
+  const [html, setHTML] = useRecoilState(loadedHTML);
+  const [css, setCSS] = useRecoilState(loadedCSS);
+  const [js, setJS] = useRecoilState(loadedJS);
   const editorRef = useRef(null);
-  const [editorLoaded, setEditorLoaded] = useState(false);
-  const [activeText, setActiveText] = useState("");
-  const [fileName, setFileName] = useState("script.js");
-  const file = files[fileName];
+  const doc = new Y.Doc();
+  const type = doc.getText("monaco");
+  const lessonId = window.location.href.split("room/")[1];
+  const wsProvider = new WebsocketProvider(
+    "ws://localhost:1234",
+    lessonId,
+    doc
+  );
 
-  function handleEditorDidMount(editor, monaco) {
-    editorRef.current = editor;
-    setEditorLoaded(true);
-  }
+  const handleHTML = (
+    value
+    //  event
+  ) => {
+    setHTML(value);
+  };
+  const handleJS = (
+    value
+    //  event
+  ) => {
+    setJS(value);
+  };
+  const handleCSS = (
+    value
+    //  event
+  ) => {
+    setCSS(value);
+  };
+
+  const handleSave = async () =>
+    // value, event
+    {
+      return await axios.patch(`/files/${activeFiles._id}`, {
+        js: js,
+        css: css,
+        html: html,
+      });
+    };
 
   useEffect(() => {
-    // if (!firebase.app.length) {
-    //   firebase.initializeApp(firebaseConfig);
-    // } else {
-    //   firebase.app();
-    // }
-    firebase.initializeApp(firebaseConfig);
+    setHTML(activeFiles.html);
+    setJS(activeFiles.js);
+    setCSS(activeFiles.css);
   }, []);
 
-  useEffect(() => {
-    if (!editorLoaded) {
-      return;
-    }
+  function handleEditorDidMount(editor) {
+    // wsProvider.connect();
+    editorRef.current = editor;
+    new MonacoBinding(
+      type,
+      editorRef.current.getModel(),
+      new Set([editorRef.current]),
+      wsProvider.awareness
+    );
+  }
 
-    const dbRef = firebase.database().ref().child(`pair001`);
-    const firepad = fromMonaco(dbRef, editorRef.current);
-    const name = prompt("Enter your Name :");
-    firepad.setUserName(name);
-  }, [editorLoaded]);
-
-  const handleChange = (value, event) => {
-    setActiveText(value);
-    console.log(activeText);
-  };
-    
-    
   return (
-    <div id="editor-container">
+    <div>
       <button
         disabled={fileName === "script.js"}
         onClick={() => setFileName("script.js")}
@@ -65,16 +89,30 @@ function CodeEditor() {
       >
         index.html
       </button>
+      <button onClick={handleSave}>Save</button>
       <Editor
+        path={fileName}
         height="70vh"
         theme="vs-dark"
+        defaultValue="hello"
+        defaultLanguage={
+          fileName === "script.js"
+            ? "javascript"
+            : fileName === "index.html"
+            ? "xml"
+            : "css"
+        }
         onMount={handleEditorDidMount}
-        path={file.name}
-        defaultLanguage={file.language}
-        defaultValue={file.value}
+        onChange={
+          fileName === "script.js"
+            ? handleJS
+            : fileName === "index.html"
+            ? handleHTML
+            : handleCSS
+        }
       />
     </div>
   );
-}
+};
 
 export default CodeEditor;

@@ -1,50 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar } from "@material-ui/core";
+import React from "react";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 import logo from "../logo/logo_cropped.png";
-import axios from "axios";
+import Box from "@material-ui/core/Box";
+import { Link } from "react-router-dom";
+import { getAuth, signOut } from "@firebase/auth";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "10vh",
-  },
+const useStyles = makeStyles(() => ({
   appbar: {
     backgroundColor: "#673AB7",
-    fontFamily: "Nunioto",
+    fontFamily: "Nunito",
+    position: "relative",
   },
   appbarWrapper: {
-    width: "80%",
-    margin: "0 auto",
-  },
-  title: {
-    color: "#fff",
-    fontFamily: "Nunioto",
+    display: "flex",
+    justifyContent: "space-evenly",
   },
 }));
 
-export default function NavBar() {
-  // const [user, setUser] = useState("");
-  // const userDisp = async () => {
-  //   await axios.get("/users").then((res) => {
-  //     console.log(res);
-  //     return setUser(res.data);
-  //   });
-  // };
-
+const NavBar = ({ user }) => {
   const classes = useStyles();
+
+  const signOutHandler = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        console.log(error);
+        // An error happened.
+      });
+  };
+
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appbar} elevation={0}>
-        <Toolbar className={classes.appbarWrapper}>
-          <h1>
-            <img src={logo} alt="senpai" height="36" width="auto" />
-          </h1>
-        </Toolbar>
-      </AppBar>
-      {/* <button onClick={() => userDisp()}>User Test</button>*/}
-    </div>
+    <>
+      <Box id="navbar" sx={{ flexGrow: 1 }}>
+        <AppBar position="static" className={classes.appbar}>
+          <Toolbar className={classes.appbarWrapper}>
+            <Link to={`/`} style={{ color: "white" }}>
+              <img src={logo} alt="senpai" height="36" width="auto" />
+            </Link>
+            <Link
+              to={user.name ? `/kouhai/${user._id}` : "/login"}
+              style={{ color: "white" }}
+            >
+              Profile
+            </Link>
+            <Link
+              to={user._id ? `/myLessons` : "/login"}
+              style={{ color: "white" }}
+            >
+              My Lessons
+            </Link>
+            <Link to={`/search`} style={{ color: "white" }}>
+              Find a Senpai
+            </Link>
+            {user.name ? (
+              user.email
+            ) : (
+              <Link to="/signup" style={{ color: "white" }}>
+                Create an Account
+              </Link>
+            )}
+            {!user.email ? (
+              <Link to="/login" style={{ color: "white" }}>
+                Sign in
+              </Link>
+            ) : (
+              <Link to="/" onClick={signOutHandler} style={{ color: "white" }}>
+                Sign Out
+              </Link>
+            )}
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
-}
+};
+
+export default NavBar;
