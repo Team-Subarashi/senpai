@@ -17,10 +17,10 @@ import Grid from "@material-ui/core/Grid";
 import { lessonState, userState } from "../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useHistory } from "react-router";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import PreviousLesson from "./PreviousLesson";
+import Vanta from '../components/Vanta';
+
 
 const styles = (theme) => ({
   textCenter: {
@@ -176,7 +176,7 @@ export default function MyLessons() {
   };
 
   return (
-    <>
+    <Vanta>
       <Paper>
         <Scheduler data={schedulerData}>
           <ViewState defaultCurrentDate={Date.now()} />
@@ -201,6 +201,6 @@ export default function MyLessons() {
           {checkRenderLesson()}
         </Paper>
       </Grid>
-    </>
+    </Vanta>
   );
 }

@@ -13,7 +13,7 @@ import axios from "axios";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   section: {
     backgroundColor: "#616162",
     border: "1px solid white",
@@ -85,7 +85,6 @@ export default function SenpaiList() {
           id="single-senpai"
           style={{
             padding: "2rem",
-            backgroundColor: "#303030",
           }}
           key={senpai._id}
         >
