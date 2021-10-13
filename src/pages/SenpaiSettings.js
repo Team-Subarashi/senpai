@@ -1,9 +1,6 @@
-import React, {
-  useState,
-  // useEffect
-} from "react";
-import { Grid, Box, Button } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
 
+import { Grid, Box, Button } from "@material-ui/core";
 import {
   FormControl,
   InputLabel,
@@ -20,27 +17,67 @@ import { userState } from "../atoms";
 
 export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
-  const [senpaiCheck, setSenpaiCheck] = useState(user.isSenpai);
-  const [skillOne, setSkillOne] = useState("user.category[0]");
-  const [skillTwo, setSkillTwo] = useState("user.category[1]");
-  const [skillThree, setSkillThree] = useState("user.category[2]");
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, async (user) => {
+  //     if (user._id === null) {
+  //       const response = await axios({
+  //         method: "get",
+  //         url: `/api/v1/firebase/${user.uid}`,
+  //       });
+  //       if (response.data) {
+  //         setUser(response.data);
+  //       }
+  //     }
+  //   });
+  // }, []);
+
+  const [senpaiCheck, setSenpaiCheck] = useState(false);
+  const [skillOne, setSkillOne] = useState("");
+  const [rateOne, setRateOne] = useState(0);
+  const [skillTwo, setSkillTwo] = useState("");
+  const [rateTwo, setRateTwo] = useState(0);
+  const [skillThree, setSkillThree] = useState("");
+  const [rateThree, setRateThree] = useState(0);
 
   const changeSkillOne = (skill) => {
     setSkillOne(skill);
   };
+  const changeRateOne = (rate) => {
+    setRateOne(rate);
+  };
+
   const changeSkillTwo = (skill) => {
     setSkillTwo(skill);
   };
+  const changeRateTwo = (rate) => {
+    setRateTwo(rate);
+  };
+
   const changeSkillThree = (skill) => {
     setSkillThree(skill);
   };
+  const changeRateThree = (rate) => {
+    setRateThree(rate);
+  };
 
-  //   useEffect(() => {
-  //     if (user.isSenpai === true) {
-  //       document.getElementById("senpai-check").checked = true;
-  //     }
-  //     console.log(user);
-  //   }, []);
+  useEffect(() => {
+    if (user.category) {
+      setSkillOne(user.category[0]);
+      setRateOne(user.rates[0]);
+    }
+
+    if (user.category) {
+      setSkillTwo(user.category[1]);
+      setRateTwo(user.rates[1]);
+    }
+    if (user.category) {
+      setSkillThree(user.category[2]);
+      setRateThree(user.rates[2]);
+    }
+    if (user.isSenpai) {
+      setSenpaiCheck(user.isSenpai);
+    }
+  }, [user]);
 
   return (
     <Grid container style={{ fontFamily: "Nunito" }}>
@@ -63,7 +100,7 @@ export default function SenpaiSettings() {
       </Grid>
       <Grid item xs={12}>
         <Checkbox
-          defaultChecked={user.isSenpai}
+          checked={senpaiCheck}
           onChange={() =>
             setSenpaiCheck(document.getElementById("senpai-check").checked)
           }
@@ -134,7 +171,10 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-one"
                     style={{ color: "#fff" }}
-                    defaultValue={"user.rates[0]"}
+                    value={rateOne}
+                    onChange={(e) => {
+                      changeRateOne(e.target.value);
+                    }}
                   />
                 </FormControl>
               </FormControl>
@@ -167,7 +207,10 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-two"
                     style={{ color: "#fff" }}
-                    defaultValue={"user.rates[1]"}
+                    value={rateTwo}
+                    onChange={(e) => {
+                      changeRateTwo(e.target.value);
+                    }}
                   />
                 </FormControl>
               </FormControl>
@@ -200,7 +243,10 @@ export default function SenpaiSettings() {
                   <Input
                     id="rate-three"
                     style={{ color: "#fff" }}
-                    defaultValue={"user.rates[2]"}
+                    value={rateThree}
+                    onChange={(e) => {
+                      changeRateThree(e.target.value);
+                    }}
                   />
                 </FormControl>
               </FormControl>
@@ -234,6 +280,41 @@ export default function SenpaiSettings() {
                     rates: rates,
                   },
                 });
+                if (document.getElementById("skill-one").innerText !== "") {
+                  axios({
+                    method: "post",
+                    url: `/create-lesson-and-price`,
+                    data: {
+                      name: `${skillOne} Lesson with ${user.name}`,
+                      price: rates[0],
+                      priceId: `price_${user._id}:${skillOne}`,
+                      metadata: { userId: `${user._id}` },
+                    },
+                  });
+                }
+                if (document.getElementById("skill-two").innerText !== "") {
+                  axios({
+                    method: "post",
+                    url: `/create-lesson-and-price`,
+                    data: {
+                      name: `${skillTwo} Lesson with ${user.name}`,
+                      price: rates[1],
+                      priceId: `price_${user._id}:${skillTwo}`,
+                      metadata: { userId: `${user._id}` },
+                    },
+                  });
+                }
+                if (document.getElementById("skill-three").innerText !== "") {
+                  axios({
+                    method: "post",
+                    url: `/create-lesson-and-price`,
+                    data: {
+                      name: `${skillThree} Lesson with ${user.name}`,
+                      price: rates[2],
+                      metadata: { userId: `${user._id}` },
+                    },
+                  });
+                }
 
                 let successMessage = document.createElement("div");
                 successMessage.innerText = "Settings updated!";

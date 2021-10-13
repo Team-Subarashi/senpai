@@ -51,6 +51,18 @@ exports.updateUser = (req, res) => {
   );
 };
 
+// exports.userSeed = async (req, res) => {
+//   await User.find({}, (err, user) => {
+//     if (err) {
+//       res.status(500).send(err);
+//     }
+//     for (const data of res.json(user)) {
+//       res.send(data);
+//       // User.deleteOne({ _id: data._id });
+//     }
+//   });
+// };
+
 exports.deleteUser = async (req, res) => {
   await User.deleteOne({ _id: req.params.id }, (err) => {
     if (err) {

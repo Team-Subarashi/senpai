@@ -28,6 +28,12 @@ const lessonSchema = new Schema({
   vonageSessionId: {
     type: String,
   },
+  price: {
+    type: Number,
+  },
+  category: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("lesson", lessonSchema);

@@ -4,7 +4,8 @@ import { useState } from "react";
 import Chat from "./Chat";
 import React from "react";
 
-const socket = io.connect("http://localhost:8080");
+//Look at for GCP
+const socket = io.connect("http://localhost:8081");
 
 function Messages() {
   const [username, setUsername] = useState("");

@@ -1,22 +1,20 @@
-require("dotenv").config();
-// const port = process.env.NODE_ENV === "production"
-//   ? process.env.PORT
-//   : 8080;
-
-//const port = process.env.PORT || 8080;
-
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const app = express();
-const { Server } = require("socket.io")
+const { Server } = require("socket.io");
 const routes = require("./routes");
-const http = require('http');
+const http = require("http");
+const users = require("./controllers/userController");
+const files = require("./controllers/fileController");
+const lessons = require("./controllers/LessonController");
+const stripe = require("./controllers/StripeController");
+const messages = require("./controllers/MessageController");
+const vonage = require("./controllers/vonageController");
 
 require("dotenv").config();
-
 
 let port;
 if (process.env.NODE_ENV === "production") {
@@ -25,15 +23,15 @@ if (process.env.NODE_ENV === "production") {
   port = 8080;
 }
 
-
+let socket_port = process.env.SOCKET_PORT;
 
 const server = http.createServer(app);
 
+// app.get("/", (req, res) => {
+//   res.send("<h1>Hello world</h1>");
+// });
 
-app.get('/', (req, res) => {
-  res.send('<h1>Hello world</h1>');
-});
-
+//Look at for GCP
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5000",
@@ -58,8 +56,7 @@ io.on("connection", (socket) => {
   });
 });
 
-
-const uri = process.env.MONGODB_URI || `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
+const uri = process.env.MONGODB_URI;
 
 const options = {
   useNewUrlParser: true,
@@ -86,11 +83,64 @@ app.use(
     ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'
   )
 );
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "..", "build")));
 
-// app.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
+  //Importing all routes to prod
 
-server.listen(port, () => {
+  app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
+  app
+    .route("/api/v1/users/:id")
+    .get(users.getOneUserById)
+    .patch(users.updateUser)
+    .delete(users.deleteUser);
+  app.route("/user/:id").get(users.getOneUserById);
+
+  app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
+  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
+
+  app
+    .route("/lessons")
+    .get(lessons.listAllLessons)
+    .post(lessons.createNewLesson);
+  app
+    .route("/lessons/:id")
+    .patch(lessons.updateLesson)
+    .delete(lessons.deleteLesson);
+
+  app.route("/messages").get(messages.getMessages);
+
+  app.route("/files").get(files.listAllFiles).post(files.createNewFile);
+  app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
+
+  app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
+  app.route("/stripeLessons").get(stripe.getStripeLesson);
+  app.route("/stripePrices").get(stripe.getStripePrice);
+
+  app
+    .route("/create-checkout-session/:priceId/:senpaiId")
+    .post(stripe.createCheckoutSession);
+
+  app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
+
+  app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId);
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../../", "senpai", "build", "index.html")
+    );
+  });
+  // } else {
+  //   app.get("/", (req, res) => {
+  //     res.send("api running");
+  // });
+}
+
+app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+});
+
+server.listen(socket_port, () => {
+  console.log(`Server running at http://localhost:${socket_port}`);
 });

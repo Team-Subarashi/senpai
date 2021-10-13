@@ -2,29 +2,32 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import CodeView from "../components/CodeRoom/CodeView";
 import axios from "axios";
-import Video from "../components/Video"
+import Video from "../components/Video";
 
 import CodeEditor from "../components/CodeRoom/CodeEditor";
 import { useRecoilState } from "recoil";
 import { lessonState } from "../atoms";
 
 export default function Workspace() {
-  const [activeFiles, setActiveFiles] = useState("")
-  const [lesson, setLesson] = useRecoilState(lessonState)
+  const [activeFiles, setActiveFiles] = useState("");
+  const [lesson, setLesson] = useRecoilState(lessonState);
   useEffect(async () => {
     const files = await axios.get("/files");
     setActiveFiles(files.data[0]);
 
     return () => {
-      setLesson({})
-    }
+      setLesson({});
+    };
   }, []);
-  
+
   return (
     <Grid
       container
       // justifyContent="space-around"
-      style={{ height: "87vh", backgroundColor: "red" }}
+      style={{
+        height: "87vh",
+        // backgroundColor: "red"
+      }}
     >
       <Grid
         item
@@ -33,11 +36,11 @@ export default function Workspace() {
           // marginLeft: "1vw",
           marginTop: "5vh",
           marginBottom: "5vh",
-          backgroundColor: "lightblue",
+          // backgroundColor: "lightblue",
         }}
       >
         <React.Suspense fallback={<div>Loading...</div>}>
-          <CodeEditor activeFiles={activeFiles}/>
+          <CodeEditor activeFiles={activeFiles} />
         </React.Suspense>
       </Grid>
       <Grid
@@ -47,10 +50,10 @@ export default function Workspace() {
           // marginLeft: "1vw",
           marginTop: "5vh",
           marginBottom: "5vh",
-          backgroundColor: "lightpink",
+          // backgroundColor: "lightpink",
         }}
       >
-        <CodeView/>
+        <CodeView />
       </Grid>
       <Grid item xs={2} style={{ backgroundColor: "gray" }}>
         <Video lesson={lesson} />

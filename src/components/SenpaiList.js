@@ -12,7 +12,6 @@ import { category as categoryAtom } from "../atoms";
 import axios from "axios";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-
 const useStyles = makeStyles(() => ({
   section: {
     backgroundColor: "#616162",
@@ -36,7 +35,7 @@ export default function SenpaiList() {
   const temp = [];
   const senpaiSetter = async () => {
     await axios.get("/api/v1/users").then((res) => {
-      console.log(res);
+      // console.log(res);
       for (const senpai of res.data) {
         if (senpai.isSenpai === true) {
           if (category.toLowerCase() === "all") {
@@ -72,7 +71,7 @@ export default function SenpaiList() {
           }
         }
       }
-      console.log(temp);
+      // console.log(temp);
       setSenpaiList(temp);
     });
   };
@@ -88,17 +87,21 @@ export default function SenpaiList() {
           }}
           key={senpai._id}
         >
-          <Grid
-            item
-            xs={4}
-            className={classes.section}
-          >
-            <Typography variant="h4">
-              {senpai.name}
-            </Typography>
-            <Box style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }} mt={2}>
+          <Grid item xs={4} className={classes.section}>
+            <Typography variant="h4">{senpai.name}</Typography>
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              mt={2}
+            >
               <img height="125px" width="125px" src={senpai.avatar} />
-              <Link to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}>
+              <Link
+                to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
+              >
                 <Button
                   variant="contained"
                   style={{
@@ -110,12 +113,10 @@ export default function SenpaiList() {
                     senpaiSetter();
                   }}
                 >
-                Go to Profile
+                  Go to Profile
                 </Button>
               </Link>
             </Box>
-
-
           </Grid>
           <Grid
             container
@@ -134,7 +135,7 @@ export default function SenpaiList() {
               {senpai.category.map((skill, index) => {
                 return (
                   <div key={skill}>
-                    {skill} - {senpai.rates[index]}/hour
+                    {skill} - ￥{senpai.rates[index]}/hour
                   </div>
                 );
               })}
@@ -175,10 +176,6 @@ export default function SenpaiList() {
   useEffect(() => {
     senpaiSetter();
   }, [category]);
-
-  useEffect(() => {
-    senpaiSetter();
-  }, []);
 
   useEffect(() => {
     senpaiPopulator();

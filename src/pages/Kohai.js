@@ -48,7 +48,7 @@ const useStyles = makeStyles(() => ({
     overflow: "hidden",
     borderRadius: "4px",
     width: "48%",
-    margin: "1rem"
+    margin: "1rem",
   },
 }));
 
@@ -105,7 +105,7 @@ const Kohai = () => {
                         {user.twitter ? (
                           <a
                             target="_blank"
-                            href={`https://${user.twitter}`}
+                            href={`${user.twitter}`}
                             rel="noreferrer"
                           >
                             <Button>
@@ -116,7 +116,7 @@ const Kohai = () => {
                         {user.linkedIn ? (
                           <a
                             target="_blank"
-                            href={`https://${user.linkedIn}`}
+                            href={`${user.linkedIn}`}
                             rel="noreferrer"
                           >
                             <Button>
@@ -138,7 +138,7 @@ const Kohai = () => {
                         {user.instagram ? (
                           <a
                             target="_blank"
-                            href={`https://${user.instagram}`}
+                            href={`${user.instagram}`}
                             rel="noreferrer"
                           >
                             <Button>
@@ -163,7 +163,7 @@ const Kohai = () => {
                       <Typography variant="h6">
                         <a
                           target="_blank"
-                          href={`https://${user.website}`}
+                          href={`${user.website}`}
                           rel="noreferrer"
                         >
                           <a>{user.website}</a>
