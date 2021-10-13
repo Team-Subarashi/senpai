@@ -36,6 +36,8 @@ module.exports = function (app) {
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
   app.route("/stripePrices").get(stripe.getStripePrice);
+  app.route("/archivePrices").patch(stripe.archiveAllPrices);
+  app.route("/archiveProducts").patch(stripe.archiveAllProducts);
 
   app
     .route("/create-checkout-session/:priceId/:senpaiId")

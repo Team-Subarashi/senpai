@@ -55,6 +55,26 @@ exports.getStripeLesson = async (req, res) => {
   res.send(products);
 };
 
+exports.archiveAllProducts = async (req, res) => {
+  const products = await stripe.products.list({ active: true });
+
+  // res.send(products.data);
+  for (const product of products.data) {
+    await stripe.products.update(`${product.id}`, { active: false });
+  }
+  res.send("Products archived");
+};
+
+exports.archiveAllPrices = async (req, res) => {
+  const prices = await stripe.prices.list({ active: true });
+
+  // res.send(prices.data);
+  for (const price of prices.data) {
+    await stripe.prices.update(`${price.id}`, { active: false });
+  }
+  res.send("Prices archived");
+};
+
 exports.getStripePrice = async (req, res) => {
   const prices = await stripe.prices.list({
     limit: 100,
