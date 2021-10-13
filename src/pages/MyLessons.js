@@ -167,7 +167,6 @@ export default function MyLessons() {
   const checkRenderLesson = () => {
     if (previousLessons.length > 0) {
       return previousLessons.map((lesson) => {
-        console.log(lesson);
         return <PreviousLesson key={lesson._id} lesson={lesson} />;
       });
     } else {
