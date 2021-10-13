@@ -14,7 +14,6 @@ import axios from "axios";
 
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
-import { SettingsBackupRestoreOutlined } from "@material-ui/icons";
 
 export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
