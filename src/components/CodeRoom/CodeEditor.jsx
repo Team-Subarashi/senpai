@@ -9,18 +9,14 @@ import "./CodeEditor.css";
 import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
 export const CodeEditor = ({ activeFiles }) => {
-  const [fileName, setFileName] = useState("script.js");
+  const [fileName, setFileName] = useState();
   const [html, setHTML] = useRecoilState(loadedHTML);
   const [css, setCSS] = useRecoilState(loadedCSS);
   const [js, setJS] = useRecoilState(loadedJS);
-
   const editorRef = useRef(null);
-
   const doc = new Y.Doc();
-  const lessonId = window.location.href.split("room/")[1];
-
   const type = doc.getText("monaco");
-
+  const lessonId = window.location.href.split("room/")[1];
   const wsProvider = new WebsocketProvider(
     "ws://localhost:1234",
     lessonId,
@@ -32,21 +28,18 @@ export const CodeEditor = ({ activeFiles }) => {
     //  event
   ) => {
     setHTML(value);
-    console.log(html);
   };
   const handleJS = (
     value
     //  event
   ) => {
     setJS(value);
-    console.log(js);
   };
   const handleCSS = (
     value
     //  event
   ) => {
     setCSS(value);
-    console.log(css);
   };
 
   const handleSave = async () =>
@@ -63,12 +56,11 @@ export const CodeEditor = ({ activeFiles }) => {
     setHTML(activeFiles.html);
     setJS(activeFiles.js);
     setCSS(activeFiles.css);
-  }, [activeFiles]);
+  }, []);
 
   function handleEditorDidMount(editor) {
-    wsProvider.connect();
+    // wsProvider.connect();
     editorRef.current = editor;
-    console.log(editorRef.current);
     new MonacoBinding(
       type,
       editorRef.current.getModel(),
@@ -102,15 +94,7 @@ export const CodeEditor = ({ activeFiles }) => {
         path={fileName}
         height="70vh"
         theme="vs-dark"
-        value={
-          fileName === "script.js"
-            ? js
-            : fileName === "index.html"
-            ? html
-            : fileName === "style.css"
-            ? css
-            : ""
-        }
+        defaultValue="hello"
         defaultLanguage={
           fileName === "script.js"
             ? "javascript"
@@ -118,7 +102,6 @@ export const CodeEditor = ({ activeFiles }) => {
             ? "xml"
             : "css"
         }
-        defaultValue="hello"
         onMount={handleEditorDidMount}
         onChange={
           fileName === "script.js"
