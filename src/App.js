@@ -23,17 +23,17 @@ import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
-import Messages from './components/message/Messages';
-import { makeStyles } from "@material-ui/core/styles";
+import Messages from "./components/message/Messages";
+// import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: "100vh",
-    backgroundColor: "#616161",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     minHeight: "100vh",
+//     backgroundColor: "#616161",
+//     backgroundRepeat: "no-repeat",
+//     backgroundSize: "cover",
+//   },
+// }));
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -60,7 +60,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
-        <div >
+        <div>
           <Router hashType="slash">
             <CssBaseline />
             <NavBar user={user} />
@@ -73,7 +73,10 @@ function App() {
               <Route path="/senpai/:id/schedule" component={ScheduleBooking} />
               <Route path="/search" component={Search} />
               <Route path="/room" component={Workspace} />
-              <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
+              <Route
+                path="/checkout/:senpaiId/:lessonId"
+                component={Checkout}
+              />
               <Route path="/mylessons" component={MyLessons} />
               <Route path="/messages" component={Messages} />
               <Route path="/edit" component={Edit} />
@@ -81,8 +84,8 @@ function App() {
             </Switch>
           </Router>
         </div>
-      </div >
-    </ThemeProvider >
+      </div>
+    </ThemeProvider>
   );
 }
 

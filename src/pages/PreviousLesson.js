@@ -1,12 +1,12 @@
 import React from "react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import {
   FormControl,
   Select,
   MenuItem,
   Avatar,
-  Typography,
+  // Typography,
   InputLabel,
 } from "@material-ui/core";
 
@@ -58,14 +58,14 @@ const PreviousLesson = ({ lesson }) => {
         />
       </Grid>
       <Grid item xs={3}>
-        <div>Name</div>
+        <div>Partner</div>
         <p>{lesson.name}</p>
       </Grid>
       <Grid item xs={3}>
         <div>Date</div>
         <p>{date.toDateString()}</p>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} style={{ display: "none" }}>
         <DropDown />
       </Grid>
     </Grid>
