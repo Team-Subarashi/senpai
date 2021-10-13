@@ -1,10 +1,3 @@
-require("dotenv").config();
-// const port = process.env.NODE_ENV === "production"
-//   ? process.env.PORT
-//   : 8080;
-
-//const port = process.env.PORT || 8080;
-
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const express = require("express");
@@ -18,7 +11,7 @@ const users = require("./controllers/userController");
 const files = require("./controllers/fileController");
 const lessons = require("./controllers/LessonController");
 const stripe = require("./controllers/StripeController");
-// const messages = require("./controllers/MessageController");
+const messages = require("./controllers/MessageController");
 const vonage = require("./controllers/vonageController");
 
 require("dotenv").config();
@@ -36,7 +29,32 @@ const server = http.createServer(app);
 //   res.send("<h1>Hello world</h1>");
 // });
 
+// const io = new Server(server, {
+//   cors: {
+//     origin: "http://localhost:5000",
+//     methods: ["GET", "POST"],
+//   },
+// });
+
+// io.on("connection", (socket) => {
+//   console.log(`User Connected: ${socket.id}`);
+
+//   socket.on("join_room", (data) => {
+//     socket.join(data);
+//     console.log(`User with ID: ${socket.id} joined room: ${data}`);
+//   });
+
+//   socket.on("send_message", (data) => {
+//     socket.to(data.room).emit("receive_message", data);
+//   });
+
+//   socket.on("disconnect", () => {
+//     console.log("User Disconnected", socket.id);
+//   });
+// });
+
 const uri = process.env.MONGODB_URI;
+
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -88,7 +106,7 @@ if (process.env.NODE_ENV === "production") {
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
-  // app.route("/messages").get(messages.getMessages);
+  app.route("/messages").get(messages.getMessages);
 
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
