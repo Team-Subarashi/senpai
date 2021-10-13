@@ -17,12 +17,14 @@ const http = require('http');
 
 require("dotenv").config();
 
+
 let port;
 if (process.env.NODE_ENV === "production") {
   port = process.env.PORT;
 } else {
   port = 8080;
 }
+
 
 
 const server = http.createServer(app);
@@ -57,9 +59,8 @@ io.on("connection", (socket) => {
 });
 
 
+const uri = process.env.MONGODB_URI || `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
 
-
-const uri = `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,

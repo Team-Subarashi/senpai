@@ -24,7 +24,6 @@ export default function Search() {
         xs={10}
         style={{
           marginLeft: "8.5vw",
-          marginTop: "3vh",
           // height: "80vh",
           backgroundColor: "#616162",
           //border: "1px solid white"
