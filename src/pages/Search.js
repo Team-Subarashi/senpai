@@ -24,9 +24,8 @@ export default function Search() {
           item
           xs={12}
           style={{
-            height: "95vh",
+            height: "87vh",
             width: "max-content",
-            padding: "2rem",
             overflow: "scroll",
           }}
         >

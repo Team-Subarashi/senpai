@@ -36,7 +36,7 @@ const NavBar = ({ user }) => {
   };
 
   return (
-    <Box id="navbar" sx={{ flexGrow: 1, height: "8%"}}>
+    <Box id="navbar" sx={{ flexGrow: 1, height: "8vh"}}>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar className={classes.appbarWrapper}>
           <Link to={`/`} style={{ color: "white" }}>

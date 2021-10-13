@@ -29,7 +29,7 @@ export default function Vanta(props) {
     };
   }, [vantaEffect]);
   return (
-    <div ref={myRef} style={{height: "100%"}}>
+    <div ref={myRef} style={{height: "92vh"}}>
       {props.children}
     </div>
   );
