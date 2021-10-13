@@ -12,6 +12,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#673AB7",
     fontFamily: "Nunito",
     position: "relative",
+    height: "100%"
   },
   appbarWrapper: {
     display: "flex",
@@ -35,48 +36,46 @@ const NavBar = ({ user }) => {
   };
 
   return (
-    <>
-      <Box id="navbar" sx={{ flexGrow: 1 }}>
-        <AppBar position="static" className={classes.appbar}>
-          <Toolbar className={classes.appbarWrapper}>
-            <Link to={`/`} style={{ color: "white" }}>
-              <img src={logo} alt="senpai" height="36" width="auto" />
-            </Link>
-            <Link
-              to={user.name ? `/kouhai/${user._id}` : "/login"}
-              style={{ color: "white" }}
-            >
+    <Box id="navbar" sx={{ flexGrow: 1, height: "8%"}}>
+      <AppBar position="static" className={classes.appbar}>
+        <Toolbar className={classes.appbarWrapper}>
+          <Link to={`/`} style={{ color: "white" }}>
+            <img src={logo} alt="senpai" height="36" width="auto" />
+          </Link>
+          <Link
+            to={user.name ? `/kouhai/${user._id}` : "/login"}
+            style={{ color: "white" }}
+          >
               Profile
-            </Link>
-            <Link
-              to={user._id ? `/myLessons` : "/login"}
-              style={{ color: "white" }}
-            >
+          </Link>
+          <Link
+            to={user._id ? `/myLessons` : "/login"}
+            style={{ color: "white" }}
+          >
               My Lessons
-            </Link>
-            <Link to={`/search`} style={{ color: "white" }}>
+          </Link>
+          <Link to={`/search`} style={{ color: "white" }}>
               Find a Senpai
-            </Link>
-            {user.name ? (
-              user.email
-            ) : (
-              <Link to="/signup" style={{ color: "white" }}>
+          </Link>
+          {user.name ? (
+            user.email
+          ) : (
+            <Link to="/signup" style={{ color: "white" }}>
                 Create an Account
-              </Link>
-            )}
-            {!user.email ? (
-              <Link to="/login" style={{ color: "white" }}>
+            </Link>
+          )}
+          {!user.email ? (
+            <Link to="/login" style={{ color: "white" }}>
                 Sign in
-              </Link>
-            ) : (
-              <Link to="/" onClick={signOutHandler} style={{ color: "white" }}>
+            </Link>
+          ) : (
+            <Link to="/" onClick={signOutHandler} style={{ color: "white" }}>
                 Sign Out
-              </Link>
-            )}
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </>
+            </Link>
+          )}
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 
