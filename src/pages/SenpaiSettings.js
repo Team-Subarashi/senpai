@@ -17,20 +17,6 @@ import { userState } from "../atoms";
 
 export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, async (user) => {
-  //     if (user._id === null) {
-  //       const response = await axios({
-  //         method: "get",
-  //         url: `/api/v1/firebase/${user.uid}`,
-  //       });
-  //       if (response.data) {
-  //         setUser(response.data);
-  //       }
-  //     }
-  //   });
-  // }, []);
-
   const [senpaiCheck, setSenpaiCheck] = useState(false);
   const [skillOne, setSkillOne] = useState("");
   const [rateOne, setRateOne] = useState(0);
@@ -85,6 +71,8 @@ export default function SenpaiSettings() {
         item
         xs={12}
         style={{
+          fontSize: "large",
+          paddingTop: "1.25vh",
           marginLeft: "40%",
           marginRight: "40%",
           marginTop: "5vh",

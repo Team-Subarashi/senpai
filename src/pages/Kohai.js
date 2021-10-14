@@ -16,11 +16,13 @@ import { userState } from "../atoms";
 
 const useStyles = makeStyles(() => ({
   main: {
-    height: "100vh",
-    padding: "50px",
+    height: "90vh",
+    paddingTop: "50px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
   },
   left: {
-    height: "85vh",
+    height: "80vh",
     backgroundColor: "#424242",
     borderRadius: "4px",
     padding: "30px",
@@ -37,9 +39,10 @@ const useStyles = makeStyles(() => ({
     height: 150,
   },
   right: {
+    height: "80vh",
     backgroundColor: "#424242",
     borderRadius: "4px",
-    padding: "30px",
+    padding: "10px",
     margin: "1rem",
   },
   preview: {
@@ -65,7 +68,7 @@ const Kohai = () => {
               textAlign: "right",
               marginTop: "2.5vh",
               marginBottom: "-6vh",
-              marginRight: "6.5vw",
+              marginRight: "6vw",
             }}
           >
             <Link to={{ pathname: `/edit/${user._id}` }}>

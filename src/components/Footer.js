@@ -27,27 +27,12 @@ export default function Footer() {
       <Box id="navbar" sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <Link to={`/`} style={{ color: "white" }}>
+            {/* <Link to={`/`} style={{ color: "white" }}>
               <Typography variant="h4">SENPAI</Typography>
-            </Link>
+            </Link> */}
             <Link to={`/info`} style={{ color: "white" }}>
               <Typography variant="h4">About Us</Typography>
             </Link>
-            {/* <Link
-              to={user.name ? `/kouhai/${user._id}` : "/login"}
-              style={{ color: "white" }}
-            >
-              Profile
-            </Link> */}
-            {/* <Link
-              to={user._id ? `/myLessons` : "/login"}
-              style={{ color: "white" }}
-            >
-              My Lessons
-            </Link> */}
-            {/* <Link to={`/search`} style={{ color: "white" }}>
-              Find a Senpai
-            </Link> */}
           </Toolbar>
         </AppBar>
       </Box>

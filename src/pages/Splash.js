@@ -32,7 +32,7 @@ export default function Splash() {
   const classes = useStyles();
   const theme = useTheme();
   return (
-    <Grid container>
+    <Grid container style={{ height: "86.7vh" }}>
       <Grid className={classes.padding} container>
         <Grid item xs={6} className={classes.padding}>
           <Typography className={classes.title}>Welcome to</Typography>
