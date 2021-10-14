@@ -23,8 +23,8 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  rates: {
-    type: [Number],
+  rate: {
+    type: Number,
   },
   category: {
     type: [String],

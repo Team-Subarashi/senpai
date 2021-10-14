@@ -19,46 +19,38 @@ export default function SenpaiSettings() {
   const user = useRecoilValue(userState);
   const [senpaiCheck, setSenpaiCheck] = useState(false);
   const [skillOne, setSkillOne] = useState("");
-  const [rateOne, setRateOne] = useState(0);
+  const [rate, setRate] = useState(0);
   const [skillTwo, setSkillTwo] = useState("");
-  const [rateTwo, setRateTwo] = useState(0);
   const [skillThree, setSkillThree] = useState("");
-  const [rateThree, setRateThree] = useState(0);
 
   const changeSkillOne = (skill) => {
     setSkillOne(skill);
   };
-  const changeRateOne = (rate) => {
-    setRateOne(rate);
+  const changeRate = (rate) => {
+    setRate(rate);
   };
 
   const changeSkillTwo = (skill) => {
     setSkillTwo(skill);
   };
-  const changeRateTwo = (rate) => {
-    setRateTwo(rate);
-  };
 
   const changeSkillThree = (skill) => {
     setSkillThree(skill);
-  };
-  const changeRateThree = (rate) => {
-    setRateThree(rate);
   };
 
   useEffect(() => {
     if (user.category) {
       setSkillOne(user.category[0]);
-      setRateOne(user.rates[0]);
     }
 
     if (user.category) {
       setSkillTwo(user.category[1]);
-      setRateTwo(user.rates[1]);
     }
     if (user.category) {
       setSkillThree(user.category[2]);
-      setRateThree(user.rates[2]);
+    }
+    if (user.rate) {
+      setRate(user.rate);
     }
     if (user.isSenpai) {
       setSenpaiCheck(user.isSenpai);
@@ -154,17 +146,6 @@ export default function SenpaiSettings() {
                   <MenuItem value="WebGPU">WebGPU</MenuItem>
                   <MenuItem value="three.js">three.js</MenuItem>
                 </Select>
-                <FormControl>
-                  <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
-                  <Input
-                    id="rate-one"
-                    style={{ color: "#fff" }}
-                    value={rateOne}
-                    onChange={(e) => {
-                      changeRateOne(e.target.value);
-                    }}
-                  />
-                </FormControl>
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "2vh" }}>
@@ -190,17 +171,6 @@ export default function SenpaiSettings() {
                   <MenuItem value="WebGPU">WebGPU</MenuItem>
                   <MenuItem value="three.js">three.js</MenuItem>
                 </Select>
-                <FormControl>
-                  <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
-                  <Input
-                    id="rate-two"
-                    style={{ color: "#fff" }}
-                    value={rateTwo}
-                    onChange={(e) => {
-                      changeRateTwo(e.target.value);
-                    }}
-                  />
-                </FormControl>
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "2vh" }}>
@@ -226,20 +196,21 @@ export default function SenpaiSettings() {
                   <MenuItem value="WebGPU">WebGPU</MenuItem>
                   <MenuItem value="three.js">three.js</MenuItem>
                 </Select>
-                <FormControl>
-                  <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
-                  <Input
-                    id="rate-three"
-                    style={{ color: "#fff" }}
-                    value={rateThree}
-                    onChange={(e) => {
-                      changeRateThree(e.target.value);
-                    }}
-                  />
-                </FormControl>
               </FormControl>
             </Grid>
           </Box>
+          <FormControl>
+            <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
+            <Input
+              id="rate"
+              style={{ color: "#fff", marginBottom: "2vh" }}
+              value={rate}
+              onChange={(e) => {
+                changeRate(e.target.value);
+              }}
+            />
+          </FormControl>
+
           <Grid item xs={3} style={{ marginLeft: "40vw" }}>
             <Button
               onClick={() => {
@@ -254,18 +225,15 @@ export default function SenpaiSettings() {
                     ? `${document.getElementById("skill-three").innerText}`
                     : null,
                 ];
-                let rates = [
-                  Number(document.getElementById("rate-one").value),
-                  Number(document.getElementById("rate-two").value),
-                  Number(document.getElementById("rate-three").value),
-                ];
+                let rate = Number(document.getElementById("rate").value);
+
                 axios({
                   method: "patch",
                   url: `/api/v1/users/${user._id}`,
                   data: {
                     isSenpai: senpaiCheck,
                     category: skills,
-                    rates: rates,
+                    rate: rate,
                   },
                 });
                 if (document.getElementById("skill-one").innerText !== "") {
@@ -274,31 +242,8 @@ export default function SenpaiSettings() {
                     url: `/create-lesson-and-price`,
                     data: {
                       name: `${skillOne} Lesson with ${user.name}`,
-                      price: rates[0],
+                      price: rate,
                       priceId: `price_${user._id}:${skillOne}`,
-                      metadata: { userId: `${user._id}` },
-                    },
-                  });
-                }
-                if (document.getElementById("skill-two").innerText !== "") {
-                  axios({
-                    method: "post",
-                    url: `/create-lesson-and-price`,
-                    data: {
-                      name: `${skillTwo} Lesson with ${user.name}`,
-                      price: rates[1],
-                      priceId: `price_${user._id}:${skillTwo}`,
-                      metadata: { userId: `${user._id}` },
-                    },
-                  });
-                }
-                if (document.getElementById("skill-three").innerText !== "") {
-                  axios({
-                    method: "post",
-                    url: `/create-lesson-and-price`,
-                    data: {
-                      name: `${skillThree} Lesson with ${user.name}`,
-                      price: rates[2],
                       metadata: { userId: `${user._id}` },
                     },
                   });
