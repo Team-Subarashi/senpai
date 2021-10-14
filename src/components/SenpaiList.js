@@ -84,7 +84,6 @@ export default function SenpaiList() {
           id="single-senpai"
           style={{
             padding: "2rem",
-            backgroundColor: "#303030",
           }}
           key={senpai._id}
         >
