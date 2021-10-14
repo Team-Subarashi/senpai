@@ -12,7 +12,9 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
+import ReviewList from "../components/Reviews/ReviewList";
+import { useRecoilState } from "recoil";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -46,7 +48,7 @@ const useStyles = makeStyles(() => ({
   contactDetails: {
     alignItems: "center",
     padding: "1rem",
-    textAlign: "left"
+    textAlign: "left",
   },
   aboutMeItem: {
     padding: "1rem",
@@ -56,55 +58,61 @@ const useStyles = makeStyles(() => ({
     top: 0,
     left: 0,
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   videoDiv: {
     position: "relative",
     width: "100%",
     height: 0,
-    paddingBottom: "56.25%"
+    paddingBottom: "56.25%",
   },
   right: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "start",
-  }
+  },
 }));
 
 export default function SenpaiProfileView({ match, location }) {
   const classes = useStyles();
-  const [senpai, setSenpai] = useState(location.state ? location.state.senpai : null);
+
+  const [senpai, setSenpai] = useState(
+    location.state ? location.state.senpai : null
+  );
 
   const fetchData = async () => {
-    const response = await axios.get('/api/v1/users/' + match.params.id);
+    const response = await axios.get("/api/v1/users/" + match.params.id);
     if (response.data) {
       setSenpai(response.data);
     }
   };
-
+  const fetchReview = async () => {
+    const responseReview = await axios.get("/api/v1/reviews");
+    const allReviews = responseReview.data;
+    allReviews.map((review) => {
+      if (review.senpaiId === match.params.id) {
+        console.log(review);
+      } else {
+        console.log("review not found");
+      }
+    });
+  };
   useEffect(() => {
     if (match.params.id) {
       fetchData();
+      fetchReview();
     }
   }, []);
-
 
   return (
     <Container>
       <Box>
-        {senpai ?
+        {senpai ? (
           <Grid container spacing={3} className={classes.root}>
-            <Grid
-              className={classes.aboutMe}
-              container
-              item
-              xs={3}
-            >
+            <Grid className={classes.aboutMe} container item xs={3}>
               <Grid item className={classes.aboutMeItem}>
                 <Typography variant="h2">{senpai.name}</Typography>
-
               </Grid>
-
 
               <Grid item className={classes.aboutMeItem}>
                 <Avatar
@@ -121,22 +129,18 @@ export default function SenpaiProfileView({ match, location }) {
                     style={{ color: "white" }}
                     to={`/senpai/${match.params.id}/schedule`}
                   >
-              View schedule
+                    View schedule
                   </Link>
                 </Button>
               </Grid>
 
-              <Grid
-                container
-                item
-                className={classes.contactDetails}
-              >
+              <Grid container item className={classes.contactDetails}>
                 {senpai.twitter ||
-            senpai.linkedIn ||
-            senpai.facebook ||
-            senpai.instagram ? (
-                    <Typography variant="h5">Socials:</Typography>
-                  ) : null}
+                senpai.linkedIn ||
+                senpai.facebook ||
+                senpai.instagram ? (
+                  <Typography variant="h5">Socials:</Typography>
+                ) : null}
                 <div>
                   <Typography variant="h6">
                     {senpai.twitter ? (
@@ -177,7 +181,9 @@ export default function SenpaiProfileView({ match, location }) {
                 ) : null}
                 {senpai.website ? (
                   <div>
-                    <Typography xs={3} variant="h5">Personal Website:</Typography>
+                    <Typography xs={3} variant="h5">
+                      Personal Website:
+                    </Typography>
                     <Typography variant="h6">
                       <a href={senpai.website}>{senpai.website}</a>
                     </Typography>
@@ -185,15 +191,11 @@ export default function SenpaiProfileView({ match, location }) {
                 ) : null}
               </Grid>
             </Grid>
-            <Grid
-              container
-              xs={8}
-              className={classes.right}
-            >
+            <Grid container xs={8} className={classes.right}>
               <Container
                 fixed
                 className={classes.container}
-                style={{padding: "1rem"}}
+                style={{ padding: "1rem" }}
               >
                 <div className={classes.videoDiv}>
                   <iframe
@@ -203,19 +205,16 @@ export default function SenpaiProfileView({ match, location }) {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     className={classes.videoIframe}
-                  >
-                  </iframe>
+                  ></iframe>
                 </div>
               </Container>
               <Container
                 fixed
                 className={classes.container}
-                style={{  padding: "2rem" }}
+                style={{ padding: "2rem" }}
               >
                 {senpai.bio ? (
-                  <Typography variant="h3">
-                About me
-                  </Typography>
+                  <Typography variant="h3">About me</Typography>
                 ) : null}
                 {senpai.bio ? (
                   <Typography variant="h6" component="p">
@@ -224,10 +223,13 @@ export default function SenpaiProfileView({ match, location }) {
                 ) : null}
               </Container>
             </Grid>
+            <Grid xs={12} style={{ height: "50vh", backgroundColor: "pink" }}>
+              <ReviewList />
+            </Grid>
           </Grid>
-          :
+        ) : (
           <CircularProgress />
-        }
+        )}
       </Box>
     </Container>
   );
