@@ -17,12 +17,14 @@ const http = require('http');
 
 require("dotenv").config();
 
+
 let port;
 if (process.env.NODE_ENV === "production") {
   port = process.env.PORT;
 } else {
   port = 8080;
 }
+
 
 
 const server = http.createServer(app);
@@ -34,27 +36,31 @@ app.get('/', (req, res) => {
 
 const io = new Server(server, {
   cors: {
-    origin: "*"
-  }
+    origin: "http://localhost:5000",
+    methods: ["GET", "POST"],
+  },
 });
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   socket.on("join_room", (data) => {
-    socket.join(data)
-    console.log(`User with ID: ${socket.id} joined room: ${data}`)
-  })
+    socket.join(data);
+    console.log(`User with ID: ${socket.id} joined room: ${data}`);
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+  });
 
   socket.on("disconnect", () => {
-    console.log("User Disconnected", socket.id)
-  })
-})
+    console.log("User Disconnected", socket.id);
+  });
+});
 
 
+const uri = process.env.MONGODB_URI || `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
 
-
-const uri = `mongodb+srv://greg:subarashi-greg@senpai.v11ar.mongodb.net/senpaidb`;
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
