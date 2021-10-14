@@ -36,19 +36,22 @@ function Chat({ socket, username, room }) {
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent) => {
+
+          {messageList.map((messageContent, index) => {
+
             return (
               <div
+                key={index}
                 className="message"
-                key={username === messageContent.author ? "you" : "other"}
+                id={username === messageContent.author ? "you" : "other"}
               >
                 <div>
                   <div className="message-content">
                     <p>{messageContent.message}</p>
                   </div>
                   <div className="message-meta">
-                    <p key="time">{messageContent.time}</p>
-                    <p key="author">{messageContent.author}</p>
+                    <p id="time">{messageContent.time}</p>
+                    <p id="author">{messageContent.author}</p>
                   </div>
                 </div>
               </div>

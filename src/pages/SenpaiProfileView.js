@@ -121,7 +121,7 @@ export default function SenpaiProfileView({ match, location }) {
                     style={{ color: "white" }}
                     to={`/senpai/${match.params.id}/schedule`}
                   >
-              View schedule
+                    View schedule
                   </Link>
                 </Button>
               </Grid>
@@ -132,11 +132,11 @@ export default function SenpaiProfileView({ match, location }) {
                 className={classes.contactDetails}
               >
                 {senpai.twitter ||
-            senpai.linkedIn ||
-            senpai.facebook ||
-            senpai.instagram ? (
-                    <Typography variant="h5">Socials:</Typography>
-                  ) : null}
+                  senpai.linkedIn ||
+                  senpai.facebook ||
+                  senpai.instagram ? (
+                  <Typography variant="h5">Socials:</Typography>
+                ) : null}
                 <div>
                   <Typography variant="h6">
                     {senpai.twitter ? (
@@ -184,6 +184,17 @@ export default function SenpaiProfileView({ match, location }) {
                   </div>
                 ) : null}
               </Grid>
+
+              <Grid item className={classes.aboutMeItem}>
+                <Button variant="contained" color="primary">
+                  <Link
+                    style={{ color: "white" }}
+                    to={`/messages`}
+                  >
+                    Contact Senpai
+                  </Link>
+                </Button>
+              </Grid>
             </Grid>
             <Grid
               container
@@ -193,7 +204,7 @@ export default function SenpaiProfileView({ match, location }) {
               <Container
                 fixed
                 className={classes.container}
-                style={{padding: "1rem"}}
+                style={{ padding: "1rem" }}
               >
                 <div className={classes.videoDiv}>
                   <iframe
@@ -210,11 +221,11 @@ export default function SenpaiProfileView({ match, location }) {
               <Container
                 fixed
                 className={classes.container}
-                style={{  padding: "2rem" }}
+                style={{ padding: "2rem" }}
               >
                 {senpai.bio ? (
                   <Typography variant="h3">
-                About me
+                    About me
                   </Typography>
                 ) : null}
                 {senpai.bio ? (

@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const app = express();
+
 const { Server } = require("socket.io");
 const routes = require("./routes");
 const http = require("http");
@@ -11,7 +12,6 @@ const users = require("./controllers/userController");
 const files = require("./controllers/fileController");
 const lessons = require("./controllers/LessonController");
 const stripe = require("./controllers/StripeController");
-const messages = require("./controllers/MessageController");
 const vonage = require("./controllers/vonageController");
 
 require("dotenv").config();
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === "production") {
 
 let socket_port = process.env.SOCKET_PORT;
 
-const server = http.createServer(app);
+const server = http.createServer(app);//i erased app
 
 // app.get("/", (req, res) => {
 //   res.send("<h1>Hello world</h1>");
@@ -109,7 +109,7 @@ if (process.env.NODE_ENV === "production") {
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
-  app.route("/messages").get(messages.getMessages);
+
 
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);

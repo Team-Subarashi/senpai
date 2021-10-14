@@ -1,10 +1,9 @@
-import "./App.css";
+import "./ChatApp.css";
 import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
-import React from "react";
+import React from "react"
 
-//Look at for GCP
 const socket = io.connect("http://localhost:8081");
 
 function Messages() {
@@ -20,7 +19,7 @@ function Messages() {
   };
 
   return (
-    <div className="App">
+    <div className="ChatApp">
       {!showChat ? (
         <div className="joinChatContainer">
           <h3>Join A Chat</h3>
