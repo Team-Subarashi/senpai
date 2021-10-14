@@ -5,7 +5,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/database";
 import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
-import {useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import axios from "axios";
 import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 
@@ -18,7 +18,7 @@ function CodeEditor({ activeFiles }) {
   // const [cssEditorLoaded, setCSSEditorLoaded] = useState(false);
   // const [htmlEditorLoaded, setHTMLEditorLoaded] = useState(false);
 
-  const [fileName, setFileName] = useState("script.js");
+  const [fileName, setFileName] = useState("");
 
   const lessonId = window.location.href.split("room/")[1];
   // const user = useRecoilValue(userState);
@@ -50,14 +50,14 @@ function CodeEditor({ activeFiles }) {
     });
   };
   // const loadedFiles = useRecoilValueLoadable(fileQuery)
- 
+
   function handleJSEditorDidMount(editor) {
     jsEditorRef.current = editor;
-    console.log(jsEditorRef)
+
     const jsDbRef = firebase.database().ref().child(`${lessonId}/script`);
     const jsFirepad = fromMonaco(jsDbRef, jsEditorRef.current);
     jsFirepad.setUserName("stephen");
-    console.log(jsFirepad)
+
     // setJSEditorLoaded(true);
   }
   function handleCSSEditorDidMount(editor) {
@@ -86,45 +86,45 @@ function CodeEditor({ activeFiles }) {
   //   }
   // }, [jsEditorLoaded, cssEditorLoaded, htmlEditorLoaded]);
 
-  const renderEditor = () => {
-    if (fileName === "script.js") {
-      return (
-        <Editor
-          height="70vh"
-          theme="vs-dark"
-          onMount={handleJSEditorDidMount}
-          defaultLanguage="javascript"
-          defaultValue="hello js"
-          options={{ fontSize: 10 }}
-          onChange={handleJS}
-        />
-      );
-    } else if (fileName === "style.css") {
-      return (
-        <Editor
-          height="70vh"
-          theme="vs-dark"
-          onMount={handleCSSEditorDidMount}
-          defaultLanguage="css"
-          defaultValue="hello css"
-          options={{ fontSize: 10 }}
-          onChange={handleCSS}
-        />
-      );
-    } else {
-      return (
-        <Editor
-          height="70vh"
-          theme="vs-dark"
-          onMount={handleHTMLEditorDidMount}
-          defaultLanguage="html"
-          defaultValue="hello html"
-          options={{ fontSize: 10 }}
-          onChange={handleHTML}
-        />
-      );
-    }
-  };
+  // const renderEditor = () => {
+  //   if (fileName === "script.js") {
+  //     return (
+  //       <Editor
+  //         height="70vh"
+  //         theme="vs-dark"
+  //         onMount={handleJSEditorDidMount}
+  //         defaultLanguage="javascript"
+  //         defaultValue="hello js"
+  //         options={{ fontSize: 10 }}
+  //         onChange={handleJS}
+  //       />
+  //     );
+  //   } else if (fileName === "style.css") {
+  //     return (
+  //       <Editor
+  //         height="70vh"
+  //         theme="vs-dark"
+  //         onMount={handleCSSEditorDidMount}
+  //         defaultLanguage="css"
+  //         defaultValue="hello css"
+  //         options={{ fontSize: 10 }}
+  //         onChange={handleCSS}
+  //       />
+  //     );
+  //   } else {
+  //     return (
+  //       <Editor
+  //         height="70vh"
+  //         theme="vs-dark"
+  //         onMount={handleHTMLEditorDidMount}
+  //         defaultLanguage="html"
+  //         defaultValue="hello html"
+  //         options={{ fontSize: 10 }}
+  //         onChange={handleHTML}
+  //       />
+  //     );
+  //   }
+  // };
 
   return (
     <div id="editor-container">
@@ -147,7 +147,40 @@ function CodeEditor({ activeFiles }) {
         index.html
       </button>
       <button onClick={handleSave}>Save</button>
-      {renderEditor()}
+
+      {fileName === "script.js" && (
+        <Editor
+          height="70vh"
+          theme="vs-dark"
+          onMount={handleJSEditorDidMount}
+          defaultLanguage="javascript"
+          defaultValue="hello js"
+          options={{ fontSize: 10 }}
+          onChange={handleJS}
+        />
+      )}
+      {fileName === "style.css" && (
+        <Editor
+          height="70vh"
+          theme="vs-dark"
+          onMount={handleCSSEditorDidMount}
+          defaultLanguage="css"
+          defaultValue="hello cs"
+          options={{ fontSize: 10 }}
+          onChange={handleCSS}
+        />
+      )}
+      {fileName === "index.html" && (
+        <Editor
+          height="70vh"
+          theme="vs-dark"
+          onMount={handleHTMLEditorDidMount}
+          defaultLanguage="html"
+          defaultValue="hello html"
+          options={{ fontSize: 10 }}
+          onChange={handleHTML}
+        />
+      )}
     </div>
   );
 }
