@@ -9,7 +9,6 @@ import Container from '@material-ui/core/Container';
 import { getAuth, signInWithEmailAndPassword } from '@firebase/auth';
 import { Link, useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-import Vanta from './Vanta';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -69,63 +68,61 @@ export default function SignIn() {
   };
 
   return (
-    <Vanta>
-      <Container component="main" maxWidth="xs">
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography className={classes.signInText} component="h1" variant="h5">
+    <Container component="main" maxWidth="xs">
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography className={classes.signInText} component="h1" variant="h5">
           Sign In
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => emailChangeHandler(e)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => passwordChangeHandler(e)}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={(e) => {
-                e.preventDefault();
-                submitHandler();
-              }}
-            >
+        </Typography>
+        <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={(e) => emailChangeHandler(e)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(e) => passwordChangeHandler(e)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={(e) => {
+              e.preventDefault();
+              submitHandler();
+            }}
+          >
             Sign In
-            </Button>
-            <Grid container justifyContent="center">
-              <Grid item>
-                <Link to="/signup" variant="body2">
+          </Button>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Link to="/signup" variant="body2">
                 Don't have an account? Create an account
-                </Link>
-              </Grid>
+              </Link>
             </Grid>
-          </form>
-        </div>
-      </Container>
-    </Vanta>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 }

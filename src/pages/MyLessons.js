@@ -26,7 +26,6 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import PreviousLesson from "./PreviousLesson";
-import Vanta from '../components/Vanta';
 
 
 const styles = (theme) => ({
@@ -265,7 +264,7 @@ export default function MyLessons() {
 
   if (user.isSenpai === true) {
     return (
-      <Vanta>
+      <>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
             <Grid item xs={9}>
@@ -277,7 +276,8 @@ export default function MyLessons() {
                   <WeekView
                     startDayHour={9}
                     endDayHour={24}
-                    cellDuration={60}
+                    cellDuration={30}
+                    timeScaleLayoutPr
                   />
                   <Appointments />
                   <AppointmentTooltip contentComponent={Content} />
@@ -398,11 +398,11 @@ export default function MyLessons() {
             </Grid>
           </Grid>
         </MuiPickersUtilsProvider>
-      </Vanta>
+      </>
     );
   } else {
     return (
-      <Vanta>
+      <>
         <Grid container>
           <Grid item xs={12} style={{ backgroundColor: "blue" }}>
             <Paper>
@@ -431,7 +431,7 @@ export default function MyLessons() {
             </Paper>
           </Grid>
         </Grid>
-      </Vanta>
+      </>
     );
   }
 }

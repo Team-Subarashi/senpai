@@ -13,7 +13,6 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import Vanta from '../components/Vanta';
 
 
 const useStyles = makeStyles(() => ({
@@ -90,7 +89,7 @@ export default function SenpaiProfileView({ match, location }) {
 
 
   return (
-    <Vanta>
+    <>
       <Container style={{height: "92vh"}}>
         <Box style={{height: "100%"}}>
           {senpai ?
@@ -231,6 +230,6 @@ export default function SenpaiProfileView({ match, location }) {
           }
         </Box>
       </Container>
-    </Vanta>
+    </>
   );
 }

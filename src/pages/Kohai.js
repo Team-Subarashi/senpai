@@ -13,7 +13,6 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
-import Vanta from '../components/Vanta';
 
 
 const useStyles = makeStyles(() => ({
@@ -57,7 +56,7 @@ const Kohai = () => {
   const classes = useStyles();
 
   return (
-    <Vanta>
+    <>
       <Container>
         <Box>
           <Grid container xs={12}>
@@ -226,7 +225,7 @@ const Kohai = () => {
           </Grid>
         </Box>
       </Container>
-    </Vanta>
+    </>
   );
 };
 export default Kohai;

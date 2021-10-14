@@ -4,7 +4,6 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import Timetable from "../components/Scheduler";
 import Grid from "@material-ui/core/Grid";
-import Vanta from '../components/Vanta';
 
 
 export default function ScheduleBooking({ match }) {
@@ -46,7 +45,7 @@ export default function ScheduleBooking({ match }) {
   }, []);
 
   return (
-    <Vanta>
+    <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <div>Senpai's lessons</div>
         <Grid container>
@@ -81,6 +80,6 @@ export default function ScheduleBooking({ match }) {
           </Grid> */}
         </Grid>
       </MuiPickersUtilsProvider>
-    </Vanta>
+    </>
   );
 }

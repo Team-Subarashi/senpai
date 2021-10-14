@@ -14,7 +14,6 @@ import axios from "axios";
 
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
-import Vanta from "../components/Vanta";
 
 export default function Edit() {
   const user = useRecoilValue(userState);
@@ -51,7 +50,7 @@ export default function Edit() {
   }, [user]);
 
   return (
-    <Vanta>
+    <>
       <Grid container style={{ fontFamily: "Nunito" }}>
         <Grid
           item
@@ -319,6 +318,6 @@ export default function Edit() {
           </Link>
         </Grid>
       </Grid>
-    </Vanta>
+    </>
   );
 }

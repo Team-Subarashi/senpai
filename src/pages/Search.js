@@ -2,11 +2,10 @@ import React from "react";
 import Filter from "../components/Filter";
 import SenpaiList from "../components/SenpaiList";
 import Grid from "@material-ui/core/Grid";
-import Vanta from "../components/Vanta";
 
 export default function Search() {
   return (
-    <Vanta>
+    <>
       <Grid container>
         <Grid
           item
@@ -33,6 +32,6 @@ export default function Search() {
         </Grid>
         {/* <Grid item xs={2}></Grid> */}
       </Grid>
-    </Vanta>
+    </>
   );
 }
