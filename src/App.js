@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {  useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js";
 import Checkout from "./components/Checkout";
@@ -11,7 +11,6 @@ import Kohai from "./pages/Kohai";
 import MyLessons from "./pages/MyLessons";
 import Edit from "./pages/Edit";
 import SenpaiSettings from "./pages/SenpaiSettings";
-
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { auth } from "./firebase";
@@ -26,6 +25,8 @@ import theme from "./units/theme";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
+ 
+
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -49,7 +50,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
+      <div className="App" >
         <Router hashType="slash">
           <CssBaseline />
           <NavBar user={user} />
