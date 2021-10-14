@@ -17,6 +17,7 @@ const useStyles = makeStyles(() => ({
   appbarWrapper: {
     display: "flex",
     justifyContent: "space-evenly",
+    height: "100%"
   },
 }));
 
