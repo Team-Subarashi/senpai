@@ -4,7 +4,7 @@ module.exports = function (app) {
   const files = require("./controllers/fileController");
   const lessons = require("./controllers/LessonController");
   const stripe = require("./controllers/StripeController");
-  const messages = require("./controllers/MessageController");
+  // const messages = require("./controllers/MessageController");
   const vonage = require("./controllers/vonageController");
   const reviews = require("./controllers/reviewController");
 
@@ -15,6 +15,7 @@ module.exports = function (app) {
     .patch(users.updateUser)
     .delete(users.deleteUser);
   app.route("/user/:id").get(users.getOneUserById);
+  // app.route("/api/v1/seed").patch(users.userSeed);
 
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
   app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
@@ -29,13 +30,16 @@ module.exports = function (app) {
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
+  // app.route("/messages").get(messages.getMessages);
+
   app.route("/files").get(files.listAllFiles).post(files.createNewFile);
   app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
 
   app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
   app.route("/stripeLessons").get(stripe.getStripeLesson);
-
-  app.route("/messages").get(messages.getMessages);
+  app.route("/stripePrices").get(stripe.getStripePrice);
+  app.route("/archivePrices").patch(stripe.archiveAllPrices);
+  app.route("/archiveProducts").patch(stripe.archiveAllProducts);
 
   app
     .route("/create-checkout-session/:priceId/:senpaiId")

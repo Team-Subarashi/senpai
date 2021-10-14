@@ -24,16 +24,16 @@ import { userState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
 import Messages from "./components/message/Messages";
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minHeight: "100vh",
-    backgroundColor: "#616161",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     minHeight: "100vh",
+//     backgroundColor: "#616161",
+//     backgroundRepeat: "no-repeat",
+//     backgroundSize: "cover",
+//   },
+// }));
 
 function App() {
   const [user, setUser] = useRecoilState(userState);

@@ -1,8 +1,15 @@
 import React from "react";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import CreateReview from "../components/Reviews/CreateReview";
-import { Avatar } from "@material-ui/core";
+import {
+  FormControl,
+  Select,
+  MenuItem,
+  Avatar,
+  // Typography,
+  InputLabel,
+} from "@material-ui/core";
 
 const PreviousLesson = ({ lesson }) => {
   const date = new Date(lesson.endDate);
@@ -31,7 +38,7 @@ const PreviousLesson = ({ lesson }) => {
         />
       </Grid>
       <Grid item xs={3}>
-        <div>Name</div>
+        <div>Partner</div>
         <p>{lesson.name}</p>
       </Grid>
       <Grid item xs={3}>

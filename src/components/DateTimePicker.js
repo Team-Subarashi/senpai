@@ -3,7 +3,6 @@ import { DateTimePicker } from "@material-ui/pickers";
 import { selectedDate } from "../atoms";
 import { useRecoilState } from "recoil";
 
-
 function BasicDateTimePicker() {
   const [date, setDate] = useRecoilState(selectedDate);
 

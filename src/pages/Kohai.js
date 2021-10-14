@@ -46,7 +46,7 @@ const useStyles = makeStyles(() => ({
     overflow: "hidden",
     borderRadius: "4px",
     width: "48%",
-    margin: "1rem"
+    margin: "1rem",
   },
 }));
 
@@ -69,7 +69,9 @@ const Kohai = () => {
             }}
           >
             <Link to={{ pathname: `/edit/${user._id}` }}>
-              <Button style={{ backgroundColor: "#673AB7" }}>Edit Profile</Button>
+              <Button style={{ backgroundColor: "#673AB7" }}>
+                Edit Profile
+              </Button>
             </Link>
           </Grid>
           <Grid
@@ -97,12 +99,12 @@ const Kohai = () => {
               <Grid className={classes.details}>
                 {user.twitter || user.linkedIn || user.facebook ? (
                   <Typography variant="h5" component="div">
-                Socials:
+                    Socials:
                     <div>
                       {user.twitter ? (
                         <a
                           target="_blank"
-                          href={`https://${user.twitter}`}
+                          href={`${user.twitter}`}
                           rel="noreferrer"
                         >
                           <Button>
@@ -113,7 +115,7 @@ const Kohai = () => {
                       {user.linkedIn ? (
                         <a
                           target="_blank"
-                          href={`https://${user.linkedIn}`}
+                          href={`${user.linkedIn}`}
                           rel="noreferrer"
                         >
                           <Button>
@@ -135,7 +137,7 @@ const Kohai = () => {
                       {user.instagram ? (
                         <a
                           target="_blank"
-                          href={`https://${user.instagram}`}
+                          href={`${user.instagram}`}
                           rel="noreferrer"
                         >
                           <Button>
@@ -160,7 +162,7 @@ const Kohai = () => {
                     <Typography variant="h6">
                       <a
                         target="_blank"
-                        href={`https://${user.website}`}
+                        href={`${user.website}`}
                         rel="noreferrer"
                       >
                         <a>{user.website}</a>
@@ -169,21 +171,25 @@ const Kohai = () => {
                   </div>
                 ) : null}
                 {user.location ? (
-                  <Typography variant="h5">Location: {user.location}</Typography>
+                  <Typography variant="h5">
+                    Location: {user.location}
+                  </Typography>
                 ) : null}
               </Grid>
             </Grid>
             <Grid container className={classes.right} xs={8}>
-              <Grid item >
+              <Grid item>
                 <Typography variant="h3">About me</Typography>
-                <Typography variant="h6" component="p">{user.bio}</Typography>
+                <Typography variant="h6" component="p">
+                  {user.bio}
+                </Typography>
               </Grid>
               <Grid
                 container
                 xs={12}
                 alignItems="center"
                 justifyContent="space-between"
-                style={{margin: "2rem"}}
+                style={{ margin: "2rem" }}
               >
                 <Grid item className={classes.preview} xs={5}>
                   <img
@@ -223,7 +229,6 @@ const Kohai = () => {
         </Grid>
       </Box>
     </Container>
-
   );
 };
 export default Kohai;
