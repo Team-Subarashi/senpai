@@ -14,10 +14,6 @@ function CodeEditor({ activeFiles }) {
   const cssEditorRef = useRef(null);
   const htmlEditorRef = useRef(null);
 
-  // const [jsEditorLoaded, setJSEditorLoaded] = useState(false);
-  // const [cssEditorLoaded, setCSSEditorLoaded] = useState(false);
-  // const [htmlEditorLoaded, setHTMLEditorLoaded] = useState(false);
-
   const [fileName, setFileName] = useState("");
 
   const lessonId = window.location.href.split("room/")[1];
@@ -49,7 +45,6 @@ function CodeEditor({ activeFiles }) {
       html: html,
     });
   };
-  // const loadedFiles = useRecoilValueLoadable(fileQuery)
 
   function handleJSEditorDidMount(editor) {
     jsEditorRef.current = editor;
@@ -57,74 +52,23 @@ function CodeEditor({ activeFiles }) {
     const jsDbRef = firebase.database().ref().child(`${lessonId}/script`);
     const jsFirepad = fromMonaco(jsDbRef, jsEditorRef.current);
     jsFirepad.setUserName("stephen");
-
-    // setJSEditorLoaded(true);
   }
   function handleCSSEditorDidMount(editor) {
     cssEditorRef.current = editor;
     const cssDbRef = firebase.database().ref().child(`${lessonId}/css`);
     const cssFirepad = fromMonaco(cssDbRef, cssEditorRef.current);
     cssFirepad.setUserName("stephen");
-
-    // setCSSEditorLoaded(true);
   }
   function handleHTMLEditorDidMount(editor) {
     htmlEditorRef.current = editor;
     const htmlDbRef = firebase.database().ref().child(`${lessonId}/html`);
     const htmlFirepad = fromMonaco(htmlDbRef, htmlEditorRef.current);
     htmlFirepad.setUserName("stephen");
-    // setHTMLEditorLoaded(true);
   }
 
   useEffect(() => {
     firebase.initializeApp(firebaseConfig);
   }, []);
-
-  // useEffect(() => {
-  //   if (!jsEditorLoaded && !cssEditorLoaded && !htmlEditorLoaded) {
-  //     return;
-  //   }
-  // }, [jsEditorLoaded, cssEditorLoaded, htmlEditorLoaded]);
-
-  // const renderEditor = () => {
-  //   if (fileName === "script.js") {
-  //     return (
-  //       <Editor
-  //         height="70vh"
-  //         theme="vs-dark"
-  //         onMount={handleJSEditorDidMount}
-  //         defaultLanguage="javascript"
-  //         defaultValue="hello js"
-  //         options={{ fontSize: 10 }}
-  //         onChange={handleJS}
-  //       />
-  //     );
-  //   } else if (fileName === "style.css") {
-  //     return (
-  //       <Editor
-  //         height="70vh"
-  //         theme="vs-dark"
-  //         onMount={handleCSSEditorDidMount}
-  //         defaultLanguage="css"
-  //         defaultValue="hello css"
-  //         options={{ fontSize: 10 }}
-  //         onChange={handleCSS}
-  //       />
-  //     );
-  //   } else {
-  //     return (
-  //       <Editor
-  //         height="70vh"
-  //         theme="vs-dark"
-  //         onMount={handleHTMLEditorDidMount}
-  //         defaultLanguage="html"
-  //         defaultValue="hello html"
-  //         options={{ fontSize: 10 }}
-  //         onChange={handleHTML}
-  //       />
-  //     );
-  //   }
-  // };
 
   return (
     <div id="editor-container">
