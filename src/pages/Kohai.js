@@ -180,6 +180,11 @@ const Kohai = () => {
             <Grid container className={classes.right} xs={8}>
               <Grid item>
                 <Typography variant="h3">About me</Typography>
+                {/* <Link to={{ pathname: `/edit/${user._id}` }}>
+                  <Button style={{ backgroundColor: "#673AB7" }}>
+                    Edit Profile
+                  </Button>
+                </Link> */}
                 <Typography variant="h6" component="p">
                   {user.bio}
                 </Typography>
