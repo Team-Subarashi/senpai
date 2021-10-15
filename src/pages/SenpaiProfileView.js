@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
@@ -13,16 +14,26 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
+
 const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: "#424242",
     margin: "1rem",
   },
-  root: {
-    marginTop: "0px",
-    height: "100vh",
+  aboutMe: {
     display: "flex",
-    justifyContent: "space-evenly",
+    flexDirection: "column",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#424242",
+    margin: "1rem",
+    minWidth: "260px",
+    maxWidth: "260px",
+  },
+  root: {
+    display: "flex",
+    justifyContent: "center",
     alignContent: "center",
     padding: "1rem",
   },
@@ -31,171 +42,194 @@ const useStyles = makeStyles(() => ({
     justifyContent: "center",
     height: "25vh",
   },
+  contactDetails: {
+    alignItems: "center",
+    padding: "1rem",
+    textAlign: "left"
+  },
+  aboutMeItem: {
+    padding: "1rem",
+  },
+  videoIframe: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%"
+  },
+  videoDiv: {
+    position: "relative",
+    width: "100%",
+    height: 0,
+    paddingBottom: "56.25%"
+  },
+  right: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "start",
+  }
 }));
 
 export default function SenpaiProfileView({ match, location }) {
   const classes = useStyles();
-  const [senpai, setSenpai] = useState(location.state ? location.state.senpai : null)
-  
+  const [senpai, setSenpai] = useState(location.state ? location.state.senpai : null);
+
   const fetchData = async () => {
-    const response = await axios.get('/api/v1/users/' + match.params.id)
+    const response = await axios.get('/api/v1/users/' + match.params.id);
     if (response.data) {
-      setSenpai(response.data)
+      setSenpai(response.data);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    if (match.params.id) {
+      fetchData();
+    }
+  }, []);
 
 
   return (
-    <div>
-      {senpai ? 
-        <Grid container spacing={3} className={classes.root}>
-          <Grid
-            className={classes.container}
-            item
-            xs={3}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              height: "100%",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="h2">{senpai.name}</Typography>
-            <Grid xs={3} className={classes.avatarHolder} container>
-              <Grid>
-                <Avatar
-                  className="senpai-photo"
-                  alt="senpai"
-                  src={senpai.avatar}
-                  style={{ width: 150, height: 150 }}
-                />
-              </Grid>
-            </Grid>
-            <Button variant="contained" color="primary">
-              <Link
-                style={{ color: "white" }}
-                to={`/senpai/${match.params.id}/schedule`}
+    <>
+      <Container style={{height: "92vh"}}>
+        <Box style={{height: "100%"}}>
+          {senpai ?
+            <Grid container spacing={3} className={classes.root}>
+              <Grid
+                className={classes.aboutMe}
+                container
+                item
+                xs={3}
               >
+                <Grid item className={classes.aboutMeItem}>
+                  <Typography variant="h2">{senpai.name}</Typography>
+
+                </Grid>
+
+
+                <Grid item className={classes.aboutMeItem}>
+                  <Avatar
+                    className="senpai-photo"
+                    alt="senpai"
+                    src={senpai.avatar}
+                    style={{ width: 150, height: 150 }}
+                  />
+                </Grid>
+
+                <Grid item className={classes.aboutMeItem}>
+                  <Button variant="contained" color="primary">
+                    <Link
+                      style={{ color: "white" }}
+                      to={`/senpai/${match.params.id}/schedule`}
+                    >
               View schedule
-              </Link>
-            </Button>
-            <Grid
-              container
-              style={{ alignItems: "center", padding: "1rem", textAlign: "left" }}
-            >
-              {senpai.twitter ||
+                    </Link>
+                  </Button>
+                </Grid>
+
+                <Grid
+                  container
+                  item
+                  className={classes.contactDetails}
+                >
+                  {senpai.twitter ||
             senpai.linkedIn ||
             senpai.facebook ||
             senpai.instagram ? (
-                  <Typography variant="h5">Socials:</Typography>
-                ) : null}
-              <div>
-                <Typography variant="h6">
-                  {senpai.twitter ? (
-                    <a>
-                      <TwitterIcon />
-                    </a>
+                      <Typography variant="h5">Socials:</Typography>
+                    ) : null}
+                  <div>
+                    <Typography variant="h6">
+                      {senpai.twitter ? (
+                        <a>
+                          <TwitterIcon />
+                        </a>
+                      ) : null}
+                      {senpai.linkedIn ? (
+                        <a>
+                          <LinkedInIcon />{" "}
+                        </a>
+                      ) : null}
+                      {senpai.facebook ? (
+                        <a>
+                          <FacebookIcon />
+                        </a>
+                      ) : null}
+                      {senpai.instagram ? (
+                        <a>
+                          <InstagramIcon />
+                        </a>
+                      ) : null}
+                    </Typography>
+                  </div>
+                  {senpai.email ? (
+                    <div>
+                      <Typography variant="h5">Email:</Typography>
+                      <Typography variant="h6">
+                        <a href={senpai.email}>{senpai.email}</a>
+                      </Typography>
+                    </div>
                   ) : null}
-                  {senpai.linkedIn ? (
-                    <a>
-                      <LinkedInIcon />{" "}
-                    </a>
+                  {senpai.location ? (
+                    <div>
+                      <Typography variant="h5">Location:</Typography>
+                      <Typography variant="h6">{senpai.location}</Typography>
+                    </div>
                   ) : null}
-                  {senpai.facebook ? (
-                    <a>
-                      <FacebookIcon />
-                    </a>
+                  {senpai.website ? (
+                    <div>
+                      <Typography xs={3} variant="h5">Personal Website:</Typography>
+                      <Typography variant="h6">
+                        <a href={senpai.website}>{senpai.website}</a>
+                      </Typography>
+                    </div>
                   ) : null}
-                  {senpai.instagram ? (
-                    <a>
-                      <InstagramIcon />
-                    </a>
-                  ) : null}
-                </Typography>
-              </div>
-              {senpai.email ? (
-                <div>
-                  <Typography variant="h5">Email:</Typography>
-                  <Typography variant="h6">
-                    <a href={senpai.email}>{senpai.email}</a>
-                  </Typography>
-                </div>
-              ) : null}
-              {senpai.location ? (
-                <div>
-                  <Typography variant="h5">Location:</Typography>
-                  <Typography variant="h6">{senpai.location}</Typography>
-                </div>
-              ) : null}
-              {senpai.website ? (
-                <div>
-                  <Typography xs={3} variant="h5">Personal Website:</Typography>
-                  <Typography variant="h6">
-                    <a href={senpai.website}>{senpai.website}</a>
-                  </Typography>
-                </div>
-              ) : null}
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            xs={8}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-            }}
-          >
-            <Container
-              fixed
-              className={classes.container}
-              style={{padding: "1rem"}}
-            >
-              <div               
-                style={{
-                  position: "relative",
-                  width: "100%",
-                  height: 0,
-                  paddingBottom: "56.25%"
-                }}>
-                <iframe
-                  src="https://www.youtube.com/embed/dHRO8M6elcQ"
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                xs={8}
+                className={classes.right}
+              >
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{padding: "1rem"}}
                 >
-                </iframe>
-              </div>
-            </Container>
-            <Container
-              fixed
-              className={classes.container}
-              style={{ height: "30vh", padding: "2rem" }}
-            >
-              {senpai.bio ? (
-                <Typography variant="h5" component="p">
-                Bio
-                </Typography>
-              ) : null}
-              {senpai.bio ? (
-                <Typography variant="h6" component="p">
-                  {senpai.bio}
-                </Typography>
-              ) : null}
-            </Container>
-          </Grid>
-        </Grid> 
-        : 
-        <CircularProgress />
-      }
-      
-    </div>
+                  <div className={classes.videoDiv}>
+                    <iframe
+                      src="https://www.youtube.com/embed/dHRO8M6elcQ"
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className={classes.videoIframe}
+                    >
+                    </iframe>
+                  </div>
+                </Container>
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{  padding: "2rem" }}
+                >
+                  {senpai.bio ? (
+                    <Typography variant="h3">
+                About me
+                    </Typography>
+                  ) : null}
+                  {senpai.bio ? (
+                    <Typography variant="h6" component="p">
+                      {senpai.bio}
+                    </Typography>
+                  ) : null}
+                </Container>
+              </Grid>
+            </Grid>
+            :
+            <CircularProgress />
+          }
+        </Box>
+      </Container>
+    </>
   );
 }

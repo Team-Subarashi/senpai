@@ -3,14 +3,25 @@ import { Link } from "react-router-dom";
 import Calendar from "./Calendar";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useRecoilValue } from "recoil";
 import "antd/dist/antd.css";
 import { Tabs } from "antd";
 import { category as categoryAtom } from "../atoms";
 import axios from "axios";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
+const useStyles = makeStyles(() => ({
+  section: {
+    backgroundColor: "#616162",
+    border: "1px solid white",
+    padding: "1rem",
+  },
+}));
 
 export default function SenpaiList() {
+  const classes = useStyles();
   const [senpaiList, setSenpaiList] = useState([]);
   const category = useRecoilValue(categoryAtom);
 
@@ -24,7 +35,7 @@ export default function SenpaiList() {
   const temp = [];
   const senpaiSetter = async () => {
     await axios.get("/api/v1/users").then((res) => {
-      console.log(res);
+      // console.log(res);
       for (const senpai of res.data) {
         if (senpai.isSenpai === true) {
           if (category.toLowerCase() === "all") {
@@ -60,7 +71,7 @@ export default function SenpaiList() {
           }
         }
       }
-      console.log(temp);
+      // console.log(temp);
       setSenpaiList(temp);
     });
   };
@@ -72,48 +83,50 @@ export default function SenpaiList() {
           container
           id="single-senpai"
           style={{
-            marginBottom: "3vh",
-            height: "25vh",
+            padding: "2rem",
           }}
           key={senpai._id}
         >
-          <Grid
-            item
-            xs={4}
-            style={{
-              height: "90%",
-              backgroundColor: "#616162",
-              border: "1px solid white",
-            }}
-          >
-            {senpai.name}
-            <Box mt={2}>
+          <Grid item xs={4} className={classes.section}>
+            <Typography variant="h4">{senpai.name}</Typography>
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              mt={2}
+            >
               <img height="125px" width="125px" src={senpai.avatar} />
-            </Box>
-
-            <Link to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}>
-              <Button
-                variant="contained"
-                style={{
-                  marginTop: "1vh",
-                  backgroundColor: "purple",
-                  color: "white",
-                }}
-                onClick={() => {
-                  senpaiSetter();
-                }}
+              <Link
+                to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
               >
-                Go to Profile
-              </Button>
-            </Link>
+                <Button
+                  variant="contained"
+                  style={{
+                    marginTop: "1vh",
+                    backgroundColor: "purple",
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    senpaiSetter();
+                  }}
+                >
+                  Go to Profile
+                </Button>
+              </Link>
+            </Box>
           </Grid>
           <Grid
+            container
+            alignItems="center"
+            justifyContent="center"
             item
             xs={4}
             style={{
               fontWeight: "bold",
               paddingTop: "1.cl.2vh",
-              height: "90%",
               backgroundColor: "#616162",
               border: "1px solid white",
             }}
@@ -122,7 +135,7 @@ export default function SenpaiList() {
               {senpai.category.map((skill, index) => {
                 return (
                   <div key={skill}>
-                    {skill} - {senpai.rates[index]}/hour
+                    {skill} - ￥{senpai.rates[index]}/hour
                   </div>
                 );
               })}
@@ -135,7 +148,6 @@ export default function SenpaiList() {
             item
             xs={4}
             style={{
-              height: "90%",
               backgroundColor: "#616162",
               border: "1px solid white",
             }}
@@ -156,15 +168,6 @@ export default function SenpaiList() {
               </TabPane>
             </Tabs>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              height: "100%",
-              backgroundColor: "#303030",
-              //border: "1px solid white"
-            }}
-          ></Grid>
         </Grid>
       );
     });
@@ -173,10 +176,6 @@ export default function SenpaiList() {
   useEffect(() => {
     senpaiSetter();
   }, [category]);
-
-  useEffect(() => {
-    senpaiSetter();
-  }, []);
 
   useEffect(() => {
     senpaiPopulator();

@@ -4,12 +4,11 @@ const stripe = require("stripe")(
 
 require("dotenv").config();
 
-let YOUR_DOMAIN
+let YOUR_DOMAIN;
 if (process.env.NODE_ENV === "development") {
   YOUR_DOMAIN = "http://localhost:5000";
 } else if (process.env.NODE_ENV === "production") {
   YOUR_DOMAIN = "https://senpai-container-flsg4ziguq-uc.a.run.app";
-  // YOUR_DOMAIN = "http://localhost:5000";
 }
 exports.createCheckoutSession = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -31,22 +30,55 @@ exports.createCheckoutSession = async (req, res) => {
 };
 
 exports.createLessonAndPrice = async (req, res) => {
+  console.log(req);
   const inputNewLesson = req.body;
   const product = await stripe.products.create({
-    name: inputNewLesson.lessonName,
+    name: inputNewLesson.name,
+    metadata: inputNewLesson.metadata,
   });
   const inputPrice = req.body;
   const price = await stripe.prices.create({
     product: product.id,
     unit_amount: inputPrice.price,
     currency: "jpy",
+    metadata: inputPrice.metadata,
   });
-  res.send(200);
+  // res.send(product);
+  res.sendStatus(200);
 };
 
 exports.getStripeLesson = async (req, res) => {
   const products = await stripe.products.list({
     limit: 100,
+    active: true,
   });
   res.send(products);
+};
+
+exports.archiveAllProducts = async (req, res) => {
+  const products = await stripe.products.list({ active: true });
+
+  // res.send(products.data);
+  for (const product of products.data) {
+    await stripe.products.update(`${product.id}`, { active: false });
+  }
+  res.send("Products archived");
+};
+
+exports.archiveAllPrices = async (req, res) => {
+  const prices = await stripe.prices.list({ active: true });
+
+  // res.send(prices.data);
+  for (const price of prices.data) {
+    await stripe.prices.update(`${price.id}`, { active: false });
+  }
+  res.send("Prices archived");
+};
+
+exports.getStripePrice = async (req, res) => {
+  const prices = await stripe.prices.list({
+    limit: 100,
+    active: true,
+  });
+  res.send(prices);
 };

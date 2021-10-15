@@ -22,6 +22,7 @@ import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
+import Messages from './components/message/Messages';
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -35,7 +36,6 @@ function App() {
           url: `/api/v1/firebase/${user.uid}`,
         });
         if (response.data) {
-          console.log(response.data);
           setUser(response.data);
         }
       } else {
@@ -65,12 +65,13 @@ function App() {
             <Route path="/room" component={Workspace} />
             <Route path="/checkout/:senpaiId/:lessonId" component={Checkout} />
             <Route path="/mylessons" component={MyLessons} />
+            <Route path="/messages" component={Messages} />
             <Route path="/edit" component={Edit} />
             <Route path="/senpai-settings" component={SenpaiSettings} />
           </Switch>
         </Router>
-      </div>
-    </ThemeProvider>
+      </div >
+    </ThemeProvider >
   );
 }
 

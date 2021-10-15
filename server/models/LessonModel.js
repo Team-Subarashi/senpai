@@ -14,7 +14,7 @@ const lessonSchema = new Schema({
     required: true,
   },
   title: {
-    type: String
+    type: String,
   },
   kouhaiId: {
     type: mongoose.ObjectId,
@@ -26,6 +26,12 @@ const lessonSchema = new Schema({
     type: String,
   },
   vonageSessionId: {
+    type: String,
+  },
+  price: {
+    type: Number,
+  },
+  category: {
     type: String,
   },
 });

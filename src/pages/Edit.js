@@ -1,7 +1,14 @@
-import React, { useEffect } from "react";
+import React, {
+  //  useState,
+  useEffect,
+} from "react";
 import { Grid, Box, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { FormControl, InputLabel, Input } from "@mui/material";
+import {
+  FormControl,
+  //  InputLabel,
+  Input,
+} from "@mui/material";
 
 import axios from "axios";
 
@@ -10,90 +17,102 @@ import { userState } from "../atoms";
 
 export default function Edit() {
   const user = useRecoilValue(userState);
-
-  useEffect(() => {
-    console.log(user);
-  }, []);
+  // const [linkedIn, setLinkedIn] = useState("LinkedIn");
+  // const [twitter, setTwitter] = useState("Twitter");
+  // const [facebook, setFacebook] = useState("Facebook");
+  // const [website, setWebsite] = useState("Personal Website");
 
   useEffect(() => {
     if (user.linkedIn) {
+      // setLinkedIn(user.linkedIn);
       document.getElementById("linkedin").value = user.linkedIn;
-      document.getElementById("twitter").value = user.twitter;
-      document.getElementById("facebook").value = user.facebook;
-      document.getElementById("website").value = user.website;
+    } else {
+      return;
     }
-  }, []);
+    if (user.twitter) {
+      // setTwitter(user.twitter);
+      document.getElementById("twitter").value = user.twitter;
+    } else {
+      return;
+    }
+    if (user.facebook) {
+      // setFacebook(user.facebook);
+      document.getElementById("facebook").value = user.facebook;
+    } else {
+      return;
+    }
+    if (user.website) {
+      // setWebsite(user.website);
+      document.getElementById("website").value = user.website;
+    } else {
+      return;
+    }
+  }, [user]);
 
   return (
-    <Grid container style={{ fontFamily: "Nunito" }}>
-      <Grid
-        item
-        xs={12}
-        style={{
-          marginLeft: "40%",
-          marginRight: "40%",
-          marginTop: "5vh",
-          marginBottom: "2vh",
-          height: "5vh",
-          borderRadius: "4px",
-          backgroundColor: "#673AB7",
-        }}
-      >
-        <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}>
-          Edit Profile
-        </h1>
-      </Grid>
-      <Grid
-        container
-        alignItems="center"
-        style={{
-          backgroundColor: "#424242",
-          borderRadius: "4px",
-          padding: "0.5%",
-          marginLeft: "25%",
-          marginRight: "25%",
-        }}
-      >
+    <>
+      <Grid container style={{ fontFamily: "Nunito" }}>
         <Grid
           item
           xs={12}
           style={{
             marginLeft: "40%",
             marginRight: "40%",
+            marginTop: "5vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
             backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
-            Socials
-          </h2>
+          <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}>
+          Edit Profile
+          </h1>
         </Grid>
         <Grid container direction="column">
           <Box>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>Twitter</InputLabel>
-                <Input id="twitter" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{twitter}</InputLabel> */}
+                <Input
+                  id="twitter"
+                  placeholder="Twitter"
+                  style={{ color: "#fff" }}
+                  // value={twitter}
+                />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>LinkedIn</InputLabel>
-                <Input id="linkedin" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{linkedIn}</InputLabel> */}
+                <Input
+                  id="linkedin"
+                  placeholder="LinkedIn"
+                  style={{ color: "#fff" }}
+                  // value={linkedIn}
+                />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>Facebook</InputLabel>
-                <Input id="facebook" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{facebook}</InputLabel> */}
+                <Input
+                  id="facebook"
+                  placeholder="Facebook"
+                  style={{ color: "#fff" }}
+                  // value={facebook}
+                />
               </FormControl>
             </Grid>
             <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
-                <InputLabel style={{ color: "#fff" }}>Website</InputLabel>
-                <Input id="website" style={{ color: "#fff" }} />
+                {/* <InputLabel style={{ color: "#fff" }}>{website}</InputLabel> */}
+                <Input
+                  id="website"
+                  placeholder="Personal Website"
+                  style={{ color: "#fff" }}
+                  // value={website}
+                />
               </FormControl>
             </Grid>
             {/* <Grid item style={{ marginBottom: "1vh" }}>
@@ -288,6 +307,7 @@ export default function Edit() {
             <Button
               onClick={() => {}}
               style={{
+                marginTop: "1vh",
                 height: "4vh",
                 width: "7vw",
                 backgroundColor: "#673AB7",
@@ -298,6 +318,6 @@ export default function Edit() {
           </Link>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }
