@@ -133,12 +133,9 @@ export default function SenpaiList() {
             }}
           >
             <div>
-              {senpai.category.map((skill, index) => {
-                return (
-                  <div key={skill}>
-                    {skill} - ￥{senpai.rates[index]}/hour
-                  </div>
-                );
+              Hourly Rate: ¥{senpai.rates[0]}
+              {senpai.category.map((skill) => {
+                return <div key={skill}>{skill}</div>;
               })}
             </div>
             {/* {senpai.skillOneRate}

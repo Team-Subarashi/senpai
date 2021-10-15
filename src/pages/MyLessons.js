@@ -14,7 +14,7 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import { FormControl, InputLabel } from "@mui/material";
+// import { FormControl, InputLabel } from "@mui/material";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { lessonState, userState, selectedDate } from "../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -22,8 +22,8 @@ import { useHistory } from "react-router";
 import BasicDateTimePicker from "../components/DateTimePicker";
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+// import Select from "@material-ui/core/Select";
+// import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import PreviousLesson from "./PreviousLesson";
 
@@ -43,47 +43,45 @@ export default function MyLessons() {
   const date = useRecoilValue(selectedDate);
   const setLesson = useSetRecoilState(lessonState);
   const [schedulerData, setSchedulerData] = useState([]);
-  const [category, setCategory] = useState("");
-  const [prices, setPrices] = useState([]);
-  const [selectedPrice, setSelectedPrice] = useState({});
+  // const [category, setCategory] = useState("");
+  const [price, setPrice] = useState(0);
+  // const [selectedPrice, setSelectedPrice] = useState({});
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [previousLessons, setPreviousLessons] = useState([]);
   const [scheduleToggler, setScheduleToggler] = useState(false);
 
-  const changeCategory = (skill) => {
-    setCategory(skill);
-  };
+  // const changeCategory = (skill) => {
+  //   setCategory(skill);
+  // };
+
+  // useEffect(() => {
+  //   for (const product of products) {
+  //     if (product.name === `${category} Lesson with ${user.name}`) {
+  //       setSelectedProduct(product);
+  //     }
+  //   }
+  // }, [category]);
 
   useEffect(() => {
-    for (const product of products) {
-      if (product.name === `${category} Lesson with ${user.name}`) {
-        setSelectedProduct(product);
-      }
+    if (user.rates) {
+      setPrice(user.rates[0]);
     }
-  }, [category]);
-
-  useEffect(() => {
-    for (const price of prices) {
-      if (price.product === selectedProduct.id) {
-        setSelectedPrice(price);
-      }
-    }
-  }, [selectedProduct]);
-
-  let tempProducts = [];
-  useEffect(async () => {
-    await axios.get("/stripeLessons").then((res) => {
-      {
-        return res.data.data.map((product) => {
-          if (product.metadata.userId === user._id) {
-            tempProducts.push(product);
-          }
-          setProducts([...tempProducts]);
-        });
-      }
-    });
   }, [user]);
+
+  // let tempProducts = [];
+  // useEffect(async () => {
+  //   await axios.get("/stripeLessons").then((res) => {
+  //     {
+  //       return res.data.data.map((product) => {
+  //         if (product.metadata.userId === user._id) {
+  //           tempProducts.push(product);
+  //         }
+  //         setProducts([...tempProducts]);
+  //       });
+  //     }
+  //   });
+  // }, [user]);
 
   let tempPrices = [];
   useEffect(async () => {
@@ -93,7 +91,7 @@ export default function MyLessons() {
           if (price.metadata.userId === user._id) {
             tempPrices.push(price);
           }
-          setPrices([...tempPrices]);
+          setPrice([...tempPrices]);
         });
       }
     });
@@ -120,9 +118,9 @@ export default function MyLessons() {
         senpaiId: user._id,
         startDate: date._d,
         endDate: endtime,
-        category: category,
-        price: user.rates[user.category.indexOf(category)],
-        priceId: `${selectedPrice.id}`,
+        category: user.category,
+        price: price[0].unit_amount,
+        priceId: price[0].id,
       },
     });
     setScheduleToggler(!scheduleToggler);
@@ -226,6 +224,7 @@ export default function MyLessons() {
   }, [scheduleToggler]);
 
   const joinClickHandler = (appointmentData) => {
+    console.log(appointmentData.price, appointmentData.priceId);
     setLesson(appointmentData);
     history.push(`/room/${appointmentData._id}`);
   };
@@ -300,7 +299,7 @@ export default function MyLessons() {
                 }}
               >
                 <BasicDateTimePicker />
-                {user.category.length === 3 ? (
+                {/* {user.category.length === 3 ? (
                   <FormControl style={{ marginTop: "1vh" }}>
                     <InputLabel style={{ color: "#fff", marginTop: "-1vh" }}>
                       Category
@@ -371,7 +370,7 @@ export default function MyLessons() {
                     </Select>
                   </FormControl>
                 ) : null}
-
+ */}
                 <Button
                   color="primary"
                   variant="contained"

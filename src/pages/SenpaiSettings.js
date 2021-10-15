@@ -49,8 +49,8 @@ export default function SenpaiSettings() {
     if (user.category) {
       setSkillThree(user.category[2]);
     }
-    if (user.rate) {
-      setRate(user.rate);
+    if (user.rates) {
+      setRate(user.rates[0]);
     }
     if (user.isSenpai) {
       setSenpaiCheck(user.isSenpai);
@@ -225,7 +225,7 @@ export default function SenpaiSettings() {
                     ? `${document.getElementById("skill-three").innerText}`
                     : null,
                 ];
-                let rate = Number(document.getElementById("rate").value);
+                let rate = [Number(document.getElementById("rate").value)];
 
                 axios({
                   method: "patch",
@@ -233,7 +233,7 @@ export default function SenpaiSettings() {
                   data: {
                     isSenpai: senpaiCheck,
                     category: skills,
-                    rate: rate,
+                    rates: rate,
                   },
                 });
                 if (document.getElementById("skill-one").innerText !== "") {
@@ -241,9 +241,9 @@ export default function SenpaiSettings() {
                     method: "post",
                     url: `/create-lesson-and-price`,
                     data: {
-                      name: `${skillOne} Lesson with ${user.name}`,
-                      price: rate,
-                      priceId: `price_${user._id}:${skillOne}`,
+                      name: `Lesson with ${user.name}`,
+                      price: Number(rate),
+                      // priceId: `price_${user._id}`,
                       metadata: { userId: `${user._id}` },
                     },
                   });
@@ -274,6 +274,7 @@ export default function SenpaiSettings() {
             >
               Save
             </Button>
+            <Button onClick={() => console.log(rate)}>Price Test</Button>
           </Grid>
         </Grid>
       </Grid>

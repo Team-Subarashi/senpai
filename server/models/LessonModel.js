@@ -32,7 +32,7 @@ const lessonSchema = new Schema({
     type: Number,
   },
   category: {
-    type: String,
+    type: [String],
   },
 });
 
