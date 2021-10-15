@@ -26,7 +26,6 @@ export default function Workspace() {
       // justifyContent="space-around"
       style={{
         height: "87vh",
-        // backgroundColor: "red"
       }}
     >
       <Grid
@@ -36,7 +35,6 @@ export default function Workspace() {
           // marginLeft: "1vw",
           marginTop: "5vh",
           marginBottom: "5vh",
-          // backgroundColor: "lightblue",
         }}
       >
         <React.Suspense fallback={<div>Loading...</div>}>
@@ -50,7 +48,6 @@ export default function Workspace() {
           // marginLeft: "1vw",
           marginTop: "5vh",
           marginBottom: "5vh",
-          // backgroundColor: "lightpink",
         }}
       >
         <CodeView />

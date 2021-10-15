@@ -86,15 +86,16 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
+            marginTop: "5vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
             backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
-            Socials
-          </h2>
+          <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}>
+            Edit Profile
+          </h1>
         </Grid>
         <Grid container direction="column">
           <Box>

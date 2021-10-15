@@ -26,6 +26,31 @@ import moment from "moment";
 // import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import PreviousLesson from "./PreviousLesson";
+import "../App.css";
+import Container from "@material-ui/core/Container";
+
+const TimeTableCell = (
+  props // individual cell
+) => (
+  <WeekView.TimeTableCell
+    {...props}
+    style={{ textAlign: "center", fontWeight: "bold", height: "50px" }}
+  /> // the boxes in the middle of the scheduler
+);
+const TimeScaleLabel = (props) => {
+  return (
+    <WeekView.TimeScaleLabel
+      {...props}
+      style={{
+        textAlign: "center",
+        fontWeight: "bold",
+        height: "50px",
+        fontSize: "1.2rem",
+      }}
+    />
+  ); // the div that wraps the span for the time labels
+};
+//need to find a way to target
 
 const styles = (theme) => ({
   textCenter: {
@@ -242,17 +267,19 @@ export default function MyLessons() {
 
   if (user.isSenpai === true) {
     return (
-      <>
+      <Container style={{ padding: "3vw" }}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
             <Grid item xs={9}>
-              <Paper>
+              <Paper elevation={24}>
                 <Scheduler data={schedulerData}>
                   <ViewState defaultCurrentDate={Date.now()} />
                   <WeekView
-                    startDayHour={9}
+                    startDayHour={8}
                     endDayHour={24}
-                    cellDuration={30}
+                    cellDuration={60}
+                    timeTableCellComponent={TimeTableCell}
+                    timeScaleLabelComponent={TimeScaleLabel}
                   />
                   <Appointments />
                   <AppointmentTooltip contentComponent={Content} />
@@ -274,6 +301,9 @@ export default function MyLessons() {
                   marginTop: "2vh",
                   marginLeft: "3vw",
                   marginRight: "3vw",
+                  backgroundColor: "#424242",
+                  padding: "2vh",
+                  borderRadius: "2px",
                 }}
               >
                 <BasicDateTimePicker />
@@ -301,17 +331,23 @@ export default function MyLessons() {
             </Grid>
           </Grid>
         </MuiPickersUtilsProvider>
-      </>
+      </Container>
     );
   } else {
     return (
-      <>
+      <Container>
         <Grid container>
           <Grid item xs={12} style={{ backgroundColor: "blue" }}>
             <Paper>
               <Scheduler data={schedulerData}>
                 <ViewState defaultCurrentDate={Date.now()} />
-                <WeekView startDayHour={9} endDayHour={24} cellDuration={60} />
+                <WeekView
+                  startDayHour={9}
+                  endDayHour={24}
+                  cellDuration={60}
+                  timeTableCellComponent={TimeTableCell}
+                  timeScaleLabelComponent={TimeScaleLabel}
+                />
                 <Appointments />
                 <AppointmentTooltip contentComponent={Content} />
                 <Resources data={resources} mainResourceName={"userIsSenpai"} />
@@ -334,7 +370,7 @@ export default function MyLessons() {
             </Paper>
           </Grid>
         </Grid>
-      </>
+      </Container>
     );
   }
 }
