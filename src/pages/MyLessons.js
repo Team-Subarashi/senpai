@@ -43,45 +43,17 @@ export default function MyLessons() {
   const date = useRecoilValue(selectedDate);
   const setLesson = useSetRecoilState(lessonState);
   const [schedulerData, setSchedulerData] = useState([]);
-  // const [category, setCategory] = useState("");
   const [price, setPrice] = useState(0);
-  // const [selectedPrice, setSelectedPrice] = useState({});
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [previousLessons, setPreviousLessons] = useState([]);
   const [scheduleToggler, setScheduleToggler] = useState(false);
-
-  // const changeCategory = (skill) => {
-  //   setCategory(skill);
-  // };
-
-  // useEffect(() => {
-  //   for (const product of products) {
-  //     if (product.name === `${category} Lesson with ${user.name}`) {
-  //       setSelectedProduct(product);
-  //     }
-  //   }
-  // }, [category]);
 
   useEffect(() => {
     if (user.rates) {
       setPrice(user.rates[0]);
     }
   }, [user]);
-
-  // let tempProducts = [];
-  // useEffect(async () => {
-  //   await axios.get("/stripeLessons").then((res) => {
-  //     {
-  //       return res.data.data.map((product) => {
-  //         if (product.metadata.userId === user._id) {
-  //           tempProducts.push(product);
-  //         }
-  //         setProducts([...tempProducts]);
-  //       });
-  //     }
-  //   });
-  // }, [user]);
 
   let tempPrices = [];
   useEffect(async () => {
@@ -115,6 +87,7 @@ export default function MyLessons() {
       method: "post",
       url: "/lessons",
       data: {
+        selectedCategory: "",
         senpaiId: user._id,
         startDate: date._d,
         endDate: endtime,
@@ -197,7 +170,11 @@ export default function MyLessons() {
     if (response.data) {
       let temp = response.data.map((lesson) => {
         lesson.title =
-          lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
+          lesson.senpaiId === user._id
+            ? lesson.selectedCategory
+              ? `Senpai Lesson: ${lesson.selectedCategory}`
+              : `Senpai Lesson`
+            : `Kohai Lesson: ${lesson.selectedCategory}`;
         lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
         return lesson;
       });
@@ -241,10 +218,13 @@ export default function MyLessons() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => joinClickHandler(appointmentData)}
+              onClick={() => {
+                joinClickHandler(appointmentData);
+              }}
             >
               Join Room
             </Button>
+            <Button onClick={() => console.log(appointmentData)}>Test</Button>
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>
@@ -266,9 +246,7 @@ export default function MyLessons() {
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
             <Grid item xs={9}>
-              <Paper
-              // style={{ height: "80vh" }}
-              >
+              <Paper>
                 <Scheduler data={schedulerData}>
                   <ViewState defaultCurrentDate={Date.now()} />
                   <WeekView
@@ -299,78 +277,6 @@ export default function MyLessons() {
                 }}
               >
                 <BasicDateTimePicker />
-                {/* {user.category.length === 3 ? (
-                  <FormControl style={{ marginTop: "1vh" }}>
-                    <InputLabel style={{ color: "#fff", marginTop: "-1vh" }}>
-                      Category
-                    </InputLabel>
-                    <Select
-                      id="category-input"
-                      value={category}
-                      style={{
-                        color: "#fff",
-                        marginBottom: "1vh",
-                      }}
-                      onChange={(e) => {
-                        changeCategory(e.target.value);
-                      }}
-                    >
-                      <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
-                      </MenuItem>
-                      <MenuItem value={`${user.category[1]}`}>
-                        {`${user.category[1]} - ￥${user.rates[1]}/hr`}
-                      </MenuItem>
-                      <MenuItem value={`${user.category[2]}`}>
-                        {`${user.category[2]} - ￥${user.rates[2]}/hr`}
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : null}
-                {user.category.length === 2 ? (
-                  <FormControl style={{ marginTop: "1vh" }}>
-                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
-                    <Select
-                      id="category-input"
-                      value={category}
-                      style={{
-                        color: "#fff",
-                        marginBottom: "1vh",
-                      }}
-                      onChange={(e) => {
-                        changeCategory(e.target.value);
-                      }}
-                    >
-                      <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
-                      </MenuItem>
-                      <MenuItem value={`${user.category[1]}`}>
-                        {`${user.category[1]} - ￥${user.rates[1]}/hr`}
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : null}
-                {user.category.length === 1 ? (
-                  <FormControl style={{ marginTop: "1vh" }}>
-                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
-                    <Select
-                      id="category-input"
-                      value={category}
-                      style={{
-                        color: "#fff",
-                        marginBottom: "1vh",
-                      }}
-                      onChange={(e) => {
-                        changeCategory(e.target.value);
-                      }}
-                    >
-                      <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : null}
- */}
                 <Button
                   color="primary"
                   variant="contained"

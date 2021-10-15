@@ -34,6 +34,9 @@ const lessonSchema = new Schema({
   category: {
     type: [String],
   },
+  selectedCategory: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("lesson", lessonSchema);

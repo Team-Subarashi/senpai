@@ -45,7 +45,7 @@ export default function Info() {
             About Senpai
           </Grid>
           <Grid item style={{ paddingTop: "5vh", fontSize: "20px" }}>
-            Senpai was founded as a way to bring together programmers of all
+            Senpai was created as a way to bring together programmers of all
             levels, and to not only help budding programmers learn from their
             peers, but to help veterans spread their knowledge and experience,
             all on one platform.

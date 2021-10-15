@@ -11,12 +11,10 @@ export default function Search() {
         xs={12}
         style={{
           height: "5vh",
-          //   backgroundColor: "red"
         }}
       >
         <Filter />
       </Grid>
-      {/* <Grid item xs={2}></Grid> */}
 
       <Grid
         id="senpai-list"
@@ -24,15 +22,11 @@ export default function Search() {
         xs={10}
         style={{
           marginLeft: "8.5vw",
-          // height: "80vh",
           backgroundColor: "#616162",
-          //border: "1px solid white"
-          // overflow: "scroll",
         }}
       >
         <SenpaiList />
       </Grid>
-      {/* <Grid item xs={2}></Grid> */}
     </Grid>
   );
 }

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import { ViewState } from "@devexpress/dx-react-scheduler";
@@ -86,12 +87,29 @@ export default function Timetable({ senpaiLessons }) {
                   </Select>
                 </FormControl>
 
-                <Button variant="contained" color="primary" type="submit">
+                <Button
+                  onClick={async () => {
+                    await axios({
+                      method: "patch",
+                      url: `/lessons/${appointmentData._id}`,
+                      data: {
+                        selectedCategory:
+                          document.getElementById("category-input").innerText,
+                      },
+                    });
+                    console.log(
+                      document.getElementById("category-input").innerText
+                    );
+                  }}
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                >
                   Book Now
                 </Button>
-                {/* <Button onClick={() => console.log(appointmentData.category)}>
+                <Button onClick={() => console.log(appointmentData)}>
                   Category Test
-                </Button> */}
+                </Button>
               </form>
             ) : null}
           </Grid>

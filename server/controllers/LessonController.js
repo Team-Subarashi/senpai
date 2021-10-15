@@ -1,7 +1,7 @@
 const Lesson = require("../models/LessonModel");
 require("dotenv").config();
 
-let OpenTok = require('opentok');
+let OpenTok = require("opentok");
 let opentok = new OpenTok(process.env.API_KEY, process.env.SECRET);
 
 exports.listAllLessons = (req, res) => {
@@ -14,12 +14,15 @@ exports.listAllLessons = (req, res) => {
 };
 
 exports.getUserLessons = (req, res) => {
-  Lesson.find({ $or: [{ senpaiId: req.params.id }, { kouhaiId: req.params.id }]}, (err, lesson) => {
-    if (err) {
-      res.status(500).send(err);
+  Lesson.find(
+    { $or: [{ senpaiId: req.params.id }, { kouhaiId: req.params.id }] },
+    (err, lesson) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.status(200).json(lesson);
     }
-    res.status(200).json(lesson);
-  });
+  );
 };
 
 exports.getLessonsBySenpaiId = (req, res) => {
@@ -41,19 +44,18 @@ exports.getLessonsByKouhaiId = (req, res) => {
 };
 
 exports.createNewLesson = async (req, res) => {
-  await opentok.createSession(function(err, session) {
+  await opentok.createSession(function (err, session) {
     if (err) return console.log(err);
-    req.body.vonageSessionId = session.sessionId
+    req.body.vonageSessionId = session.sessionId;
     let newLesson = new Lesson(req.body);
     newLesson.save((err, lesson) => {
       if (err) {
-        console.log
+        console.log;
         res.status(500).send(err);
       }
       res.status(201).json(lesson);
     });
   });
-  
 };
 // updateTodo function — To update todo status by id
 exports.updateLesson = (req, res) => {
