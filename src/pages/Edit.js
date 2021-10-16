@@ -44,6 +44,9 @@ export default function Edit() {
     if (user.website) {
       // setWebsite(user.website);
       document.getElementById("website").value = user.website;
+    }
+    if (user.avatar) {
+      document.getElementById("avatar").value = user.avatar;
     } else {
       return;
     }
@@ -143,6 +146,17 @@ export default function Edit() {
                 />
               </FormControl>
             </Grid>
+            <Grid item style={{ marginBottom: "1vh" }}>
+              <FormControl>
+                {/* <InputLabel style={{ color: "#fff" }}>{website}</InputLabel> */}
+                <Input
+                  id="avatar"
+                  placeholder="Avatar URL"
+                  style={{ color: "#fff" }}
+                  // value={website}
+                />
+              </FormControl>
+            </Grid>
             {/* <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
               <InputLabel style={{ color: "#fff" }}>Instagram</InputLabel>
@@ -158,6 +172,7 @@ export default function Edit() {
                   linkedin: document.getElementById("linkedin").value,
                   facebook: document.getElementById("facebook").value,
                   website: document.getElementById("website").value,
+                  avatar: document.getElementById("avatar").value,
                   // instagram: document.getElementById("instagram").value,
                 };
                 axios({
@@ -168,6 +183,7 @@ export default function Edit() {
                     linkedIn: body.linkedin,
                     twitter: body.twitter,
                     website: body.website,
+                    avatar: body.avatar,
                     // instagram: body.instagram,
                   },
                 });

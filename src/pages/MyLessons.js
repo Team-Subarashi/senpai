@@ -14,7 +14,6 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-// import { FormControl, InputLabel } from "@mui/material";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { lessonState, userState, selectedDate } from "../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -22,8 +21,6 @@ import { useHistory } from "react-router";
 import BasicDateTimePicker from "../components/DateTimePicker";
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
-// import Select from "@material-ui/core/Select";
-// import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import PreviousLesson from "./PreviousLesson";
 import "../App.css";
@@ -69,8 +66,6 @@ export default function MyLessons() {
   const setLesson = useSetRecoilState(lessonState);
   const [schedulerData, setSchedulerData] = useState([]);
   const [price, setPrice] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState({});
   const [previousLessons, setPreviousLessons] = useState([]);
   const [scheduleToggler, setScheduleToggler] = useState(false);
 
