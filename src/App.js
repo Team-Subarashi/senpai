@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js";
+import Footer from "./components/Footer.js";
 import Checkout from "./components/Checkout";
 import Splash from "./pages/Splash";
 import Search from "./pages/Search";
@@ -11,6 +12,7 @@ import Kohai from "./pages/Kohai";
 import MyLessons from "./pages/MyLessons";
 import Edit from "./pages/Edit";
 import SenpaiSettings from "./pages/SenpaiSettings";
+import Info from "./pages/Info";
 
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -23,7 +25,7 @@ import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
-import Messages from './components/message/Messages';
+import Messages from "./components/message/Messages";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
@@ -67,10 +69,12 @@ function App() {
             <Route path="/messages" component={Messages} />
             <Route path="/edit" component={Edit} />
             <Route path="/senpai-settings" component={SenpaiSettings} />
+            <Route path="/info" component={Info} />
           </Switch>
+          <Footer />
         </Router>
-      </div >
-    </ThemeProvider >
+      </div>
+    </ThemeProvider>
   );
 }
 
