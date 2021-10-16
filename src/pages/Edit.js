@@ -189,7 +189,7 @@ export default function Edit() {
                 });
 
                 let successMessage = document.createElement("div");
-                successMessage.innerText = "Socials updated!";
+                successMessage.innerText = "Profile updated!";
                 successMessage.style.color = "white";
                 successMessage.style.position = "absolute";
                 successMessage.style.marginLeft = "12.5vw";
@@ -212,7 +212,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Save Socials
+              Update Profile
             </Button>
           </Grid>
         </Grid>

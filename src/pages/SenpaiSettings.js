@@ -58,7 +58,10 @@ export default function SenpaiSettings() {
   }, [user]);
 
   return (
-    <Grid container style={{ fontFamily: "Nunito" }}>
+    <Grid
+      container
+      style={{ fontFamily: "Nunito", marginBottom: "17.75vh", height: "70vh" }}
+    >
       <Grid
         item
         xs={12}
