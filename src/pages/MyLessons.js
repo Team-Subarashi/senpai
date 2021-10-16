@@ -14,7 +14,6 @@ import axios from "axios";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
-import { FormControl, InputLabel } from "@mui/material";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { lessonState, userState, selectedDate } from "../atoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -22,22 +21,33 @@ import { useHistory } from "react-router";
 import BasicDateTimePicker from "../components/DateTimePicker";
 import MomentUtils from "@date-io/moment";
 import moment from "moment";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import _ from "lodash";
 import PreviousLesson from "./PreviousLesson";
 import "../App.css";
 import Container from "@material-ui/core/Container";
 
-
-const TimeTableCell = props => ( // individual cell
-  <WeekView.TimeTableCell {...props} style={{ textAlign: 'center', fontWeight: 'bold', height: "50px" }} /> // the boxes in the middle of the scheduler
+const TimeTableCell = (
+  props // individual cell
+) => (
+  <WeekView.TimeTableCell
+    {...props}
+    style={{ textAlign: "center", fontWeight: "bold", height: "50px" }}
+  /> // the boxes in the middle of the scheduler
 );
-const TimeScaleLabel = props => {
-  return <WeekView.TimeScaleLabel {...props} style={{ textAlign: 'center', fontWeight: 'bold', height: "50px", fontSize: "1.2rem" }} />; // the div that wraps the span for the time labels
+const TimeScaleLabel = (props) => {
+  return (
+    <WeekView.TimeScaleLabel
+      {...props}
+      style={{
+        textAlign: "center",
+        fontWeight: "bold",
+        height: "50px",
+        fontSize: "1.2rem",
+      }}
+    />
+  ); // the div that wraps the span for the time labels
 };
 //need to find a way to target
-
 
 const styles = (theme) => ({
   textCenter: {
@@ -55,46 +65,14 @@ export default function MyLessons() {
   const date = useRecoilValue(selectedDate);
   const setLesson = useSetRecoilState(lessonState);
   const [schedulerData, setSchedulerData] = useState([]);
-  const [category, setCategory] = useState("");
-  const [prices, setPrices] = useState([]);
-  const [selectedPrice, setSelectedPrice] = useState({});
-  const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState({});
+  const [price, setPrice] = useState(0);
   const [previousLessons, setPreviousLessons] = useState([]);
   const [scheduleToggler, setScheduleToggler] = useState(false);
 
-  const changeCategory = (skill) => {
-    setCategory(skill);
-  };
-
   useEffect(() => {
-    for (const product of products) {
-      if (product.name === `${category} Lesson with ${user.name}`) {
-        setSelectedProduct(product);
-      }
+    if (user.rates) {
+      setPrice(user.rates[0]);
     }
-  }, [category]);
-
-  useEffect(() => {
-    for (const price of prices) {
-      if (price.product === selectedProduct.id) {
-        setSelectedPrice(price);
-      }
-    }
-  }, [selectedProduct]);
-
-  let tempProducts = [];
-  useEffect(async () => {
-    await axios.get("/stripeLessons").then((res) => {
-      {
-        return res.data.data.map((product) => {
-          if (product.metadata.userId === user._id) {
-            tempProducts.push(product);
-          }
-          setProducts([...tempProducts]);
-        });
-      }
-    });
   }, [user]);
 
   let tempPrices = [];
@@ -105,7 +83,7 @@ export default function MyLessons() {
           if (price.metadata.userId === user._id) {
             tempPrices.push(price);
           }
-          setPrices([...tempPrices]);
+          setPrice([...tempPrices]);
         });
       }
     });
@@ -129,12 +107,13 @@ export default function MyLessons() {
       method: "post",
       url: "/lessons",
       data: {
+        selectedCategory: "",
         senpaiId: user._id,
         startDate: date._d,
         endDate: endtime,
-        category: category,
-        price: user.rates[user.category.indexOf(category)],
-        priceId: `${selectedPrice.id}`,
+        category: user.category,
+        price: price[0].unit_amount,
+        priceId: price[0].id,
       },
     });
     setScheduleToggler(!scheduleToggler);
@@ -211,7 +190,11 @@ export default function MyLessons() {
     if (response.data) {
       let temp = response.data.map((lesson) => {
         lesson.title =
-          lesson.senpaiId === user._id ? "Senpai Lesson" : "Kohai Lesson";
+          lesson.senpaiId === user._id
+            ? lesson.selectedCategory
+              ? `Senpai Lesson: ${lesson.selectedCategory}`
+              : `Senpai Lesson`
+            : `Kohai Lesson: ${lesson.selectedCategory}`;
         lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
         return lesson;
       });
@@ -238,6 +221,7 @@ export default function MyLessons() {
   }, [scheduleToggler]);
 
   const joinClickHandler = (appointmentData) => {
+    console.log(appointmentData.price, appointmentData.priceId);
     setLesson(appointmentData);
     history.push(`/room/${appointmentData._id}`);
   };
@@ -254,10 +238,13 @@ export default function MyLessons() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => joinClickHandler(appointmentData)}
+              onClick={() => {
+                joinClickHandler(appointmentData);
+              }}
             >
               Join Room
             </Button>
+            <Button onClick={() => console.log(appointmentData)}>Test</Button>
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>
@@ -275,12 +262,11 @@ export default function MyLessons() {
 
   if (user.isSenpai === true) {
     return (
-      <Container style={{padding: "3vw"}}>
+      <Container style={{ padding: "3vw" }}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
             <Grid item xs={9}>
-              <Paper elevation={24}
-              >
+              <Paper elevation={24}>
                 <Scheduler data={schedulerData}>
                   <ViewState defaultCurrentDate={Date.now()} />
                   <WeekView
@@ -312,82 +298,10 @@ export default function MyLessons() {
                   marginRight: "3vw",
                   backgroundColor: "#424242",
                   padding: "2vh",
-                  borderRadius: "2px"
+                  borderRadius: "2px",
                 }}
               >
                 <BasicDateTimePicker />
-                {user.category.length === 3 ? (
-                  <FormControl style={{ marginTop: "1vh" }}>
-                    <InputLabel style={{ color: "#fff", marginTop: "-1vh" }}>
-                      Category
-                    </InputLabel>
-                    <Select
-                      id="category-input"
-                      value={category}
-                      style={{
-                        color: "#fff",
-                        marginBottom: "1vh",
-                      }}
-                      onChange={(e) => {
-                        changeCategory(e.target.value);
-                      }}
-                    >
-                      <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
-                      </MenuItem>
-                      <MenuItem value={`${user.category[1]}`}>
-                        {`${user.category[1]} - ￥${user.rates[1]}/hr`}
-                      </MenuItem>
-                      <MenuItem value={`${user.category[2]}`}>
-                        {`${user.category[2]} - ￥${user.rates[2]}/hr`}
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : null}
-                {user.category.length === 2 ? (
-                  <FormControl style={{ marginTop: "1vh" }}>
-                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
-                    <Select
-                      id="category-input"
-                      value={category}
-                      style={{
-                        color: "#fff",
-                        marginBottom: "1vh",
-                      }}
-                      onChange={(e) => {
-                        changeCategory(e.target.value);
-                      }}
-                    >
-                      <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
-                      </MenuItem>
-                      <MenuItem value={`${user.category[1]}`}>
-                        {`${user.category[1]} - ￥${user.rates[1]}/hr`}
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : null}
-                {user.category.length === 1 ? (
-                  <FormControl style={{ marginTop: "1vh" }}>
-                    <InputLabel style={{ color: "#fff" }}>Category</InputLabel>
-                    <Select
-                      id="category-input"
-                      value={category}
-                      style={{
-                        color: "#fff",
-                        marginBottom: "1vh",
-                      }}
-                      onChange={(e) => {
-                        changeCategory(e.target.value);
-                      }}
-                    >
-                      <MenuItem value={`${user.category[0]}`}>
-                        {`${user.category[0]} - ￥${user.rates[0]}/hr`}
-                      </MenuItem>
-                    </Select>
-                  </FormControl>
-                ) : null}
-
                 <Button
                   color="primary"
                   variant="contained"
@@ -427,7 +341,8 @@ export default function MyLessons() {
                   endDayHour={24}
                   cellDuration={60}
                   timeTableCellComponent={TimeTableCell}
-                  timeScaleLabelComponent={TimeScaleLabel} />
+                  timeScaleLabelComponent={TimeScaleLabel}
+                />
                 <Appointments />
                 <AppointmentTooltip contentComponent={Content} />
                 <Resources data={resources} mainResourceName={"userIsSenpai"} />

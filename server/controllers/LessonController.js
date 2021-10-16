@@ -25,12 +25,15 @@ exports.listAllLessons = (req, res) => {
 };
 
 exports.getUserLessons = (req, res) => {
-  Lesson.find({ $or: [{ senpaiId: req.params.id }, { kouhaiId: req.params.id }]}, (err, lesson) => {
-    if (err) {
-      res.status(500).send(err);
+  Lesson.find(
+    { $or: [{ senpaiId: req.params.id }, { kouhaiId: req.params.id }] },
+    (err, lesson) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      res.status(200).json(lesson);
     }
-    res.status(200).json(lesson);
-  });
+  );
 };
 
 exports.getLessonsBySenpaiId = (req, res) => {
@@ -52,7 +55,7 @@ exports.getLessonsByKouhaiId = (req, res) => {
 };
 
 exports.createNewLesson = async (req, res) => {
-  await opentok.createSession(function(err, session) {
+  await opentok.createSession(function (err, session) {
     if (err) return console.log(err);
     req.body.vonageSessionId = session.sessionId;
     let newLesson = new Lesson(req.body);
@@ -63,8 +66,8 @@ exports.createNewLesson = async (req, res) => {
       res.status(201).json(lesson);
     });
   });
-
 };
+
 // updateTodo function — To update todo status by id
 exports.updateLesson = (req, res) => {
   Lesson.findOneAndUpdate(

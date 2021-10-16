@@ -14,14 +14,15 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 
-
 const useStyles = makeStyles(() => ({
   main: {
-    height: "100vh",
-    padding: "50px",
+    height: "90vh",
+    paddingTop: "50px",
+    paddingLeft: "50px",
+    paddingRight: "50px",
   },
   left: {
-    height: "85vh",
+    height: "80vh",
     backgroundColor: "#424242",
     borderRadius: "4px",
     padding: "30px",
@@ -38,9 +39,10 @@ const useStyles = makeStyles(() => ({
     height: 150,
   },
   right: {
+    height: "80vh",
     backgroundColor: "#424242",
     borderRadius: "4px",
-    padding: "30px",
+    padding: "10px",
     margin: "1rem",
   },
   preview: {
@@ -71,7 +73,9 @@ const Kohai = () => {
               }}
             >
               <Link to={{ pathname: `/edit/${user._id}` }}>
-                <Button style={{ backgroundColor: "#673AB7" }}>Edit Profile</Button>
+                <Button style={{ backgroundColor: "#673AB7" }}>
+                  Edit Profile
+                </Button>
               </Link>
             </Grid>
             <Grid
@@ -99,7 +103,7 @@ const Kohai = () => {
                 <Grid className={classes.details}>
                   {user.twitter || user.linkedIn || user.facebook ? (
                     <Typography variant="h5" component="div">
-                Socials:
+                      Socials:
                       <div>
                         {user.twitter ? (
                           <a
@@ -171,21 +175,25 @@ const Kohai = () => {
                     </div>
                   ) : null}
                   {user.location ? (
-                    <Typography variant="h5">Location: {user.location}</Typography>
+                    <Typography variant="h5">
+                      Location: {user.location}
+                    </Typography>
                   ) : null}
                 </Grid>
               </Grid>
               <Grid container className={classes.right} xs={8}>
-                <Grid item >
+                <Grid item>
                   <Typography variant="h3">About me</Typography>
-                  <Typography variant="h6" component="p">{user.bio}</Typography>
+                  <Typography variant="h6" component="p">
+                    {user.bio}
+                  </Typography>
                 </Grid>
                 <Grid
                   container
                   xs={12}
                   alignItems="center"
                   justifyContent="space-between"
-                  style={{margin: "2rem"}}
+                  style={{ margin: "2rem" }}
                 >
                   <Grid item className={classes.preview} xs={5}>
                     <img
