@@ -1,10 +1,10 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar.js";
 import Checkout from "./components/Checkout";
 import Splash from "./pages/Splash";
 import Search from "./pages/Search";
-import Workspace from "./pages/Workspace";
+import Workspace from "./components/CodeRoom/Workspace";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import SenpaiProfileView from "./pages/SenpaiProfileView";
 import Kohai from "./pages/Kohai";
@@ -22,11 +22,10 @@ import { useRecoilState } from "recoil";
 import { userState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
-import Messages from './components/message/Messages';
+import Messages from "./components/message/Messages";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
- 
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -50,7 +49,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App" >
+      <div className="App">
         <Router hashType="slash">
           <CssBaseline />
           <NavBar user={user} />
@@ -70,8 +69,8 @@ function App() {
             <Route path="/senpai-settings" component={SenpaiSettings} />
           </Switch>
         </Router>
-      </div >
-    </ThemeProvider >
+      </div>
+    </ThemeProvider>
   );
 }
 

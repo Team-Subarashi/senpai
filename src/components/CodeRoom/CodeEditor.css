@@ -1,6 +1,8 @@
 #editor-container {
-  width: 40vw;
+  /* width: 40vw;
   height: 70vh;
   margin: auto;
-  border-style: solid;
+  border-style: solid; */
+  box-shadow: rgb(50, 38, 77) 0px 20px 30px -10px;
+  
 }
