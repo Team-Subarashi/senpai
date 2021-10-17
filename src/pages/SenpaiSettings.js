@@ -20,6 +20,7 @@ export default function SenpaiSettings() {
   const [senpaiCheck, setSenpaiCheck] = useState(false);
   const [skillOne, setSkillOne] = useState("");
   const [rate, setRate] = useState(0);
+  const [video, setVideo] = useState("");
   const [skillTwo, setSkillTwo] = useState("");
   const [skillThree, setSkillThree] = useState("");
 
@@ -28,6 +29,10 @@ export default function SenpaiSettings() {
   };
   const changeRate = (rate) => {
     setRate(rate);
+  };
+
+  const changeVideo = (video) => {
+    setVideo(video);
   };
 
   const changeSkillTwo = (skill) => {
@@ -42,7 +47,6 @@ export default function SenpaiSettings() {
     if (user.category) {
       setSkillOne(user.category[0]);
     }
-
     if (user.category) {
       setSkillTwo(user.category[1]);
     }
@@ -54,6 +58,9 @@ export default function SenpaiSettings() {
     }
     if (user.isSenpai) {
       setSenpaiCheck(user.isSenpai);
+    }
+    if (user.introVideo) {
+      setVideo(user.introVideo);
     }
   }, [user]);
 
@@ -213,6 +220,19 @@ export default function SenpaiSettings() {
               }}
             />
           </FormControl>
+          <FormControl>
+            <InputLabel style={{ color: "#fff" }}>
+              Introduction Video
+            </InputLabel>
+            <Input
+              id="video"
+              style={{ color: "#fff", marginBottom: "2vh" }}
+              value={video}
+              onChange={(e) => {
+                changeVideo(e.target.value);
+              }}
+            />
+          </FormControl>
 
           <Grid item xs={3} style={{ marginLeft: "40vw" }}>
             <Button
@@ -229,6 +249,7 @@ export default function SenpaiSettings() {
                     : null,
                 ];
                 let rate = [Number(document.getElementById("rate").value)];
+                let video = document.getElementById("video").value;
 
                 axios({
                   method: "patch",
@@ -237,6 +258,7 @@ export default function SenpaiSettings() {
                     isSenpai: senpaiCheck,
                     category: skills,
                     rates: rate,
+                    introVideo: video,
                   },
                 });
                 if (document.getElementById("skill-one").innerText !== "") {
