@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import "./CodeView.css";
+import debounce from "lodash/debounce";
 const CodeView = () => {
   const html = useRecoilValue(loadedHTML);
   const js = useRecoilValue(loadedJS);
@@ -21,7 +22,8 @@ const CodeView = () => {
   };
 
   useEffect(() => {
-    setSrcDoc(createSrcDoc());
+    const debounceSrcDoc = debounce(setSrcDoc, 500);
+    debounceSrcDoc(createSrcDoc());
   }, [html, js, css]);
 
   return (
