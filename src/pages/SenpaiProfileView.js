@@ -109,7 +109,7 @@ export default function SenpaiProfileView({ match, location }) {
                 </Grid>
 
                 <Grid item className={classes.aboutMeItem}>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="secondary">
                     <Link
                       style={{ color: "white" }}
                       to={`/senpai/${match.params.id}/schedule`}
@@ -124,8 +124,8 @@ export default function SenpaiProfileView({ match, location }) {
                   senpai.linkedIn ||
                   senpai.facebook ||
                   senpai.instagram ? (
-                    <Typography variant="h5">Socials:</Typography>
-                  ) : null}
+                      <Typography variant="h5">Socials:</Typography>
+                    ) : null}
                   <div>
                     <Typography variant="h6">
                       {senpai.twitter ? (
