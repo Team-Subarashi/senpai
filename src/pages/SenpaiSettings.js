@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Grid, Box, Button } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 import {
   FormControl,
   InputLabel,
@@ -10,16 +11,40 @@ import {
   MenuItem,
 } from "@mui/material";
 
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
 import axios from "axios";
 
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 
+const useStyles = makeStyles(() => ({
+  container: {
+    backgroundColor: "#424242",
+    // margin: "1rem",
+  },
+  videoIframe: {
+    position: "absolute",
+    top: 0,
+    left: "30%",
+    width: "75%",
+    height: "100%",
+  },
+  videoDiv: {
+    position: "relative",
+    width: "75%",
+    height: "75%",
+    paddingBottom: "25vh",
+  },
+}));
+
 export default function SenpaiSettings() {
+  const classes = useStyles();
   const user = useRecoilValue(userState);
   const [senpaiCheck, setSenpaiCheck] = useState(false);
   const [skillOne, setSkillOne] = useState("");
   const [rate, setRate] = useState(0);
+  const [video, setVideo] = useState("");
   const [skillTwo, setSkillTwo] = useState("");
   const [skillThree, setSkillThree] = useState("");
 
@@ -28,6 +53,10 @@ export default function SenpaiSettings() {
   };
   const changeRate = (rate) => {
     setRate(rate);
+  };
+
+  const changeVideo = (video) => {
+    setVideo(video);
   };
 
   const changeSkillTwo = (skill) => {
@@ -42,7 +71,6 @@ export default function SenpaiSettings() {
     if (user.category) {
       setSkillOne(user.category[0]);
     }
-
     if (user.category) {
       setSkillTwo(user.category[1]);
     }
@@ -55,10 +83,19 @@ export default function SenpaiSettings() {
     if (user.isSenpai) {
       setSenpaiCheck(user.isSenpai);
     }
+    if (user.introVideo) {
+      setVideo(user.introVideo);
+    }
   }, [user]);
 
   return (
-    <Grid container style={{ fontFamily: "Nunito" }}>
+    <Box
+      style={{
+        width: "100%",
+        paddingLeft: "10%",
+        paddingRight: "10%",
+      }}
+    >
       <Grid
         item
         xs={12}
@@ -101,8 +138,7 @@ export default function SenpaiSettings() {
           backgroundColor: "#424242",
           borderRadius: "4px",
           padding: "0.5%",
-          marginLeft: "25%",
-          marginRight: "25%",
+          marginBottom: "2vh",
         }}
       >
         <Grid
@@ -211,7 +247,7 @@ export default function SenpaiSettings() {
             />
           </FormControl>
 
-          <Grid item xs={3} style={{ marginLeft: "40vw" }}>
+          <Grid item xs={3} style={{ marginLeft: "60vw" }}>
             <Button
               onClick={() => {
                 let skills = [
@@ -268,16 +304,114 @@ export default function SenpaiSettings() {
               }}
               style={{
                 height: "4vh",
-                width: "7vw",
+                width: "10vw",
                 backgroundColor: "#673AB7",
+                marginTop: "1vh",
               }}
             >
-              Save
+              Save Skills
             </Button>
-            <Button onClick={() => console.log(rate)}>Price Test</Button>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+      <Grid
+        container
+        alignItems="center"
+        style={{
+          backgroundColor: "#424242",
+          borderRadius: "4px",
+          padding: "1%",
+          height: "55vh",
+        }}
+      >
+        <Grid
+          item
+          xs={12}
+          style={{
+            marginLeft: "40%",
+            marginRight: "40%",
+            height: "5vh",
+            borderRadius: "4px",
+            backgroundColor: "#673AB7",
+          }}
+        >
+          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+            Video
+          </h2>
+        </Grid>
+
+        <FormControl style={{ width: "100%" }}>
+          <InputLabel style={{ color: "#fff" }}>Introduction Video</InputLabel>
+          <Input
+            id="video"
+            style={{ color: "#fff", marginBottom: "2vh" }}
+            value={video}
+            onChange={(e) => {
+              changeVideo(e.target.value);
+            }}
+          />
+        </FormControl>
+        <Container
+          fixed
+          className={classes.container}
+          style={{ padding: "1rem" }}
+        >
+          <div className={classes.videoDiv}>
+            {user.introVideo ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${
+                  user.introVideo.split("?v=")[1]
+                }`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className={classes.videoIframe}
+              ></iframe>
+            ) : null}
+          </div>
+        </Container>
+        <Grid item xs={3} style={{ marginLeft: "60vw" }}>
+          <Button
+            style={{
+              height: "4vh",
+              width: "10vw",
+              backgroundColor: "#673AB7",
+              marginTop: "1vh",
+            }}
+            onClick={() => {
+              let video = document.getElementById("video").value;
+
+              axios({
+                method: "patch",
+                url: `/api/v1/users/${user._id}`,
+                data: {
+                  introVideo: video,
+                },
+              });
+
+              let successMessage = document.createElement("div");
+              successMessage.innerText = "Settings updated!";
+              successMessage.style.color = "white";
+              successMessage.style.fontWeight = "bold";
+              successMessage.style.fontSize = "large";
+              successMessage.style.backgroundColor = "#4BB543";
+              successMessage.style.width = "33%";
+              successMessage.style.height = "5vh";
+              successMessage.style.marginLeft = "33%";
+              successMessage.style.paddingTop = "1vh";
+
+              document.getElementById("navbar").append(successMessage);
+
+              setTimeout(() => {
+                window.location.reload();
+              }, 750);
+            }}
+          >
+            Save Video
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Calendar from "./Calendar";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useRecoilValue } from "recoil";
@@ -18,6 +18,23 @@ const useStyles = makeStyles(() => ({
     border: "1px solid white",
     padding: "1rem",
   },
+  container: {
+    backgroundColor: "#424242",
+    // margin: "1rem",
+  },
+  videoIframe: {
+    position: "absolute",
+    top: 0,
+    left: "30%",
+    width: "75%",
+    height: "100%",
+  },
+  videoDiv: {
+    position: "relative",
+    width: "75%",
+    height: "75%",
+    paddingBottom: "25vh",
+  },
 }));
 
 export default function SenpaiList() {
@@ -25,6 +42,13 @@ export default function SenpaiList() {
   const [senpaiList, setSenpaiList] = useState([]);
   const category = useRecoilValue(categoryAtom);
 
+  useEffect(() => {
+    for (const senpai of senpaiList) {
+      if (senpai.video !== "") {
+        console.log(senpai);
+      }
+    }
+  }, [senpaiList]);
   // const { Tabs } = antd;
   const { TabPane } = Tabs;
 
@@ -51,6 +75,7 @@ export default function SenpaiList() {
               facebook: senpai.facebook,
               linkedIn: senpai.linkedIn,
               website: senpai.website,
+              video: senpai.introVideo,
             });
           } else if (senpai.category.includes(category)) {
             temp.push({
@@ -66,6 +91,7 @@ export default function SenpaiList() {
               facebook: senpai.facebook,
               linkedIn: senpai.linkedIn,
               website: senpai.website,
+              video: senpai.introVideo,
             });
           }
         }
@@ -118,7 +144,7 @@ export default function SenpaiList() {
           </Grid>
           <Grid
             container
-            alignItems="center"
+            // alignItems="center"
             justifyContent="center"
             item
             xs={4}
@@ -129,12 +155,20 @@ export default function SenpaiList() {
               border: "1px solid white",
             }}
           >
-            <div>
-              {`Hourly Rate: ¥${senpai.rates[0]}`}
-              {senpai.category.map((skill) => {
-                return <div key={skill}>{skill}</div>;
-              })}
-            </div>
+            <Grid item xs={12}>
+              <div>
+                <h2
+                  style={{
+                    backgroundColor: "white",
+                    // width: "25vw",
+                    marginTop: "2vh",
+                  }}
+                >{`Hourly Rate: ¥${senpai.rates[0]}`}</h2>
+                {senpai.category.map((skill) => {
+                  return <div key={skill}>{skill}</div>;
+                })}
+              </div>
+            </Grid>
           </Grid>
           <Grid
             item
@@ -148,16 +182,39 @@ export default function SenpaiList() {
               <TabPane tab="Bio" key="1">
                 {senpai.bio}
               </TabPane>
-              <TabPane tab="Calendar" key="2">
-                <Calendar />
+              <TabPane tab="Intro" key="2">
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{ padding: "1rem" }}
+                >
+                  <div className={classes.videoDiv}>
+                    {senpai.video !== "" ? (
+                      // <p>{senpai.video.split("?v=")[1]}</p>
+
+                      <iframe
+                        src={`https://www.youtube.com/embed/
+                    ${senpai.video.split("?v=")[1]}
+                    `}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className={classes.videoIframe}
+                      ></iframe>
+                    ) : (
+                      <p>This user does not have a video uploaded</p>
+                    )}
+                  </div>
+                </Container>
               </TabPane>
-              <TabPane tab="Sample" key="3">
+              {/* <TabPane tab="Sample" key="3">
                 <img
                   height="50px"
                   width="50px"
                   src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
                 />
-              </TabPane>
+              </TabPane> */}
             </Tabs>
           </Grid>
         </Grid>

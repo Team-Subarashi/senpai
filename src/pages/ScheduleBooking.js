@@ -5,7 +5,6 @@ import MomentUtils from "@date-io/moment";
 import Timetable from "../components/Scheduler";
 import Grid from "@material-ui/core/Grid";
 
-
 export default function ScheduleBooking({ match }) {
   const [state, setState] = useState([]);
 
@@ -38,6 +37,7 @@ export default function ScheduleBooking({ match }) {
             style={{
               marginLeft: "2vw",
               marginRight: "2vw",
+              marginBottom: "36.45vh",
             }}
           >
             <Timetable senpaiLessons={state} match={match} />
