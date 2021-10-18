@@ -3,6 +3,7 @@ module.exports = function (app) {
   const users = require("./controllers/userController");
   const files = require("./controllers/fileController");
   const lessons = require("./controllers/LessonController");
+  const repositories = require("./controllers/RepositoryController");
   const stripe = require("./controllers/StripeController");
   // const messages = require("./controllers/MessageController");
   const vonage = require("./controllers/vonageController");
@@ -28,6 +29,17 @@ module.exports = function (app) {
     .route("/lessons/:id")
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
+
+  app.route("/api/v1/user/:id/repositories").get(repositories.getUserRepositories);
+
+  app
+    .route("/api/v1/repositories")
+    .get(repositories.getAllRepositories)
+    .post(repositories.createNewRepository);
+  app
+    .route("/api/v1/repositories/:id")
+    .patch(repositories.updateRepository)
+    .delete(repositories.deleteRepository);
 
   // app.route("/messages").get(messages.getMessages);
 
