@@ -7,7 +7,7 @@ const theme = createTheme({
       main: '#6737b8',
     },
     background: {
-      default: '#616161'
+      default: '#131417'
     },
     type: 'dark',
   },
@@ -41,7 +41,6 @@ const theme = createTheme({
       fontSize: "1.8rem",
       color: "white",
       textAlign: "left",
-
     },
     h4: {
       fontFamily: "Nunito",

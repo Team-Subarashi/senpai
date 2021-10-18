@@ -44,9 +44,22 @@ const userSchema = new Schema({
   facebook: {
     type: String,
   },
+  github: {
+    type: String,
+  },
+  instagram: {
+    type: String,
+  },
   website: {
     type: String,
   },
+  interests: {
+    type: String,
+  },
+  repositories: {
+    type: [mongoose.ObjectId]
+  }
+
 });
 
 module.exports = mongoose.model("user", userSchema);
