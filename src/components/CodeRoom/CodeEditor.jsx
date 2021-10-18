@@ -6,13 +6,14 @@ import "firebase/compat/database";
 import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
 import { useRecoilState } from "recoil";
+// import { userState } from "../../atoms";
 // import axios from "axios";
 import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-function CodeEditor({ activeFiles }) {
+function CodeEditor({ activeFiles, user }) {
   const jsEditorRef = useRef(null);
   const cssEditorRef = useRef(null);
   const htmlEditorRef = useRef(null);
@@ -20,12 +21,13 @@ function CodeEditor({ activeFiles }) {
   const [fileName, setFileName] = useState("script.js");
 
   const lessonId = window.location.href.split("room/")[1];
-  // const user = useRecoilValue(userState);
+
   const [html, setHTML] = useRecoilState(loadedHTML);
   const [css, setCSS] = useRecoilState(loadedCSS);
   const [js, setJS] = useRecoilState(loadedJS);
 
-  useEffect(() => {
+
+  useEffect(async () => {
     setHTML(activeFiles.html);
     setJS(activeFiles.js);
     setCSS(activeFiles.css);
@@ -57,19 +59,19 @@ function CodeEditor({ activeFiles }) {
 
     const jsDbRef = firebase.database().ref().child(`${lessonId}/script`);
     const jsFirepad = fromMonaco(jsDbRef, jsEditorRef.current);
-    jsFirepad.setUserName("stephen");
+    jsFirepad.setUserName(user.name || "Default");
   }
   function handleCSSEditorDidMount(editor) {
     cssEditorRef.current = editor;
     const cssDbRef = firebase.database().ref().child(`${lessonId}/css`);
     const cssFirepad = fromMonaco(cssDbRef, cssEditorRef.current);
-    cssFirepad.setUserName("stephen");
+    cssFirepad.setUserName(user.name || "Default");
   }
   function handleHTMLEditorDidMount(editor) {
     htmlEditorRef.current = editor;
     const htmlDbRef = firebase.database().ref().child(`${lessonId}/html`);
     const htmlFirepad = fromMonaco(htmlDbRef, htmlEditorRef.current);
-    htmlFirepad.setUserName("stephen");
+    htmlFirepad.setUserName(user.name || "Default");
   }
 
   function handleTabChange(event, value) {
