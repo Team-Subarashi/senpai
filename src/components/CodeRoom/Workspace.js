@@ -47,6 +47,7 @@ export default function Workspace() {
           <CodeEditor activeFiles={activeFiles} />
         </React.Suspense>
       </Grid>
+
       <Grid
         item
         xs={5}
