@@ -3,32 +3,34 @@ import Review from "./Review";
 import axios from "axios";
 
 const ReviewList = ({ senpai }) => {
-  const [reviews, setReviews] = useState([]);
-
+  const [allReviews, setAllReviews] = useState([]);
+  console.log(senpai);
   useEffect(() => {
-    const fetchReview = async () => {
+    let mounted = true;
+
+    const fetchReviews = async () => {
       const responseReview = await axios.get("/api/v1/reviews");
-      const allReviews = responseReview.data;
-      let temp = [];
-      allReviews.map((review) => {
-        if (review.senpaiId == senpai._id) {
-          temp.push(review);
-        } else {
-          return;
-        }
-      });
-      setReviews(temp);
+      const temp = responseReview.data;
+      if (mounted) {
+        setAllReviews(temp);
+      }
+      return () => (mounted = false);
     };
-    fetchReview();
-  }, [reviews]);
+    fetchReviews();
+  }, []);
+
   return (
     <div>
-      {reviews.map((review) => {
-        return (
-          <>
-            <Review review={review} />
-          </>
-        );
+      {allReviews.map((review) => {
+        if (review.senpaiId == senpai._id) {
+          return (
+            <>
+              <Review review={review} />
+            </>
+          );
+        } else {
+          return null;
+        }
       })}
     </div>
   );

@@ -35,7 +35,6 @@ export default function SenpaiList() {
   const temp = [];
   const senpaiSetter = async () => {
     await axios.get("/api/v1/users").then((res) => {
-      // console.log(res);
       for (const senpai of res.data) {
         if (senpai.isSenpai === true) {
           if (category.toLowerCase() === "all") {
@@ -71,7 +70,6 @@ export default function SenpaiList() {
           }
         }
       }
-      // console.log(temp);
       setSenpaiList(temp);
     });
   };
@@ -84,7 +82,6 @@ export default function SenpaiList() {
           id="single-senpai"
           style={{
             padding: "2rem",
-            backgroundColor: "#303030",
           }}
           key={senpai._id}
         >
@@ -133,17 +130,11 @@ export default function SenpaiList() {
             }}
           >
             <div>
-              {senpai.category.map((skill, index) => {
-                return (
-                  <div key={skill}>
-                    {skill} - ￥{senpai.rates[index]}/hour
-                  </div>
-                );
+              {`Hourly Rate: ¥${senpai.rates[0]}`}
+              {senpai.category.map((skill) => {
+                return <div key={skill}>{skill}</div>;
               })}
             </div>
-            {/* {senpai.skillOneRate}
-            {senpai.skillTwoRate}
-            {senpai.skillThreeRate} */}
           </Grid>
           <Grid
             item

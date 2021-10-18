@@ -5,6 +5,7 @@ import MomentUtils from "@date-io/moment";
 import Timetable from "../components/Scheduler";
 import Grid from "@material-ui/core/Grid";
 
+
 export default function ScheduleBooking({ match }) {
   const [state, setState] = useState([]);
 
@@ -18,23 +19,6 @@ export default function ScheduleBooking({ match }) {
     fetchData();
   }, []);
 
-  // const date = useRecoilValue(selectedDate);
-
-  // const bookButtonHandler = () => {
-  //   // match.params.senpaiId should be senpai's id
-  //   let endtime = moment(date).add(1, "hours");
-  //   axios({
-  //     method: "post",
-  //     url: "/lessons",
-  //     data: {
-  //       senpaiId: match.params.id,
-  //       startDate: date._d,
-  //       endDate: endtime,
-  //       priceId: "price_1Jg1LrEp77X0l0jdvmgYUpwP", //temp until we have a create your own rate page
-  //     },
-  //   });
-  // };
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(`/senpai/${match.params.id}/lessons`);
@@ -44,9 +28,9 @@ export default function ScheduleBooking({ match }) {
   }, []);
 
   return (
-    <div>
+    <>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <div>Senpai's lessons</div>
+        <div>Senpai's Lessons</div>
         <Grid container>
           <Grid
             item
@@ -79,6 +63,6 @@ export default function ScheduleBooking({ match }) {
           </Grid> */}
         </Grid>
       </MuiPickersUtilsProvider>
-    </div>
+    </>
   );
 }

@@ -40,32 +40,32 @@ export default function SignIn() {
   const history = useHistory();
   const classes = useStyles();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
+  const [password, setPassword] = useState("");
 
   const passwordChangeHandler = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
   const emailChangeHandler = (e) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
 
   const submitHandler = () => {
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        // Signed in 
+        // Signed in
         // ...
-        history.push('/')
+        history.push('/');
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage)
+        console.log(errorCode);
+        console.log(errorMessage);
         // ..
       });
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -108,8 +108,8 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
             onClick={(e) => {
-              e.preventDefault()
-              submitHandler()
+              e.preventDefault();
+              submitHandler();
             }}
           >
             Sign In

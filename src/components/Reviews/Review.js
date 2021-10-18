@@ -1,8 +1,8 @@
 import React from "react";
 import { Avatar, Grid } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+// if want to have kohai name added the review then we have to make a call by kohaiId to get the name
 const Review = ({ review }) => {
-  console.log(review);
   return (
     <Grid
       container

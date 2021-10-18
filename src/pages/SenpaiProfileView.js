@@ -78,18 +78,18 @@ export default function SenpaiProfileView({ match, location }) {
   const [senpai, setSenpai] = useState(
     location.state ? location.state.senpai : null
   );
+  const fetchData = async () => {
+    const response = await axios.get("/api/v1/users/" + match.params.id);
+    if (response.data) {
+      setSenpai(response.data);
+    }
+  };
 
   useEffect(() => {
     if (match.params.id) {
-      const fetchData = async () => {
-        const response = await axios.get("/api/v1/users/" + match.params.id);
-        if (response.data) {
-          setSenpai(response.data);
-        }
-      };
       fetchData();
     }
-  }, [senpai]);
+  }, []);
 
   return (
     <Container>
@@ -209,9 +209,9 @@ export default function SenpaiProfileView({ match, location }) {
                   </Typography>
                 ) : null}
               </Container>
-            </Grid>
-            <Grid xs={4} style={{ height: "50vh", overflow: "auto" }}>
-              <ReviewList senpai={senpai} />
+              <Grid xs={4} style={{ height: "50vh", overflow: "auto" }}>
+                <ReviewList senpai={senpai} />
+              </Grid>
             </Grid>
           </Grid>
         ) : (

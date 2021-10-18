@@ -1,4 +1,4 @@
-import createTheme  from '@material-ui/core/styles/createTheme'
+import createTheme  from '@material-ui/core/styles/createTheme';
 
 const theme = createTheme({
   palette: {
@@ -59,8 +59,7 @@ const theme = createTheme({
       fontSize: "1.2rem",
       color: "white",
       textAlign: "left",
-
-    }
+    },
   },
   components: {
     MuiAppBar: {
@@ -69,6 +68,6 @@ const theme = createTheme({
       }
     }
   }
-})
+});
 
 export default theme;

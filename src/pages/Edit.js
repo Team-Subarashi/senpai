@@ -44,6 +44,9 @@ export default function Edit() {
     if (user.website) {
       // setWebsite(user.website);
       document.getElementById("website").value = user.website;
+    }
+    if (user.avatar) {
+      document.getElementById("avatar").value = user.avatar;
     } else {
       return;
     }
@@ -70,6 +73,7 @@ export default function Edit() {
       </Grid>
       <Grid
         container
+        id="social-grid"
         alignItems="center"
         style={{
           backgroundColor: "#424242",
@@ -85,15 +89,16 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
+            marginTop: "5vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
             backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
-            Socials
-          </h2>
+          <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}>
+            Edit Profile
+          </h1>
         </Grid>
         <Grid container direction="column">
           <Box>
@@ -141,6 +146,17 @@ export default function Edit() {
                 />
               </FormControl>
             </Grid>
+            <Grid item style={{ marginBottom: "1vh" }}>
+              <FormControl>
+                {/* <InputLabel style={{ color: "#fff" }}>{website}</InputLabel> */}
+                <Input
+                  id="avatar"
+                  placeholder="Avatar URL"
+                  style={{ color: "#fff" }}
+                  // value={website}
+                />
+              </FormControl>
+            </Grid>
             {/* <Grid item style={{ marginBottom: "1vh" }}>
               <FormControl>
               <InputLabel style={{ color: "#fff" }}>Instagram</InputLabel>
@@ -156,6 +172,7 @@ export default function Edit() {
                   linkedin: document.getElementById("linkedin").value,
                   facebook: document.getElementById("facebook").value,
                   website: document.getElementById("website").value,
+                  avatar: document.getElementById("avatar").value,
                   // instagram: document.getElementById("instagram").value,
                 };
                 axios({
@@ -166,6 +183,7 @@ export default function Edit() {
                     linkedIn: body.linkedin,
                     twitter: body.twitter,
                     website: body.website,
+                    avatar: body.avatar,
                     // instagram: body.instagram,
                   },
                 });
@@ -173,15 +191,16 @@ export default function Edit() {
                 let successMessage = document.createElement("div");
                 successMessage.innerText = "Socials updated!";
                 successMessage.style.color = "white";
+                successMessage.style.position = "absolute";
+                successMessage.style.marginLeft = "12.5vw";
                 successMessage.style.fontWeight = "bold";
                 successMessage.style.fontSize = "large";
                 successMessage.style.backgroundColor = "#4BB543";
-                successMessage.style.width = "33%";
+                successMessage.style.width = "25%";
                 successMessage.style.height = "5vh";
-                successMessage.style.marginLeft = "33%";
                 successMessage.style.paddingTop = "1vh";
 
-                document.getElementById("navbar").append(successMessage);
+                document.getElementById("social-grid").append(successMessage);
 
                 setTimeout(() => {
                   window.location.reload();
@@ -201,7 +220,7 @@ export default function Edit() {
 
       <Grid
         container
-        id="bio-area"
+        id="bio-grid"
         alignItems="center"
         style={{
           backgroundColor: "#424242",
@@ -269,15 +288,17 @@ export default function Edit() {
                 let successMessage = document.createElement("div");
                 successMessage.innerText = "Bio updated!";
                 successMessage.style.color = "white";
+                successMessage.style.position = "absolute";
+                successMessage.style.marginTop = "-21vh";
+                successMessage.style.marginLeft = "12.5vw";
                 successMessage.style.fontWeight = "bold";
                 successMessage.style.fontSize = "large";
                 successMessage.style.backgroundColor = "#4BB543";
-                successMessage.style.width = "33%";
+                successMessage.style.width = "25%";
                 successMessage.style.height = "5vh";
-                successMessage.style.marginLeft = "33%";
                 successMessage.style.paddingTop = "1vh";
 
-                document.getElementById("navbar").append(successMessage);
+                document.getElementById("bio-grid").append(successMessage);
 
                 setTimeout(() => {
                   window.location.reload();
@@ -320,13 +341,17 @@ export default function Edit() {
             backgroundColor: "#673AB7",
           }}
         >
-          {/* <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}> */}
-          Are you a Senpai?
-          {/* </h2> */}
+          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+            Are you a senpai?
+          </h2>
         </Grid>
         <Grid item xs={12} style={{ fontSize: "large" }}>
-          Are you looking to spread some knowledge? Click here to get started on
-          your journey as a senpai!
+          Are you looking to spread some knowledge?
+          <br />
+          <br />
+          Continue to the next page to set yourself up for success and begin
+          <br />
+          your Senpai journey!
         </Grid>
         <Grid item xs={3} style={{ marginLeft: "40vw" }}>
           <Link to={{ pathname: `/senpai-settings/${user._id}` }}>

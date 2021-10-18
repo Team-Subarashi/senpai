@@ -30,19 +30,12 @@ export default function Checkout({
   const user = useRecoilValue(userState);
 
   useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-
     const query = new URLSearchParams(window.location.search);
 
-    // console.log(query);
     let trueMess = window.location.href.split("?")[1];
-    // console.log(trueMess);
 
     if (trueMess === "success=true") {
-      // if (query.get("success")) {
       setMessage("Lesson booked!");
-      // console.log(user._id);
-      // console.log(match.params.lessonId);
       axios({
         method: "patch",
         url: `/lessons/${match.params.lessonId}`,

@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+  height: inherit;
+}
+
+#root {
+  height: 100%;
 }
 
 .App-logo {
@@ -35,4 +40,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#className {
+  position: relative;
+  bottom: 0;
 }

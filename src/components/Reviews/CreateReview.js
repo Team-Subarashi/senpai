@@ -21,38 +21,9 @@ import axios from "axios";
 const CreateReview = ({ lesson }) => {
   const [open, setOpen] = React.useState(false);
   const [stateValue, setStateValue] = React.useState(2);
-  const [stateHover, setStateHover] = React.useState(-1);
-  const value = React.useRef(2);
-  const hover = React.useRef(-1);
+  // const [stateHover, setStateHover] = React.useState(-1);
   const review = React.useRef();
-  const DropDown = () => {
-    return (
-      <>
-        <FormControl fullWidth>
-          <InputLabel xs={12} id="demo-simple-select-label">
-            RATE
-          </InputLabel>
-          <Select>
-            <MenuItem onChange={console.log((rate.current = 1))} value={1}>
-              1
-            </MenuItem>
-            <MenuItem onChange={(rate.current = 2)} value={2}>
-              2
-            </MenuItem>
-            <MenuItem onChange={(rate.current = 3)} value={3}>
-              3
-            </MenuItem>
-            <MenuItem onChange={(rate.current = 4)} value={4}>
-              4
-            </MenuItem>
-            <MenuItem onChange={(rate.current = 5)} value={5}>
-              5
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </>
-    );
-  };
+  //if we want labels for the stars
   const labels = {
     0.5: "Useless",
     1: "Useless+",
@@ -86,25 +57,31 @@ const CreateReview = ({ lesson }) => {
       <div className={classes.root}>
         <Rating
           name="hover-feedback"
-          value={value.current}
+          value={stateValue} //2
           precision={0.5}
-          onClick={handleClick}
+          // onClick={handleClick}
           onChange={(event, newValue) => {
-            value.current = newValue;
-            console.log(value.current);
+            // value.current = newValue;
+            setStateValue(newValue);
+            console.log(stateValue);
           }}
           onChangeActive={(event, newHover) => {
-            hover.current = newHover;
-            // setStateHover(newHover);
-            value.current = newHover;
+            // hover.current = newHover;
+            // value.current = newHover;
             // console.log(newHover);
+            // setStateHover(newHover);
+            // console.log("active");
           }}
         />
-        {/* {value.current !== null && (
+        {
+          //if we want labels for the stars
+          /*
+         {stateValue !== null && (
           <Box ml={2}>
-            {labels[hover.current !== -1 ? hover.current : value.current]}
+            {labels[stateHover !== -1 ? stateHover : stateValue]}
           </Box>
-        )} */}
+        )} */
+        }
       </div>
     );
   }
@@ -115,14 +92,15 @@ const CreateReview = ({ lesson }) => {
 
     const handleClose = () => {
       setOpen(false);
-      console.log("closed");
     };
     const handleSubmit = () => {
-      // console.log(lesson);
       setOpen(false);
-      if (typeof review.current === "string" && typeof value === "number") {
+      if (
+        typeof review.current === "string" &&
+        typeof stateValue === "number"
+      ) {
         axios.post("/api/v1/reviews", {
-          rating: value.current,
+          rating: stateValue,
           review: review.current,
           kohaiId: lesson.kouhaiId,
           senpaiId: lesson.senpaiId,
@@ -134,17 +112,7 @@ const CreateReview = ({ lesson }) => {
       } else {
         alert("Please add a correct review and rate.");
       }
-      // console.log({
-      //   rating: value,
-      //   review: review.current,
-      //   kohaiId: lesson.kouhaiId,
-      //   senpaiId: lesson.senpaiId,
-      //   avatar: lesson.avatar,
-      //   startDate: lesson.startDate,
-      //   endDate: lesson.endDate,
-      //   title: lesson.title,
-      // });
-      value.current = null;
+      setStateValue(2);
       review.current = null;
     };
 
