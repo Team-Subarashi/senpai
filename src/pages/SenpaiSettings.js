@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Grid, Box, Button } from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 import {
   FormControl,
   InputLabel,
@@ -20,20 +21,20 @@ import { userState } from "../atoms";
 const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: "#424242",
-    margin: "1rem",
+    // margin: "1rem",
   },
   videoIframe: {
     position: "absolute",
     top: 0,
-    left: 0,
-    width: "100%",
+    left: "30%",
+    width: "75%",
     height: "100%",
   },
   videoDiv: {
     position: "relative",
-    width: "100%",
-    height: 0,
-    paddingBottom: "56.25%",
+    width: "75%",
+    height: "75%",
+    paddingBottom: "25vh",
   },
 }));
 
@@ -88,12 +89,11 @@ export default function SenpaiSettings() {
   }, [user]);
 
   return (
-    <Grid
-      container
+    <Box
       style={{
-        fontFamily: "Nunito",
-        height: "100%",
-        backgroundColor: "pink",
+        width: "100%",
+        paddingLeft: "10%",
+        paddingRight: "10%",
       }}
     >
       <Grid
@@ -138,8 +138,6 @@ export default function SenpaiSettings() {
           backgroundColor: "#424242",
           borderRadius: "4px",
           padding: "0.5%",
-          marginLeft: "25%",
-          marginRight: "25%",
           marginBottom: "2vh",
         }}
       >
@@ -249,7 +247,7 @@ export default function SenpaiSettings() {
             />
           </FormControl>
 
-          <Grid item xs={3} style={{ marginLeft: "40vw" }}>
+          <Grid item xs={3} style={{ marginLeft: "60vw" }}>
             <Button
               onClick={() => {
                 let skills = [
@@ -306,8 +304,9 @@ export default function SenpaiSettings() {
               }}
               style={{
                 height: "4vh",
-                width: "7vw",
+                width: "10vw",
                 backgroundColor: "#673AB7",
+                marginTop: "1vh",
               }}
             >
               Save Skills
@@ -321,9 +320,8 @@ export default function SenpaiSettings() {
         style={{
           backgroundColor: "#424242",
           borderRadius: "4px",
-          padding: "0.5%",
-          marginLeft: "25%",
-          marginRight: "25%",
+          padding: "1%",
+          height: "55vh",
         }}
       >
         <Grid
@@ -332,7 +330,6 @@ export default function SenpaiSettings() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
-            marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
             backgroundColor: "#673AB7",
@@ -354,22 +351,34 @@ export default function SenpaiSettings() {
             }}
           />
         </FormControl>
-        <div className={classes.videoDiv}>
-          {user.introVideo ? (
-            <iframe
-              src={`https://www.youtube.com/embed/${
-                user.introVideo.split("?v=")[1]
-              }`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className={classes.videoIframe}
-            ></iframe>
-          ) : null}
-        </div>
-        <Grid item xs={3} style={{ marginLeft: "40vw" }}>
+        <Container
+          fixed
+          className={classes.container}
+          style={{ padding: "1rem" }}
+        >
+          <div className={classes.videoDiv}>
+            {user.introVideo ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${
+                  user.introVideo.split("?v=")[1]
+                }`}
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className={classes.videoIframe}
+              ></iframe>
+            ) : null}
+          </div>
+        </Container>
+        <Grid item xs={3} style={{ marginLeft: "60vw" }}>
           <Button
+            style={{
+              height: "4vh",
+              width: "10vw",
+              backgroundColor: "#673AB7",
+              marginTop: "1vh",
+            }}
             onClick={() => {
               let video = document.getElementById("video").value;
 
@@ -398,18 +407,11 @@ export default function SenpaiSettings() {
                 window.location.reload();
               }, 750);
             }}
-            style={{
-              height: "4vh",
-              width: "7vw",
-              backgroundColor: "#673AB7",
-              marginTop: "1vh",
-            }}
           >
             Save Video
           </Button>
-          {/* <Button onClick={() => console.log(rate)}>Price Test</Button> */}
         </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 }

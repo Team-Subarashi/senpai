@@ -326,7 +326,7 @@ export default function Edit() {
           marginLeft: "25%",
           marginRight: "25%",
           marginTop: "2vh",
-          marginBottom: "2vh",
+          // marginBottom: "2vh",
         }}
       >
         <Grid
