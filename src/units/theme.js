@@ -47,18 +47,15 @@ const theme = createTheme({
       textAlign: "left",
     },
     h4: {
-      fontFamily: "Nunito",
       fontSize: "1.6rem",
       color: "white",
     },
     h5: {
-      fontFamily: "Nunito",
       fontSize: "1.4rem",
       color: "white",
       textAlign: "left",
     },
     h6: {
-      fontFamily: "Nunito",
       fontSize: "1.2rem",
       color: "white",
       textAlign: "left",
