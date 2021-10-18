@@ -27,27 +27,24 @@ import "../App.css";
 import Container from "@material-ui/core/Container";
 
 const TimeTableCell = (
-  props // individual cell
+  props
 ) => (
   <WeekView.TimeTableCell
     {...props}
     style={{ textAlign: "center", fontWeight: "bold", height: "50px" }}
-  /> // the boxes in the middle of the scheduler
+  />
 );
-const TimeScaleLabel = (props) => {
-  return (
-    <WeekView.TimeScaleLabel
-      {...props}
-      style={{
-        textAlign: "center",
-        fontWeight: "bold",
-        height: "50px",
-        fontSize: "1.2rem",
-      }}
-    />
-  ); // the div that wraps the span for the time labels
-};
-//need to find a way to target
+const TimeScaleLabel = (props) => (
+  <WeekView.TimeScaleLabel
+    {...props}
+    style={{
+      textAlign: "center",
+      fontWeight: "bold",
+      height: "50px",
+      fontSize: "1.2rem",
+    }}
+  />
+);
 
 const styles = (theme) => ({
   textCenter: {

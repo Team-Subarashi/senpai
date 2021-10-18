@@ -1,7 +1,18 @@
 const Lesson = require("../models/LessonModel");
+const User = require("../models/userModel");
 require("dotenv").config();
 
-let OpenTok = require("opentok");
+const nodemailer = require('nodemailer');
+
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: { // THIS SHOULD BE IN .ENV
+    user: 'subarashisenpaiapp@gmail.com',
+    pass: 'subarashi-team'
+  }
+});
+
+let OpenTok = require('opentok');
 let opentok = new OpenTok(process.env.API_KEY, process.env.SECRET);
 
 exports.listAllLessons = (req, res) => {
@@ -50,24 +61,62 @@ exports.createNewLesson = async (req, res) => {
     let newLesson = new Lesson(req.body);
     newLesson.save((err, lesson) => {
       if (err) {
-        console.log;
         res.status(500).send(err);
       }
       res.status(201).json(lesson);
     });
   });
 };
+
 // updateTodo function — To update todo status by id
 exports.updateLesson = (req, res) => {
   Lesson.findOneAndUpdate(
     { _id: req.params.id },
     req.body,
     { new: true },
-    (err, todo) => {
+    async (err, lesson) => {
       if (err) {
         res.status(500).send(err);
       }
-      res.status(200).json(todo);
+
+      const senpai = await User.findById(lesson.senpaiId);
+      const kouhai = await User.findById(req.body.kouhaiId);
+
+      let toSenpai = {
+        from: 'subarashisenpaiapp@gmail.com',
+        to: senpai.email,
+        subject: `New Lesson with ${kouhai.name}`,
+        text: `Time: ${new Date(lesson.startDate)}` // NEED TO FLESH THIS OUT
+      };
+
+      transporter.sendMail(toSenpai, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          console.log(toSenpai.to);
+
+        }
+      });
+
+      let toKouhai = {
+        from: 'subarashisenpaiapp@gmail.com',
+        to: kouhai.email,
+        subject: `Lesson booked with ${senpai.name}`,
+        text: `Time: ${new Date(lesson.startDate)}` // NEED TO FLESH THIS OUT
+      };
+
+      transporter.sendMail(toKouhai, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          console.log(toKouhai.to);
+        }
+      });
+
+
+      res.status(200).json(lesson);
     }
   );
 };
