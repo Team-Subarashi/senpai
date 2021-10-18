@@ -23,7 +23,12 @@ export default function Filter() {
     <Grid
       item
       xs={12}
-      style={{ height: "inherit", backgroundColor: "lightblue", display: "flex", alignItems:"center" }}
+      style={{
+        height: "inherit",
+        backgroundColor: "#f3f0e9",
+        display: "flex",
+        alignItems: "center",
+      }}
     >
       <Button
         id="categoryButton"
@@ -31,7 +36,7 @@ export default function Filter() {
           backgroundColor: "purple",
           color: "white",
           height: "2rem",
-          marginLeft: "1rem"
+          marginLeft: "1rem",
         }}
         onClick={() => toggleMenuState(!menuState)}
       >

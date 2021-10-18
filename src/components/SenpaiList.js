@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import Container from "@material-ui/core/Container";
+// import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useRecoilValue } from "recoil";
@@ -23,17 +23,17 @@ const useStyles = makeStyles(() => ({
     // margin: "1rem",
   },
   videoIframe: {
-    position: "absolute",
-    top: 0,
-    left: "30%",
-    width: "75%",
-    height: "100%",
+    // position: "absolute",
+    // top: 0,
+    // left: "30%",
+    // width: "75%",
+    // height: "100%",
   },
   videoDiv: {
-    position: "relative",
-    width: "75%",
-    height: "75%",
-    paddingBottom: "25vh",
+    // position: "relative",
+    // width: "75%",
+    // height: "75%",
+    // paddingBottom: "25vh",
   },
 }));
 
@@ -111,38 +111,45 @@ export default function SenpaiList() {
           }}
           key={senpai._id}
         >
-          <Grid item xs={4} className={classes.section}>
-            <Typography variant="h4">{senpai.name}</Typography>
-            <Box
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              mt={2}
-            >
-              <img height="125px" width="125px" src={senpai.avatar} />
-              <Link
-                to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
-              >
-                <Button
-                  variant="contained"
-                  style={{
-                    marginTop: "1vh",
-                    backgroundColor: "purple",
-                    color: "white",
-                  }}
-                  onClick={() => {
-                    senpaiSetter();
-                  }}
-                >
-                  Go to Profile
-                </Button>
-              </Link>
-            </Box>
-          </Grid>
           <Grid
+            container
+            justifyContent="space-between"
+            xs={8}
+            className={classes.section}
+            style={{ backgroundColor: "#f3f0e9" }}
+          >
+            <Grid item xs={6}>
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                mt={2}
+              >
+                <img height="125px" width="125px" src={senpai.avatar} />
+                <Link
+                  to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
+                >
+                  <Button
+                    variant="contained"
+                    style={{
+                      marginTop: "1vh",
+                      backgroundColor: "purple",
+                      color: "white",
+                    }}
+                    onClick={() => {
+                      senpaiSetter();
+                    }}
+                  >
+                    Go to Profile
+                  </Button>
+                </Link>
+              </Box>
+            </Grid>
+            {/* </Grid> */}
+            {/* <Grid
             container
             // alignItems="center"
             justifyContent="center"
@@ -154,27 +161,42 @@ export default function SenpaiList() {
               backgroundColor: "#616162",
               border: "1px solid white",
             }}
-          >
-            <Grid item xs={12}>
-              <div>
-                <h2
-                  style={{
-                    backgroundColor: "white",
-                    // width: "25vw",
-                    marginTop: "2vh",
-                  }}
-                >{`Hourly Rate: ¥${senpai.rates[0]}`}</h2>
-                {senpai.category.map((skill) => {
-                  return <div key={skill}>{skill}</div>;
-                })}
-              </div>
+          > */}
+            {/* <Grid item xs={12}> */}
+            <Grid item xs={6}>
+              <Typography variant="h2" style={{ color: "black" }}>
+                {senpai.name}
+              </Typography>
+              <h2
+                style={{
+                  // backgroundColor: "white",
+                  // width: "25vw",
+                  borderBottom: "1px",
+                }}
+              >{`Hourly Rate: ¥${senpai.rates[0]}`}</h2>
+              {senpai.category.map((skill) => {
+                return (
+                  <li
+                    key={skill}
+                    style={{
+                      color: "black",
+                      fontWeight: "bold",
+                      textAlign: "left",
+                      fontSize: "large",
+                    }}
+                  >
+                    {skill}
+                  </li>
+                );
+              })}
             </Grid>
+            {/* </Grid> */}
           </Grid>
           <Grid
             item
             xs={4}
             style={{
-              backgroundColor: "#616162",
+              backgroundColor: "#673ab7",
               border: "1px solid white",
             }}
           >
@@ -183,7 +205,7 @@ export default function SenpaiList() {
                 {senpai.bio}
               </TabPane>
               <TabPane tab="Intro" key="2">
-                <Container
+                {/* <Container
                   fixed
                   className={classes.container}
                   style={{ padding: "1rem" }}
@@ -191,11 +213,9 @@ export default function SenpaiList() {
                   <div className={classes.videoDiv}>
                     {senpai.video !== "" ? (
                       // <p>{senpai.video.split("?v=")[1]}</p>
-
                       <iframe
                         src={`https://www.youtube.com/embed/
-                    ${senpai.video.split("?v=")[1]}
-                    `}
+                    ${senpai.video.split("?v=")[1]}`}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -206,7 +226,7 @@ export default function SenpaiList() {
                       <p>This user does not have a video uploaded</p>
                     )}
                   </div>
-                </Container>
+                </Container> */}
               </TabPane>
               {/* <TabPane tab="Sample" key="3">
                 <img
