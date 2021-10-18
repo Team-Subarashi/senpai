@@ -1,118 +1,152 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import axios from "axios";
-import * as Y from "yjs";
-import { WebsocketProvider } from "y-websocket";
-import { MonacoBinding } from "y-monaco";
+import React, { useRef, useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
+import { firebaseConfig } from "../../firebase";
+import firebase from "firebase/compat/app";
+import "firebase/compat/database";
+import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
+import { useRecoilState } from "recoil";
+// import { userState } from "../../atoms";
+// import axios from "axios";
 import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 
-export const CodeEditor = ({ activeFiles }) => {
-  const [fileName, setFileName] = useState();
+function CodeEditor({ activeFiles, user }) {
+  const jsEditorRef = useRef(null);
+  const cssEditorRef = useRef(null);
+  const htmlEditorRef = useRef(null);
+
+  const [fileName, setFileName] = useState("script.js");
+
+  const lessonId = window.location.href.split("room/")[1];
+
   const [html, setHTML] = useRecoilState(loadedHTML);
   const [css, setCSS] = useRecoilState(loadedCSS);
   const [js, setJS] = useRecoilState(loadedJS);
-  const editorRef = useRef(null);
-  const doc = new Y.Doc();
-  const type = doc.getText("monaco");
-  const lessonId = window.location.href.split("room/")[1];
-  const wsProvider = new WebsocketProvider(
-    "ws://localhost:1234",
-    lessonId,
-    doc
-  );
 
-  const handleHTML = (
-    value
-    //  event
-  ) => {
-    setHTML(value);
-  };
-  const handleJS = (
-    value
-    //  event
-  ) => {
-    setJS(value);
-  };
-  const handleCSS = (
-    value
-    //  event
-  ) => {
-    setCSS(value);
-  };
 
-  const handleSave = async () =>
-    // value, event
-    {
-      return await axios.patch(`/files/${activeFiles._id}`, {
-        js: js,
-        css: css,
-        html: html,
-      });
-    };
-
-  useEffect(() => {
+  useEffect(async () => {
     setHTML(activeFiles.html);
     setJS(activeFiles.js);
     setCSS(activeFiles.css);
   }, []);
 
-  function handleEditorDidMount(editor) {
-    // wsProvider.connect();
-    editorRef.current = editor;
-    new MonacoBinding(
-      type,
-      editorRef.current.getModel(),
-      new Set([editorRef.current]),
-      wsProvider.awareness
-    );
+  const handleHTML = (value) => {
+    setHTML(value);
+    console.log(html);
+  };
+  const handleJS = (value) => {
+    setJS(value);
+    console.log(js);
+  };
+  const handleCSS = (value) => {
+    setCSS(value);
+    console.log(css);
+  };
+
+  // const handleSave = async () => {
+  //   return await axios.patch(`/files/${activeFiles._id}`, {
+  //     js: js,
+  //     css: css,
+  //     html: html,
+  //   });
+  // };
+
+  function handleJSEditorDidMount(editor) {
+    jsEditorRef.current = editor;
+
+    const jsDbRef = firebase.database().ref().child(`${lessonId}/script`);
+    const jsFirepad = fromMonaco(jsDbRef, jsEditorRef.current);
+    jsFirepad.setUserName(user.name || "Default");
+  }
+  function handleCSSEditorDidMount(editor) {
+    cssEditorRef.current = editor;
+    const cssDbRef = firebase.database().ref().child(`${lessonId}/css`);
+    const cssFirepad = fromMonaco(cssDbRef, cssEditorRef.current);
+    cssFirepad.setUserName(user.name || "Default");
+  }
+  function handleHTMLEditorDidMount(editor) {
+    htmlEditorRef.current = editor;
+    const htmlDbRef = firebase.database().ref().child(`${lessonId}/html`);
+    const htmlFirepad = fromMonaco(htmlDbRef, htmlEditorRef.current);
+    htmlFirepad.setUserName(user.name || "Default");
   }
 
+  function handleTabChange(event, value) {
+    setFileName(value);
+    console.log(fileName);
+  }
+
+  useEffect(() => {
+    firebase.initializeApp(firebaseConfig);
+  }, []);
+
   return (
-    <div>
-      <button
-        disabled={fileName === "script.js"}
-        onClick={() => setFileName("script.js")}
-      >
-        script.js
-      </button>
-      <button
-        disabled={fileName === "style.css"}
-        onClick={() => setFileName("style.css")}
-      >
-        style.css
-      </button>
-      <button
-        disabled={fileName === "index.html"}
-        onClick={() => setFileName("index.html")}
-      >
-        index.html
-      </button>
-      <button onClick={handleSave}>Save</button>
-      <Editor
-        path={fileName}
-        height="70vh"
-        theme="vs-dark"
-        defaultValue="hello"
-        defaultLanguage={
-          fileName === "script.js"
-            ? "javascript"
-            : fileName === "index.html"
-            ? "xml"
-            : "css"
-        }
-        onMount={handleEditorDidMount}
-        onChange={
-          fileName === "script.js"
-            ? handleJS
-            : fileName === "index.html"
-            ? handleHTML
-            : handleCSS
-        }
-      />
+    <div id="editor-container">
+      <Box sx={{ width: "100%", height: "10%", border: "none" }}>
+        <Tabs
+          value={fileName}
+          onChange={handleTabChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+          orientation="horizontal"
+          centered
+        >
+          <Tab
+            sx={{ height: "15px", width: "20px", color: "#b4f9f8" }}
+            value="script.js"
+            label="script.js"
+          />
+          <Tab
+            sx={{ height: "15px", width: "20px", color: "#b4f9f8" }}
+            value="style.css"
+            label="style.css"
+          />
+          <Tab
+            sx={{ height: "10px", width: "20px", color: "#b4f9f8" }}
+            value="index.html"
+            label="index.html"
+          />
+        </Tabs>
+      </Box>
+
+      {fileName === "script.js" && (
+        <Editor
+          height="70vh"
+          theme="vs-dark"
+          onMount={handleJSEditorDidMount}
+          defaultLanguage="javascript"
+          defaultValue="hello js"
+          options={{ fontSize: 10 }}
+          onChange={handleJS}
+        />
+      )}
+      {fileName === "style.css" && (
+        <Editor
+          height="70vh"
+          theme="vs-dark"
+          onMount={handleCSSEditorDidMount}
+          defaultLanguage="css"
+          defaultValue="hello cs"
+          options={{ fontSize: 10 }}
+          onChange={handleCSS}
+        />
+      )}
+      {fileName === "index.html" && (
+        <Editor
+          height="70vh"
+          theme="vs-dark"
+          onMount={handleHTMLEditorDidMount}
+          defaultLanguage="html"
+          defaultValue="hello html"
+          options={{ fontSize: 10 }}
+          onChange={handleHTML}
+        />
+      )}
     </div>
   );
-};
+}
 
 export default CodeEditor;

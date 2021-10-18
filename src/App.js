@@ -5,7 +5,7 @@ import Footer from "./components/Footer.js";
 import Checkout from "./components/Checkout";
 import Splash from "./pages/Splash";
 import Search from "./pages/Search";
-import Workspace from "./pages/Workspace";
+import Workspace from "./components/CodeRoom/Workspace";
 import ScheduleBooking from "./pages/ScheduleBooking";
 import SenpaiProfileView from "./pages/SenpaiProfileView";
 import Kohai from "./pages/Kohai";
@@ -13,7 +13,6 @@ import MyLessons from "./pages/MyLessons";
 import Edit from "./pages/Edit";
 import SenpaiSettings from "./pages/SenpaiSettings";
 import Info from "./pages/Info";
-
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { auth } from "./firebase";
@@ -29,6 +28,7 @@ import Messages from "./components/message/Messages";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
+
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
