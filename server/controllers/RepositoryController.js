@@ -9,7 +9,7 @@ description
 
 */
 
-exports.listAllRepositories = (req, res) => {
+exports.getAllRepositories = (req, res) => {
   Repository.find({}, (err, repository) => {
     if (err) {
       res.status(500).send(err);
@@ -18,7 +18,7 @@ exports.listAllRepositories = (req, res) => {
   });
 };
 
-exports.getOneRepositoryById = (req, res) => {
+exports.getRepositoryById = (req, res) => {
   Repository.findOne({ _id: req.params.id }, (err, repository) => {
     if (err) {
       res.status(500).send(err);
@@ -27,7 +27,7 @@ exports.getOneRepositoryById = (req, res) => {
   });
 };
 
-exports.getRepositoriesByUserId = (req, res) => {
+exports.getUserRepositories = (req, res) => {
   Repository.find({ userId: req.params.id }, (err, repository) => {
     if (err) {
       res.status(500).send(err);
@@ -46,7 +46,7 @@ exports.createNewRepository = (req, res) => {
     res.status(201).json(repository);
   });
 };
-// updateTodo function — To update todo status by id
+
 exports.updateRepository = (req, res) => {
   Repository.findOneAndUpdate(
     { _id: req.params.id },

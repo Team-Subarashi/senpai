@@ -38,6 +38,7 @@ module.exports = function (app) {
     .post(repositories.createNewRepository);
   app
     .route("/api/v1/repositories/:id")
+    .get(repositories.getRepositoryById)
     .patch(repositories.updateRepository)
     .delete(repositories.deleteRepository);
 
