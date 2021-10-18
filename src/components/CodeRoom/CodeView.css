@@ -1,7 +1,7 @@
 #view-container {
-    width: 40vw;
-    height: 70vh;
-    margin: auto;
-    border-style: solid;
+    width: 45vw;
+    height: 50vh;
+    padding-right: 15%;
+    box-shadow: rgb(50, 38, 77) 0px 20px 30px -10px;
   }
   
