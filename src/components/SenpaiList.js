@@ -15,7 +15,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 const useStyles = makeStyles(() => ({
   section: {
     backgroundColor: "#616162",
-    border: "1px solid white",
+    border: "1px #2c303a",
     padding: "1rem",
   },
   container: {
@@ -111,14 +111,22 @@ export default function SenpaiList() {
           }}
           key={senpai._id}
         >
+          {/* Left side of senpai */}
           <Grid
             container
             justifyContent="space-between"
-            xs={8}
+            xs={4}
             className={classes.section}
-            style={{ backgroundColor: "#f3f0e9" }}
+            style={{
+              borderTopLeftRadius: "4px",
+              borderBottomLeftRadius: "4px",
+              backgroundColor: "#5a5f72",
+              borderRadius: "4px",
+              marginRight: "-1vw",
+              marginLeft: "23%",
+            }}
           >
-            <Grid item xs={6}>
+            <Grid item xs={6} style={{ marginTop: "-1vh" }}>
               <Box
                 style={{
                   display: "flex",
@@ -164,11 +172,12 @@ export default function SenpaiList() {
           > */}
             {/* <Grid item xs={12}> */}
             <Grid item xs={6}>
-              <Typography variant="h2" style={{ color: "black" }}>
+              <Typography variant="h2" style={{ color: "#c0caf5" }}>
                 {senpai.name}
               </Typography>
               <h2
                 style={{
+                  color: "#f3f0e9",
                   // backgroundColor: "white",
                   // width: "25vw",
                   borderBottom: "1px",
@@ -179,7 +188,7 @@ export default function SenpaiList() {
                   <li
                     key={skill}
                     style={{
-                      color: "black",
+                      color: "#f3f0e9",
                       fontWeight: "bold",
                       textAlign: "left",
                       fontSize: "large",
@@ -192,17 +201,26 @@ export default function SenpaiList() {
             </Grid>
             {/* </Grid> */}
           </Grid>
+
+          {/* Right side of senpai */}
           <Grid
             item
-            xs={4}
+            xs={3}
             style={{
               backgroundColor: "#673ab7",
-              border: "1px solid white",
+              border: "1px #2c303a",
             }}
           >
             <Tabs class="my-tabs" defaultActiveKey="1" onChange={callback}>
               <TabPane tab="Bio" key="1">
-                {senpai.bio}
+                <div
+                  style={{
+                    // color: "#e0af68"
+                    fontWeight: "bold",
+                  }}
+                >
+                  {senpai.bio}
+                </div>
               </TabPane>
               <TabPane tab="Intro" key="2">
                 {/* <Container

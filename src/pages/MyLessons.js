@@ -26,9 +26,7 @@ import PreviousLesson from "./PreviousLesson";
 import "../App.css";
 import Container from "@material-ui/core/Container";
 
-const TimeTableCell = (
-  props
-) => (
+const TimeTableCell = (props) => (
   <WeekView.TimeTableCell
     {...props}
     style={{ textAlign: "center", fontWeight: "bold", height: "50px" }}
@@ -241,7 +239,6 @@ export default function MyLessons() {
             >
               Join Room
             </Button>
-            <Button onClick={() => console.log(appointmentData)}>Test</Button>
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>

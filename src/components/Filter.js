@@ -25,7 +25,7 @@ export default function Filter() {
       xs={12}
       style={{
         height: "inherit",
-        backgroundColor: "#f3f0e9",
+        backgroundColor: "#5a5f72",
         display: "flex",
         alignItems: "center",
       }}

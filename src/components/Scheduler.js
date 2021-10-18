@@ -23,9 +23,7 @@ const style = () => ({
   },
 });
 
-const TimeTableCell = (
-  props
-) => (
+const TimeTableCell = (props) => (
   <WeekView.TimeTableCell
     {...props}
     style={{ textAlign: "center", fontWeight: "bold", height: "50px" }}
@@ -126,9 +124,6 @@ export default function Timetable({ senpaiLessons }) {
                   type="submit"
                 >
                   Book Now
-                </Button>
-                <Button onClick={() => console.log(appointmentData)}>
-                  Category Test
                 </Button>
               </form>
             ) : null}
