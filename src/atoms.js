@@ -33,6 +33,11 @@ export const userState = atom({
   },
 });
 
+export const repositoriesState = atom({
+  key: "repositoriesState",
+  default: [],
+});
+
 export const lessonState = atom({
   key: "lessonState",
   default: {},

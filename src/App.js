@@ -20,14 +20,15 @@ import { onAuthStateChanged } from "@firebase/auth";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import axios from "axios";
-import { useRecoilState } from "recoil";
-import { userState } from "./atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { userState, repositoriesState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
 import Messages from "./components/message/Messages";
 
 function App() {
   const [user, setUser] = useRecoilState(userState);
+  const setRepositories = useSetRecoilState(repositoriesState);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -46,6 +47,18 @@ function App() {
         });
       }
     });
+
+    const fetchRepos = async () => {
+      const repos = await axios({
+        method: "get",
+        url: `/api/v1/repositories`
+      });
+      if (repos.data) {
+        setRepositories(repos.data);
+      }
+    };
+    fetchRepos();
+
   }, []);
 
   return (
