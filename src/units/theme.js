@@ -42,21 +42,21 @@ const theme = createTheme({
     },
     h3: {
       fontFamily: "Nunito",
-      fontSize: "1.8rem",
+      fontSize: "1.6rem",
       color: "white",
       textAlign: "left",
     },
     h4: {
-      fontSize: "1.6rem",
+      fontSize: "1.4rem",
       color: "white",
     },
     h5: {
-      fontSize: "1.4rem",
+      fontSize: "1.2rem",
       color: "white",
       textAlign: "left",
     },
     h6: {
-      fontSize: "1.2rem",
+      fontSize: "1.1rem",
       color: "white",
       textAlign: "left",
     },
