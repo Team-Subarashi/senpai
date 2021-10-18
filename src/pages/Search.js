@@ -12,12 +12,10 @@ export default function Search() {
           xs={12}
           style={{
             height: "5vh",
-          //   backgroundColor: "red"
           }}
         >
           <Filter />
         </Grid>
-        {/* <Grid item xs={2}></Grid> */}
         <Grid
           id="senpai-list"
           item
@@ -30,7 +28,6 @@ export default function Search() {
         >
           <SenpaiList />
         </Grid>
-        {/* <Grid item xs={2}></Grid> */}
       </Grid>
     </>
   );
