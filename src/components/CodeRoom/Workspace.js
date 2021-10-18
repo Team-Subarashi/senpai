@@ -26,13 +26,7 @@ export default function Workspace() {
       className="workspace"
       spacing={3}
       style={{
-<<<<<<< HEAD:src/components/CodeRoom/Workspace.js
-        height: "100%",
-        justifyContent: "space-around",
-        // backgroundColor: "red"
-=======
         height: "87vh",
->>>>>>> 0810f5ff8bad81dfa7f548bd592fc3239e85f5e3:src/pages/Workspace.js
       }}
     >
       <Grid
