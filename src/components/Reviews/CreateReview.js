@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useDebugValue } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -6,13 +6,24 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { FormControl, Select, MenuItem, InputLabel } from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import { makeStyles } from "@material-ui/core/styles";
+import { Rating } from "@material-ui/lab";
+import {
+  Grid,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@material-ui/core";
 import axios from "axios";
 
 const CreateReview = ({ lesson }) => {
-  console.log(lesson);
   const [open, setOpen] = React.useState(false);
-  const rate = React.useRef();
+  const [stateValue, setStateValue] = React.useState(2);
+  const [stateHover, setStateHover] = React.useState(-1);
+  const value = React.useRef(2);
+  const hover = React.useRef(-1);
   const review = React.useRef();
   const DropDown = () => {
     return (
@@ -22,7 +33,7 @@ const CreateReview = ({ lesson }) => {
             RATE
           </InputLabel>
           <Select>
-            <MenuItem onChange={(rate.current = 1)} value={1}>
+            <MenuItem onChange={console.log((rate.current = 1))} value={1}>
               1
             </MenuItem>
             <MenuItem onChange={(rate.current = 2)} value={2}>
@@ -42,7 +53,61 @@ const CreateReview = ({ lesson }) => {
       </>
     );
   };
+  const labels = {
+    0.5: "Useless",
+    1: "Useless+",
+    1.5: "Poor",
+    2: "Poor+",
+    2.5: "Ok",
+    3: "Ok+",
+    3.5: "Good",
+    4: "Good+",
+    4.5: "Excellent",
+    5: "Excellent+",
+  };
 
+  const useStyles = makeStyles({
+    root: {
+      width: 200,
+      display: "flex",
+      alignItems: "center",
+    },
+  });
+
+  const handleClick = (event, value) => {
+    console.log(event);
+    console.log(value);
+  };
+  function HoverRating() {
+    // const [value, setValue] = React.useState(2);
+    const classes = useStyles();
+
+    return (
+      <div className={classes.root}>
+        <Rating
+          name="hover-feedback"
+          value={value.current}
+          precision={0.5}
+          onClick={handleClick}
+          onChange={(event, newValue) => {
+            value.current = newValue;
+            console.log(value.current);
+          }}
+          onChangeActive={(event, newHover) => {
+            hover.current = newHover;
+            // setStateHover(newHover);
+            value.current = newHover;
+            // console.log(newHover);
+          }}
+        />
+        {/* {value.current !== null && (
+          <Box ml={2}>
+            {labels[hover.current !== -1 ? hover.current : value.current]}
+          </Box>
+        )} */}
+      </div>
+    );
+  }
   const FormDialog = () => {
     const handleClickOpen = () => {
       setOpen(true);
@@ -53,22 +118,33 @@ const CreateReview = ({ lesson }) => {
       console.log("closed");
     };
     const handleSubmit = () => {
+      // console.log(lesson);
       setOpen(false);
-      if (
-        typeof review.current === "string" &&
-        typeof rate.current === "number"
-      ) {
+      if (typeof review.current === "string" && typeof value === "number") {
         axios.post("/api/v1/reviews", {
-          rating: rate.current,
+          rating: value.current,
           review: review.current,
           kohaiId: lesson.kouhaiId,
           senpaiId: lesson.senpaiId,
+          avatar: lesson.avatar,
+          startDate: lesson.startDate,
+          endDate: lesson.endDate,
+          title: lesson.title,
         });
-        console.log(typeof review.current, typeof rate.current);
       } else {
         alert("Please add a correct review and rate.");
       }
-      rate.current = null;
+      // console.log({
+      //   rating: value,
+      //   review: review.current,
+      //   kohaiId: lesson.kouhaiId,
+      //   senpaiId: lesson.senpaiId,
+      //   avatar: lesson.avatar,
+      //   startDate: lesson.startDate,
+      //   endDate: lesson.endDate,
+      //   title: lesson.title,
+      // });
+      value.current = null;
       review.current = null;
     };
 
@@ -88,7 +164,7 @@ const CreateReview = ({ lesson }) => {
               To subscribe to this website, please enter your email address
               here. We will send updates occasionally.
             </DialogContentText>
-            <DropDown />
+            <HoverRating />
             <TextField
               autoFocus
               margin="dense"

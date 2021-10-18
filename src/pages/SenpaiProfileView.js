@@ -14,7 +14,6 @@ import InstagramIcon from "@material-ui/icons/Instagram";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ReviewList from "../components/Reviews/ReviewList";
-import { useRecoilState } from "recoil";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -80,29 +79,17 @@ export default function SenpaiProfileView({ match, location }) {
     location.state ? location.state.senpai : null
   );
 
-  const fetchData = async () => {
-    const response = await axios.get("/api/v1/users/" + match.params.id);
-    if (response.data) {
-      setSenpai(response.data);
-    }
-  };
-  const fetchReview = async () => {
-    const responseReview = await axios.get("/api/v1/reviews");
-    const allReviews = responseReview.data;
-    allReviews.map((review) => {
-      if (review.senpaiId === match.params.id) {
-        console.log(review);
-      } else {
-        console.log("review not found");
-      }
-    });
-  };
   useEffect(() => {
     if (match.params.id) {
+      const fetchData = async () => {
+        const response = await axios.get("/api/v1/users/" + match.params.id);
+        if (response.data) {
+          setSenpai(response.data);
+        }
+      };
       fetchData();
-      fetchReview();
     }
-  }, []);
+  }, [senpai]);
 
   return (
     <Container>
@@ -223,8 +210,8 @@ export default function SenpaiProfileView({ match, location }) {
                 ) : null}
               </Container>
             </Grid>
-            <Grid xs={12} style={{ height: "50vh", backgroundColor: "pink" }}>
-              <ReviewList />
+            <Grid xs={4} style={{ height: "50vh", overflow: "auto" }}>
+              <ReviewList senpai={senpai} />
             </Grid>
           </Grid>
         ) : (

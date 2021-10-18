@@ -205,7 +205,7 @@ export default function MyLessons() {
       });
 
       const filteredTemp = temp.filter((lesson) => {
-        return new Date(lesson.endDate) < new Date();
+        return new Date(lesson.endDate) > new Date();
       });
       const sortedTemp = filteredTemp.sort((a, b) => {
         return new Date(a.endDate) - new Date(b.endDate);
