@@ -53,13 +53,16 @@ const userSchema = new Schema({
   website: {
     type: String,
   },
+  introVideo: {
+    type: String,
+    default: "",
+  },
   interests: {
     type: String,
   },
   repositories: {
     type: [mongoose.ObjectId]
   }
-
 });
 
 module.exports = mongoose.model("user", userSchema);
