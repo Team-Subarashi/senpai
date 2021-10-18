@@ -10,12 +10,35 @@ import {
   MenuItem,
 } from "@mui/material";
 
+import makeStyles from "@material-ui/core/styles/makeStyles";
+
 import axios from "axios";
 
 import { useRecoilValue } from "recoil";
 import { userState } from "../atoms";
 
+const useStyles = makeStyles(() => ({
+  container: {
+    backgroundColor: "#424242",
+    margin: "1rem",
+  },
+  videoIframe: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+  },
+  videoDiv: {
+    position: "relative",
+    width: "100%",
+    height: 0,
+    paddingBottom: "56.25%",
+  },
+}));
+
 export default function SenpaiSettings() {
+  const classes = useStyles();
   const user = useRecoilValue(userState);
   const [senpaiCheck, setSenpaiCheck] = useState(false);
   const [skillOne, setSkillOne] = useState("");
@@ -67,7 +90,11 @@ export default function SenpaiSettings() {
   return (
     <Grid
       container
-      style={{ fontFamily: "Nunito", marginBottom: "17.75vh", height: "70vh" }}
+      style={{
+        fontFamily: "Nunito",
+        height: "100%",
+        backgroundColor: "pink",
+      }}
     >
       <Grid
         item
@@ -113,6 +140,7 @@ export default function SenpaiSettings() {
           padding: "0.5%",
           marginLeft: "25%",
           marginRight: "25%",
+          marginBottom: "2vh",
         }}
       >
         <Grid
@@ -220,19 +248,6 @@ export default function SenpaiSettings() {
               }}
             />
           </FormControl>
-          <FormControl>
-            <InputLabel style={{ color: "#fff" }}>
-              Introduction Video
-            </InputLabel>
-            <Input
-              id="video"
-              style={{ color: "#fff", marginBottom: "2vh" }}
-              value={video}
-              onChange={(e) => {
-                changeVideo(e.target.value);
-              }}
-            />
-          </FormControl>
 
           <Grid item xs={3} style={{ marginLeft: "40vw" }}>
             <Button
@@ -249,7 +264,6 @@ export default function SenpaiSettings() {
                     : null,
                 ];
                 let rate = [Number(document.getElementById("rate").value)];
-                let video = document.getElementById("video").value;
 
                 axios({
                   method: "patch",
@@ -258,7 +272,6 @@ export default function SenpaiSettings() {
                     isSenpai: senpaiCheck,
                     category: skills,
                     rates: rate,
-                    introVideo: video,
                   },
                 });
                 if (document.getElementById("skill-one").innerText !== "") {
@@ -297,10 +310,104 @@ export default function SenpaiSettings() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Save
+              Save Skills
             </Button>
-            <Button onClick={() => console.log(rate)}>Price Test</Button>
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        alignItems="center"
+        style={{
+          backgroundColor: "#424242",
+          borderRadius: "4px",
+          padding: "0.5%",
+          marginLeft: "25%",
+          marginRight: "25%",
+        }}
+      >
+        <Grid
+          item
+          xs={12}
+          style={{
+            marginLeft: "40%",
+            marginRight: "40%",
+            marginBottom: "2vh",
+            height: "5vh",
+            borderRadius: "4px",
+            backgroundColor: "#673AB7",
+          }}
+        >
+          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+            Video
+          </h2>
+        </Grid>
+
+        <FormControl style={{ width: "100%" }}>
+          <InputLabel style={{ color: "#fff" }}>Introduction Video</InputLabel>
+          <Input
+            id="video"
+            style={{ color: "#fff", marginBottom: "2vh" }}
+            value={video}
+            onChange={(e) => {
+              changeVideo(e.target.value);
+            }}
+          />
+        </FormControl>
+        <div className={classes.videoDiv}>
+          {user.introVideo ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${
+                user.introVideo.split("?v=")[1]
+              }`}
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className={classes.videoIframe}
+            ></iframe>
+          ) : null}
+        </div>
+        <Grid item xs={3} style={{ marginLeft: "40vw" }}>
+          <Button
+            onClick={() => {
+              let video = document.getElementById("video").value;
+
+              axios({
+                method: "patch",
+                url: `/api/v1/users/${user._id}`,
+                data: {
+                  introVideo: video,
+                },
+              });
+
+              let successMessage = document.createElement("div");
+              successMessage.innerText = "Settings updated!";
+              successMessage.style.color = "white";
+              successMessage.style.fontWeight = "bold";
+              successMessage.style.fontSize = "large";
+              successMessage.style.backgroundColor = "#4BB543";
+              successMessage.style.width = "33%";
+              successMessage.style.height = "5vh";
+              successMessage.style.marginLeft = "33%";
+              successMessage.style.paddingTop = "1vh";
+
+              document.getElementById("navbar").append(successMessage);
+
+              setTimeout(() => {
+                window.location.reload();
+              }, 750);
+            }}
+            style={{
+              height: "4vh",
+              width: "7vw",
+              backgroundColor: "#673AB7",
+              marginTop: "1vh",
+            }}
+          >
+            Save Video
+          </Button>
+          {/* <Button onClick={() => console.log(rate)}>Price Test</Button> */}
         </Grid>
       </Grid>
     </Grid>
