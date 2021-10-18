@@ -47,6 +47,10 @@ const userSchema = new Schema({
   website: {
     type: String,
   },
+  introVideo: {
+    type: String,
+    default: "",
+  },
 });
 
 module.exports = mongoose.model("user", userSchema);
