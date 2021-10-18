@@ -23,6 +23,26 @@ const style = () => ({
   },
 });
 
+const TimeTableCell = (
+  props
+) => (
+  <WeekView.TimeTableCell
+    {...props}
+    style={{ textAlign: "center", fontWeight: "bold", height: "50px" }}
+  />
+);
+const TimeScaleLabel = (props) => (
+  <WeekView.TimeScaleLabel
+    {...props}
+    style={{
+      textAlign: "center",
+      fontWeight: "bold",
+      height: "50px",
+      fontSize: "1.2rem",
+    }}
+  />
+);
+
 export default function Timetable({ senpaiLessons }) {
   const [schedulerData, setSchedulerData] = useState([]);
   const [category, setCategory] = useState("");
@@ -122,7 +142,13 @@ export default function Timetable({ senpaiLessons }) {
     <Paper>
       <Scheduler data={schedulerData}>
         <ViewState defaultCurrentDate={Date.now()} />
-        <WeekView startDayHour={9} endDayHour={24} cellDuration={60} />
+        <WeekView
+          startDayHour={9}
+          endDayHour={24}
+          cellDuration={60}
+          timeTableCellComponent={TimeTableCell}
+          timeScaleLabelComponent={TimeScaleLabel}
+        />
         <Appointments />
         <AppointmentTooltip contentComponent={Content} />
         <Toolbar />
