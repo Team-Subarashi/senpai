@@ -13,6 +13,9 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { repositoriesState } from "../atoms";
+
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -74,12 +77,15 @@ export default function SenpaiProfileView({ match, location }) {
   const [senpai, setSenpai] = useState(
     location.state ? location.state.senpai : null
   );
+  const repositories = useRecoilValue(repositoriesState);
+  const [userRepositories, setUserRepositories] = useState([]);
 
   const fetchData = async () => {
     const response = await axios.get("/api/v1/users/" + match.params.id);
     if (response.data) {
       setSenpai(response.data);
     }
+    setUserRepositories(repositories.filter((repository) => repository.userId === match.params.id));
   };
 
   useEffect(() => {
@@ -118,8 +124,17 @@ export default function SenpaiProfileView({ match, location }) {
                     </Link>
                   </Button>
                 </Grid>
-
                 <Grid container item className={classes.contactDetails}>
+                  <div style={{width: "100%", marginBottom: "1rem"}}>
+                    <Typography variant="h5">Skills:</Typography>
+                    <div style={{display: "flex", width: "100%", justifyContent: "space-evenly"}}>
+                      {senpai.category ? senpai.category.map((category) => (
+                        <Button key={category} variant="contained" color="primary" style={{padding: "0"}}>
+                          {category}
+                        </Button>
+                      )) : null}
+                    </div>
+                  </div>
                   {senpai.twitter ||
                   senpai.linkedIn ||
                   senpai.facebook ||
@@ -236,6 +251,26 @@ export default function SenpaiProfileView({ match, location }) {
                   {senpai.bio ? (
                     <Typography variant="h6" component="p">
                       {senpai.bio}
+                    </Typography>
+                  ) : null}
+                </Container>
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{ padding: "2rem" }}
+                >
+                  {userRepositories.length > 0 ? (
+                    <Typography variant="h3">Repositories</Typography>
+                  ) : null}
+                  {senpai.bio ? (
+                    <Typography variant="h6" component="p">
+                      {userRepositories.map((repository) => (
+                        <div style={{padding: "1rem"}} key={repository.url}>
+                          <Typography variant="h4" component="span">{repository.title} - </Typography>
+                          <Typography variant="h6" component="span">{repository.description}</Typography>
+                          <Typography variant="h6"><a href={repository.url}>{repository.url}</a></Typography>
+                        </div>
+                      ))}
                     </Typography>
                   ) : null}
                 </Container>
