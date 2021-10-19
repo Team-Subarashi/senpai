@@ -41,36 +41,36 @@ const NavBar = ({ user }) => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar className={classes.appbarWrapper}>
           <Link to={`/`} style={{ color: "white" }}>
-            <img src={logo} alt="senpai" height="50" width="auto" />
+            <img src={logo} alt="senpai" height="45" width="auto" />
           </Link>
           <Link
             to={user.name ? `/kouhai/${user._id}` : "/login"}
-            style={{ color: "white", fontSize: "1.3rem" }}
+            style={{ color: "white", fontSize: "1.2rem" }}
           >
               Profile
           </Link>
           <Link
             to={user._id ? `/myLessons` : "/login"}
-            style={{ color: "white", fontSize: "1.3rem" }}
+            style={{ color: "white", fontSize: "1.2rem" }}
           >
               My Lessons
           </Link>
-          <Link to={`/search`} style={{ color: "white", fontSize: "1.3rem" }}>
+          <Link to={`/search`} style={{ color: "white", fontSize: "1.2rem" }}>
               Find a Senpai
           </Link>
           {user.name ? (
-            <div style={{ color: "white", fontSize: "1.3rem" }}>{user.email}</div>
+            <div style={{ color: "white", fontSize: "1.2rem" }}>{user.email}</div>
           ) : (
-            <Link to="/signup" style={{ color: "white", fontSize: "1.3rem" }}>
+            <Link to="/signup" style={{ color: "white", fontSize: "1.2rem" }}>
                 Create an Account
             </Link>
           )}
           {!user.email ? (
-            <Link to="/login" style={{ color: "white", fontSize: "1.3rem" }}>
+            <Link to="/login" style={{ color: "white", fontSize: "1.2rem" }}>
                 Sign in
             </Link>
           ) : (
-            <Link to="/" onClick={signOutHandler} style={{ color: "white", fontSize: "1.3rem" }}>
+            <Link to="/" onClick={signOutHandler} style={{ color: "white", fontSize: "1.2rem" }}>
                 Sign Out
             </Link>
           )}
