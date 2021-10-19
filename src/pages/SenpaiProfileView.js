@@ -5,15 +5,20 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+// import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
+import GitHubIcon from "@material-ui/icons/GitHub";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { repositoriesState } from "../atoms";
 import ReviewList from "../components/Reviews/ReviewList";
+import { Rating } from "@material-ui/lab";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -32,8 +37,6 @@ const useStyles = makeStyles(() => ({
     maxWidth: "260px",
   },
   root: {
-    marginTop: "1rem",
-    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
@@ -69,25 +72,27 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "start",
+    marginBottom: "2rem",
   },
 }));
 
 export default function SenpaiProfileView({ match, location }) {
   const classes = useStyles();
-
   const [senpai, setSenpai] = useState(
     location.state ? location.state.senpai : null
   );
+  const repositories = useRecoilValue(repositoriesState);
+  const [userRepositories, setUserRepositories] = useState([]);
+
   const fetchData = async () => {
     const response = await axios.get("/api/v1/users/" + match.params.id);
     if (response.data) {
       setSenpai(response.data);
     }
+    setUserRepositories(
+      repositories.filter((repository) => repository.userId === match.params.id)
+    );
   };
-
-  useEffect(() => {
-    console.log(senpai);
-  }, [senpai]);
 
   useEffect(() => {
     if (match.params.id) {
@@ -95,9 +100,40 @@ export default function SenpaiProfileView({ match, location }) {
     }
   }, []);
 
+  //Review
+  const [averageScore, setAverageScore] = useState(0);
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchReviews = async () => {
+      const responseReview = await axios.get("/api/v1/reviews");
+      const reviews = responseReview.data;
+      const senpaiReviews = reviews.filter(
+        (review) => review.senpaiId === match.params.id
+      );
+
+      if (senpaiReviews.length === 0) {
+        senpaiReviews.push(0);
+        setAverageScore(
+          senpaiReviews.reduce((prevVal, currentVal) => {
+            return prevVal.rating + currentVal.rating;
+          }) / senpaiReviews.length
+        );
+      } else if (mounted && senpaiReviews.length !== 0) {
+        setAverageScore(
+          senpaiReviews.reduce((prevVal, currentVal) => {
+            return prevVal.rating + currentVal.rating;
+          }) / senpaiReviews.length
+        );
+      }
+      return () => (mounted = false);
+    };
+    fetchReviews();
+  }, []);
+
   return (
-    <Container>
-      <Box>
+    <Container style={{ height: "92vh" }}>
+      <Box style={{ height: "100%" }}>
         {senpai ? (
           <Grid container spacing={3} className={classes.root}>
             <Grid className={classes.aboutMe} container item xs={3}>
@@ -115,7 +151,7 @@ export default function SenpaiProfileView({ match, location }) {
               </Grid>
 
               <Grid item className={classes.aboutMeItem}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="secondary">
                   <Link
                     style={{ color: "white" }}
                     to={`/senpai/${match.params.id}/schedule`}
@@ -124,12 +160,44 @@ export default function SenpaiProfileView({ match, location }) {
                   </Link>
                 </Button>
               </Grid>
+              <Grid item className={classes.aboutMeItem}>
+                <Rating
+                  value={averageScore}
+                  name="rating"
+                  readOnly="true"
+                  precision={0.5}
+                />
+              </Grid>
 
               <Grid container item className={classes.contactDetails}>
+                <div style={{ width: "100%", marginBottom: "1rem" }}>
+                  <Typography variant="h5">Skills:</Typography>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    {senpai.category
+                      ? senpai.category.map((category) => (
+                          <Button
+                            key={category}
+                            variant="contained"
+                            color="primary"
+                            style={{ padding: "0" }}
+                          >
+                            {category}
+                          </Button>
+                        ))
+                      : null}
+                  </div>
+                </div>
                 {senpai.twitter ||
                 senpai.linkedIn ||
                 senpai.facebook ||
-                senpai.instagram ? (
+                senpai.instagram ||
+                senpai.github ? (
                   <Typography variant="h5">Socials:</Typography>
                 ) : null}
                 <div>
@@ -141,7 +209,7 @@ export default function SenpaiProfileView({ match, location }) {
                     ) : null}
                     {senpai.linkedIn ? (
                       <a>
-                        <LinkedInIcon />{" "}
+                        <LinkedInIcon />
                       </a>
                     ) : null}
                     {senpai.facebook ? (
@@ -154,13 +222,26 @@ export default function SenpaiProfileView({ match, location }) {
                         <InstagramIcon />
                       </a>
                     ) : null}
+                    {senpai.github ? (
+                      <a
+                        target="_blank"
+                        href={`${senpai.github}`}
+                        rel="noreferrer"
+                      >
+                        <Button>
+                          <GitHubIcon />
+                        </Button>
+                      </a>
+                    ) : null}
                   </Typography>
                 </div>
                 {senpai.email ? (
                   <div>
                     <Typography variant="h5">Email:</Typography>
                     <Typography variant="h6">
-                      <a href={senpai.email}>{senpai.email}</a>
+                      <a href={senpai.email} style={{ color: "#2ac3de" }}>
+                        {senpai.email}
+                      </a>
                     </Typography>
                   </div>
                 ) : null}
@@ -176,19 +257,21 @@ export default function SenpaiProfileView({ match, location }) {
                       Personal Website:
                     </Typography>
                     <Typography variant="h6">
-                      <a href={senpai.website}>{senpai.website}</a>
+                      <a href={senpai.website} style={{ color: "#2ac3de" }}>
+                        {senpai.website}
+                      </a>
                     </Typography>
                   </div>
                 ) : null}
               </Grid>
             </Grid>
             <Grid container xs={8} className={classes.right}>
-              <Container
-                fixed
-                className={classes.container}
-                style={{ padding: "1rem" }}
-              >
-                {senpai.introVideo ? (
+              {senpai.introVideo ? (
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{ padding: "1rem" }}
+                >
                   <div className={classes.videoDiv}>
                     <iframe
                       src={`https://www.youtube.com/embed/${
@@ -201,27 +284,68 @@ export default function SenpaiProfileView({ match, location }) {
                       className={classes.videoIframe}
                     ></iframe>
                   </div>
-                ) : (
-                  <p>No Video Found</p>
-                )}
-              </Container>
+                </Container>
+              ) : null}
+              {senpai.bio ? (
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{ padding: "2rem" }}
+                >
+                  <Typography variant="h3">About me</Typography>
+                  <Typography variant="h6" component="p">
+                    {senpai.bio}
+                  </Typography>
+                </Container>
+              ) : null}
+              {userRepositories.length > 0 ? (
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{ padding: "2rem" }}
+                >
+                  {userRepositories.length > 0 ? (
+                    <Typography variant="h3">Repositories</Typography>
+                  ) : null}
+
+                  <Typography variant="h6" component="p">
+                    {userRepositories.map((repository) => (
+                      <div style={{ padding: "1rem" }} key={repository.url}>
+                        <Typography
+                          variant="h4"
+                          component="span"
+                          style={{ color: "#9ece6a" }}
+                        >
+                          {repository.title}
+                        </Typography>
+                        <Typography variant="h4" component="span">
+                          -
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          component="span"
+                          style={{ fontStyle: "italic" }}
+                        >
+                          {repository.description}
+                        </Typography>
+                        <Typography variant="h6">
+                          <a style={{ color: "#2ac3de" }} href={repository.url}>
+                            {repository.url}
+                          </a>
+                        </Typography>
+                      </div>
+                    ))}
+                  </Typography>
+                </Container>
+              ) : null}
               <Container
                 fixed
                 className={classes.container}
                 style={{ padding: "2rem" }}
               >
-                {senpai.bio ? (
-                  <Typography variant="h3">About me</Typography>
-                ) : null}
-                {senpai.bio ? (
-                  <Typography variant="h6" component="p">
-                    {senpai.bio}
-                  </Typography>
-                ) : null}
-              </Container>
-              <Grid xs={4} style={{ height: "50vh", overflow: "auto" }}>
+                <Typography variant="h3">Reviews</Typography>
                 <ReviewList senpai={senpai} />
-              </Grid>
+              </Container>
             </Grid>
           </Grid>
         ) : (

@@ -102,8 +102,8 @@ export default function SenpaiSettings() {
         style={{
           fontSize: "1.8rem",
           paddingTop: "0.5vh",
-          marginLeft: "35%",
-          marginRight: "35%",
+          marginLeft: "33vw",
+          marginRight: "33vw",
           marginTop: "5vh",
           marginBottom: "2vh",
           height: "3rem",
@@ -112,9 +112,7 @@ export default function SenpaiSettings() {
           width: "15rem",
         }}
       >
-        {/* <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}> */}
         Senpai Settings
-        {/* </h1> */}
       </Grid>
       <Grid item xs={12}>
         <Checkbox
