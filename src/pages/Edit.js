@@ -97,7 +97,7 @@ export default function Edit() {
           }}
         >
           <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}>
-            Edit Profile
+            Socials
           </h1>
         </Grid>
         <Grid container direction="column">
@@ -212,7 +212,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Update Profile
+              Update
             </Button>
           </Grid>
         </Grid>
@@ -310,7 +310,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Update Bio
+              Update
             </Button>
           </Grid>
         </Grid>
@@ -326,7 +326,7 @@ export default function Edit() {
           marginLeft: "25%",
           marginRight: "25%",
           marginTop: "2vh",
-          // marginBottom: "2vh",
+          marginBottom: "5vh",
         }}
       >
         <Grid
@@ -345,7 +345,7 @@ export default function Edit() {
             Are you a senpai?
           </h2>
         </Grid>
-        <Grid item xs={12} style={{ fontSize: "large" }}>
+        <Grid item xs={12} style={{ fontSize: "large", marginBottom: "2vh" }}>
           Are you looking to spread some knowledge?
           <br />
           <br />
@@ -364,7 +364,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Senpai Settings
+              Settings
             </Button>
           </Link>
         </Grid>

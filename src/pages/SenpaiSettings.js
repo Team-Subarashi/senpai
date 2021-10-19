@@ -309,7 +309,7 @@ export default function SenpaiSettings() {
                 marginTop: "1vh",
               }}
             >
-              Save Skills
+              Update
             </Button>
           </Grid>
         </Grid>
@@ -322,6 +322,7 @@ export default function SenpaiSettings() {
           borderRadius: "4px",
           padding: "1%",
           height: "55vh",
+          marginBottom: "5vh",
         }}
       >
         <Grid
@@ -408,7 +409,7 @@ export default function SenpaiSettings() {
               }, 750);
             }}
           >
-            Save Video
+            Update
           </Button>
         </Grid>
       </Grid>

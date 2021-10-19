@@ -64,10 +64,10 @@ export default function Info() {
             backgroundColor: "pink",
           }}
         >
-          <img
+          {/* <img
             src="https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-9/72750529_2927365680624885_9078900207579561984_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=u9qvgKq2AmkAX_j31Kp&_nc_ht=scontent-nrt1-1.xx&oh=684fd3e88d8fdedfae65baefc63642d3&oe=618EA439"
             style={{ height: "100%" }}
-          />
+          /> */}
           <p>Our Vision</p>
           <p>We envision a world where everyone is a programmer.</p>
         </Grid>
@@ -83,10 +83,10 @@ export default function Info() {
             backgroundColor: "pink",
           }}
         >
-          <img
+          {/* <img
             src="https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-9/72750529_2927365680624885_9078900207579561984_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=u9qvgKq2AmkAX_j31Kp&_nc_ht=scontent-nrt1-1.xx&oh=684fd3e88d8fdedfae65baefc63642d3&oe=618EA439"
             style={{ height: "100%" }}
-          />
+          /> */}
           <p>Our Mission</p>
           <p>World domination, starting with one webpage at a time.</p>
         </Grid>
