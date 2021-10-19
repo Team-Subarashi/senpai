@@ -224,20 +224,19 @@ export default function SenpaiProfileView({ match, location }) {
                   </div>
                 </Container>
               ) : null}
-              <Container
-                fixed
-                className={classes.container}
-                style={{ padding: "2rem" }}
-              >
-                {senpai.bio ? (
+              {senpai.bio ? (
+
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{ padding: "2rem" }}
+                >
                   <Typography variant="h3">About me</Typography>
-                ) : null}
-                {senpai.bio ? (
                   <Typography variant="h6" component="p">
                     {senpai.bio}
                   </Typography>
-                ) : null}
-              </Container>
+                </Container>
+              ) : null}
               {userRepositories.length > 0 ? (
                 <Container
                   fixed
@@ -251,7 +250,7 @@ export default function SenpaiProfileView({ match, location }) {
                   <Typography variant="h6" component="p">
                     {userRepositories.map((repository) => (
                       <div style={{padding: "1rem"}} key={repository.url}>
-                        <Typography variant="h4" component="span" style={{color: "lightgreen"}}>{repository.title} - </Typography>
+                        <Typography variant="h4" component="span" style={{color: "#9ece6a"}}>{repository.title} - </Typography>
                         <Typography variant="h4" component="span"> - </Typography>
                         <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
                         <Typography variant="h6">
@@ -267,9 +266,13 @@ export default function SenpaiProfileView({ match, location }) {
 
                 </Container>
               ) : null}
-              <Grid xs={4} style={{ height: "50vh", overflow: "auto" }}>
+              <Container
+                fixed
+                className={classes.container}
+                style={{ padding: "2rem" }}
+              >
                 <ReviewList senpai={senpai} />
-              </Grid>
+              </Container>
             </Grid>
           </Grid>
         ) : (

@@ -190,7 +190,7 @@ const Kohai = () => {
                     <Typography variant="h6" component="p">
                       {userRepositories.map((repository) => (
                         <div style={{padding: "1rem"}} key={repository.url}>
-                          <Typography variant="h4" component="span" style={{color: "lightgreen"}}>{repository.title}</Typography>
+                          <Typography variant="h4" component="span" style={{color: "#9ece6a"}}>{repository.title}</Typography>
                           <Typography variant="h4" component="span"> - </Typography>
                           <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
                           <Typography variant="h6"><a href={repository.url} style={{color: "#2ac3de"}}>{repository.url}</a></Typography>
