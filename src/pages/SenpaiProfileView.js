@@ -11,6 +11,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
@@ -138,7 +139,8 @@ export default function SenpaiProfileView({ match, location }) {
                   {senpai.twitter ||
                   senpai.linkedIn ||
                   senpai.facebook ||
-                  senpai.instagram ? (
+                  senpai.instagram ||
+                  senpai.github ? (
                       <Typography variant="h5">Socials:</Typography>
                     ) : null}
                   <div>
@@ -184,6 +186,17 @@ export default function SenpaiProfileView({ match, location }) {
                         >
                           <Button>
                             <InstagramIcon />
+                          </Button>
+                        </a>
+                      ) : null}
+                      {senpai.github ? (
+                        <a
+                          target="_blank"
+                          href={`${senpai.github}`}
+                          rel="noreferrer"
+                        >
+                          <Button>
+                            <GitHubIcon />
                           </Button>
                         </a>
                       ) : null}
@@ -254,15 +267,17 @@ export default function SenpaiProfileView({ match, location }) {
                     </Typography>
                   ) : null}
                 </Container>
-                <Container
-                  fixed
-                  className={classes.container}
-                  style={{ padding: "2rem" }}
-                >
-                  {userRepositories.length > 0 ? (
-                    <Typography variant="h3">Repositories</Typography>
-                  ) : null}
-                  {senpai.bio ? (
+
+                {senpai.repositories.length > 0 ? (
+                  <Container
+                    fixed
+                    className={classes.container}
+                    style={{ padding: "2rem" }}
+                  >
+                    {userRepositories.length > 0 ? (
+                      <Typography variant="h3">Repositories</Typography>
+                    ) : null}
+
                     <Typography variant="h6" component="p">
                       {userRepositories.map((repository) => (
                         <div style={{padding: "1rem"}} key={repository.url}>
@@ -272,8 +287,10 @@ export default function SenpaiProfileView({ match, location }) {
                         </div>
                       ))}
                     </Typography>
-                  ) : null}
-                </Container>
+
+                  </Container>
+                ) : null}
+
               </Grid>
             </Grid>
           ) : (
