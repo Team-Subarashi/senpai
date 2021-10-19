@@ -70,6 +70,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "start",
+    marginBottom: "2rem"
   },
 }));
 
@@ -268,7 +269,7 @@ export default function SenpaiProfileView({ match, location }) {
                   ) : null}
                 </Container>
 
-                {senpai.repositories.length > 0 ? (
+                {userRepositories.length > 0 ? (
                   <Container
                     fixed
                     className={classes.container}

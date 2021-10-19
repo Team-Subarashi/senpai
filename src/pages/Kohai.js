@@ -11,6 +11,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { useRecoilValue } from "recoil";
 import { userState, repositoriesState } from "../atoms";
 
@@ -105,7 +106,7 @@ const Kohai = () => {
                   </Grid>
                 </Grid>
                 <Grid className={classes.details}>
-                  {user.twitter || user.linkedIn || user.facebook ? (
+                  {user.twitter || user.linkedIn || user.facebook || user.instagram || user.github ? (
                     <Typography variant="h5" component="div">
                       Socials:
                       <div>
@@ -150,6 +151,17 @@ const Kohai = () => {
                           >
                             <Button>
                               <InstagramIcon />
+                            </Button>
+                          </a>
+                        ) : null}
+                        {user.github ? (
+                          <a
+                            target="_blank"
+                            href={`${user.github}`}
+                            rel="noreferrer"
+                          >
+                            <Button>
+                              <GitHubIcon />
                             </Button>
                           </a>
                         ) : null}
@@ -198,19 +210,21 @@ const Kohai = () => {
                     {user.interests}
                   </Typography>
                 </Grid>
-                <Grid item className={classes.rightItem}>
-                  <Typography variant="h3">Repositories</Typography>
-                  <Typography variant="h6" component="p">
-                    {userRepositories.map((repository) => (
-                      <div style={{padding: "1rem"}} key={repository.url}>
-                        <Typography variant="h4" component="span">{repository.title} - </Typography>
-                        <Typography variant="h6" component="span">{repository.description}</Typography>
-                        <Typography variant="h6"><a href={repository.url}>{repository.url}</a></Typography>
 
-                      </div>
-                    ))}
-                  </Typography>
-                </Grid>
+                {userRepositories.length > 0 ?
+                  <Grid item className={classes.rightItem}>
+                    <Typography variant="h3">Repositories</Typography>
+                    <Typography variant="h6" component="p">
+                      {userRepositories.map((repository) => (
+                        <div style={{padding: "1rem"}} key={repository.url}>
+                          <Typography variant="h4" component="span">{repository.title} - </Typography>
+                          <Typography variant="h6" component="span">{repository.description}</Typography>
+                          <Typography variant="h6"><a href={repository.url}>{repository.url}</a></Typography>
+                        </div>
+                      ))}
+                    </Typography>
+                  </Grid>
+                  : null }
               </Grid>
             </Grid>
           </Grid>
