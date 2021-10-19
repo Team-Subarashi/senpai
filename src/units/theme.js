@@ -1,24 +1,24 @@
-import createTheme  from '@material-ui/core/styles/createTheme';
+import createTheme from "@material-ui/core/styles/createTheme";
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
-      main: '#6737b8',
+      main: "#6737b8",
     },
     secondary: {
-      main: "#2ac3de"
+      main: "#2ac3de",
     },
     background: {
       // default: '#616161'
-      default: '#23242D'
+      default: "#23242D",
     },
-    type: 'dark',
+    type: "dark",
   },
   contrastThreshhold: 3,
   tonalOffset: 0.2,
   shape: {
-    borderRadius: "4px"
+    borderRadius: "4px",
   },
   spacing: 4,
   typography: {
@@ -33,7 +33,6 @@ const theme = createTheme({
       fontSize: "2.5rem",
       color: "white",
       textAlign: "left",
-
     },
     h2: {
       fontSize: "2rem",
@@ -66,9 +65,9 @@ const theme = createTheme({
     MuiAppBar: {
       defaultProps: {
         enableColorOnDark: true,
-      }
-    }
-  }
+      },
+    },
+  },
 });
 
 export default theme;

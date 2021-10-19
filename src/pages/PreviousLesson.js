@@ -3,12 +3,8 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import CreateReview from "../components/Reviews/CreateReview";
 import {
-  FormControl,
-  Select,
-  MenuItem,
   Avatar,
   // Typography,
-  InputLabel,
 } from "@material-ui/core";
 
 const PreviousLesson = ({ lesson }) => {

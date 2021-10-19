@@ -1,7 +1,6 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
@@ -12,10 +11,9 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
-import GitHubIcon from '@material-ui/icons/GitHub';
+import GitHubIcon from "@material-ui/icons/GitHub";
 import { useRecoilValue } from "recoil";
 import { userState, repositoriesState } from "../atoms";
-
 
 const useStyles = makeStyles(() => ({
   main: {
@@ -49,7 +47,6 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#424242",
     marginBottom: "1rem",
     padding: "1rem",
-
   },
 }));
 
@@ -60,7 +57,9 @@ const Kohai = () => {
   const classes = useStyles();
 
   React.useEffect(() => {
-    setUserRepositories(repositories.filter((repository) => repository.userId === user._id));
+    setUserRepositories(
+      repositories.filter((repository) => repository.userId === user._id)
+    );
   }, [repositories]);
 
   return (
@@ -107,35 +106,69 @@ const Kohai = () => {
                   </Grid>
                 </Grid>
                 <Grid className={classes.details}>
-                  {user.twitter || user.linkedIn || user.facebook || user.instagram || user.github ? (
+                  {user.twitter ||
+                  user.linkedIn ||
+                  user.facebook ||
+                  user.instagram ||
+                  user.github ? (
                     <Typography variant="h5" component="div">
                       Socials:
                       <div>
                         {user.twitter ? (
-                          <IconButton>
-                            <TwitterIcon />
-                          </IconButton>
+                          <a
+                            target="_blank"
+                            href={`${user.twitter}`}
+                            rel="noreferrer"
+                          >
+                            <Button>
+                              <TwitterIcon />
+                            </Button>
+                          </a>
                         ) : null}
                         {user.linkedIn ? (
-                          <IconButton>
-                            <LinkedInIcon />
-                          </IconButton>
+                          <a
+                            target="_blank"
+                            href={`${user.linkedIn}`}
+                            rel="noreferrer"
+                          >
+                            <Button>
+                              <LinkedInIcon />
+                            </Button>
+                          </a>
                         ) : null}
                         {user.facebook ? (
-                          <IconButton>
-                            <FacebookIcon />
-                          </IconButton>
+                          <a
+                            target="_blank"
+                            href={`${user.facebook}`}
+                            rel="noreferrer"
+                          >
+                            <Button>
+                              <FacebookIcon />
+                            </Button>
+                          </a>
                         ) : null}
                         {user.instagram ? (
-                          <IconButton>
-                            <InstagramIcon />
-                          </IconButton>
+                          <a
+                            target="_blank"
+                            href={`${user.instagram}`}
+                            rel="noreferrer"
+                          >
+                            <Button>
+                              <InstagramIcon />
+                            </Button>
+                          </a>
                         ) : null}
+                        {/* Fix to match others later */}
                         {user.github ? (
-
-                          <IconButton>
-                            <GitHubIcon />
-                          </IconButton>
+                          <a
+                            target="_blank"
+                            href={`${user.github}`}
+                            rel="noreferrer"
+                          >
+                            <Button>
+                              <GitHubIcon />
+                            </Button>
+                          </a>
                         ) : null}
                       </div>
                     </Typography>
@@ -144,7 +177,9 @@ const Kohai = () => {
                     <div>
                       <Typography variant="h5">Email:</Typography>
                       <Typography variant="h6">
-                        <a href={user.email} style={{color: "#2ac3de"}}>{user.email}</a>
+                        <a href={user.email} style={{ color: "#2ac3de" }}>
+                          {user.email}
+                        </a>
                       </Typography>
                     </div>
                   ) : null}
@@ -156,9 +191,8 @@ const Kohai = () => {
                           target="_blank"
                           href={`${user.website}`}
                           rel="noreferrer"
-                          style={{color: "#2ac3de"}}
                         >
-                          {user.website}
+                          <a>{user.website}</a>
                         </a>
                       </Typography>
                     </div>
@@ -184,21 +218,42 @@ const Kohai = () => {
                   </Typography>
                 </Grid>
 
-                {userRepositories.length > 0 ?
+                {userRepositories.length > 0 ? (
                   <Grid item className={classes.rightItem}>
                     <Typography variant="h3">Repositories</Typography>
                     <Typography variant="h6" component="p">
                       {userRepositories.map((repository) => (
-                        <div style={{padding: "1rem"}} key={repository.url}>
-                          <Typography variant="h4" component="span" style={{color: "#9ece6a"}}>{repository.title}</Typography>
-                          <Typography variant="h4" component="span"> - </Typography>
-                          <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
-                          <Typography variant="h6"><a href={repository.url} style={{color: "#2ac3de"}}>{repository.url}</a></Typography>
+                        <div style={{ padding: "1rem" }} key={repository.url}>
+                          <Typography
+                            variant="h4"
+                            component="span"
+                            style={{ color: "#9ece6a" }}
+                          >
+                            {repository.title}
+                          </Typography>
+                          <Typography variant="h4" component="span">
+                            -
+                          </Typography>
+                          <Typography
+                            variant="h6"
+                            component="span"
+                            style={{ fontStyle: "italic" }}
+                          >
+                            {repository.description}
+                          </Typography>
+                          <Typography variant="h6">
+                            <a
+                              href={repository.url}
+                              style={{ color: "#2ac3de" }}
+                            >
+                              {repository.url}
+                            </a>
+                          </Typography>
                         </div>
                       ))}
                     </Typography>
                   </Grid>
-                  : null }
+                ) : null}
               </Grid>
             </Grid>
           </Grid>

@@ -21,7 +21,7 @@ let port;
 if (process.env.NODE_ENV === "production") {
   port = process.env.PORT;
 } else {
-  port = 8081;
+  port = 8083;
 }
 
 let socket_port = process.env.SOCKET_PORT;

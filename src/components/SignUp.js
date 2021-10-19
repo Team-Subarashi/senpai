@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Container from '@material-ui/core/Container';
-import { getAuth, createUserWithEmailAndPassword, signOut } from '@firebase/auth';
-import { Link, useHistory } from 'react-router-dom';
-import Grid from '@material-ui/core/Grid';
-import Alert from '@material-ui/lab/Alert';
-import axios from 'axios';
-import Vanta from "../components/Vanta";
-
+import React, { useState } from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import Container from "@material-ui/core/Container";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signOut,
+} from "@firebase/auth";
+import { Link, useHistory } from "react-router-dom";
+import Grid from "@material-ui/core/Grid";
+import Alert from "@material-ui/lab/Alert";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    border: '1px solid',
-    borderColor: 'gray',
-    padding: theme.spacing(9)
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    border: "1px solid",
+    borderColor: "gray",
+    padding: theme.spacing(9),
   },
   avatar: {
     margin: theme.spacing(1),
@@ -37,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   signUpText: {
-    color: "#fff"
-  }
+    color: "#fff",
+  },
 }));
 
 export default function SignUp() {
@@ -83,16 +85,19 @@ export default function SignUp() {
           data: {
             name: name,
             email: email,
-            authId: userCredential.user.uid
-          }
+            authId: userCredential.user.uid,
+          },
         });
-        signOut(auth).then(() => {  // TEMPORARY BUGFIX FOR CREATE ACCOUNT NOT PROPERLY LOGGING IN
-          // Sign-out successful.
-        }).catch((error) => {
-          // An error happened.
-          console.log(error);
-        });
-        history.push('/login');
+        signOut(auth)
+          .then(() => {
+            // TEMPORARY BUGFIX FOR CREATE ACCOUNT NOT PROPERLY LOGGING IN
+            // Sign-out successful.
+          })
+          .catch((error) => {
+            // An error happened.
+            console.log(error);
+          });
+        history.push("/login");
         // ...
       })
       .catch((error) => {

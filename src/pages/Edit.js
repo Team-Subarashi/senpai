@@ -16,15 +16,13 @@ import {
 import axios from "axios";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userState, repositoriesState } from "../atoms";
-import { makeStyles } from '@material-ui/core/styles';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { makeStyles } from "@material-ui/core/styles";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import IconButton from "@material-ui/core/IconButton";
 
-
 const useStyles = makeStyles(() => ({
-  addRepo: {
-  }
+  addRepo: {},
 }));
 
 export default function Edit() {
@@ -35,13 +33,15 @@ export default function Edit() {
   // const [website, setWebsite] = useState("Personal Website");
   const [repositories, setRepositories] = useRecoilState(repositoriesState);
   const [userRepositories, setUserRepositories] = React.useState([]);
-  const [repoTitle, setRepoTitle] = React.useState('');
-  const [repoUrl, setRepoUrl] = React.useState('');
-  const [repoDesc, setRepoDesc] = React.useState('');
+  const [repoTitle, setRepoTitle] = React.useState("");
+  const [repoUrl, setRepoUrl] = React.useState("");
+  const [repoDesc, setRepoDesc] = React.useState("");
   const classes = useStyles();
 
   useEffect(() => {
-    setUserRepositories(repositories.filter((repository) => repository.userId === user._id));
+    setUserRepositories(
+      repositories.filter((repository) => repository.userId === user._id)
+    );
   }, [repositories]);
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function Edit() {
     });
     const repos = await axios({
       method: "get",
-      url: `/api/v1/repositories`
+      url: `/api/v1/repositories`,
     });
     if (repos.data) {
       setRepositories(repos.data);
@@ -113,7 +113,7 @@ export default function Edit() {
     await axios.delete(`/api/v1/repositories/${id}`);
     const repos = await axios({
       method: "get",
-      url: `/api/v1/repositories`
+      url: `/api/v1/repositories`,
     });
     if (repos.data) {
       setRepositories(repos.data);
@@ -157,15 +157,20 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
-            marginTop: "5vh",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}>
-            Edit Profile
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
+            Socials
           </h1>
         </Grid>
         <Grid container direction="column">
@@ -291,7 +296,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Update Profile
+              Update
             </Button>
           </Grid>
         </Grid>
@@ -316,15 +321,21 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Bio
-          </h2>
+          </h1>
         </Grid>
         <Grid container direction="column">
           <Box>
@@ -389,7 +400,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Update Bio
+              Update
             </Button>
           </Grid>
         </Grid>
@@ -474,7 +485,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Update Interests
+              Update
             </Button>
           </Grid>
         </Grid>
@@ -508,11 +519,22 @@ export default function Edit() {
             Repositories
           </h2>
         </Grid>
-        <div style={{width: "100%"}}>
+        <div style={{ width: "100%" }}>
           {userRepositories.map((repository) => (
-            <div key={repository.url} style={{display: "flex", alignItems: "center", justifyContent: "space-evenly"}}>
-              <Typography variant="h5" component="span">{repository.title}</Typography>
-              <Typography variant="h5" component="span">{repository.url}</Typography>
+            <div
+              key={repository.url}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <Typography variant="h5" component="span">
+                {repository.title}
+              </Typography>
+              <Typography variant="h5" component="span">
+                {repository.url}
+              </Typography>
               {/* <span>{repository.description}</span> */}
               <IconButton onClick={() => removeRepoHandler(repository._id)}>
                 <RemoveCircleIcon />
@@ -520,10 +542,37 @@ export default function Edit() {
             </div>
           ))}
         </div>
-        <form className={classes.addRepo} noValidate autoComplete="off" style={{display: "flex", alignItems: "center", justifyContent: "space-evenly", width: "100%"}}>
-          <TextField id="title" label="Title" variant="filled" required={true} onChange={repoTitleHandler}/>
-          <TextField id="URL" label="URL" variant="filled" required={true} onChange={repoUrlHandler}/>
-          <TextField id="description" label="Description" variant="filled" onChange={repoDescHandler}/>
+        <form
+          className={classes.addRepo}
+          noValidate
+          autoComplete="off"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            width: "100%",
+          }}
+        >
+          <TextField
+            id="title"
+            label="Title"
+            variant="filled"
+            required={true}
+            onChange={repoTitleHandler}
+          />
+          <TextField
+            id="URL"
+            label="URL"
+            variant="filled"
+            required={true}
+            onChange={repoUrlHandler}
+          />
+          <TextField
+            id="description"
+            label="Description"
+            variant="filled"
+            onChange={repoDescHandler}
+          />
           <AddCircleIcon fontSize="large" onClick={() => addRepoHandler()} />
         </form>
       </Grid>
@@ -538,26 +587,30 @@ export default function Edit() {
           marginLeft: "25%",
           marginRight: "25%",
           marginTop: "2vh",
-          // marginBottom: "2vh",
+          marginBottom: "5vh",
         }}
       >
         <Grid
           item
           xs={12}
           style={{
-            marginLeft: "40%",
-            marginRight: "40%",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Are you a senpai?
-          </h2>
+          </h1>
         </Grid>
-        <Grid item xs={12} style={{ fontSize: "large" }}>
+        <Grid item xs={12} style={{ fontSize: "large", marginBottom: "2vh" }}>
           Are you looking to spread some knowledge?
           <br />
           <br />
@@ -576,7 +629,7 @@ export default function Edit() {
                 backgroundColor: "#673AB7",
               }}
             >
-              Senpai Settings
+              Settings
             </Button>
           </Link>
         </Grid>

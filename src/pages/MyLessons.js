@@ -26,9 +26,7 @@ import PreviousLesson from "./PreviousLesson";
 import "../App.css";
 import Container from "@material-ui/core/Container";
 
-const TimeTableCell = (
-  props
-) => (
+const TimeTableCell = (props) => (
   <WeekView.TimeTableCell
     {...props}
     style={{ textAlign: "center", fontWeight: "bold", height: "50px" }}
@@ -189,9 +187,9 @@ export default function MyLessons() {
         lesson.title =
           lesson.senpaiId === user._id
             ? lesson.selectedCategory
-              ? `Senpai Lesson: ${lesson.selectedCategory}`
-              : `Senpai Lesson`
-            : `Kohai Lesson: ${lesson.selectedCategory}`;
+              ? `${lesson.selectedCategory} Lesson`
+              : `Unbooked`
+            : `${lesson.selectedCategory} Lesson`;
         lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
         return lesson;
       });
@@ -241,7 +239,6 @@ export default function MyLessons() {
             >
               Join Room
             </Button>
-            <Button onClick={() => console.log(appointmentData)}>Test</Button>
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>
@@ -259,10 +256,10 @@ export default function MyLessons() {
 
   if (user.isSenpai === true) {
     return (
-      <Container style={{ padding: "3vw" }}>
+      <Container style={{ padding: "2vw" }}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <Paper elevation={24}>
                 <Scheduler data={schedulerData}>
                   <ViewState defaultCurrentDate={Date.now()} />
@@ -284,7 +281,7 @@ export default function MyLessons() {
                 </Scheduler>
               </Paper>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <div
                 style={{
                   display: "flex",

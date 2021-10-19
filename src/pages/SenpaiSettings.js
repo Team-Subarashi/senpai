@@ -100,20 +100,19 @@ export default function SenpaiSettings() {
         item
         xs={12}
         style={{
-          fontSize: "large",
-          paddingTop: "1.25vh",
-          marginLeft: "40%",
-          marginRight: "40%",
+          fontSize: "1.8rem",
+          paddingTop: "0.5vh",
+          marginLeft: "33vw",
+          marginRight: "33vw",
           marginTop: "5vh",
           marginBottom: "2vh",
-          height: "5vh",
+          height: "3rem",
           borderRadius: "4px",
           backgroundColor: "#673AB7",
+          width: "15rem",
         }}
       >
-        {/* <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}> */}
         Senpai Settings
-        {/* </h1> */}
       </Grid>
       <Grid item xs={12}>
         <Checkbox
@@ -145,17 +144,21 @@ export default function SenpaiSettings() {
           item
           xs={12}
           style={{
-            marginLeft: "40%",
-            marginRight: "40%",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Skills
-          </h2>
+          </h1>
         </Grid>
         <Grid container direction="column">
           <Box>
@@ -309,7 +312,7 @@ export default function SenpaiSettings() {
                 marginTop: "1vh",
               }}
             >
-              Save Skills
+              Update
             </Button>
           </Grid>
         </Grid>
@@ -322,22 +325,28 @@ export default function SenpaiSettings() {
           borderRadius: "4px",
           padding: "1%",
           height: "55vh",
+          marginBottom: "5vh",
         }}
       >
         <Grid
           item
           xs={12}
           style={{
-            marginLeft: "40%",
-            marginRight: "40%",
+            marginTop: "1vh",
+            marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Video
-          </h2>
+          </h1>
         </Grid>
 
         <FormControl style={{ width: "100%" }}>
@@ -408,7 +417,7 @@ export default function SenpaiSettings() {
               }, 750);
             }}
           >
-            Save Video
+            Update
           </Button>
         </Grid>
       </Grid>

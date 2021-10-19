@@ -1,4 +1,4 @@
-import React, { useDebugValue } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -6,16 +6,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import { Rating } from "@material-ui/lab";
-import {
-  Grid,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
-} from "@material-ui/core";
 import axios from "axios";
 
 const CreateReview = ({ lesson }) => {
@@ -24,18 +16,18 @@ const CreateReview = ({ lesson }) => {
   // const [stateHover, setStateHover] = React.useState(-1);
   const review = React.useRef();
   //if we want labels for the stars
-  const labels = {
-    0.5: "Useless",
-    1: "Useless+",
-    1.5: "Poor",
-    2: "Poor+",
-    2.5: "Ok",
-    3: "Ok+",
-    3.5: "Good",
-    4: "Good+",
-    4.5: "Excellent",
-    5: "Excellent+",
-  };
+  // const labels = {
+  //   0.5: "Useless",
+  //   1: "Useless+",
+  //   1.5: "Poor",
+  //   2: "Poor+",
+  //   2.5: "Ok",
+  //   3: "Ok+",
+  //   3.5: "Good",
+  //   4: "Good+",
+  //   4.5: "Excellent",
+  //   5: "Excellent+",
+  // };
 
   const useStyles = makeStyles({
     root: {
@@ -45,10 +37,6 @@ const CreateReview = ({ lesson }) => {
     },
   });
 
-  const handleClick = (event, value) => {
-    console.log(event);
-    console.log(value);
-  };
   function HoverRating() {
     // const [value, setValue] = React.useState(2);
     const classes = useStyles();
@@ -65,13 +53,13 @@ const CreateReview = ({ lesson }) => {
             setStateValue(newValue);
             console.log(stateValue);
           }}
-          onChangeActive={(event, newHover) => {
-            // hover.current = newHover;
-            // value.current = newHover;
-            // console.log(newHover);
-            // setStateHover(newHover);
-            // console.log("active");
-          }}
+          // onChangeActive={(event) => {
+          // hover.current = newHover;
+          // value.current = newHover;
+          // console.log(newHover);
+          // setStateHover(newHover);
+          // console.log("active");
+          // }}
         />
         {
           //if we want labels for the stars

@@ -5,21 +5,20 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+// import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
-import GitHubIcon from '@material-ui/icons/GitHub';
+import GitHubIcon from "@material-ui/icons/GitHub";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { repositoriesState } from "../atoms";
 import ReviewList from "../components/Reviews/ReviewList";
 import { Rating } from "@material-ui/lab";
-
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -73,7 +72,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexDirection: "column",
     justifyContent: "start",
-    marginBottom: "2rem"
+    marginBottom: "2rem",
   },
 }));
 
@@ -90,7 +89,9 @@ export default function SenpaiProfileView({ match, location }) {
     if (response.data) {
       setSenpai(response.data);
     }
-    setUserRepositories(repositories.filter((repository) => repository.userId === match.params.id));
+    setUserRepositories(
+      repositories.filter((repository) => repository.userId === match.params.id)
+    );
   };
 
   useEffect(() => {
@@ -107,22 +108,28 @@ export default function SenpaiProfileView({ match, location }) {
     const fetchReviews = async () => {
       const responseReview = await axios.get("/api/v1/reviews");
       const reviews = responseReview.data;
-      if (mounted) {
-        const senpaiReviews = reviews.filter((review) => review.senpaiId === match.params.id);
-        console.log(senpaiReviews);
-        setAverageScore(senpaiReviews.reduce((prevVal, currentVal) => {
-          console.log(prevVal);
-          return prevVal.rating + currentVal.rating;
-        }) / senpaiReviews.length);
+      const senpaiReviews = reviews.filter(
+        (review) => review.senpaiId === match.params.id
+      );
+
+      if (senpaiReviews.length === 0) {
+        senpaiReviews.push(0);
+        setAverageScore(
+          senpaiReviews.reduce((prevVal, currentVal) => {
+            return prevVal.rating + currentVal.rating;
+          }) / senpaiReviews.length
+        );
+      } else if (mounted && senpaiReviews.length !== 0) {
+        setAverageScore(
+          senpaiReviews.reduce((prevVal, currentVal) => {
+            return prevVal.rating + currentVal.rating;
+          }) / senpaiReviews.length
+        );
       }
       return () => (mounted = false);
     };
     fetchReviews();
   }, []);
-
-  useEffect(() => {
-    console.log(averageScore);
-  }, [averageScore]);
 
   return (
     <Container style={{ height: "92vh" }}>
@@ -154,18 +161,36 @@ export default function SenpaiProfileView({ match, location }) {
                 </Button>
               </Grid>
               <Grid item className={classes.aboutMeItem}>
-                <Rating value={averageScore} name="rating" readOnly="true" precision={0.5} />
+                <Rating
+                  value={averageScore}
+                  name="rating"
+                  readOnly="true"
+                  precision={0.5}
+                />
               </Grid>
 
               <Grid container item className={classes.contactDetails}>
-                <div style={{width: "100%", marginBottom: "1rem"}}>
+                <div style={{ width: "100%", marginBottom: "1rem" }}>
                   <Typography variant="h5">Skills:</Typography>
-                  <div style={{display: "flex", width: "100%", justifyContent: "space-evenly"}}>
-                    {senpai.category ? senpai.category.map((category) => (
-                      <Button key={category} variant="contained" color="primary" style={{padding: "0"}}>
-                        {category}
-                      </Button>
-                    )) : null}
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    {senpai.category
+                      ? senpai.category.map((category) => (
+                          <Button
+                            key={category}
+                            variant="contained"
+                            color="primary"
+                            style={{ padding: "0" }}
+                          >
+                            {category}
+                          </Button>
+                        ))
+                      : null}
                   </div>
                 </div>
                 {senpai.twitter ||
@@ -173,34 +198,40 @@ export default function SenpaiProfileView({ match, location }) {
                 senpai.facebook ||
                 senpai.instagram ||
                 senpai.github ? (
-                    <Typography variant="h5">Socials:</Typography>
-                  ) : null}
+                  <Typography variant="h5">Socials:</Typography>
+                ) : null}
                 <div>
                   <Typography variant="h6">
                     {senpai.twitter ? (
-                      <IconButton>
+                      <a>
                         <TwitterIcon />
-                      </IconButton>
+                      </a>
                     ) : null}
                     {senpai.linkedIn ? (
-                      <IconButton>
+                      <a>
                         <LinkedInIcon />
-                      </IconButton>
+                      </a>
                     ) : null}
                     {senpai.facebook ? (
-                      <IconButton>
+                      <a>
                         <FacebookIcon />
-                      </IconButton>
+                      </a>
                     ) : null}
                     {senpai.instagram ? (
-                      <IconButton>
+                      <a>
                         <InstagramIcon />
-                      </IconButton>
+                      </a>
                     ) : null}
                     {senpai.github ? (
-                      <IconButton>
-                        <GitHubIcon />
-                      </IconButton>
+                      <a
+                        target="_blank"
+                        href={`${senpai.github}`}
+                        rel="noreferrer"
+                      >
+                        <Button>
+                          <GitHubIcon />
+                        </Button>
+                      </a>
                     ) : null}
                   </Typography>
                 </div>
@@ -208,7 +239,9 @@ export default function SenpaiProfileView({ match, location }) {
                   <div>
                     <Typography variant="h5">Email:</Typography>
                     <Typography variant="h6">
-                      <a href={senpai.email} style={{color: "#2ac3de"}}>{senpai.email}</a>
+                      <a href={senpai.email} style={{ color: "#2ac3de" }}>
+                        {senpai.email}
+                      </a>
                     </Typography>
                   </div>
                 ) : null}
@@ -224,7 +257,9 @@ export default function SenpaiProfileView({ match, location }) {
                       Personal Website:
                     </Typography>
                     <Typography variant="h6">
-                      <a href={senpai.website} style={{color: "#2ac3de"}}>{senpai.website}</a>
+                      <a href={senpai.website} style={{ color: "#2ac3de" }}>
+                        {senpai.website}
+                      </a>
                     </Typography>
                   </div>
                 ) : null}
@@ -275,21 +310,32 @@ export default function SenpaiProfileView({ match, location }) {
 
                   <Typography variant="h6" component="p">
                     {userRepositories.map((repository) => (
-                      <div style={{padding: "1rem"}} key={repository.url}>
-                        <Typography variant="h4" component="span" style={{color: "#9ece6a"}}>{repository.title}</Typography>
-                        <Typography variant="h4" component="span"> - </Typography>
-                        <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
+                      <div style={{ padding: "1rem" }} key={repository.url}>
+                        <Typography
+                          variant="h4"
+                          component="span"
+                          style={{ color: "#9ece6a" }}
+                        >
+                          {repository.title}
+                        </Typography>
+                        <Typography variant="h4" component="span">
+                          -
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          component="span"
+                          style={{ fontStyle: "italic" }}
+                        >
+                          {repository.description}
+                        </Typography>
                         <Typography variant="h6">
-                          <a
-                            style={{color: "#2ac3de"}}
-                            href={repository.url}>
+                          <a style={{ color: "#2ac3de" }} href={repository.url}>
                             {repository.url}
                           </a>
                         </Typography>
                       </div>
                     ))}
                   </Typography>
-
                 </Container>
               ) : null}
               <Container
