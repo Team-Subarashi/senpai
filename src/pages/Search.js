@@ -21,9 +21,9 @@ export default function Search() {
           item
           xs={12}
           style={{
+            marginTop: "0.5vh",
             height: "87vh",
             width: "max-content",
-            overflow: "scroll",
           }}
         >
           <SenpaiList />

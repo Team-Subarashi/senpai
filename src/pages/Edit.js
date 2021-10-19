@@ -89,14 +89,19 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
-            marginTop: "5vh",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Socials
           </h1>
         </Grid>
@@ -237,15 +242,21 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Bio
-          </h2>
+          </h1>
         </Grid>
         <Grid container direction="column">
           <Box>
@@ -333,17 +344,21 @@ export default function Edit() {
           item
           xs={12}
           style={{
-            marginLeft: "40%",
-            marginRight: "40%",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Are you a senpai?
-          </h2>
+          </h1>
         </Grid>
         <Grid item xs={12} style={{ fontSize: "large", marginBottom: "2vh" }}>
           Are you looking to spread some knowledge?

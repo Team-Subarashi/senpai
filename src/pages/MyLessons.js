@@ -256,10 +256,10 @@ export default function MyLessons() {
 
   if (user.isSenpai === true) {
     return (
-      <Container style={{ padding: "3vw" }}>
+      <Container style={{ padding: "2vw" }}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <Paper elevation={24}>
                 <Scheduler data={schedulerData}>
                   <ViewState defaultCurrentDate={Date.now()} />
@@ -281,7 +281,7 @@ export default function MyLessons() {
                 </Scheduler>
               </Paper>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <div
                 style={{
                   display: "flex",

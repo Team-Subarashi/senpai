@@ -7,6 +7,17 @@
   height: 100%;
 }
 
+* {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+*::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

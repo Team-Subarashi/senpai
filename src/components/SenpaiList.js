@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 // import Container from "@material-ui/core/Container";
+import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { useRecoilValue } from "recoil";
@@ -21,6 +22,11 @@ const useStyles = makeStyles(() => ({
   container: {
     backgroundColor: "#424242",
     // margin: "1rem",
+  },
+  avatarHolder: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: "25vh",
   },
   videoIframe: {
     // position: "absolute",
@@ -107,7 +113,10 @@ export default function SenpaiList() {
           container
           id="single-senpai"
           style={{
-            padding: "2rem",
+            // padding: "2rem",
+            marginTop: "2rem",
+            marginBottom: "3vh",
+            fontFamily: "Roboto",
           }}
           key={senpai._id}
         >
@@ -118,15 +127,14 @@ export default function SenpaiList() {
             xs={4}
             className={classes.section}
             style={{
-              borderTopLeftRadius: "4px",
-              borderBottomLeftRadius: "4px",
               backgroundColor: "#5a5f72",
-              borderRadius: "4px",
               marginRight: "-1vw",
               marginLeft: "23%",
+              borderTopLeftRadius: "4px",
+              borderBottomLeftRadius: "4px",
             }}
           >
-            <Grid item xs={6} style={{ marginTop: "-1vh" }}>
+            <Grid item xs={6}>
               <Box
                 style={{
                   display: "flex",
@@ -136,14 +144,19 @@ export default function SenpaiList() {
                 }}
                 mt={2}
               >
-                <img height="125px" width="125px" src={senpai.avatar} />
+                <Avatar
+                  className="senpai-photo"
+                  alt="senpai"
+                  src={senpai.avatar}
+                  style={{ width: 100, height: 100 }}
+                />
                 <Link
                   to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
                 >
                   <Button
                     variant="contained"
                     style={{
-                      marginTop: "1vh",
+                      marginTop: "3vh",
                       backgroundColor: "purple",
                       color: "white",
                     }}
@@ -172,32 +185,58 @@ export default function SenpaiList() {
           > */}
             {/* <Grid item xs={12}> */}
             <Grid item xs={6}>
-              <Typography variant="h2" style={{ color: "#c0caf5" }}>
+              <Typography
+                variant="h6"
+                style={{
+                  color: "#2ac3de",
+                  textAlign: "center",
+                  fontFamily: "Roboto",
+                  // fontWeight: "bold",
+                }}
+              >
                 {senpai.name}
               </Typography>
-              <h2
+              <h3
                 style={{
-                  color: "#f3f0e9",
-                  // backgroundColor: "white",
-                  // width: "25vw",
+                  color: "#9ece6a",
                   borderBottom: "1px",
                 }}
-              >{`Hourly Rate: ¥${senpai.rates[0]}`}</h2>
-              {senpai.category.map((skill) => {
-                return (
-                  <li
-                    key={skill}
-                    style={{
-                      color: "#f3f0e9",
-                      fontWeight: "bold",
-                      textAlign: "left",
-                      fontSize: "large",
-                    }}
-                  >
-                    {skill}
-                  </li>
-                );
-              })}
+              >{`¥${senpai.rates[0]}/hr`}</h3>
+              <Grid
+                container
+                direction="column"
+                style={{
+                  paddingRight: "1vw",
+                  paddingLeft: "1vw",
+                  alignContent: "center",
+                  // marginLeft: "30%",
+                  // marginRight: "30%",
+                  // backgroundColor: "red",
+                }}
+              >
+                {senpai.category.map((skill) => {
+                  if (skill.length > 1) {
+                    return (
+                      <Button
+                        key={skill}
+                        style={{
+                          //   color: "#f3f0e9",
+                          //   fontWeight: "bold",
+                          //   textAlign: "left",
+                          //   fontSize: "large",
+                          marginTop: "1vh",
+                          width: "50%",
+                          backgroundColor: "purple",
+                          color: "white",
+                          borderRadius: "4px",
+                        }}
+                      >
+                        {skill}
+                      </Button>
+                    );
+                  }
+                })}
+              </Grid>
             </Grid>
             {/* </Grid> */}
           </Grid>
@@ -207,17 +246,21 @@ export default function SenpaiList() {
             item
             xs={3}
             style={{
-              backgroundColor: "#673ab7",
+              backgroundColor: "#414868",
               border: "1px #2c303a",
+              borderTopRightRadius: "4px",
+              borderBottomRightRadius: "4px",
             }}
           >
             <Tabs class="my-tabs" defaultActiveKey="1" onChange={callback}>
               <TabPane tab="Bio" key="1">
                 <div
-                  style={{
-                    // color: "#e0af68"
-                    fontWeight: "bold",
-                  }}
+                  style={
+                    {
+                      // fontWeight: "bold",
+                      // color: "#e0af68"
+                    }
+                  }
                 >
                   {senpai.bio}
                 </div>
