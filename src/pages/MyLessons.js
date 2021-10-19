@@ -327,14 +327,14 @@ export default function MyLessons() {
     );
   } else {
     return (
-      <Container>
+      <Container style={{ padding: "3vw" }}>
         <Grid container>
-          <Grid item xs={12} style={{ backgroundColor: "blue" }}>
+          <Grid item xs={12}>
             <Paper>
               <Scheduler data={schedulerData}>
                 <ViewState defaultCurrentDate={Date.now()} />
                 <WeekView
-                  startDayHour={9}
+                  startDayHour={8}
                   endDayHour={24}
                   cellDuration={60}
                   timeTableCellComponent={TimeTableCell}

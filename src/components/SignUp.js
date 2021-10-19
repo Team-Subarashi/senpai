@@ -107,89 +107,87 @@ export default function SignUp() {
   };
 
   return (
-    <Vanta>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography className={classes.signUpText} component="h1" variant="h5">
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography className={classes.signUpText} component="h1" variant="h5">
           Sign Up
-          </Typography>
-          {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              name="name"
-              autoComplete="name"
-              autoFocus
-              onChange={(e) => nameChangeHandler(e)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e) => emailChangeHandler(e)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(e) => passwordChangeHandler(e)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password-confirm"
-              label="Re-enter your password"
-              type="password"
-              id="password-confirm"
-              autoComplete="current-password-confirm"
-              onChange={(e) => passwordConfirmChangeHandler(e)}
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={(e) => {
-                e.preventDefault();
-                submitHandler();
-              }}
-            >
+        </Typography>
+        {errorMessage ? <Alert severity="error">{errorMessage}</Alert> : null}
+        <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+            onChange={(e) => nameChangeHandler(e)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            onChange={(e) => emailChangeHandler(e)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange={(e) => passwordChangeHandler(e)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password-confirm"
+            label="Re-enter your password"
+            type="password"
+            id="password-confirm"
+            autoComplete="current-password-confirm"
+            onChange={(e) => passwordConfirmChangeHandler(e)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={(e) => {
+              e.preventDefault();
+              submitHandler();
+            }}
+          >
             Sign Up
-            </Button>
-            <Grid container justifyContent="center">
-              <Grid item>
-                <Link to="/login" variant="body2">
+          </Button>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Link to="/login" variant="body2">
                 Already have an account? Sign in
-                </Link>
-              </Grid>
+              </Link>
             </Grid>
-          </form>
-        </div>
-      </Container>
-    </Vanta>
+          </Grid>
+        </form>
+      </div>
+    </Container>
   );
 }
