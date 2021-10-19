@@ -5,6 +5,7 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TwitterIcon from "@material-ui/icons/Twitter";
@@ -37,8 +38,6 @@ const useStyles = makeStyles(() => ({
     maxWidth: "260px",
   },
   root: {
-    marginTop: "1rem",
-    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
@@ -102,8 +101,8 @@ export default function SenpaiProfileView({ match, location }) {
   }, []);
 
   return (
-    <Container>
-      <Box>
+    <Container style={{ height: "92vh" }}>
+      <Box style={{ height: "100%" }}>
         {senpai ? (
           <Grid container spacing={3} className={classes.root}>
             <Grid className={classes.aboutMe} container item xs={3}>
@@ -121,7 +120,7 @@ export default function SenpaiProfileView({ match, location }) {
               </Grid>
 
               <Grid item className={classes.aboutMeItem}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="secondary">
                   <Link
                     style={{ color: "white" }}
                     to={`/senpai/${match.params.id}/schedule`}
@@ -152,34 +151,29 @@ export default function SenpaiProfileView({ match, location }) {
                 <div>
                   <Typography variant="h6">
                     {senpai.twitter ? (
-                      <a>
+                      <IconButton>
                         <TwitterIcon />
-                      </a>
+                      </IconButton>
                     ) : null}
                     {senpai.linkedIn ? (
-                      <a>
-                        <LinkedInIcon />{" "}
-                      </a>
+                      <IconButton>
+                        <LinkedInIcon />
+                      </IconButton>
                     ) : null}
                     {senpai.facebook ? (
-                      <a>
+                      <IconButton>
                         <FacebookIcon />
-                      </a>
+                      </IconButton>
                     ) : null}
                     {senpai.instagram ? (
-                      <a>
+                      <IconButton>
                         <InstagramIcon />
-                      </a>
-                    ) : null}
-                    {senpai.instagram ? (
-                      <a>
-                        <InstagramIcon />
-                      </a>
+                      </IconButton>
                     ) : null}
                     {senpai.github ? (
-                      <a>
+                      <IconButton>
                         <GitHubIcon />
-                      </a>
+                      </IconButton>
                     ) : null}
                   </Typography>
                 </div>
@@ -187,7 +181,7 @@ export default function SenpaiProfileView({ match, location }) {
                   <div>
                     <Typography variant="h5">Email:</Typography>
                     <Typography variant="h6">
-                      <a href={senpai.email}>{senpai.email}</a>
+                      <a href={senpai.email} style={{color: "#2ac3de"}}>{senpai.email}</a>
                     </Typography>
                   </div>
                 ) : null}

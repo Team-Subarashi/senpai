@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
@@ -111,59 +112,30 @@ const Kohai = () => {
                       Socials:
                       <div>
                         {user.twitter ? (
-                          <a
-                            target="_blank"
-                            href={`${user.twitter}`}
-                            rel="noreferrer"
-                          >
-                            <Button>
-                              <TwitterIcon />
-                            </Button>
-                          </a>
+                          <IconButton>
+                            <TwitterIcon />
+                          </IconButton>
                         ) : null}
                         {user.linkedIn ? (
-                          <a
-                            target="_blank"
-                            href={`${user.linkedIn}`}
-                            rel="noreferrer"
-                          >
-                            <Button>
-                              <LinkedInIcon />
-                            </Button>
-                          </a>
+                          <IconButton>
+                            <LinkedInIcon />
+                          </IconButton>
                         ) : null}
                         {user.facebook ? (
-                          <a
-                            target="_blank"
-                            href={`${user.facebook}`}
-                            rel="noreferrer"
-                          >
-                            <Button>
-                              <FacebookIcon />
-                            </Button>
-                          </a>
+                          <IconButton>
+                            <FacebookIcon />
+                          </IconButton>
                         ) : null}
                         {user.instagram ? (
-                          <a
-                            target="_blank"
-                            href={`${user.instagram}`}
-                            rel="noreferrer"
-                          >
-                            <Button>
-                              <InstagramIcon />
-                            </Button>
-                          </a>
+                          <IconButton>
+                            <InstagramIcon />
+                          </IconButton>
                         ) : null}
                         {user.github ? (
-                          <a
-                            target="_blank"
-                            href={`${user.github}`}
-                            rel="noreferrer"
-                          >
-                            <Button>
-                              <GitHubIcon />
-                            </Button>
-                          </a>
+
+                          <IconButton>
+                            <GitHubIcon />
+                          </IconButton>
                         ) : null}
                       </div>
                     </Typography>
