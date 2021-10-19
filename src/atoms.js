@@ -57,3 +57,8 @@ export const roomAtom = atom({
   key: "roomAtom",
   default: "default",
 });
+
+export const userListState = atom({
+  key: "userListState",
+  default: [],
+});

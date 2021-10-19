@@ -18,7 +18,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { repositoriesState } from "../atoms";
 import ReviewList from "../components/Reviews/ReviewList";
-
+import { Rating } from "@material-ui/lab";
 
 
 const useStyles = makeStyles(() => ({
@@ -79,7 +79,6 @@ const useStyles = makeStyles(() => ({
 
 export default function SenpaiProfileView({ match, location }) {
   const classes = useStyles();
-
   const [senpai, setSenpai] = useState(
     location.state ? location.state.senpai : null
   );
@@ -99,6 +98,31 @@ export default function SenpaiProfileView({ match, location }) {
       fetchData();
     }
   }, []);
+
+  //Review
+  const [averageScore, setAverageScore] = useState(0);
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchReviews = async () => {
+      const responseReview = await axios.get("/api/v1/reviews");
+      const reviews = responseReview.data;
+      if (mounted) {
+        const senpaiReviews = reviews.filter((review) => review.senpaiId === match.params.id);
+        console.log(senpaiReviews);
+        setAverageScore(senpaiReviews.reduce((prevVal, currentVal) => {
+          console.log(prevVal);
+          return prevVal.rating + currentVal.rating;
+        }) / senpaiReviews.length);
+      }
+      return () => (mounted = false);
+    };
+    fetchReviews();
+  }, []);
+
+  useEffect(() => {
+    console.log(averageScore);
+  }, [averageScore]);
 
   return (
     <Container style={{ height: "92vh" }}>
@@ -128,6 +152,9 @@ export default function SenpaiProfileView({ match, location }) {
                     View schedule
                   </Link>
                 </Button>
+              </Grid>
+              <Grid item className={classes.aboutMeItem}>
+                <Rating value={averageScore} name="rating" readOnly="true" precision={0.5} />
               </Grid>
 
               <Grid container item className={classes.contactDetails}>
@@ -225,7 +252,6 @@ export default function SenpaiProfileView({ match, location }) {
                 </Container>
               ) : null}
               {senpai.bio ? (
-
                 <Container
                   fixed
                   className={classes.container}
@@ -271,6 +297,7 @@ export default function SenpaiProfileView({ match, location }) {
                 className={classes.container}
                 style={{ padding: "2rem" }}
               >
+                <Typography variant="h3">Reviews</Typography>
                 <ReviewList senpai={senpai} />
               </Container>
             </Grid>

@@ -1,8 +1,16 @@
 import React from "react";
-import { Avatar, Grid } from "@material-ui/core";
+import { Avatar, Grid, Typography } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 // if want to have kohai name added the review then we have to make a call by kohaiId to get the name
-const Review = ({ review }) => {
+const Review = ({ review, userList }) => {
+  const [user, setUser] = React.useState(userList.find((user) => user._id === review.kouhaiId));
+
+  React.useEffect(() => {
+    setUser(userList.find((user) => {
+      return user._id === review.kohaiId;
+    }));
+  }), [userList];
+
   return (
     <Grid
       container
@@ -16,38 +24,29 @@ const Review = ({ review }) => {
       }}
     >
       <Grid
+        container
         item
-        xs={2}
+        xs={3}
         style={{
-          marginLeft: "10px",
-          marginRight: "20px",
-          padding: "10px",
-          alignItems: "center",
+          justifyContent: "center", alignItems: "center", flexDirection: "column"
         }}
       >
         <Avatar
-          className="lesson-partner-photo"
           alt="img"
           src={review.avatar}
-          sx={{ width: 100, height: 100 }}
+          style={{ width: 100, height: 100 }}
         />
+        {user ? <Typography variant="h5" style={{lineHeight: 2}}>{user.name}</Typography> : null}
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} >
         {<Rating value={review.rating} name="rating" readOnly="true" />}
+
+      </Grid>
+      <Grid item xs={6}>
+        <Typography variant="p">{review.review ? review.review : "No description provided"}</Typography>
+
       </Grid>
 
-      <Grid
-        item
-        xs={12}
-        style={{
-          height: "50%",
-          marginLeft: "10px",
-          padding: "10px",
-          alignItems: "center",
-        }}
-      >
-        <p>{review.review}</p>
-      </Grid>
     </Grid>
   );
 };
