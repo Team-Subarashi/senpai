@@ -38,13 +38,12 @@ const Review = ({ review, userList }) => {
         />
         {user ? <Typography variant="h5" style={{lineHeight: 2}}>{user.name}</Typography> : null}
       </Grid>
-      <Grid item xs={3} >
-        {<Rating value={review.rating} name="rating" readOnly="true" />}
+      <Grid item xs={3} style={{textAlign: "left"}}>
+        {<Rating value={review.rating} name="rating" size="large" readOnly="true" />}
 
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={6} style={{textAlign: "left"}}>
         <Typography variant="p">{review.review ? review.review : "No description provided"}</Typography>
-
       </Grid>
 
     </Grid>
