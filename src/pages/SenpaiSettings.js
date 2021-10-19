@@ -100,15 +100,16 @@ export default function SenpaiSettings() {
         item
         xs={12}
         style={{
-          fontSize: "large",
-          paddingTop: "1.25vh",
-          marginLeft: "40%",
-          marginRight: "40%",
+          fontSize: "1.8rem",
+          paddingTop: "0.5vh",
+          marginLeft: "35%",
+          marginRight: "35%",
           marginTop: "5vh",
           marginBottom: "2vh",
-          height: "5vh",
+          height: "3rem",
           borderRadius: "4px",
           backgroundColor: "#673AB7",
+          width: "15rem",
         }}
       >
         {/* <h1 style={{ fontWeight: "bold", color: "#fff", marginTop: "0.5vh" }}> */}

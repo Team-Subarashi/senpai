@@ -187,9 +187,9 @@ export default function MyLessons() {
         lesson.title =
           lesson.senpaiId === user._id
             ? lesson.selectedCategory
-              ? `Senpai Lesson: ${lesson.selectedCategory}`
-              : `Senpai Lesson`
-            : `Kohai Lesson: ${lesson.selectedCategory}`;
+              ? `${lesson.selectedCategory} Lesson`
+              : `Unbooked`
+            : `${lesson.selectedCategory} Lesson`;
         lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
         return lesson;
       });

@@ -113,9 +113,7 @@ export default function SenpaiList() {
           container
           id="single-senpai"
           style={{
-            // padding: "2rem",
             marginTop: "2rem",
-            marginBottom: "3vh",
             fontFamily: "Roboto",
           }}
           key={senpai._id}
@@ -226,9 +224,9 @@ export default function SenpaiList() {
                           //   fontSize: "large",
                           marginTop: "1vh",
                           width: "50%",
-                          backgroundColor: "purple",
-                          color: "white",
-                          borderRadius: "4px",
+                          backgroundColor: "#2ac3de",
+                          color: "black",
+                          // borderRadius: "4px",
                         }}
                       >
                         {skill}

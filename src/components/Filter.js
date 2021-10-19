@@ -26,14 +26,14 @@ export default function Filter() {
       xs={12}
       style={{
         height: "5.5vh",
-        backgroundColor: "#e0af68",
+        backgroundColor: "#5a5f72",
         display: "flex",
         alignItems: "center",
       }}
     >
       <Typography
         variant="h5"
-        style={{ marginLeft: "1vw", fontFamily: "Roboto", fontWeight: "bold" }}
+        style={{ marginLeft: "1vw", fontFamily: "Roboto" }}
       >
         Filters:
       </Typography>

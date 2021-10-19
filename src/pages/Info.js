@@ -55,39 +55,39 @@ export default function Info() {
         {/* Picture Section */}
         <Grid
           item
-          id="greg"
+          id="mission"
           xs={6}
           style={{
-            height: "33vh",
+            height: "45vh",
             marginTop: "1vh",
             marginBottom: "1vh",
-            backgroundColor: "pink",
+            backgroundColor: "#673AB7",
           }}
         >
           {/* <img
             src="https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-9/72750529_2927365680624885_9078900207579561984_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=u9qvgKq2AmkAX_j31Kp&_nc_ht=scontent-nrt1-1.xx&oh=684fd3e88d8fdedfae65baefc63642d3&oe=618EA439"
             style={{ height: "100%" }}
           /> */}
-          <p>Our Vision</p>
+          <p style={{ color: "#e0af68", fontSize: "2rem" }}>Our Vision</p>
           <p>We envision a world where everyone is a programmer.</p>
         </Grid>
         {/* Picture Section */}
         <Grid
           item
-          id="greg"
+          id="vision"
           xs={6}
           style={{
-            height: "33vh",
+            height: "45vh",
             marginTop: "1vh",
             marginBottom: "1vh",
-            backgroundColor: "pink",
+            backgroundColor: "#424242",
           }}
         >
           {/* <img
             src="https://scontent-nrt1-1.xx.fbcdn.net/v/t1.6435-9/72750529_2927365680624885_9078900207579561984_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=u9qvgKq2AmkAX_j31Kp&_nc_ht=scontent-nrt1-1.xx&oh=684fd3e88d8fdedfae65baefc63642d3&oe=618EA439"
             style={{ height: "100%" }}
           /> */}
-          <p>Our Mission</p>
+          <p style={{ color: "#e0af68", fontSize: "2rem" }}>Our Mission</p>
           <p>World domination, starting with one webpage at a time.</p>
         </Grid>
       </Grid>
