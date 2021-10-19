@@ -49,7 +49,7 @@ const useStyles = makeStyles(() => ({
     marginBottom: "1rem",
     padding: "1rem",
 
-  }
+  },
 }));
 
 const Kohai = () => {
@@ -172,7 +172,7 @@ const Kohai = () => {
                     <div>
                       <Typography variant="h5">Email:</Typography>
                       <Typography variant="h6">
-                        <a href={user.email}>{user.email}</a>
+                        <a href={user.email} style={{color: "#2ac3de"}}>{user.email}</a>
                       </Typography>
                     </div>
                   ) : null}
@@ -184,8 +184,9 @@ const Kohai = () => {
                           target="_blank"
                           href={`${user.website}`}
                           rel="noreferrer"
+                          style={{color: "#2ac3de"}}
                         >
-                          <a>{user.website}</a>
+                          {user.website}
                         </a>
                       </Typography>
                     </div>
@@ -217,9 +218,10 @@ const Kohai = () => {
                     <Typography variant="h6" component="p">
                       {userRepositories.map((repository) => (
                         <div style={{padding: "1rem"}} key={repository.url}>
-                          <Typography variant="h4" component="span">{repository.title} - </Typography>
-                          <Typography variant="h6" component="span">{repository.description}</Typography>
-                          <Typography variant="h6"><a href={repository.url}>{repository.url}</a></Typography>
+                          <Typography variant="h4" component="span" style={{color: "lightgreen"}}>{repository.title}</Typography>
+                          <Typography variant="h4" component="span"> - </Typography>
+                          <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
+                          <Typography variant="h6"><a href={repository.url} style={{color: "#2ac3de"}}>{repository.url}</a></Typography>
                         </div>
                       ))}
                     </Typography>

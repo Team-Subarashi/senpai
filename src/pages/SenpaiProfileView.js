@@ -207,7 +207,9 @@ export default function SenpaiProfileView({ match, location }) {
                     <div>
                       <Typography variant="h5">Email:</Typography>
                       <Typography variant="h6">
-                        <a href={senpai.email}>{senpai.email}</a>
+                        <a href={senpai.email} style={{color: "#2ac3de"}}>
+                          {senpai.email}
+                        </a>
                       </Typography>
                     </div>
                   ) : null}
@@ -225,8 +227,9 @@ export default function SenpaiProfileView({ match, location }) {
                           target="_blank"
                           href={`${senpai.website}`}
                           rel="noreferrer"
+                          style={{color: "#2ac3de"}}
                         >
-                          <a>{senpai.website}</a>
+                          {senpai.website}
                         </a>
                       </Typography>
                     </div>
@@ -234,13 +237,13 @@ export default function SenpaiProfileView({ match, location }) {
                 </Grid>
               </Grid>
               <Grid container xs={8} className={classes.right}>
-                <Container
-                  fixed
-                  className={classes.container}
-                  style={{ padding: "1rem" }}
-                >
-                  <div className={classes.videoDiv}>
-                    {senpai.introVideo ? (
+                {senpai.introVideo ? (
+                  <Container
+                    fixed
+                    className={classes.container}
+                    style={{ padding: "1rem" }}
+                  >
+                    <div className={classes.videoDiv}>
                       <iframe
                         src={`https://www.youtube.com/embed/${
                           senpai.introVideo.split("?v=")[1]
@@ -251,9 +254,9 @@ export default function SenpaiProfileView({ match, location }) {
                         allowFullScreen
                         className={classes.videoIframe}
                       ></iframe>
-                    ) : null}
-                  </div>
-                </Container>
+                    </div>
+                  </Container>
+                ) : null}
                 <Container
                   fixed
                   className={classes.container}
@@ -282,9 +285,16 @@ export default function SenpaiProfileView({ match, location }) {
                     <Typography variant="h6" component="p">
                       {userRepositories.map((repository) => (
                         <div style={{padding: "1rem"}} key={repository.url}>
-                          <Typography variant="h4" component="span">{repository.title} - </Typography>
-                          <Typography variant="h6" component="span">{repository.description}</Typography>
-                          <Typography variant="h6"><a href={repository.url}>{repository.url}</a></Typography>
+                          <Typography variant="h4" component="span" style={{color: "lightgreen"}}>{repository.title} - </Typography>
+                          <Typography variant="h4" component="span"> - </Typography>
+                          <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
+                          <Typography variant="h6">
+                            <a
+                              style={{color: "#2ac3de"}}
+                              href={repository.url}>
+                              {repository.url}
+                            </a>
+                          </Typography>
                         </div>
                       ))}
                     </Typography>

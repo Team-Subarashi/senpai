@@ -37,12 +37,15 @@ const theme = createTheme({
     },
     h2: {
       fontSize: "2rem",
+      fontWeight: "bolder",
       color: "white",
     },
     h3: {
       fontSize: "1.6rem",
+      fontWeight: "bold",
       color: "white",
       textAlign: "left",
+      lineHeight: 2,
     },
     h4: {
       fontSize: "1.4rem",
