@@ -36,12 +36,10 @@ const theme = createTheme({
 
     },
     h2: {
-      fontFamily: "Nunito",
       fontSize: "2rem",
       color: "white",
     },
     h3: {
-      fontFamily: "Nunito",
       fontSize: "1.6rem",
       color: "white",
       textAlign: "left",
