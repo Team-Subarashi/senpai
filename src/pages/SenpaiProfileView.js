@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { repositoriesState } from "../atoms";
+import ReviewList from "../components/Reviews/ReviewList";
+
 
 
 const useStyles = makeStyles(() => ({
@@ -35,6 +37,8 @@ const useStyles = makeStyles(() => ({
     maxWidth: "260px",
   },
   root: {
+    marginTop: "1rem",
+    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
@@ -76,6 +80,7 @@ const useStyles = makeStyles(() => ({
 
 export default function SenpaiProfileView({ match, location }) {
   const classes = useStyles();
+
   const [senpai, setSenpai] = useState(
     location.state ? location.state.senpai : null
   );
@@ -97,218 +102,186 @@ export default function SenpaiProfileView({ match, location }) {
   }, []);
 
   return (
-    <>
-      <Container style={{ height: "92vh" }}>
-        <Box style={{ height: "100%" }}>
-          {senpai ? (
-            <Grid container spacing={3} className={classes.root}>
-              <Grid className={classes.aboutMe} container item xs={3}>
-                <Grid item className={classes.aboutMeItem}>
-                  <Typography variant="h2">{senpai.name}</Typography>
-                </Grid>
+    <Container>
+      <Box>
+        {senpai ? (
+          <Grid container spacing={3} className={classes.root}>
+            <Grid className={classes.aboutMe} container item xs={3}>
+              <Grid item className={classes.aboutMeItem}>
+                <Typography variant="h2">{senpai.name}</Typography>
+              </Grid>
 
-                <Grid item className={classes.aboutMeItem}>
-                  <Avatar
-                    className="senpai-photo"
-                    alt="senpai"
-                    src={senpai.avatar}
-                    style={{ width: 150, height: 150 }}
-                  />
-                </Grid>
+              <Grid item className={classes.aboutMeItem}>
+                <Avatar
+                  className="senpai-photo"
+                  alt="senpai"
+                  src={senpai.avatar}
+                  style={{ width: 150, height: 150 }}
+                />
+              </Grid>
 
-                <Grid item className={classes.aboutMeItem}>
-                  <Button variant="contained" color="secondary">
-                    <Link
-                      style={{ color: "white" }}
-                      to={`/senpai/${match.params.id}/schedule`}
-                    >
-                      View schedule
-                    </Link>
-                  </Button>
-                </Grid>
-                <Grid container item className={classes.contactDetails}>
-                  <div style={{width: "100%", marginBottom: "1rem"}}>
-                    <Typography variant="h5">Skills:</Typography>
-                    <div style={{display: "flex", width: "100%", justifyContent: "space-evenly"}}>
-                      {senpai.category ? senpai.category.map((category) => (
-                        <Button key={category} variant="contained" color="primary" style={{padding: "0"}}>
-                          {category}
-                        </Button>
-                      )) : null}
-                    </div>
+              <Grid item className={classes.aboutMeItem}>
+                <Button variant="contained" color="primary">
+                  <Link
+                    style={{ color: "white" }}
+                    to={`/senpai/${match.params.id}/schedule`}
+                  >
+                    View schedule
+                  </Link>
+                </Button>
+              </Grid>
+
+              <Grid container item className={classes.contactDetails}>
+                <div style={{width: "100%", marginBottom: "1rem"}}>
+                  <Typography variant="h5">Skills:</Typography>
+                  <div style={{display: "flex", width: "100%", justifyContent: "space-evenly"}}>
+                    {senpai.category ? senpai.category.map((category) => (
+                      <Button key={category} variant="contained" color="primary" style={{padding: "0"}}>
+                        {category}
+                      </Button>
+                    )) : null}
                   </div>
-                  {senpai.twitter ||
-                  senpai.linkedIn ||
-                  senpai.facebook ||
-                  senpai.instagram ||
-                  senpai.github ? (
-                      <Typography variant="h5">Socials:</Typography>
+                </div>
+                {senpai.twitter ||
+                senpai.linkedIn ||
+                senpai.facebook ||
+                senpai.instagram ||
+                senpai.github ? (
+                    <Typography variant="h5">Socials:</Typography>
+                  ) : null}
+                <div>
+                  <Typography variant="h6">
+                    {senpai.twitter ? (
+                      <a>
+                        <TwitterIcon />
+                      </a>
                     ) : null}
+                    {senpai.linkedIn ? (
+                      <a>
+                        <LinkedInIcon />{" "}
+                      </a>
+                    ) : null}
+                    {senpai.facebook ? (
+                      <a>
+                        <FacebookIcon />
+                      </a>
+                    ) : null}
+                    {senpai.instagram ? (
+                      <a>
+                        <InstagramIcon />
+                      </a>
+                    ) : null}
+                    {senpai.instagram ? (
+                      <a>
+                        <InstagramIcon />
+                      </a>
+                    ) : null}
+                    {senpai.github ? (
+                      <a>
+                        <GitHubIcon />
+                      </a>
+                    ) : null}
+                  </Typography>
+                </div>
+                {senpai.email ? (
                   <div>
+                    <Typography variant="h5">Email:</Typography>
                     <Typography variant="h6">
-                      {senpai.twitter ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.twitter}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <TwitterIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                      {senpai.linkedIn ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.linkedIn}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <LinkedInIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                      {senpai.facebook ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.facebook}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <FacebookIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                      {senpai.instagram ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.instagram}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <InstagramIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                      {senpai.github ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.github}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <GitHubIcon />
-                          </Button>
-                        </a>
-                      ) : null}
+                      <a href={senpai.email}>{senpai.email}</a>
                     </Typography>
                   </div>
-                  {senpai.email ? (
-                    <div>
-                      <Typography variant="h5">Email:</Typography>
-                      <Typography variant="h6">
-                        <a href={senpai.email} style={{color: "#2ac3de"}}>
-                          {senpai.email}
-                        </a>
-                      </Typography>
-                    </div>
-                  ) : null}
-                  {senpai.location ? (
-                    <div>
-                      <Typography variant="h5">Location:</Typography>
-                      <Typography variant="h6">{senpai.location}</Typography>
-                    </div>
-                  ) : null}
-                  {senpai.website ? (
-                    <div>
-                      <Typography variant="h5">Personal Website:</Typography>
-                      <Typography variant="h6">
-                        <a
-                          target="_blank"
-                          href={`${senpai.website}`}
-                          rel="noreferrer"
-                          style={{color: "#2ac3de"}}
-                        >
-                          {senpai.website}
-                        </a>
-                      </Typography>
-                    </div>
-                  ) : null}
-                </Grid>
-              </Grid>
-              <Grid container xs={8} className={classes.right}>
-                {senpai.introVideo ? (
-                  <Container
-                    fixed
-                    className={classes.container}
-                    style={{ padding: "1rem" }}
-                  >
-                    <div className={classes.videoDiv}>
-                      <iframe
-                        src={`https://www.youtube.com/embed/${
-                          senpai.introVideo.split("?v=")[1]
-                        }`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className={classes.videoIframe}
-                      ></iframe>
-                    </div>
-                  </Container>
                 ) : null}
+                {senpai.location ? (
+                  <div>
+                    <Typography variant="h5">Location:</Typography>
+                    <Typography variant="h6">{senpai.location}</Typography>
+                  </div>
+                ) : null}
+                {senpai.website ? (
+                  <div>
+                    <Typography xs={3} variant="h5">
+                      Personal Website:
+                    </Typography>
+                    <Typography variant="h6">
+                      <a href={senpai.website} style={{color: "#2ac3de"}}>{senpai.website}</a>
+                    </Typography>
+                  </div>
+                ) : null}
+              </Grid>
+            </Grid>
+            <Grid container xs={8} className={classes.right}>
+              {senpai.introVideo ? (
+                <Container
+                  fixed
+                  className={classes.container}
+                  style={{ padding: "1rem" }}
+                >
+                  <div className={classes.videoDiv}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${
+                        senpai.introVideo.split("?v=")[1]
+                      }`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className={classes.videoIframe}
+                    ></iframe>
+                  </div>
+                </Container>
+              ) : null}
+              <Container
+                fixed
+                className={classes.container}
+                style={{ padding: "2rem" }}
+              >
+                {senpai.bio ? (
+                  <Typography variant="h3">About me</Typography>
+                ) : null}
+                {senpai.bio ? (
+                  <Typography variant="h6" component="p">
+                    {senpai.bio}
+                  </Typography>
+                ) : null}
+              </Container>
+              {userRepositories.length > 0 ? (
                 <Container
                   fixed
                   className={classes.container}
                   style={{ padding: "2rem" }}
                 >
-                  {senpai.bio ? (
-                    <Typography variant="h3">About me</Typography>
+                  {userRepositories.length > 0 ? (
+                    <Typography variant="h3">Repositories</Typography>
                   ) : null}
-                  {senpai.bio ? (
-                    <Typography variant="h6" component="p">
-                      {senpai.bio}
-                    </Typography>
-                  ) : null}
+
+                  <Typography variant="h6" component="p">
+                    {userRepositories.map((repository) => (
+                      <div style={{padding: "1rem"}} key={repository.url}>
+                        <Typography variant="h4" component="span" style={{color: "lightgreen"}}>{repository.title} - </Typography>
+                        <Typography variant="h4" component="span"> - </Typography>
+                        <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
+                        <Typography variant="h6">
+                          <a
+                            style={{color: "#2ac3de"}}
+                            href={repository.url}>
+                            {repository.url}
+                          </a>
+                        </Typography>
+                      </div>
+                    ))}
+                  </Typography>
+
                 </Container>
-
-                {userRepositories.length > 0 ? (
-                  <Container
-                    fixed
-                    className={classes.container}
-                    style={{ padding: "2rem" }}
-                  >
-                    {userRepositories.length > 0 ? (
-                      <Typography variant="h3">Repositories</Typography>
-                    ) : null}
-
-                    <Typography variant="h6" component="p">
-                      {userRepositories.map((repository) => (
-                        <div style={{padding: "1rem"}} key={repository.url}>
-                          <Typography variant="h4" component="span" style={{color: "lightgreen"}}>{repository.title} - </Typography>
-                          <Typography variant="h4" component="span"> - </Typography>
-                          <Typography variant="h6" component="span" style={{fontStyle: "italic"}}>{repository.description}</Typography>
-                          <Typography variant="h6">
-                            <a
-                              style={{color: "#2ac3de"}}
-                              href={repository.url}>
-                              {repository.url}
-                            </a>
-                          </Typography>
-                        </div>
-                      ))}
-                    </Typography>
-
-                  </Container>
-                ) : null}
-
+              ) : null}
+              <Grid xs={4} style={{ height: "50vh", overflow: "auto" }}>
+                <ReviewList senpai={senpai} />
               </Grid>
             </Grid>
-          ) : (
-            <CircularProgress />
-          )}
-        </Box>
-      </Container>
-    </>
+          </Grid>
+        ) : (
+          <CircularProgress />
+        )}
+      </Box>
+    </Container>
   );
 }

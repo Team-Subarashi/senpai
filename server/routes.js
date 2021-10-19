@@ -7,6 +7,7 @@ module.exports = function (app) {
   const stripe = require("./controllers/StripeController");
   // const messages = require("./controllers/MessageController");
   const vonage = require("./controllers/vonageController");
+  const reviews = require("./controllers/reviewController");
 
   app.route("/api/v1/users").get(users.listAllUsers).post(users.createNewUser);
   app
@@ -60,6 +61,13 @@ module.exports = function (app) {
   app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
 
   app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId);
+
+  app
+    .route("/api/v1/reviews")
+    .get(reviews.listAllReviews)
+    .post(reviews.createNewReview);
+
+  app.route("/api/v1/reviews/:id").delete(reviews.deleteReview);
 
   // app.post("/create-checkout-session", async (req, res) => {
   //   const session = await stripe.checkout.sessions.create({
