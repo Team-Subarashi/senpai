@@ -13,6 +13,7 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import ReviewList from "../components/Reviews/ReviewList";
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -31,6 +32,8 @@ const useStyles = makeStyles(() => ({
     maxWidth: "260px",
   },
   root: {
+    marginTop: "1rem",
+    height: "100vh",
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
@@ -71,10 +74,10 @@ const useStyles = makeStyles(() => ({
 
 export default function SenpaiProfileView({ match, location }) {
   const classes = useStyles();
+
   const [senpai, setSenpai] = useState(
     location.state ? location.state.senpai : null
   );
-
   const fetchData = async () => {
     const response = await axios.get("/api/v1/users/" + match.params.id);
     if (response.data) {
@@ -89,163 +92,132 @@ export default function SenpaiProfileView({ match, location }) {
   }, []);
 
   return (
-    <>
-      <Container style={{ height: "92vh" }}>
-        <Box style={{ height: "100%" }}>
-          {senpai ? (
-            <Grid container spacing={3} className={classes.root}>
-              <Grid className={classes.aboutMe} container item xs={3}>
-                <Grid item className={classes.aboutMeItem}>
-                  <Typography variant="h2">{senpai.name}</Typography>
-                </Grid>
-
-                <Grid item className={classes.aboutMeItem}>
-                  <Avatar
-                    className="senpai-photo"
-                    alt="senpai"
-                    src={senpai.avatar}
-                    style={{ width: 150, height: 150 }}
-                  />
-                </Grid>
-
-                <Grid item className={classes.aboutMeItem}>
-                  <Button variant="contained" color="primary">
-                    <Link
-                      style={{ color: "white" }}
-                      to={`/senpai/${match.params.id}/schedule`}
-                    >
-                      View schedule
-                    </Link>
-                  </Button>
-                </Grid>
-
-                <Grid container item className={classes.contactDetails}>
-                  {senpai.twitter ||
-                  senpai.linkedIn ||
-                  senpai.facebook ||
-                  senpai.instagram ? (
-                    <Typography variant="h5">Socials:</Typography>
-                  ) : null}
-                  <div>
-                    <Typography variant="h6">
-                      {senpai.twitter ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.twitter}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <TwitterIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                      {senpai.linkedIn ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.linkedIn}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <LinkedInIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                      {senpai.facebook ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.facebook}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <FacebookIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                      {senpai.instagram ? (
-                        <a
-                          target="_blank"
-                          href={`${senpai.instagram}`}
-                          rel="noreferrer"
-                        >
-                          <Button>
-                            <InstagramIcon />
-                          </Button>
-                        </a>
-                      ) : null}
-                    </Typography>
-                  </div>
-                  {senpai.email ? (
-                    <div>
-                      <Typography variant="h5">Email:</Typography>
-                      <Typography variant="h6">
-                        <a href={senpai.email}>{senpai.email}</a>
-                      </Typography>
-                    </div>
-                  ) : null}
-                  {senpai.location ? (
-                    <div>
-                      <Typography variant="h5">Location:</Typography>
-                      <Typography variant="h6">{senpai.location}</Typography>
-                    </div>
-                  ) : null}
-                  {senpai.website ? (
-                    <div>
-                      <Typography variant="h5">Personal Website:</Typography>
-                      <Typography variant="h6">
-                        <a
-                          target="_blank"
-                          href={`${senpai.website}`}
-                          rel="noreferrer"
-                        >
-                          <a>{senpai.website}</a>
-                        </a>
-                      </Typography>
-                    </div>
-                  ) : null}
-                </Grid>
+    <Container>
+      <Box>
+        {senpai ? (
+          <Grid container spacing={3} className={classes.root}>
+            <Grid className={classes.aboutMe} container item xs={3}>
+              <Grid item className={classes.aboutMeItem}>
+                <Typography variant="h2">{senpai.name}</Typography>
               </Grid>
-              <Grid container xs={8} className={classes.right}>
-                <Container
-                  fixed
-                  className={classes.container}
-                  style={{ padding: "1rem" }}
-                >
-                  <div className={classes.videoDiv}>
-                    {senpai.introVideo ? (
-                      <iframe
-                        src={`https://www.youtube.com/embed/${
-                          senpai.introVideo.split("?v=")[1]
-                        }`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className={classes.videoIframe}
-                      ></iframe>
+
+              <Grid item className={classes.aboutMeItem}>
+                <Avatar
+                  className="senpai-photo"
+                  alt="senpai"
+                  src={senpai.avatar}
+                  style={{ width: 150, height: 150 }}
+                />
+              </Grid>
+
+              <Grid item className={classes.aboutMeItem}>
+                <Button variant="contained" color="primary">
+                  <Link
+                    style={{ color: "white" }}
+                    to={`/senpai/${match.params.id}/schedule`}
+                  >
+                    View schedule
+                  </Link>
+                </Button>
+              </Grid>
+
+              <Grid container item className={classes.contactDetails}>
+                {senpai.twitter ||
+                senpai.linkedIn ||
+                senpai.facebook ||
+                senpai.instagram ? (
+                  <Typography variant="h5">Socials:</Typography>
+                ) : null}
+                <div>
+                  <Typography variant="h6">
+                    {senpai.twitter ? (
+                      <a>
+                        <TwitterIcon />
+                      </a>
                     ) : null}
-                  </div>
-                </Container>
-                <Container
-                  fixed
-                  className={classes.container}
-                  style={{ padding: "2rem" }}
-                >
-                  {senpai.bio ? (
-                    <Typography variant="h3">About me</Typography>
-                  ) : null}
-                  {senpai.bio ? (
-                    <Typography variant="h6" component="p">
-                      {senpai.bio}
+                    {senpai.linkedIn ? (
+                      <a>
+                        <LinkedInIcon />{" "}
+                      </a>
+                    ) : null}
+                    {senpai.facebook ? (
+                      <a>
+                        <FacebookIcon />
+                      </a>
+                    ) : null}
+                    {senpai.instagram ? (
+                      <a>
+                        <InstagramIcon />
+                      </a>
+                    ) : null}
+                  </Typography>
+                </div>
+                {senpai.email ? (
+                  <div>
+                    <Typography variant="h5">Email:</Typography>
+                    <Typography variant="h6">
+                      <a href={senpai.email}>{senpai.email}</a>
                     </Typography>
-                  ) : null}
-                </Container>
+                  </div>
+                ) : null}
+                {senpai.location ? (
+                  <div>
+                    <Typography variant="h5">Location:</Typography>
+                    <Typography variant="h6">{senpai.location}</Typography>
+                  </div>
+                ) : null}
+                {senpai.website ? (
+                  <div>
+                    <Typography xs={3} variant="h5">
+                      Personal Website:
+                    </Typography>
+                    <Typography variant="h6">
+                      <a href={senpai.website}>{senpai.website}</a>
+                    </Typography>
+                  </div>
+                ) : null}
               </Grid>
             </Grid>
-          ) : (
-            <CircularProgress />
-          )}
-        </Box>
-      </Container>
-    </>
+            <Grid container xs={8} className={classes.right}>
+              <Container
+                fixed
+                className={classes.container}
+                style={{ padding: "1rem" }}
+              >
+                <div className={classes.videoDiv}>
+                  <iframe
+                    src="https://www.youtube.com/embed/dHRO8M6elcQ"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className={classes.videoIframe}
+                  ></iframe>
+                </div>
+              </Container>
+              <Container
+                fixed
+                className={classes.container}
+                style={{ padding: "2rem" }}
+              >
+                {senpai.bio ? (
+                  <Typography variant="h3">About me</Typography>
+                ) : null}
+                {senpai.bio ? (
+                  <Typography variant="h6" component="p">
+                    {senpai.bio}
+                  </Typography>
+                ) : null}
+              </Container>
+              <Grid xs={4} style={{ height: "50vh", overflow: "auto" }}>
+                <ReviewList senpai={senpai} />
+              </Grid>
+            </Grid>
+          </Grid>
+        ) : (
+          <CircularProgress />
+        )}
+      </Box>
+    </Container>
   );
 }
