@@ -268,24 +268,26 @@ export default function SenpaiList() {
                   fixed
                   className={classes.container}
                   style={{ padding: "1rem" }}
-                >
-                  <div className={classes.videoDiv}>
-                    {senpai.video !== "" ? (
-                      // <p>{senpai.video.split("?v=")[1]}</p>
-                      <iframe
-                        src={`https://www.youtube.com/embed/
-                    ${senpai.video.split("?v=")[1]}`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className={classes.videoIframe}
-                      ></iframe>
-                    ) : (
-                      <p>This user does not have a video uploaded</p>
-                    )}
-                  </div>
-                </Container> */}
+                > */}
+                <div className={classes.videoDiv}>
+                  {senpai.video !== "" ? (
+                    // <p>{`{senpai.video.split("?v=")[1]}`}</p>
+                    <iframe
+                      src={
+                        "https://www.youtube.com/embed/" +
+                        senpai.video.split("?v=")[1]
+                      }
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className={classes.videoIframe}
+                    ></iframe>
+                  ) : (
+                    <p>This user does not have a video uploaded</p>
+                  )}
+                </div>
+                {/* </Container> */}
               </TabPane>
               {/* <TabPane tab="Sample" key="3">
                 <img

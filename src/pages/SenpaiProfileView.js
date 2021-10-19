@@ -86,6 +86,10 @@ export default function SenpaiProfileView({ match, location }) {
   };
 
   useEffect(() => {
+    console.log(senpai);
+  }, [senpai]);
+
+  useEffect(() => {
     if (match.params.id) {
       fetchData();
     }
@@ -184,16 +188,22 @@ export default function SenpaiProfileView({ match, location }) {
                 className={classes.container}
                 style={{ padding: "1rem" }}
               >
-                <div className={classes.videoDiv}>
-                  <iframe
-                    src="https://www.youtube.com/embed/dHRO8M6elcQ"
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className={classes.videoIframe}
-                  ></iframe>
-                </div>
+                {senpai.introVideo ? (
+                  <div className={classes.videoDiv}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${
+                        senpai.introVideo.split("?v=")[1]
+                      }`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className={classes.videoIframe}
+                    ></iframe>
+                  </div>
+                ) : (
+                  <p>No Video Found</p>
+                )}
               </Container>
               <Container
                 fixed
