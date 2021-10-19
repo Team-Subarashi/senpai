@@ -41,36 +41,36 @@ const NavBar = ({ user }) => {
       <AppBar position="static" className={classes.appbar}>
         <Toolbar className={classes.appbarWrapper}>
           <Link to={`/`} style={{ color: "white" }}>
-            <img src={logo} alt="senpai" height="36" width="auto" />
+            <img src={logo} alt="senpai" height="50" width="auto" />
           </Link>
           <Link
             to={user.name ? `/kouhai/${user._id}` : "/login"}
-            style={{ color: "white" }}
+            style={{ color: "white", fontSize: "1.3rem" }}
           >
               Profile
           </Link>
           <Link
             to={user._id ? `/myLessons` : "/login"}
-            style={{ color: "white" }}
+            style={{ color: "white", fontSize: "1.3rem" }}
           >
               My Lessons
           </Link>
-          <Link to={`/search`} style={{ color: "white" }}>
+          <Link to={`/search`} style={{ color: "white", fontSize: "1.3rem" }}>
               Find a Senpai
           </Link>
           {user.name ? (
-            user.email
+            <div style={{ color: "white", fontSize: "1.3rem" }}>{user.email}</div>
           ) : (
-            <Link to="/signup" style={{ color: "white" }}>
+            <Link to="/signup" style={{ color: "white", fontSize: "1.3rem" }}>
                 Create an Account
             </Link>
           )}
           {!user.email ? (
-            <Link to="/login" style={{ color: "white" }}>
+            <Link to="/login" style={{ color: "white", fontSize: "1.3rem" }}>
                 Sign in
             </Link>
           ) : (
-            <Link to="/" onClick={signOutHandler} style={{ color: "white" }}>
+            <Link to="/" onClick={signOutHandler} style={{ color: "white", fontSize: "1.3rem" }}>
                 Sign Out
             </Link>
           )}
