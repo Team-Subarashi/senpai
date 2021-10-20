@@ -6,57 +6,87 @@ import "firebase/compat/database";
 import { fromMonaco } from "fixedfirepad/firepad";
 import "./CodeEditor.css";
 import { useRecoilState } from "recoil";
-// import { userState } from "../../atoms";
-// import axios from "axios";
+import axios from "axios";
 import { loadedCSS, loadedHTML, loadedJS } from "../../atoms";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import FileControls from "./FileControls";
 
 function CodeEditor({ activeFiles, user }) {
+  const modalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
   const jsEditorRef = useRef(null);
   const cssEditorRef = useRef(null);
   const htmlEditorRef = useRef(null);
 
   const [fileName, setFileName] = useState("script.js");
+  const [saveFileName, setSaveFileName] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const lessonId = window.location.href.split("room/")[1];
-
+  const [loadedFile, setLoadedFile] = useState("");
   const [html, setHTML] = useRecoilState(loadedHTML);
   const [css, setCSS] = useRecoilState(loadedCSS);
   const [js, setJS] = useRecoilState(loadedJS);
 
+  const lessonId = window.location.href.split("room/")[1];
 
   useEffect(async () => {
-    setHTML(activeFiles.html);
-    setJS(activeFiles.js);
-    setCSS(activeFiles.css);
-  }, []);
+    setLoadedFile(activeFiles[0]);
+    setHTML(loadedFile.html);
+    setJS(loadedFile.js);
+    setCSS(loadedFile.css);
+    console.log(loadedFile, "Hello");
+  }, [loadedFile]);
 
   const handleHTML = (value) => {
     setHTML(value);
-    console.log(html);
   };
   const handleJS = (value) => {
     setJS(value);
-    console.log(js);
   };
   const handleCSS = (value) => {
     setCSS(value);
-    console.log(css);
   };
 
-  // const handleSave = async () => {
-  //   return await axios.patch(`/files/${activeFiles._id}`, {
-  //     js: js,
-  //     css: css,
-  //     html: html,
-  //   });
-  // };
+  const handleSave = async () => {
+    if (loadedFile.name === saveFileName) {
+      await axios.patch(`/files/${saveFileName}`, {
+        js: js,
+        css: css,
+        html: html,
+        userId: user._id,
+        name: saveFileName,
+      });
+      handleModalClose();
+    } else {
+      await axios.post(`/files/`, {
+        js: js,
+        css: css,
+        html: html,
+        userId: user._id,
+        name: saveFileName,
+      });
+      handleModalClose();
+    }
+  };
 
   function handleJSEditorDidMount(editor) {
+    console.log("js");
     jsEditorRef.current = editor;
-
     const jsDbRef = firebase.database().ref().child(`${lessonId}/script`);
     const jsFirepad = fromMonaco(jsDbRef, jsEditorRef.current);
     jsFirepad.setUserName(user.name || "Default");
@@ -68,6 +98,7 @@ function CodeEditor({ activeFiles, user }) {
     cssFirepad.setUserName(user.name || "Default");
   }
   function handleHTMLEditorDidMount(editor) {
+    console.log("html");
     htmlEditorRef.current = editor;
     const htmlDbRef = firebase.database().ref().child(`${lessonId}/html`);
     const htmlFirepad = fromMonaco(htmlDbRef, htmlEditorRef.current);
@@ -78,6 +109,13 @@ function CodeEditor({ activeFiles, user }) {
     setFileName(value);
     console.log(fileName);
   }
+  function handleFileName(event) {
+    console.log(event.target.value);
+    setSaveFileName(event.target.value);
+  }
+
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
 
   useEffect(() => {
     firebase.initializeApp(firebaseConfig);
@@ -85,7 +123,9 @@ function CodeEditor({ activeFiles, user }) {
 
   return (
     <div id="editor-container">
-      <Box sx={{ width: "100%", height: "10%", border: "none" }}>
+      <Box
+        sx={{ width: "100%", height: "10%", border: "none", display: "flex" }}
+      >
         <Tabs
           value={fileName}
           onChange={handleTabChange}
@@ -110,6 +150,29 @@ function CodeEditor({ activeFiles, user }) {
             label="index.html"
           />
         </Tabs>
+        <Button
+          onClick={handleModalOpen}
+          color="secondary"
+          variant="contained"
+          style={{
+            marginLeft: "20vh",
+            marginTop: "1.5vh",
+            marginBottom: "1vh",
+            paddingBottom: "1vh",
+            marginRight: "2rem",
+            height: "4vh",
+            width: "15vh",
+          }}
+        >
+          Save As
+        </Button>
+        <FileControls activeFiles={activeFiles} />
+        <Modal open={modalOpen} onClose={handleModalClose}>
+          <Box sx={modalStyle}>
+            <TextField label="File Name" onChange={handleFileName} />
+            <Button onClick={handleSave}>Save</Button>
+          </Box>
+        </Modal>
       </Box>
 
       {fileName === "script.js" && (
@@ -118,8 +181,8 @@ function CodeEditor({ activeFiles, user }) {
           theme="vs-dark"
           onMount={handleJSEditorDidMount}
           defaultLanguage="javascript"
-          defaultValue="hello js"
-          options={{ fontSize: 10 }}
+          value={js}
+          options={{ fontSize: 12 }}
           onChange={handleJS}
         />
       )}
@@ -129,8 +192,8 @@ function CodeEditor({ activeFiles, user }) {
           theme="vs-dark"
           onMount={handleCSSEditorDidMount}
           defaultLanguage="css"
-          defaultValue="hello cs"
-          options={{ fontSize: 10 }}
+          value={css}
+          options={{ fontSize: 12 }}
           onChange={handleCSS}
         />
       )}
@@ -140,8 +203,8 @@ function CodeEditor({ activeFiles, user }) {
           theme="vs-dark"
           onMount={handleHTMLEditorDidMount}
           defaultLanguage="html"
-          defaultValue="hello html"
-          options={{ fontSize: 10 }}
+          value={html}
+          options={{ fontSize: 12 }}
           onChange={handleHTML}
         />
       )}

@@ -16,7 +16,13 @@ const CodeView = () => {
       const firstHTML = html.slice(0, headIndex);
       const secondHTML = html.slice(headIndex, html.length - 1);
       const src = `${firstHTML} <style> ${css} </style> ${secondHTML}`;
-      return src;
+
+      const bodyIndex = src.indexOf("</body>");
+      const firstSrc = src.slice(0, bodyIndex);
+      const secondSrc = src.slice(bodyIndex, src.length - 1);
+      const finalSrc = `${firstSrc} <script type="module"> ${js} </script> ${secondSrc}`;
+      console.log(finalSrc);
+      return finalSrc;
     }
     return;
   };
