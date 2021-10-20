@@ -13,6 +13,14 @@ const fileSchema = new Schema({
     type: String,
     required: false,
   },
+  userId: {
+    type: String,
+    required: false,
+  },
+  name: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = mongoose.model("file", fileSchema);
