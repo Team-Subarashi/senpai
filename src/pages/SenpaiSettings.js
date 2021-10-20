@@ -237,7 +237,7 @@ export default function SenpaiSettings() {
                 </Select>
               </FormControl>
             </Grid>
-            <FormControl style={{width: "33%"}}>
+            <FormControl style={{width: "32%"}}>
               <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
               <Input
                 className={classes.input}
