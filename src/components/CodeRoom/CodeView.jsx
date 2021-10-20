@@ -21,7 +21,7 @@ const CodeView = () => {
       const firstSrc = src.slice(0, bodyIndex);
       const secondSrc = src.slice(bodyIndex, src.length - 1);
       const finalSrc = `${firstSrc} <script type="module"> ${js} </script> ${secondSrc}`;
-      console.log(finalSrc);
+
       return finalSrc;
     }
     return;

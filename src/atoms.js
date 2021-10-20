@@ -62,3 +62,8 @@ export const userListState = atom({
   key: "userListState",
   default: [],
 });
+
+export const allReviewsState = atom({
+  key: "allReviewsState",
+  default: []
+});

@@ -8,6 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import { Rating } from "@material-ui/lab";
+import { Container } from "@material-ui/core";
 import axios from "axios";
 
 const CreateReview = ({ lesson }) => {
@@ -38,7 +39,6 @@ const CreateReview = ({ lesson }) => {
   });
 
   function HoverRating() {
-    // const [value, setValue] = React.useState(2);
     const classes = useStyles();
 
     return (
@@ -47,11 +47,8 @@ const CreateReview = ({ lesson }) => {
           name="hover-feedback"
           value={stateValue} //2
           precision={0.5}
-          // onClick={handleClick}
           onChange={(event, newValue) => {
-            // value.current = newValue;
             setStateValue(newValue);
-            console.log(stateValue);
           }}
           // onChangeActive={(event) => {
           // hover.current = newHover;
@@ -106,22 +103,30 @@ const CreateReview = ({ lesson }) => {
 
     return (
       <div>
-        <Button variant="outlined" color="white" onClick={handleClickOpen}>
+        <Button
+          // variant="text"
+          variant="contained"
+          color="secondary"
+          onClick={handleClickOpen}
+          style={{ color: "white" }}
+        >
           ADD REVIEW
         </Button>
         <Dialog
+          fullWidth="true"
+          maxWidth="sm"
           open={open}
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">REVIEW</DialogTitle>
+          <DialogTitle id="form-dialog-title" style={{}}>
+            REVIEW
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address
-              here. We will send updates occasionally.
-            </DialogContentText>
+            <DialogContentText></DialogContentText>
             <HoverRating />
             <TextField
+              color="secondary"
               autoFocus
               margin="dense"
               id="review"
@@ -132,10 +137,20 @@ const CreateReview = ({ lesson }) => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="white">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleClose}
+              style={{ color: "white" }}
+            >
               Cancel
             </Button>
-            <Button onClick={handleSubmit} color="white">
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleSubmit}
+              style={{ color: "white" }}
+            >
               SUBMIT
             </Button>
           </DialogActions>
@@ -145,9 +160,9 @@ const CreateReview = ({ lesson }) => {
   };
   if (!lesson.userIsSenpai) {
     return (
-      <div>
+      <Container>
         <FormDialog />
-      </div>
+      </Container>
     );
   } else {
     return null;

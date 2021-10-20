@@ -114,38 +114,6 @@ export default function MyLessons() {
     setScheduleToggler(!scheduleToggler);
   };
 
-  // please keep this to refactor
-  // to use this you need to take the useEffect out from PreviousLesson file since this no longer gives promise
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const response = await axios.get(`/api/v1/users/${user._id}/lessons`);
-  //     if (response.data) {
-  //       const temp = response.data.map((lesson) => {
-  //         lesson.title = "Active Lesson";
-  //         return lesson;
-  //       });
-  //       setSchedulerData(temp);
-
-  //       setCurrentLessons(temp);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [user]);
-  // useEffect(() => {
-  //   const fetchLessonPartner = async (targetLessons) => {
-  //     const requestList = targetLessons.map((lesson) => {
-  //       return axios.get(`/senpai/${lesson.senpaiId}`);
-  //     });
-
-  //     Promise.all(requestList).then((response) => {
-  //       const lessons = response.map((r) => r.data);
-  //       setPreviousLessons(lessons);
-  //     });
-  //   };
-  // fetchLessonPartner(currentLessons);
-  // }, [currentLessons]);
-
   const fetchLessonPartner = async (targetLessons) => {
     const resultLessons = targetLessons.map(async (lesson) => {
       if (lesson.kouhaiId) {
@@ -212,11 +180,10 @@ export default function MyLessons() {
   }, [user]);
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, [scheduleToggler]);
 
   const joinClickHandler = (appointmentData) => {
-    console.log(appointmentData.price, appointmentData.priceId);
     setLesson(appointmentData);
     history.push(`/room/${appointmentData._id}`);
   };
@@ -306,17 +273,21 @@ export default function MyLessons() {
               </div>
             </Grid>
             <Grid xs={12} container>
-              <Paper
-                style={{
-                  marginTop: "100px",
-                  marginBottom: "100px",
-                  maxHeight: 300,
-                  width: "100%",
-                  overflow: "auto",
-                }}
-              >
-                {checkRenderLesson()}
-              </Paper>
+              <Grid xs={12} style={{ marginTop: "20px" }} item>
+                <h1 style={{ color: "#9ece6a", textAlign: "left" }}>
+                  Previous lesson
+                </h1>
+                <Paper
+                  style={{
+                    marginBottom: "100px",
+                    maxHeight: 300,
+                    width: "100%",
+                    overflow: "auto",
+                  }}
+                >
+                  {checkRenderLesson()}
+                </Paper>
+              </Grid>
             </Grid>
           </Grid>
         </MuiPickersUtilsProvider>
@@ -346,17 +317,21 @@ export default function MyLessons() {
             </Paper>
           </Grid>
           <Grid xs={12} container>
-            <Paper
-              style={{
-                marginTop: "100px",
-                marginBottom: "100px",
-                maxHeight: 300,
-                width: "100%",
-                overflow: "auto",
-              }}
-            >
-              {checkRenderLesson()}
-            </Paper>
+            <Grid xs={12} style={{ marginTop: "20px" }} item>
+              <h1 style={{ color: "#9ece6a", textAlign: "left" }}>
+                Previous lesson
+              </h1>
+              <Paper
+                style={{
+                  marginBottom: "100px",
+                  maxHeight: 300,
+                  width: "100%",
+                  overflow: "auto",
+                }}
+              >
+                {checkRenderLesson()}
+              </Paper>
+            </Grid>
           </Grid>
         </Grid>
       </Container>
