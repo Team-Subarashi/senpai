@@ -237,18 +237,20 @@ export default function SenpaiSettings() {
                 </Select>
               </FormControl>
             </Grid>
+            <FormControl style={{width: "33%"}}>
+              <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
+              <Input
+                className={classes.input}
+                id="rate"
+                style={{ color: "#fff", marginBottom: "2vh", }}
+                value={rate}
+                onChange={(e) => {
+                  changeRate(e.target.value);
+                }}
+              />
+            </FormControl>
           </Box>
-          <FormControl>
-            <InputLabel style={{ color: "#fff" }}>Hourly Rate</InputLabel>
-            <Input
-              id="rate"
-              style={{ color: "#fff", marginBottom: "2vh" }}
-              value={rate}
-              onChange={(e) => {
-                changeRate(e.target.value);
-              }}
-            />
-          </FormControl>
+
 
           <Grid item xs={3} style={{ marginLeft: "60vw" }}>
             <Button
