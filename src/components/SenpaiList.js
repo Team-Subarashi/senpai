@@ -161,6 +161,7 @@ export default function SenpaiList() {
                   name="rating"
                   readOnly="true"
                   precision={0.5}
+                  style={{marginTop: "0.5rem"}}
                 />
                 <Link
                   to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
@@ -168,7 +169,7 @@ export default function SenpaiList() {
                   <Button
                     variant="contained"
                     style={{
-                      marginTop: "3vh",
+                      marginTop: "0.5rem",
                       backgroundColor: "purple",
                       color: "white",
                     }}
