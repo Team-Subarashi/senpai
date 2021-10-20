@@ -62,13 +62,19 @@ export default function Checkout({
   );
 
   return message ? (
-    <div>
-      <img
-        src="https://i.imgur.com/MTH8PlV.png"
-        style={{ marginTop: "5vh", marginBottom: "5vh", borderRadius: "4px" }}
-      />
-      <Message message={message} />
-    </div>
+    message === "Lesson booked!" ? (
+      <div style={{ fontSize: "1.8rem" }}>
+        <img
+          src="https://i.imgur.com/MTH8PlV.png"
+          style={{ marginTop: "5vh", marginBottom: "5vh", borderRadius: "4px" }}
+        />
+        <Message message={message} />
+      </div>
+    ) : (
+      <div style={{ fontSize: "1.8rem" }}>
+        <Message message={message} />
+      </div>
+    )
   ) : (
     <ProductDisplay />
   );
