@@ -61,5 +61,15 @@ export default function Checkout({
     </section>
   );
 
-  return message ? <Message message={message} /> : <ProductDisplay />;
+  return message ? (
+    <div>
+      <img
+        src="https://i.imgur.com/MTH8PlV.png"
+        style={{ marginTop: "5vh", marginBottom: "5vh", borderRadius: "4px" }}
+      />
+      <Message message={message} />
+    </div>
+  ) : (
+    <ProductDisplay />
+  );
 }
