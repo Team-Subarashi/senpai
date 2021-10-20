@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import IconButton from "@material-ui/core/IconButton";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
@@ -120,9 +121,9 @@ const Kohai = () => {
                             href={`${user.twitter}`}
                             rel="noreferrer"
                           >
-                            <Button>
+                            <IconButton>
                               <TwitterIcon />
-                            </Button>
+                            </IconButton>
                           </a>
                         ) : null}
                         {user.linkedIn ? (
@@ -131,9 +132,9 @@ const Kohai = () => {
                             href={`${user.linkedIn}`}
                             rel="noreferrer"
                           >
-                            <Button>
+                            <IconButton>
                               <LinkedInIcon />
-                            </Button>
+                            </IconButton>
                           </a>
                         ) : null}
                         {user.facebook ? (
@@ -142,9 +143,9 @@ const Kohai = () => {
                             href={`${user.facebook}`}
                             rel="noreferrer"
                           >
-                            <Button>
+                            <IconButton>
                               <FacebookIcon />
-                            </Button>
+                            </IconButton>
                           </a>
                         ) : null}
                         {user.instagram ? (
@@ -153,9 +154,9 @@ const Kohai = () => {
                             href={`${user.instagram}`}
                             rel="noreferrer"
                           >
-                            <Button>
+                            <IconButton>
                               <InstagramIcon />
-                            </Button>
+                            </IconButton>
                           </a>
                         ) : null}
                         {/* Fix to match others later */}
@@ -165,9 +166,9 @@ const Kohai = () => {
                             href={`${user.github}`}
                             rel="noreferrer"
                           >
-                            <Button>
+                            <IconButton>
                               <GitHubIcon />
-                            </Button>
+                            </IconButton>
                           </a>
                         ) : null}
                       </div>
