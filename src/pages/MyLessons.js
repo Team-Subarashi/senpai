@@ -155,9 +155,9 @@ export default function MyLessons() {
         lesson.title =
           lesson.senpaiId === user._id
             ? lesson.selectedCategory
-              ? `Senpai Lesson: ${lesson.selectedCategory}`
-              : `Senpai Lesson`
-            : `Kohai Lesson: ${lesson.selectedCategory}`;
+              ? `${lesson.selectedCategory} Lesson`
+              : `Unbooked`
+            : `${lesson.selectedCategory} Lesson`;
         lesson.userIsSenpai = lesson.senpaiId === user._id ? true : false;
         return lesson;
       });
@@ -223,10 +223,10 @@ export default function MyLessons() {
 
   if (user.isSenpai === true) {
     return (
-      <Container style={{ padding: "3vw" }}>
+      <Container style={{ padding: "2vw" }}>
         <MuiPickersUtilsProvider utils={MomentUtils}>
           <Grid container>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <Paper elevation={24}>
                 <Scheduler data={schedulerData}>
                   <ViewState defaultCurrentDate={Date.now()} />
@@ -248,7 +248,7 @@ export default function MyLessons() {
                 </Scheduler>
               </Paper>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <div
                 style={{
                   display: "flex",
@@ -295,14 +295,14 @@ export default function MyLessons() {
     );
   } else {
     return (
-      <Container style={{ padding: "8vw" }}>
+      <Container style={{ padding: "3vw" }}>
         <Grid container>
-          <Grid item xs={12} style={{ backgroundColor: "blue" }}>
+          <Grid item xs={12}>
             <Paper>
               <Scheduler data={schedulerData}>
                 <ViewState defaultCurrentDate={Date.now()} />
                 <WeekView
-                  startDayHour={9}
+                  startDayHour={8}
                   endDayHour={24}
                   cellDuration={60}
                   timeTableCellComponent={TimeTableCell}

@@ -85,7 +85,7 @@ exports.updateLesson = (req, res) => {
       let toSenpai = {
         from: 'subarashisenpaiapp@gmail.com',
         to: senpai.email,
-        subject: `New Lesson with ${kouhai.name}`,
+        subject: `You have a lesson with ${kouhai.name} on ${new Date(lesson.startDate).toLocaleString()}`,
         text: `Time: ${new Date(lesson.startDate)}` // NEED TO FLESH THIS OUT
       };
 
@@ -102,7 +102,7 @@ exports.updateLesson = (req, res) => {
       let toKouhai = {
         from: 'subarashisenpaiapp@gmail.com',
         to: kouhai.email,
-        subject: `Lesson booked with ${senpai.name}`,
+        subject: `You booked a lesson with ${senpai.name} for ${new Date(lesson.startDate).toLocaleString()}`,
         text: `Time: ${new Date(lesson.startDate)}` // NEED TO FLESH THIS OUT
       };
 

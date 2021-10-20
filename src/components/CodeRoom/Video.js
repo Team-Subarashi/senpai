@@ -18,16 +18,18 @@ const useStyles = makeStyles(() => ({
   },
   streamsContainer: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "space-evenly",
-    height: "87vh",
-    minWidth: "264px",
+    height: "100%",
+    minWidth: "600px",
+    marginLeft: "13rem"
   },
   publisherContainer: {
     display: "flex",
-    justifyContent: "right",
+    justifyContent: "center",
     alignItems: "center",
+    paddingTop: "5px"
   },
 }));
 

@@ -1,4 +1,4 @@
-import React, { useDebugValue } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -6,17 +6,9 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import { Rating } from "@material-ui/lab";
-import {
-  Grid,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
-  Container,
-} from "@material-ui/core";
+import { Container } from "@material-ui/core";
 import axios from "axios";
 
 const CreateReview = ({ lesson }) => {
@@ -57,9 +49,14 @@ const CreateReview = ({ lesson }) => {
           precision={0.5}
           onChange={(event, newValue) => {
             setStateValue(newValue);
-            console.log(stateValue);
           }}
-          onChangeActive={(event, newHover) => {}}
+          // onChangeActive={(event) => {
+          // hover.current = newHover;
+          // value.current = newHover;
+          // console.log(newHover);
+          // setStateHover(newHover);
+          // console.log("active");
+          // }}
         />
         {
           //if we want labels for the stars

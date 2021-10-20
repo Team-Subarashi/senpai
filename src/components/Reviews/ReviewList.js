@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Review from "./Review";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userListState } from "../../atoms";
 
 const ReviewList = ({ senpai }) => {
+  const userList = useRecoilValue(userListState);
   const [allReviews, setAllReviews] = useState([]);
-  console.log(senpai);
   useEffect(() => {
     let mounted = true;
 
@@ -25,7 +27,7 @@ const ReviewList = ({ senpai }) => {
         if (review.senpaiId == senpai._id) {
           return (
             <>
-              <Review review={review} />
+              <Review userList={userList} review={review} />
             </>
           );
         } else {

@@ -4,6 +4,7 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 import Timetable from "../components/Scheduler";
 import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
 
 export default function ScheduleBooking({ match }) {
   const [state, setState] = useState([]);
@@ -27,9 +28,8 @@ export default function ScheduleBooking({ match }) {
   }, []);
 
   return (
-    <>
+    <Container style={{marginTop: "4rem", marginBottom: "4rem"}}>
       <MuiPickersUtilsProvider utils={MomentUtils}>
-        <div>Senpai's Lessons</div>
         <Grid container>
           <Grid
             item
@@ -37,32 +37,12 @@ export default function ScheduleBooking({ match }) {
             style={{
               marginLeft: "2vw",
               marginRight: "2vw",
-              marginBottom: "36.45vh",
             }}
           >
             <Timetable senpaiLessons={state} match={match} />
           </Grid>
-          {/* <Grid item xs={4}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignContent: "center",
-              }}
-            >
-              <h3>Temp selector until we have a create your own rates page </h3>
-              <BasicDateTimePicker />
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={bookButtonHandler}
-              >
-                Create Lesson Slot
-              </Button>
-            </div>
-          </Grid> */}
         </Grid>
       </MuiPickersUtilsProvider>
-    </>
+    </Container>
   );
 }
