@@ -180,11 +180,10 @@ export default function MyLessons() {
   }, [user]);
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, [scheduleToggler]);
 
   const joinClickHandler = (appointmentData) => {
-    console.log(appointmentData.price, appointmentData.priceId);
     setLesson(appointmentData);
     history.push(`/room/${appointmentData._id}`);
   };
@@ -207,7 +206,6 @@ export default function MyLessons() {
             >
               Join Room
             </Button>
-            <Button onClick={() => console.log(appointmentData)}>Test</Button>
           </Grid>
         </Grid>
       </AppointmentTooltip.Content>
