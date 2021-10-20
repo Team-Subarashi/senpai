@@ -72,7 +72,7 @@ export default function SenpaiList() {
           let ratings = allReviews.filter((review) => {
             return review.senpaiId === senpai._id;
           });
-          let avgRating = ratings.length > 0 ? ratings.reduce((prevVal, currentVal) => prevVal.rating + currentVal.rating) / ratings.length : 0;
+          let avgRating = ratings.length > 0 ? ratings.map((review) => review.rating).reduce((prevVal, currentVal) => prevVal + currentVal) / ratings.length : 0;
           if (category.toLowerCase() === "all") {
             temp.push({
               id: senpai._id,
