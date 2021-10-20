@@ -9,9 +9,11 @@ import Button from "@material-ui/core/Button";
 import { useRecoilValue } from "recoil";
 import "antd/dist/antd.css";
 import { Tabs } from "antd";
-import { category as categoryAtom } from "../atoms";
+import { category as categoryAtom, allReviewsState } from "../atoms";
 import axios from "axios";
 import makeStyles from "@material-ui/core/styles/makeStyles";
+import { Rating } from "@material-ui/lab";
+
 
 const useStyles = makeStyles(() => ({
   section: {
@@ -47,6 +49,7 @@ export default function SenpaiList() {
   const classes = useStyles();
   const [senpaiList, setSenpaiList] = useState([]);
   const category = useRecoilValue(categoryAtom);
+  const allReviews = useRecoilValue(allReviewsState);
 
   useEffect(() => {
     for (const senpai of senpaiList) {
@@ -55,7 +58,6 @@ export default function SenpaiList() {
       }
     }
   }, [senpaiList]);
-  // const { Tabs } = antd;
   const { TabPane } = Tabs;
 
   function callback(key) {
@@ -67,6 +69,10 @@ export default function SenpaiList() {
     await axios.get("/api/v1/users").then((res) => {
       for (const senpai of res.data) {
         if (senpai.isSenpai === true) {
+          let ratings = allReviews.filter((review) => {
+            return review.senpaiId === senpai._id;
+          });
+          let avgRating = ratings.length > 0 ? ratings.reduce((prevVal, currentVal) => prevVal.rating + currentVal.rating) / ratings.length : 0;
           if (category.toLowerCase() === "all") {
             temp.push({
               id: senpai._id,
@@ -82,6 +88,7 @@ export default function SenpaiList() {
               linkedIn: senpai.linkedIn,
               website: senpai.website,
               video: senpai.introVideo,
+              avgRating: avgRating,
             });
           } else if (senpai.category.includes(category)) {
             temp.push({
@@ -98,6 +105,7 @@ export default function SenpaiList() {
               linkedIn: senpai.linkedIn,
               website: senpai.website,
               video: senpai.introVideo,
+              avgRating: avgRating,
             });
           }
         }
@@ -148,6 +156,12 @@ export default function SenpaiList() {
                   src={senpai.avatar}
                   style={{ width: 100, height: 100 }}
                 />
+                <Rating
+                  value={senpai.avgRating}
+                  name="rating"
+                  readOnly="true"
+                  precision={0.5}
+                />
                 <Link
                   to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
                 >
@@ -167,21 +181,6 @@ export default function SenpaiList() {
                 </Link>
               </Box>
             </Grid>
-            {/* </Grid> */}
-            {/* <Grid
-            container
-            // alignItems="center"
-            justifyContent="center"
-            item
-            xs={4}
-            style={{
-              fontWeight: "bold",
-              paddingTop: "1.cl.2vh",
-              backgroundColor: "#616162",
-              border: "1px solid white",
-            }}
-          > */}
-            {/* <Grid item xs={12}> */}
             <Grid item xs={6}>
               <Typography
                 variant="h6"
@@ -189,7 +188,6 @@ export default function SenpaiList() {
                   color: "#2ac3de",
                   textAlign: "center",
                   fontFamily: "Roboto",
-                  // fontWeight: "bold",
                 }}
               >
                 {senpai.name}
@@ -207,9 +205,6 @@ export default function SenpaiList() {
                   paddingRight: "1vw",
                   paddingLeft: "1vw",
                   alignContent: "center",
-                  // marginLeft: "30%",
-                  // marginRight: "30%",
-                  // backgroundColor: "red",
                 }}
               >
                 {senpai.category.map((skill) => {
@@ -218,15 +213,10 @@ export default function SenpaiList() {
                       <Button
                         key={skill}
                         style={{
-                          //   color: "#f3f0e9",
-                          //   fontWeight: "bold",
-                          //   textAlign: "left",
-                          //   fontSize: "large",
                           marginTop: "1vh",
                           width: "50%",
                           backgroundColor: "#2ac3de",
                           color: "black",
-                          // borderRadius: "4px",
                         }}
                       >
                         {skill}
@@ -236,9 +226,7 @@ export default function SenpaiList() {
                 })}
               </Grid>
             </Grid>
-            {/* </Grid> */}
           </Grid>
-
           {/* Right side of senpai */}
           <Grid
             item
@@ -252,23 +240,11 @@ export default function SenpaiList() {
           >
             <Tabs class="my-tabs" defaultActiveKey="1" onChange={callback}>
               <TabPane tab="Bio" key="1">
-                <div
-                  style={
-                    {
-                      // fontWeight: "bold",
-                      // color: "#e0af68"
-                    }
-                  }
-                >
+                <div>
                   {senpai.bio}
                 </div>
               </TabPane>
               <TabPane tab="Intro" key="2">
-                {/* <Container
-                  fixed
-                  className={classes.container}
-                  style={{ padding: "1rem" }}
-                > */}
                 <div className={classes.videoDiv}>
                   {senpai.video !== "" ? (
                     // <p>{`{senpai.video.split("?v=")[1]}`}</p>
@@ -287,15 +263,7 @@ export default function SenpaiList() {
                     <p>This user does not have a video uploaded</p>
                   )}
                 </div>
-                {/* </Container> */}
               </TabPane>
-              {/* <TabPane tab="Sample" key="3">
-                <img
-                  height="50px"
-                  width="50px"
-                  src="https://www.pngfind.com/pngs/m/2-24642_imagenes-random-png-cosas-random-png-transparent-png.png"
-                />
-              </TabPane> */}
             </Tabs>
           </Grid>
         </Grid>

@@ -21,7 +21,7 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { userState, repositoriesState, userListState } from "./atoms";
+import { userState, repositoriesState, userListState, allReviewsState } from "./atoms";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 import theme from "./units/theme";
 import Messages from "./components/message/Messages";
@@ -30,6 +30,7 @@ function App() {
   const [user, setUser] = useRecoilState(userState);
   const setRepositories = useSetRecoilState(repositoriesState);
   const setUserListState = useSetRecoilState(userListState);
+  const setAllReviewsState = useSetRecoilState(allReviewsState);
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -70,6 +71,17 @@ function App() {
       }
     };
     fetchUsers();
+
+    const fetchReviews = async () => {
+      const reviews = await axios({
+        method: "get",
+        url: `/api/v1/reviews`
+      });
+      if (reviews.data) {
+        setAllReviewsState(reviews.data);
+      }
+    };
+    fetchReviews();
 
   }, []);
 
