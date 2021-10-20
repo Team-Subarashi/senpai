@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import CodeView from "./CodeView";
 import axios from "axios";
-import Video from "../Video";
+import Video from "./Video";
+// import FileControls from "./FileControls";
 import "./Workspace.css";
 import CodeEditor from "./CodeEditor";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { lessonState, userState } from "../../atoms";
+import { lessonState, userState, loadedFiles } from "../../atoms";
 
 export default function Workspace() {
-  const [activeFiles, setActiveFiles] = useState("");
+  const [activeFiles, setActiveFiles] = useRecoilState(loadedFiles);
   const [lesson, setLesson] = useRecoilState(lessonState);
   const user = useRecoilValue(userState);
-  console.log(user);
 
   useEffect(async () => {
     const files = await axios.get("/files");
-    setActiveFiles(files.data[0]);
-    console.log(lesson);
+    files.data.filter((file) => (file.userId = user._id));
+    console.log;
+    setActiveFiles(files.data);
     return () => {
       setLesson({});
     };
@@ -43,6 +44,7 @@ export default function Workspace() {
           marginTop: "5vh",
           marginBottom: "5vh",
           marginLeft: "1px",
+          height: "100%",
           // backgroundColor: "lightblue",
         }}
       >
@@ -58,12 +60,27 @@ export default function Workspace() {
           // marginLeft: "1vw",
           marginTop: "5vh",
           marginBottom: "5vh",
+          height: "100%",
         }}
       >
         <CodeView />
-      </Grid>
-      <Grid item xs={2}>
-        <Video lesson={lesson} />
+
+        <Grid
+          item
+          xs={5}
+          spacing={2}
+          style={{
+            marginTop: "4vh",
+            marginLeft: "2vh",
+            paddingLeft: "10rem",
+            justifyContent: "space-around",
+            display: "flex",
+          }}
+        >
+          {/* <FileControls item /> */}
+
+          <Video lesson={lesson} />
+        </Grid>
       </Grid>
     </Grid>
   );

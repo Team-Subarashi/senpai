@@ -23,7 +23,7 @@ exports.createNewFile = (req, res) => {
 // updateTodo function — To update todo status by id
 exports.updateFile = (req, res) => {
   File.findOneAndUpdate(
-    { _id: req.params.id },
+    { name: req.params.name },
     req.body,
     { new: true },
     (err, file) => {
