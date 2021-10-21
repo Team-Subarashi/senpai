@@ -67,7 +67,7 @@ const Kohai = () => {
     <>
       <Container>
         <Box>
-          <Grid container xs={12}>
+          <Grid container>
             <Grid
               container
               justify="flex-end"

@@ -14,7 +14,6 @@ import axios from "axios";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Rating } from "@material-ui/lab";
 
-
 const useStyles = makeStyles(() => ({
   section: {
     backgroundColor: "#616162",
@@ -72,7 +71,12 @@ export default function SenpaiList() {
           let ratings = allReviews.filter((review) => {
             return review.senpaiId === senpai._id;
           });
-          let avgRating = ratings.length > 0 ? ratings.reduce((prevVal, currentVal) => prevVal.rating + currentVal.rating) / ratings.length : 0;
+          let avgRating =
+            ratings.length > 0
+              ? ratings.reduce(
+                  (prevVal, currentVal) => prevVal.rating + currentVal.rating
+                ) / ratings.length
+              : 0;
           if (category.toLowerCase() === "all") {
             temp.push({
               id: senpai._id,
@@ -161,7 +165,7 @@ export default function SenpaiList() {
                   name="rating"
                   readOnly="true"
                   precision={0.5}
-                  style={{marginTop: "0.5rem"}}
+                  style={{ marginTop: "0.5rem" }}
                 />
                 <Link
                   to={{ pathname: `/senpai/${senpai.id}`, state: { senpai } }}
@@ -241,9 +245,7 @@ export default function SenpaiList() {
           >
             <Tabs class="my-tabs" defaultActiveKey="1" onChange={callback}>
               <TabPane tab="Bio" key="1">
-                <div>
-                  {senpai.bio}
-                </div>
+                <div>{senpai.bio}</div>
               </TabPane>
               <TabPane tab="Intro" key="2">
                 <div className={classes.videoDiv}>

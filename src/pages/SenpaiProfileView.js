@@ -290,7 +290,7 @@ export default function SenpaiProfileView({ match, location }) {
                 ) : null}
               </Grid>
             </Grid>
-            <Grid container xs={8} className={classes.right}>
+            <Grid item xs={8} className={classes.right}>
               {senpai.introVideo ? (
                 <Container
                   fixed
@@ -344,7 +344,8 @@ export default function SenpaiProfileView({ match, location }) {
                           {repository.title}
                         </Typography>
                         <Typography variant="h4" component="span">
-                          " - "
+                          {" "}
+                          -{" "}
                         </Typography>
                         <Typography
                           variant="h6"
