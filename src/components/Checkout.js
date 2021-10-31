@@ -38,7 +38,7 @@ export default function Checkout({
       setMessage("Lesson booked!");
       axios({
         method: "patch",
-        url: `/lessons/${match.params.lessonId}`,
+        url: `/api/v1/lessons/${match.params.lessonId}`,
         data: {
           kouhaiId: user._id,
         },

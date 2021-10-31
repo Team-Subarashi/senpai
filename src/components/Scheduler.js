@@ -121,7 +121,7 @@ export default function Timetable({ senpaiLessons }) {
                   onClick={async () => {
                     await axios({
                       method: "patch",
-                      url: `/lessons/${appointmentData._id}`,
+                      url: `/api/v1/lessons/${appointmentData._id}`,
                       data: {
                         selectedCategory:
                           document.getElementById("category-input").innerText,

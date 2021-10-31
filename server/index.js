@@ -96,18 +96,18 @@ if (process.env.NODE_ENV === "production") {
     .get(users.getOneUserById)
     .patch(users.updateUser)
     .delete(users.deleteUser);
-  app.route("/user/:id").get(users.getOneUserById);
+  app.route("/api/v1/user/:id").get(users.getOneUserById);
 
   app.route("/api/v1/users/:id/lessons").get(lessons.getUserLessons);
-  app.route("/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
-  app.route("/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
+  app.route("/api/v1/senpai/:id/lessons").get(lessons.getLessonsBySenpaiId);
+  app.route("/api/v1/kouhai/:id/lessons").get(lessons.getLessonsByKouhaiId);
 
   app
-    .route("/lessons")
+    .route("/api/v1/lessons")
     .get(lessons.listAllLessons)
     .post(lessons.createNewLesson);
   app
-    .route("/lessons/:id")
+    .route("/api/v1/lessons/:id")
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
@@ -127,15 +127,15 @@ if (process.env.NODE_ENV === "production") {
 
   app.route("/messages").get(messages.getMessages);
 
-  app.route("/files").get(files.listAllFiles).post(files.createNewFile);
-  app.route("/files/:id").patch(files.updateFile).delete(files.deleteFile);
+  app.route("/api/v1/files").get(files.listAllFiles).post(files.createNewFile);
+  app.route("/api/v1/files/:id").patch(files.updateFile).delete(files.deleteFile);
 
-  app.route("/create-lesson-and-price").post(stripe.createLessonAndPrice);
-  app.route("/stripeLessons").get(stripe.getStripeLesson);
-  app.route("/stripePrices").get(stripe.getStripePrice);
+  app.route("/api/v1/create-lesson-and-price").post(stripe.createLessonAndPrice);
+  app.route("/api/v1/stripeLessons").get(stripe.getStripeLesson);
+  app.route("/api/v1/stripePrices").get(stripe.getStripePrice);
 
   app
-    .route("/create-checkout-session/:priceId/:senpaiId")
+    .route("/api/v1/create-checkout-session/:priceId/:senpaiId")
     .post(stripe.createCheckoutSession);
 
   app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);

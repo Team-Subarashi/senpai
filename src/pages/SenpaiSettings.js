@@ -280,7 +280,7 @@ export default function SenpaiSettings() {
                 if (document.getElementById("skill-one").innerText !== "") {
                   axios({
                     method: "post",
-                    url: `/create-lesson-and-price`,
+                    url: `/api/v1/create-lesson-and-price`,
                     data: {
                       name: `Lesson with ${user.name}`,
                       price: Number(rate),
