@@ -45,10 +45,10 @@ export default function Info() {
             About Senpai
           </Grid>
           <Grid item style={{ paddingTop: "5vh", fontSize: "20px" }}>
-            Senpai was created as a way to bring together programmers of all
-            levels, and to not only help budding programmers learn from their
-            peers, but to help veterans spread their knowledge and experience,
-            all on one platform.
+            Senpai was created to bring together programmers of all levels, and
+            to not only help budding programmers learn from their peers, but to
+            help veterans spread their knowledge and experience, all on one
+            platform.
           </Grid>
         </Grid>
 
@@ -69,7 +69,10 @@ export default function Info() {
             style={{ height: "100%" }}
           /> */}
           <p style={{ color: "#e0af68", fontSize: "2rem" }}>Our Vision</p>
-          <p>We envision a world where everyone is a programmer.</p>
+          <p>
+            We envision a world where everyone can create beautiful art with
+            code.
+          </p>
         </Grid>
         {/* Picture Section */}
         <Grid
@@ -88,7 +91,7 @@ export default function Info() {
             style={{ height: "100%" }}
           /> */}
           <p style={{ color: "#e0af68", fontSize: "2rem" }}>Our Mission</p>
-          <p>World domination, starting with one webpage at a time.</p>
+          <p>World beautification, one webpage at a time.</p>
         </Grid>
       </Grid>
     </Box>

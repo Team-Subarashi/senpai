@@ -424,15 +424,21 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
+            marginTop: "1vh",
             marginBottom: "2vh",
             height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Interests
-          </h2>
+          </h1>
         </Grid>
         <Grid container direction="column">
           <Box>
@@ -510,14 +516,21 @@ export default function Edit() {
           style={{
             marginLeft: "40%",
             marginRight: "40%",
+            marginTop: "1vh",
             marginBottom: "2vh",
+            height: "5vh",
             borderRadius: "4px",
-            backgroundColor: "#673AB7",
           }}
         >
-          <h2 style={{ fontWeight: "bold", color: "#fff", marginTop: "1vh" }}>
+          <h1
+            style={{
+              fontSize: "1.8rem",
+              fontWeight: "bold",
+              color: "#2ac3de",
+            }}
+          >
             Repositories
-          </h2>
+          </h1>
         </Grid>
         <div style={{ width: "100%" }}>
           {userRepositories.map((repository) => (
