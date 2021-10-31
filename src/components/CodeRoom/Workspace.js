@@ -15,7 +15,7 @@ export default function Workspace() {
   const user = useRecoilValue(userState);
 
   useEffect(async () => {
-    const files = await axios.get("/files");
+    const files = await axios.get("/api/v1/files");
     files.data.filter((file) => (file.userId = user._id));
     console.log;
     setActiveFiles(files.data);

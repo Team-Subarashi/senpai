@@ -72,7 +72,7 @@ export default function MyLessons() {
 
   let tempPrices = [];
   useEffect(async () => {
-    await axios.get("/stripePrices").then((res) => {
+    await axios.get("/api/v1/stripePrices").then((res) => {
       {
         return res.data.data.map((price) => {
           if (price.metadata.userId === user._id) {
