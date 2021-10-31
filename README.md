@@ -121,7 +121,7 @@ The idea behind Senpai was to create a platform where programmers could offer 1-
 
 ### Notes before using the demo
 * The demo was not developed to be viewed on mobile/tablet.
-* The demo does not completely reflect repository code as automated updates and deploys have been disconnected.
+* The demo may not reflect current repository code as automated deploys are not set up.
 
 View the demo [here](https://senpai-container-flsg4ziguq-uc.a.run.app/)
 

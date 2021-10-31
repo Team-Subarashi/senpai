@@ -72,7 +72,7 @@ export default function MyLessons() {
 
   let tempPrices = [];
   useEffect(async () => {
-    await axios.get("/stripePrices").then((res) => {
+    await axios.get("/api/v1/stripePrices").then((res) => {
       {
         return res.data.data.map((price) => {
           if (price.metadata.userId === user._id) {
@@ -100,7 +100,7 @@ export default function MyLessons() {
     let endtime = moment(date).add(1, "hours");
     await axios({
       method: "post",
-      url: "/lessons",
+      url: "/api/v1/lessons",
       data: {
         selectedCategory: "",
         senpaiId: user._id,
@@ -118,7 +118,7 @@ export default function MyLessons() {
     const resultLessons = targetLessons.map(async (lesson) => {
       if (lesson.kouhaiId) {
         if (lesson.userIsSenpai) {
-          const response = await axios.get(`/user/${lesson.kouhaiId}`);
+          const response = await axios.get(`/api/v1/user/${lesson.kouhaiId}`);
           const lessonPartnerObj = {
             name: response.data.name,
             avatar: response.data.avatar,
@@ -127,7 +127,7 @@ export default function MyLessons() {
           const combinedObject = _.assignIn(lesson, lessonPartnerObj);
           return combinedObject;
         } else {
-          const response = await axios.get(`/user/${lesson.senpaiId}`);
+          const response = await axios.get(`/api/v1/user/${lesson.senpaiId}`);
           const lessonPartnerObj = {
             name: response.data.name,
             avatar: response.data.avatar,

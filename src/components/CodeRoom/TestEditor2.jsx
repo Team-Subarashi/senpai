@@ -44,7 +44,7 @@ export const CodeEditor = ({ activeFiles }) => {
   };
 
   const handleSave = async () => {
-    return await axios.patch(`/files/${activeFiles._id}`, {
+    return await axios.patch(`/api/v1/files/${activeFiles._id}`, {
       js: js,
       css: css,
       html: html,
@@ -117,16 +117,16 @@ export const CodeEditor = ({ activeFiles }) => {
           fileName === "script.js"
             ? "javascript"
             : fileName === "index.html"
-            ? "xml"
-            : "css"
+              ? "xml"
+              : "css"
         }
         onMount={handleEditorDidMount}
         onChange={
           fileName === "script.js"
             ? handleJS
             : fileName === "index.html"
-            ? handleHTML
-            : handleCSS
+              ? handleHTML
+              : handleCSS
         }
       />
     </div>
