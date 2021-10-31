@@ -116,14 +116,14 @@ export default function SenpaiProfileView({ match, location }) {
       if (senpaiReviews.length === 0) {
         senpaiReviews.push(0);
         setAverageScore(
-          senpaiReviews.reduce((prevVal, currentVal) => {
-            return prevVal.rating + currentVal.rating;
+          senpaiReviews.map((review) => review.rating).reduce((prevVal, currentVal) => {
+            return prevVal + currentVal;
           }) / senpaiReviews.length
         );
       } else if (mounted && senpaiReviews.length !== 0) {
         setAverageScore(
-          senpaiReviews.reduce((prevVal, currentVal) => {
-            return prevVal.rating + currentVal.rating;
+          senpaiReviews.map((review) => review.rating).reduce((prevVal, currentVal) => {
+            return prevVal + currentVal;
           }) / senpaiReviews.length
         );
       }
@@ -182,15 +182,15 @@ export default function SenpaiProfileView({ match, location }) {
                   >
                     {senpai.category
                       ? senpai.category.map((category) => (
-                          <Button
-                            key={category}
-                            variant="contained"
-                            color="primary"
-                            style={{ padding: "0" }}
-                          >
-                            {category}
-                          </Button>
-                        ))
+                        <Button
+                          key={category}
+                          variant="contained"
+                          color="primary"
+                          style={{ padding: "0" }}
+                        >
+                          {category}
+                        </Button>
+                      ))
                       : null}
                   </div>
                 </div>
@@ -199,8 +199,8 @@ export default function SenpaiProfileView({ match, location }) {
                 senpai.facebook ||
                 senpai.instagram ||
                 senpai.github ? (
-                  <Typography variant="h5">Socials:</Typography>
-                ) : null}
+                    <Typography variant="h5">Socials:</Typography>
+                  ) : null}
                 <div>
                   <Typography variant="h6">
                     {senpai.twitter ? (

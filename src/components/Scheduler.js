@@ -4,6 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
+  Resources,
   WeekView,
   Appointments,
   AppointmentTooltip,
@@ -44,6 +45,17 @@ const TimeScaleLabel = (props) => (
 export default function Timetable({ senpaiLessons }) {
   const [schedulerData, setSchedulerData] = useState([]);
   const [category, setCategory] = useState("");
+
+  const resources = [
+    {
+      fieldName: "title",
+      title: "title",
+      instances: [
+        { id: "Available", text: "Senpai", color: "#47cf73" },
+        { id: "Unavailable", text: "Kohai", color: "#ff3c41" },
+      ],
+    },
+  ];
 
   useEffect(() => {
     //set schedulerData
@@ -133,6 +145,8 @@ export default function Timetable({ senpaiLessons }) {
     )
   );
 
+
+
   return (
     <Paper>
       <Scheduler data={schedulerData}>
@@ -146,6 +160,10 @@ export default function Timetable({ senpaiLessons }) {
         />
         <Appointments />
         <AppointmentTooltip contentComponent={Content} />
+        <Resources
+          data={resources}
+          mainResourceName={"title"}
+        />
         <Toolbar />
         <DateNavigator />
       </Scheduler>
