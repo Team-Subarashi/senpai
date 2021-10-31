@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 // import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import IconButton from "@material-ui/core/IconButton";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
@@ -203,23 +204,47 @@ export default function SenpaiProfileView({ match, location }) {
                 <div>
                   <Typography variant="h6">
                     {senpai.twitter ? (
-                      <a>
-                        <TwitterIcon />
+                      <a
+                        target="_blank"
+                        href={`${senpai.twitter}`}
+                        rel="noreferrer"
+                      >
+                        <IconButton>
+                          <TwitterIcon />
+                        </IconButton>
                       </a>
                     ) : null}
                     {senpai.linkedIn ? (
-                      <a>
-                        <LinkedInIcon />
+                      <a
+                        target="_blank"
+                        href={`${senpai.linkedIn}`}
+                        rel="noreferrer"
+                      >
+                        <IconButton>
+                          <LinkedInIcon />
+                        </IconButton>
                       </a>
                     ) : null}
                     {senpai.facebook ? (
-                      <a>
-                        <FacebookIcon />
+                      <a
+                        target="_blank"
+                        href={`${senpai.facebook}`}
+                        rel="noreferrer"
+                      >
+                        <IconButton>
+                          <FacebookIcon />
+                        </IconButton>
                       </a>
                     ) : null}
                     {senpai.instagram ? (
-                      <a>
-                        <InstagramIcon />
+                      <a
+                        target="_blank"
+                        href={`${senpai.instagram}`}
+                        rel="noreferrer"
+                      >
+                        <IconButton>
+                          <InstagramIcon />
+                        </IconButton>
                       </a>
                     ) : null}
                     {senpai.github ? (
@@ -228,9 +253,9 @@ export default function SenpaiProfileView({ match, location }) {
                         href={`${senpai.github}`}
                         rel="noreferrer"
                       >
-                        <Button>
+                        <IconButton>
                           <GitHubIcon />
-                        </Button>
+                        </IconButton>
                       </a>
                     ) : null}
                   </Typography>
@@ -265,7 +290,7 @@ export default function SenpaiProfileView({ match, location }) {
                 ) : null}
               </Grid>
             </Grid>
-            <Grid container xs={8} className={classes.right}>
+            <Grid item xs={8} className={classes.right}>
               {senpai.introVideo ? (
                 <Container
                   fixed
@@ -319,7 +344,8 @@ export default function SenpaiProfileView({ match, location }) {
                           {repository.title}
                         </Typography>
                         <Typography variant="h4" component="span">
-                          -
+                          {" "}
+                          -{" "}
                         </Typography>
                         <Typography
                           variant="h6"

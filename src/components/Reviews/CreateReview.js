@@ -10,8 +10,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Rating } from "@material-ui/lab";
 import { Container } from "@material-ui/core";
 import axios from "axios";
+import { userState } from "../../atoms";
+import { useRecoilValue } from "recoil";
 
 const CreateReview = ({ lesson }) => {
+  const user = useRecoilValue(userState);
   const [open, setOpen] = React.useState(false);
   const [stateValue, setStateValue] = React.useState(2);
   // const [stateHover, setStateHover] = React.useState(-1);
@@ -89,7 +92,7 @@ const CreateReview = ({ lesson }) => {
           review: review.current,
           kohaiId: lesson.kouhaiId,
           senpaiId: lesson.senpaiId,
-          avatar: lesson.avatar,
+          avatar: user.avatar,
           startDate: lesson.startDate,
           endDate: lesson.endDate,
           title: lesson.title,

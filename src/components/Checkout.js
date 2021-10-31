@@ -61,5 +61,21 @@ export default function Checkout({
     </section>
   );
 
-  return message ? <Message message={message} /> : <ProductDisplay />;
+  return message ? (
+    message === "Lesson booked!" ? (
+      <div style={{ fontSize: "1.8rem" }}>
+        <img
+          src="https://i.imgur.com/MTH8PlV.png"
+          style={{ marginTop: "5vh", marginBottom: "5vh", borderRadius: "4px" }}
+        />
+        <Message message={message} />
+      </div>
+    ) : (
+      <div style={{ fontSize: "1.8rem" }}>
+        <Message message={message} />
+      </div>
+    )
+  ) : (
+    <ProductDisplay />
+  );
 }

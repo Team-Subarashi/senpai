@@ -14,6 +14,7 @@ const repositories = require("./controllers/RepositoryController");
 const stripe = require("./controllers/StripeController");
 const messages = require("./controllers/MessageController");
 const vonage = require("./controllers/vonageController");
+const reviews = require("./controllers/reviewController");
 
 require("dotenv").config();
 
@@ -110,7 +111,9 @@ if (process.env.NODE_ENV === "production") {
     .patch(lessons.updateLesson)
     .delete(lessons.deleteLesson);
 
-  app.route("/api/v1/user/:id/repositories").get(repositories.getUserRepositories);
+  app
+    .route("/api/v1/user/:id/repositories")
+    .get(repositories.getUserRepositories);
 
   app
     .route("/api/v1/repositories")
@@ -138,6 +141,13 @@ if (process.env.NODE_ENV === "production") {
   app.route("/api/v1/vonage/token/:sessionId").get(vonage.getSessionToken);
 
   app.route("/api/v1/firebase/:authId").get(users.getOneUserByAuthId);
+
+  app
+    .route("/api/v1/reviews")
+    .get(reviews.listAllReviews)
+    .post(reviews.createNewReview);
+
+  app.route("/api/v1/reviews/:id").delete(reviews.deleteReview);
 
   app.get("*", (req, res) => {
     res.sendFile(

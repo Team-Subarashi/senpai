@@ -11,7 +11,7 @@ import Vanta from "../components/Vanta";
 
 const useStyles = makeStyles((theme) => ({
   padding: {
-    padding: theme.spacing(6),
+    padding: theme.spacing(7),
   },
   title: {
     fontFamily: "Nunito",
@@ -53,13 +53,8 @@ export default function Splash() {
               SENPAI
             </Typography>
             <Typography className={classes.content}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Senpai was created by programmers, for programmers.
+              <br /> Take the leap, and join our community of beautiful code.
             </Typography>
             <Box component="div" className={classes.padding}>
               <Button
@@ -89,13 +84,7 @@ export default function Splash() {
         </Grid>
         <Container className={classes.padding}>
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            Senpai was created by programmers, for programmers.
           </Typography>
         </Container>
       </div>
